@@ -1,4 +1,4 @@
-package gymlife.application.model;
+package gymlife.model;
 
 import java.util.Random;
 
