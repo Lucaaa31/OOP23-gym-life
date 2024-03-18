@@ -6,7 +6,8 @@ import java.awt.event.KeyListener;
 import gymlife.utility.Constants;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import gymlife.controller.Character;
+import gymlife.utility.Directions;
 /**
  * 
  * Class responsible for managing Character movements .
@@ -19,6 +20,9 @@ public class Character extends JFrame {
     private final transient KeyListener characterListener = new KeyListener() {
         @Override
         public void keyTyped(final KeyEvent e) {
+            
+            label.setLocation(getNewPos(Directions("u")));
+
             switch (e.getKeyChar()) {
                 case 'a':
                 label.setLocation(label.getX() - Constants.MOVEMENT, label.getY());
