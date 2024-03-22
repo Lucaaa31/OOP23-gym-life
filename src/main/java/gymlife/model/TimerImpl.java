@@ -1,5 +1,7 @@
 package gymlife.model;
 
+import gymlife.view.TimerView;
+
 public class TimerImpl {
     private int milliseconds;
     private boolean running;
@@ -28,36 +30,19 @@ public class TimerImpl {
                         e.printStackTrace();
                     }
                     milliseconds--;
-                    firstDigit = milliseconds/1000;
-                    secondDigit = (milliseconds / 100) % 10;
-                    thirdDigit = (milliseconds / 10) % 10;
+                    firstDigit = milliseconds/10000;
+                    secondDigit = (milliseconds / 1000) % 10;
+                    thirdDigit = (milliseconds / 100) % 10;
                     forthDigit = milliseconds % 10;
-                    //System.out.print("\rMilliseconds left: " + milliseconds);
+                    TimerView.update(firstDigit, secondDigit, thirdDigit, forthDigit);
                 }
                 System.out.println("Stop!");
                 running = false;
             });
             timerThread.start();
-        } else {
-            System.out.println("Timer is already running.");
         }
     }
 
-    public int getFirstDigit() {
-        return firstDigit;
-    }
-
-    public int getSecondDigit() {
-        return secondDigit;
-    }
-
-    public int getThirdDigit() {
-        return thirdDigit;
-    }
-
-    public int getForthDigit() {
-        return forthDigit;
-    }
 
 }
 
