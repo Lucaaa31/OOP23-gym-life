@@ -14,5 +14,9 @@ public interface GameMap {
 
     int getDimY();
 
+    int getId();
+
+    String getName();
+
     Map<Pair<Integer, Integer>, Cell> getMap();
 }
