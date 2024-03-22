@@ -4,6 +4,6 @@ package gymlife.view;
  * 
  * Main Class of the Java application.
  */
-public class Stats {
+public class StatsView {
 
 }

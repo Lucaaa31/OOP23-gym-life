@@ -3,11 +3,11 @@ package gymlife.model;
 import gymlife.utility.Position;
 import gymlife.utility.Directions;
 
-public class Character {
+public class CharacterModel {
     private static Position pos;
 
-    public Character (Position initialPosition){
-        pos = initialPosition;
+    public CharacterModel (Position initialPosition){
+        pos = new Position(0, 0);
     }
 
     public Position getCharacterPos(){
@@ -17,6 +17,4 @@ public class Character {
     public static Position getNewPos(Directions dir){
         return pos;
     }
-    
-
 }
