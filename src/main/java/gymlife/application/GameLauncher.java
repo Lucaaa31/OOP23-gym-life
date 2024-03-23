@@ -1,5 +1,6 @@
 package gymlife.application;
-import gymlife.controller.Character;
+
+import gymlife.view.CharacterView;
 
 /**
  * 
@@ -16,6 +17,7 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-        new Character();
+        CharacterView characterView = new CharacterView();
+        characterView.start();
     }
 }
