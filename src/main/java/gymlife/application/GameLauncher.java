@@ -1,7 +1,7 @@
 package gymlife.application;
 
-import gymlife.view.CharacterView;
-
+import gymlife.view.CharacterViewImpl;
+import gymlife.view.api.CharacterView;
 /**
  * 
  * Main Class of the Java application.
@@ -17,7 +17,7 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-        CharacterView characterView = new CharacterView();
+        CharacterView characterView = new CharacterViewImpl();
         characterView.start();
     }
 }

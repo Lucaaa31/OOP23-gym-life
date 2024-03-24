@@ -3,8 +3,10 @@ package gymlife.controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import gymlife.controller.CharacterController;
-import gymlife.model.CharacterModel;
+import gymlife.controller.CharacterControllerImpl;
+import gymlife.controller.api.CharacterController;
+import gymlife.model.CharacterModelImpl;
+import gymlife.model.api.CharacterModel;
 import gymlife.utility.Directions;
 
 /**
@@ -12,11 +14,9 @@ import gymlife.utility.Directions;
  * Class responsible for managing Character movements .
  */
 
-public class CharacterController {
-    public CharacterModel charMod = new CharacterModel();
-    public static final long serialVersionUID = 4328743;
-
-    public CharacterController(CharacterModel charMod) {
+public class CharacterControllerImpl implements CharacterController {
+    public CharacterModel charMod = new CharacterModelImpl();
+    public CharacterControllerImpl(CharacterModel charMod) {
         this.charMod = charMod;
     }
 
@@ -35,6 +35,7 @@ public class CharacterController {
         }
     };
 
+    @Override
     public KeyListener getChaListener() {
         return characterListener;
     }
