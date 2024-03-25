@@ -1,5 +1,7 @@
 package gymlife.application;
 
+import gymlife.model.TimerImpl;
+import gymlife.view.MinigameViewImpl;
 
 /**
  * 
@@ -16,6 +18,10 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-
+       TimerImpl timer = new TimerImpl(10000);
+ 
+        new MinigameViewImpl();
+        
+        timer.start();
     }
 }
