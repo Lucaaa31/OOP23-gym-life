@@ -9,7 +9,7 @@ import gymlife.controller.api.CharacterController;
 import gymlife.model.CharacterModelImpl;
 import gymlife.model.api.CharacterModel;
 import gymlife.utility.Position;
-import gymlife.utility.api.Constants;
+import gymlife.utility.Constants;
 import gymlife.view.api.CharacterView;
 
 public class CharacterViewImpl extends JFrame implements CharacterView {

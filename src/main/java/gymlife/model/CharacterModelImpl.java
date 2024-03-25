@@ -3,7 +3,7 @@ package gymlife.model;
 import java.util.Optional;
 
 import gymlife.utility.Position;
-import gymlife.utility.api.Constants;
+import gymlife.utility.Constants;
 import gymlife.model.api.CharacterModel;
 import gymlife.utility.Directions;
 import gymlife.view.CharacterViewImpl;

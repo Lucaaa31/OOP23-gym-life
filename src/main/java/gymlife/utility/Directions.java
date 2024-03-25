@@ -3,9 +3,9 @@ package gymlife.utility;
 
 import java.util.Optional;
 
-import gymlife.utility.api.DirectionsInt;
+import gymlife.utility.Directions;
 
-public enum Directions implements DirectionsInt {
+public enum Directions {
     UP('w', new Position(0, -10)),
     RIGHT('d', new Position(+10, 0)),
     LEFT('a', new Position(-10, 0)),
@@ -28,7 +28,7 @@ public enum Directions implements DirectionsInt {
         return Optional.empty();
     }
 
-    public static Optional<Position> GetOffset(DirectionsInt dir) {
+    public static Optional<Position> GetOffset(Directions dir) {
         for (Directions elem : Directions.values()) {
             if (elem.equals(dir)) {
                 return Optional.of(elem.pos);
