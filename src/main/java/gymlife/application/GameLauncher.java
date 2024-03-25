@@ -1,8 +1,7 @@
 package gymlife.application;
 
-import gymlife.model.TimerImpl;
-import gymlife.view.MinigameViewImpl;
-
+import gymlife.view.CharacterViewImpl;
+import gymlife.view.api.CharacterView;
 /**
  * 
  * Main Class of the Java application.
@@ -18,10 +17,11 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-       TimerImpl timer = new TimerImpl(10000);
- 
-        new MinigameViewImpl();
+<<<<<<< HEAD
         
-        timer.start();
+=======
+        CharacterView characterView = new CharacterViewImpl();
+        characterView.start();
+>>>>>>> feature/Character
     }
 }
