@@ -4,16 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import gymlife.controller.api.CharacterController;
-import gymlife.model.CharacterModelImpl;
-import gymlife.model.api.CharacterModel;
-import gymlife.utility.Directions;
+import gymlife.model.GameStateImpl;
+import gymlife.model.api.GameState;
 
 /**
  * 
  * Class responsible for managing Character movements.
  */
 public class CharacterControllerImpl implements CharacterController {
-    private final CharacterModel charMod = new CharacterModelImpl();
+    private final GameState gameState = new GameStateImpl();
     /**
      * 
      * Class responsible for managing Character movements.
@@ -22,7 +21,7 @@ public class CharacterControllerImpl implements CharacterController {
     private final transient KeyListener characterListener = new KeyListener() {
         @Override
         public void keyTyped(final KeyEvent e) {
-            charMod.setDir(Directions.getDir(e.getKeyChar()));
+            gameState.setKey((e.getKeyChar()));
         }
 
         @Override
