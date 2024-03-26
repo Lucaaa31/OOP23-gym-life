@@ -1,7 +1,11 @@
 package gymlife.view.api;
 
+/** 
+ * Character view Interface.
+*/
 public interface CharacterView {
-    
-    public void start();
-
+    /** 
+     * Start the view.
+    */
+    void start();
 }
