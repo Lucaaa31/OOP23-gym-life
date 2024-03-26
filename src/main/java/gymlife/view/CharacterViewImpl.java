@@ -5,8 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import gymlife.controller.CharacterControllerImpl;
 import gymlife.controller.api.CharacterController;
-import gymlife.model.CharacterModelImpl;
-import gymlife.model.api.CharacterModel;
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
 import gymlife.view.api.CharacterView;
@@ -22,9 +20,7 @@ public class CharacterViewImpl extends JFrame implements CharacterView {
      */
     @Override
     public void start() {
-        final CharacterModel charMod = new CharacterModelImpl();
         final CharacterController charContr = new CharacterControllerImpl();
-        charContr.setCharactermodel(charMod);
         // Define serialization id to avoid serialization related bugs
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
