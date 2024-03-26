@@ -1,27 +1,32 @@
 package gymlife.model;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import gymlife.model.api.Cell;
 
 public enum CellImpl implements Cell {
-    HOUSE_FLOOR(0, "house_floor.png", false),
-    HOUSE_BED01(1, "house_bed01.png", true),
-    HOUSE_BED02(2, "house_bed02.png", true),
-    HOUSE_BED03(3, "house_bed03.png", true),
-    HOUSE_BED04(4, "house_bed04.png", true),
-    HOUSE_BED05(5, "house_bed05.png", true),
-    HOUSE_BED06(6, "house_bed06.png", true),
-    PLACEHOLDER(99, "placeholder.png", false);
+    HOUSE_FLOOR(0, false, Optional.empty()),
+    HOUSE_BED01(1, true, Optional.empty()),
+    HOUSE_BED02(2, true, Optional.empty()),
+    HOUSE_BED03(3, true, Optional.empty()),
+    HOUSE_BED04(4, true, Optional.empty()),
+    HOUSE_BED05(5, true, Optional.empty()),
+    HOUSE_BED06(6, true, Optional.empty()),
+    HOUSE_BED_INTERACT(7, false, Optional.empty()),
+    HOUSE_KITCHEN01(8, true, Optional.empty()),
+    HOUSE_KITCHEN02(9, true, Optional.empty()),
+    HOUSE_KITCHEN03(10, true, Optional.empty()),
+    PLACEHOLDER(99, false, Optional.empty());
 
     private int id;
-    private String fileName;
     private boolean collision;
+    private Optional<Runnable> interaction;
 
-    private CellImpl(final int id, final String fileName, final boolean collision) {
+    private CellImpl(final int id, final boolean collision, final Optional<Runnable> interaction) {
         this.id = id;
-        this.fileName = fileName;
         this.collision = collision;
+        this.interaction = interaction;
     }
 
     public static Cell getCellfromId(final int id) {
@@ -44,7 +49,13 @@ public enum CellImpl implements Cell {
 
     @Override
     public String getImage() {
-        return this.fileName;
+        return this.getClass()
+            .getName()
+            .toLowerCase();
+    }
+
+    public Optional<Runnable> getInteraction(){
+        return this.interaction;
     }
 
 }

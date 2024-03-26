@@ -10,7 +10,7 @@ import gymlife.model.api.Cell;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.Pair;
 
-public class GameMapImpl implements GameMap{
+public class GameMapImpl implements GameMap {
 
     private int id;
     private String name;
@@ -18,7 +18,7 @@ public class GameMapImpl implements GameMap{
     private int dimX;
     private Map<Pair<Integer, Integer>, Cell> map;
 
-    public GameMapImpl(final int id, final String name, final int dimX, final int dimY, final String fileName){
+    public GameMapImpl(final int id, final String name, final int dimX, final int dimY, final String fileName) {
         this.id = id;
         this.name = name;
         this.dimX = dimX;
@@ -27,7 +27,7 @@ public class GameMapImpl implements GameMap{
         int counterX = 0;
         int counterY = 0;
         try {
-            File myObj = new File("OOP23-gym-life/src/main/resources/"+fileName);
+            File myObj = new File("OOP23-gym-life/src/main/resources/" + fileName);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -49,7 +49,6 @@ public class GameMapImpl implements GameMap{
         }
     }
 
-
     @Override
     public boolean isCellCollidable(Pair<Integer, Integer> coord) {
         return this.getCellAtCoord(coord).getCollision();
@@ -62,7 +61,7 @@ public class GameMapImpl implements GameMap{
 
     @Override
     public boolean checkBorders(Pair<Integer, Integer> coord) {
-        return coord.getX()>=0 && coord.getX()<this.dimX && coord.getY()>=0 && coord.getY()<this.dimY;
+        return coord.getX() >= 0 && coord.getX() < this.dimX && coord.getY() >= 0 && coord.getY() < this.dimY;
     }
 
     @Override
@@ -76,20 +75,13 @@ public class GameMapImpl implements GameMap{
     }
 
     @Override
-    public Map<Pair<Integer, Integer>, Cell> getMap() {
-        return this.map;
-    }
-
-
-    @Override
     public int getId() {
         return this.id;
     }
-
 
     @Override
     public String getName() {
         return this.name;
     }
-    
+
 }

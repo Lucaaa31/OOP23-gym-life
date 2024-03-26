@@ -4,40 +4,40 @@ import gymlife.model.api.Pair;
 
 public class PairImpl<T1, T2> implements Pair<T1, T2> {
 
-    private T1 X;
-    private T2 Y;
+	private T1 x;
+	private T2 y;
 
-    public PairImpl(final T1 x, final T2 y){
-        this.X = x;
-        this.Y = y;
-    }
+	public PairImpl(final T1 x, final T2 y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    @Override
-    public T1 getX() {
-        return this.X;
-    }
+	@Override
+	public T1 getX() {
+		return this.x;
+	}
 
-    @Override
-    public T2 getY() {
-        return this.Y;
-    }
+	@Override
+	public T2 getY() {
+		return this.y;
+	}
 
-    @Override
-    public void setX(final T1 x) {
-        this.X = x;
-    }
+	@Override
+	public void setX(final T1 x) {
+		this.x = x;
+	}
 
-    @Override
-    public void setY(final T2 y) {
-        this.Y = y;
-    }
+	@Override
+	public void setY(final T2 y) {
+		this.y = y;
+	}
 
-    @Override
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((X == null) ? 0 : X.hashCode());
-		result = prime * result + ((Y == null) ? 0 : Y.hashCode());
+		result = prime * result + ((x == null) ? 0 : x.hashCode());
+		result = prime * result + ((y == null) ? 0 : y.hashCode());
 		return result;
 	}
 
@@ -51,15 +51,15 @@ public class PairImpl<T1, T2> implements Pair<T1, T2> {
 		if (getClass() != obj.getClass())
 			return false;
 		PairImpl other = (PairImpl) obj;
-		if (X == null) {
-			if (other.X != null)
+		if (x == null) {
+			if (other.x != null)
 				return false;
-		} else if (!X.equals(other.X))
+		} else if (!x.equals(other.x))
 			return false;
-		if (Y == null) {
-			if (other.Y != null)
+		if (y == null) {
+			if (other.y != null)
 				return false;
-		} else if (!Y.equals(other.Y))
+		} else if (!y.equals(other.y))
 			return false;
 		return true;
 	}
