@@ -1,10 +1,7 @@
 package gymlife.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
+
 import java.util.Map;
-import java.util.Scanner;
 
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameMap;
@@ -18,35 +15,12 @@ public class GameMapImpl implements GameMap {
     private int dimX;
     private Map<Pair<Integer, Integer>, Cell> map;
 
-    public GameMapImpl(final int id, final String name, final int dimX, final int dimY, final String fileName) {
+    public GameMapImpl(final int id, final String name, final int dimX, final int dimY, final Map<Pair<Integer, Integer>, Cell> map) {
         this.id = id;
         this.name = name;
         this.dimX = dimX;
         this.dimY = dimY;
-        Map<Pair<Integer, Integer>, Cell> tempMap = new HashMap<>();
-        int counterX = 0;
-        int counterY = 0;
-        try {
-            File myObj = new File("OOP23-gym-life/src/main/resources/" + fileName);
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] arr = data.split(" ");
-                for (String string : arr) {
-                    Pair<Integer, Integer> coord = new PairImpl<>(counterX, counterY);
-                    Cell cell = CellImpl.getCellfromId(Integer.parseInt(string));
-                    tempMap.put(coord, cell);
-                    counterX++;
-                }
-                counterX = 0;
-                counterY++;
-            }
-            myReader.close();
-            this.map = tempMap;
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
+        this.map = map;
     }
 
     @Override
