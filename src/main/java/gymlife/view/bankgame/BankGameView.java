@@ -8,9 +8,16 @@ import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * This class groups all the panels and shows them on screen.
+ */
 public final class BankGameView extends JFrame {
     private static final long serialVersionUID = -3972452455820596601L;
 
+    /**
+     * This method sets the dimensions of the plane image and the sky image,
+     * moreover it sets the images' layering.
+     */
     public BankGameView() {
         super("Plane Game");
         final Dimension screenDims = new Dimension(
@@ -48,6 +55,9 @@ public final class BankGameView extends JFrame {
         planeLabel.reload();
     }
 
+    /**
+     * This method closes the window of the game and frees the memory.
+     */
     public void destroy() {
         this.dispose();
     }

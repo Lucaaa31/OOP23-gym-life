@@ -5,6 +5,7 @@ package gymlife.view.bankgame;
  */
 public final class AirplaneGameView extends BankGameComponentImpl {
     private static final long serialVersionUID = 3671759742245868348L;
+
     /**
      * This is the constructor of the Airplane class.
      */
