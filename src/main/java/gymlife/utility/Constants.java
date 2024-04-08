@@ -36,6 +36,10 @@ public final class Constants {
      * Main Class of the Java application.
      */
     public static final int MAX_STATS_LEVEL = 12;
+    /**
+     * Main Class of the Java application.
+     */
+    public static final int DAYS_STARTER_COUNT = 20;
     private Constants() {
     }
 }
