@@ -1,10 +1,13 @@
 package gymlife.view;
 
 import java.awt.Color;
-import javax.swing.JFrame;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
-import gymlife.controller.CharacterControllerImpl;
-import gymlife.controller.api.CharacterController;
+import gymlife.controller.ControllerImpl;
+import gymlife.controller.api.Controller;
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
 import gymlife.view.api.CharacterView;
@@ -12,29 +15,37 @@ import gymlife.view.api.CharacterView;
 /**
  * Class that didplay character.
  */
-public class CharacterViewImpl extends JFrame implements CharacterView {
+public class CharacterViewImpl extends JPanel implements CharacterView {
     private static final JLabel LABEL = new JLabel();
-    private static final long serialVersionUID = 4328743;
+    final Controller controller;
+ 
     /**
      * No argument passed.
      */
-    @Override
-    public void start() {
-        final CharacterController charContr = new CharacterControllerImpl();
+    public CharacterViewImpl(Controller controller) {
         // Define serialization id to avoid serialization related bugs
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
-
-        this.setLayout(null);
-        this.addKeyListener(charContr.getCharacterListener());
-        LABEL.setBounds(Constants.CHARACTER_START_POS.X(), Constants.CHARACTER_START_POS.Y(), Constants.CHARACTER_WIDTH,
-                Constants.CHARACTER_HEIGHT);
+        this.controller = controller;
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(final KeyEvent e) {
+                System.out.println((e.getKeyChar()));
+            }
+    
+            @Override
+            public void keyPressed(final KeyEvent e) {
+            }
+    
+            @Override
+            public void keyReleased(final KeyEvent e) {
+            }
+        });
+        LABEL.setBounds(Constants.CHARACTER_START_POS.X(), Constants.CHARACTER_START_POS.Y(), 
+                Constants.CHARACTER_WIDTH,Constants.CHARACTER_HEIGHT);
         LABEL.setBackground(Color.RED);
         LABEL.setOpaque(true);
         this.add(LABEL);
-        this.setVisible(true);
     }
-
+    
     /**
      * Update the view .
      * @param newPos
