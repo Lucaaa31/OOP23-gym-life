@@ -17,6 +17,6 @@ public interface CharacterModel {
     *  Keylistener responsable for managing movement inputs.
     * @param dir
     */
-    void setDir(Optional<Directions> dir);
+    void setNewDir(Optional<Directions> dir);
 
 }

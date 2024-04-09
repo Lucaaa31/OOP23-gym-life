@@ -28,12 +28,11 @@ public class CharacterModelImpl implements CharacterModel {
     * @param dir
     */
     @Override
-    public void setDir(final Optional<Directions> dir) {
+    public void setNewDir(final Optional<Directions> dir) {
         dir.ifPresent(direction -> {
             final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
             pos = newPosition.apply(pos.X() + Directions.getOffset(direction).get().X(), 
                                      pos.Y() + Directions.getOffset(direction).get().Y());
-            CharacterViewImpl.update(pos);
         });
     }
 }
