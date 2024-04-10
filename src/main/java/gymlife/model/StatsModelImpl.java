@@ -52,6 +52,4 @@ public final class StatsModelImpl implements StatsModel {
     public static boolean inchumor() {
         return humor++ > Constants.MAX_STATS_LEVEL;
     }
-    private StatsModelImpl() {
-    }
 }
