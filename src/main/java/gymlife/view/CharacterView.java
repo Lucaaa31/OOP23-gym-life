@@ -22,13 +22,30 @@ public class CharacterView extends JPanel{
     /**
      * No argument passed.
      */
-    public CharacterView(Controller controller) {
+    public CharacterView(final Controller controller) {
         // Define serialization id to avoid serialization related bugs
         this.controller = controller;
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                System.out.println((e.getKeyChar()));
+                switch (Character.toUpperCase(e.getKeyChar())) {
+                    case KeyEvent.VK_W:
+                        controller.moveUp();
+                        break;
+                    case KeyEvent.VK_A:
+                        controller.moveLeft();
+                        break;
+                    case KeyEvent.VK_S:
+                        controller.moveDown();
+                        break;
+                    case KeyEvent.VK_D:
+                        controller.moveRight();
+                        break;
+                    default:
+                        break;
+                }
+                LABEL.setBounds(controller.getCharacterPos().X(), controller.getCharacterPos().Y(), 
+                        Constants.CHARACTER_WIDTH,Constants.CHARACTER_HEIGHT);
             }
     
             @Override
@@ -44,13 +61,5 @@ public class CharacterView extends JPanel{
         LABEL.setBackground(Color.RED);
         LABEL.setOpaque(true);
         this.add(LABEL);
-    }
-    
-    /**
-     * Update the view .
-     * @param newPos
-     */
-    public static void update(final Position newPos) {
-        LABEL.setLocation(newPos.X(), newPos.Y());
     }
 }

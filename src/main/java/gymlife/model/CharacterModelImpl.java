@@ -9,24 +9,26 @@ import gymlife.utility.Directions;
 import gymlife.model.api.CharacterModel;
 
 /**
-*  Keylistener responsable for managing movement inputs.
-*/
+ * Implementation of the CharacterModel interface.
+ * This class represents the character in the game and provides methods for managing its movement.
+ */
 public class CharacterModelImpl implements CharacterModel {
 
     private static Position pos = Constants.CHARACTER_START_POS;
 
     /**
-    *  Keylistener responsable for managing movement inputs.
-    * @return pos 
-    */
+     * Retrieves the current position of the character.
+     * @return The position of the character.
+     */
     @Override
     public Position getCharacterPos() {
         return pos;
     }
+
     /**
-    *  Keylistener responsable for managing movement inputs.
-    * @param dir
-    */
+     * Sets a new direction for the character's movement.
+     * @param dir The new direction for the character's movement.
+     */
     @Override
     public void setNewDir(final Optional<Directions> dir) {
         dir.ifPresent(direction -> {
