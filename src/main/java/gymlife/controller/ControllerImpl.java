@@ -1,37 +1,50 @@
 package gymlife.controller;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.Optional;
 
+import gymlife.utility.Directions;
 import gymlife.controller.api.Controller;
+import gymlife.model.api.CharacterModel;
+import gymlife.model.CharacterModelImpl;
+import gymlife.model.api.DaysModel;
+import gymlife.model.DaysModelImpl;
+import gymlife.model.api.StatsModel;
+import gymlife.model.StatsModelImpl;
+
 /**
- * 
  * Class responsible for managing Character movements.
  */
 public class ControllerImpl implements Controller {
-
+    private final CharacterModel characterModel = new CharacterModelImpl();
+    private final DaysModel daysModel = new DaysModelImpl();
+    private final StatsModel statsModel = new StatsModelImpl();
+    /**
+     * Moves the character up.
+     */
     @Override
     public void moveUp() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveUp'");
+        characterModel.setNewDir(Optional.of(Directions.UP));
     }
-
+    /**
+     * Moves the character down.
+     */
     @Override
     public void moveDown() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveDown'");
+        characterModel.setNewDir(Optional.of(Directions.DOWN));
     }
-
+    /**
+     * Moves the character to the right.
+     */
     @Override
     public void moveRight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveRight'");
+        characterModel.setNewDir(Optional.of(Directions.RIGHT));
     }
-
+    /**
+     * Moves the character to the left.
+     */
     @Override
     public void moveLeft() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'moveLeft'");
+        characterModel.setNewDir(Optional.of(Directions.LEFT));
     }
  
 }
