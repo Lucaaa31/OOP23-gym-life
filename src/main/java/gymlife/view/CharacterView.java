@@ -10,19 +10,19 @@ import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
-import gymlife.view.api.CharacterView;
+
 
 /**
  * Class that didplay character.
  */
-public class CharacterViewImpl extends JPanel implements CharacterView {
+public class CharacterView extends JPanel{
     private static final JLabel LABEL = new JLabel();
     final Controller controller;
  
     /**
      * No argument passed.
      */
-    public CharacterViewImpl(Controller controller) {
+    public CharacterView(Controller controller) {
         // Define serialization id to avoid serialization related bugs
         this.controller = controller;
         this.addKeyListener(new KeyListener() {

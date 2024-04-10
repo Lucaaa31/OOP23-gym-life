@@ -5,9 +5,9 @@ import java.util.function.BiFunction;
 
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
-import gymlife.model.api.CharacterModel;
 import gymlife.utility.Directions;
-import gymlife.view.CharacterViewImpl;
+import gymlife.model.api.CharacterModel;
+
 /**
 *  Keylistener responsable for managing movement inputs.
 */

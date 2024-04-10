@@ -7,21 +7,20 @@ import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import gymlife.view.api.CharacterView;
-import gymlife.view.CharacterViewImpl;
-import gymlife.view.api.MainView;
+import gymlife.view.CharacterView;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.Constants;
 
-public class MainViewImpl extends JFrame implements MainView {
+public class MainView extends JFrame {
     
     final Controller controller = new ControllerImpl();
-    final CharacterViewImpl charView = new CharacterViewImpl(controller);
+    final CharacterView charView = new CharacterView(controller);
     final JPanel mainPanel = new JPanel();
 
-
-    @Override
+    public MainView() {
+    }
+    
     public void start() {
         this.setSize(Constants.PANEL_WIDTH, Constants.PANEL_HEIGHT);
         this.setLayout(null);
