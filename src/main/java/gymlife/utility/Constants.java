@@ -27,7 +27,7 @@ public final class Constants {
     /**
      * Main Class of the Java application.
      */
-    public static final Position CHARACTER_START_POS = new Position(0, 0);
+    public static final Position CHARACTER_START_POS = new Position(50, 50);
     /**
      * Main Class of the Java application.
      */

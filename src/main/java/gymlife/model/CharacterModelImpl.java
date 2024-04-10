@@ -36,5 +36,6 @@ public class CharacterModelImpl implements CharacterModel {
             pos = newPosition.apply(pos.X() + Directions.getOffset(direction).get().X(), 
                                      pos.Y() + Directions.getOffset(direction).get().Y());
         });
+        System.out.println("Character position: " + pos.X() + ", " + pos.Y());
     }
 }

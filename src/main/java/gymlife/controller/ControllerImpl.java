@@ -3,6 +3,7 @@ package gymlife.controller;
 import java.util.Optional;
 
 import gymlife.utility.Directions;
+import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 import gymlife.model.CharacterModelImpl;
@@ -45,6 +46,10 @@ public class ControllerImpl implements Controller {
     @Override
     public void moveLeft() {
         characterModel.setNewDir(Optional.of(Directions.LEFT));
+    }
+
+    public Position getCharacterPos() {
+        return characterModel.getCharacterPos();
     }
  
 }
