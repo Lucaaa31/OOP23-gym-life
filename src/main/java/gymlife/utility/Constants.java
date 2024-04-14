@@ -11,11 +11,21 @@ public final class Constants {
     /**
      * Main Class of the Java application.
      */
-    public static final int PANEL_WIDTH = 600;
+    public static final int PANEL_WIDTH = 640;
     /**
      * Main Class of the Java application.
      */
-    public static final int PANEL_HEIGHT = 400;
+    public static final int PANEL_HEIGHT = 480;
+    /**
+     * Main Class of the Java
+     * application.
+     */
+    public static final int FRAME_HEIGHT = 480;
+    /**
+     * Main Class of the Java   
+     * application.
+     */
+    public static final int FRAME_WIDTH = 740;
     /**
      * Main Class of the Java application.
      */

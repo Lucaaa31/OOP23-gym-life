@@ -14,42 +14,50 @@ public final class StatsModelImpl implements StatsModel {
      *  Return mass value.
      * @return mass
      */
-    public static int getMass() {
+    @Override
+    public int getMass() {
         return mass;
     }
     /**
      *  Return stamina value.
      * @return stamina
      */
-    public static int getStamina() {
+    @Override
+    public int getStamina() {
         return stamina;
     }
     /**
      *  Return humor value.
      * @return humor
      */
-    public static int getHumor() {
+    @Override
+    public int getHumor() {
         return humor;
     }
     /**
      *  Return True if the Mass increment hasn't reaced his max.
      * @return boolean
      */
-    public static boolean incMass() {
+    @Override
+    public boolean incMass() {
         return mass++ > Constants.MAX_STATS_LEVEL;
     }
     /**
      *  Return True if the Stamina increment hasn't reaced his max. 
      * @return boolean
      */
-    public static boolean incStamina() {
+    @Override
+    public boolean incStamina() {
         return stamina++ > Constants.MAX_STATS_LEVEL;
     }
     /**
      *  Return True if the Humor increment hasn't reaced his max.
      * @return boolean
      */
-    public static boolean inchumor() {
+    @Override
+    public boolean inchumor() {
         return humor++ > Constants.MAX_STATS_LEVEL;
     }
 }
+
+

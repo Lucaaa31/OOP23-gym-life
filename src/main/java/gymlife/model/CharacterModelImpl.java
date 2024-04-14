@@ -30,7 +30,7 @@ public class CharacterModelImpl implements CharacterModel {
      * @param dir The new direction for the character's movement.
      */
     @Override
-    public void setNewDir(final Optional<Directions> dir) {
+    public void move(final Optional<Directions> dir) {
         dir.ifPresent(direction -> {
             final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
             pos = newPosition.apply(pos.X() + Directions.getOffset(direction).get().X(), 
