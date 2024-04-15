@@ -1,14 +1,15 @@
 package gymlife.model;
 
+import gymlife.model.api.AbstractCounter;
 import gymlife.model.api.DaysModel;
 import gymlife.utility.Constants;
 
 /**
  * Implementation of the DaysModel interface.
  */
-public class DaysModelImpl implements DaysModel {
+public class DaysModelImpl extends AbstractCounter implements DaysModel {
 
-    private static int days = Constants.DAYS_STARTER_COUNT;
+
 
     /**
      * Checks if the days are over.
@@ -17,15 +18,15 @@ public class DaysModelImpl implements DaysModel {
      */
     @Override
     public boolean daysAreOver() {
-        return false;
+        return this.count < Constants.DAYS_MAX_COUNT;
     }
 
     /**
-     * Decreases the number of days by 1.
+     * Increase the number of days by 1.
      */
     @Override
     public void newDay() {
-        days = days - 1;
+        this.count++;
     }
 
     /**
@@ -35,7 +36,7 @@ public class DaysModelImpl implements DaysModel {
      */
     @Override
     public int dayLeft() {
-        return days;
+        return Constants.DAYS_MAX_COUNT - this.count;
     }
 }
 
