@@ -18,7 +18,7 @@ public class DaysModelImpl extends AbstractCounter implements DaysModel {
      */
     @Override
     public boolean daysAreOver() {
-        return this.count < Constants.DAYS_MAX_COUNT;
+        return this.count < Constants.DAYS_MAX_COUNT_EASY;
     }
 
     /**
@@ -36,7 +36,7 @@ public class DaysModelImpl extends AbstractCounter implements DaysModel {
      */
     @Override
     public int dayLeft() {
-        return Constants.DAYS_MAX_COUNT - this.count;
+        return Constants.DAYS_MAX_COUNT_EASY - this.count;
     }
 }
 

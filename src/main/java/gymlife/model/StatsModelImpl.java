@@ -1,63 +1,144 @@
 package gymlife.model;
 
+import gymlife.model.api.AbstractCounter;
 import gymlife.model.api.StatsModel;
 import gymlife.utility.Constants;
+
 /**
-* Stats Class that .
-* @return KeyListener
-*/
+ * Implementation of the StatsModel interface that represents the statistics of a gym member.
+ */
 public final class StatsModelImpl implements StatsModel {
-    private static  Integer humor = Constants.STARTING_STATS_LEVEL;
-    private static  Integer stamina = Constants.STARTING_STATS_LEVEL;
-    private static  Integer mass = Constants.STARTING_STATS_LEVEL;
+    private static AbstractCounter humor;
+    private static AbstractCounter stamina;
+    private static AbstractCounter legMass;
+    private static AbstractCounter backMass;
+    private static AbstractCounter chestMass;
+
     /**
-     *  Return mass value.
-     * @return mass
+     * Returns the total mass value of the gym member.
+     *
+     * @return the total mass value
      */
     @Override
     public int getMass() {
-        return mass;
+        return chestMass.getCount() + backMass.getCount() + legMass.getCount();
     }
+
     /**
-     *  Return stamina value.
-     * @return stamina
+     * Returns the mass value of the gym member's chest.
+     *
+     * @return the chest mass value
+     */
+    public int getChestMass() {
+        return chestMass.getCount();
+    }
+
+    /**
+     * Returns the mass value of the gym member's back.
+     *
+     * @return the back mass value
+     */
+    public int getBackMass() {  
+        return backMass.getCount(); 
+    }
+
+    /**
+     * Returns the mass value of the gym member's legs.
+     *
+     * @return the leg mass value
+     */
+    public int getLegMass() {
+        return legMass.getCount();
+    }
+    
+    /**
+     * Returns the stamina value of the gym member.
+     *
+     * @return the stamina value
      */
     @Override
     public int getStamina() {
-        return stamina;
+        return stamina.getCount();
     }
+
     /**
-     *  Return humor value.
-     * @return humor
+     * Returns the humor value of the gym member.
+     *
+     * @return the humor value
      */
     @Override
     public int getHumor() {
-        return humor;
+        return humor.getCount();
     }
+
     /**
-     *  Return True if the Mass increment hasn't reaced his max.
-     * @return boolean
+     * Increments the mass values of the gym member's chest, back, and legs equally.
+     * Returns true if the mass increment hasn't reached its maximum level.
+     *
+     * @return true if the mass increment hasn't reached its maximum level, false otherwise
      */
     @Override
     public boolean incMass() {
-        return mass++ > Constants.MAX_STATS_LEVEL;
+        chestMass.increment();
+        backMass.increment();
+        legMass.increment();
+        return chestMass.getCount() < Constants.MAX_STATS_LEVEL && backMass.getCount() < Constants.MAX_STATS_LEVEL && legMass.getCount() < Constants.MAX_STATS_LEVEL;
     }
+
     /**
-     *  Return True if the Stamina increment hasn't reaced his max. 
-     * @return boolean
+     * Increments the stamina value of the gym member.
+     * Returns true if the stamina increment hasn't reached its maximum level.
+     *
+     * @return true if the stamina increment hasn't reached its maximum level, false otherwise
      */
     @Override
     public boolean incStamina() {
-        return stamina++ > Constants.MAX_STATS_LEVEL;
+        stamina.increment();
+        return stamina.getCount() < Constants.MAX_STATS_LEVEL;
     }
+
     /**
-     *  Return True if the Humor increment hasn't reaced his max.
-     * @return boolean
+     * Increments the humor value of the gym member.
+     * Returns true if the humor increment hasn't reached its maximum level.
+     *
+     * @return true if the humor increment hasn't reached its maximum level, false otherwise
      */
     @Override
     public boolean inchumor() {
-        return humor++ > Constants.MAX_STATS_LEVEL;
+        humor.increment();
+        return humor.getCount() < Constants.MAX_STATS_LEVEL;
+    }
+
+    /**
+     * Increments the mass value of the gym member's chest.
+     * Returns true if the chest mass increment hasn't reached its maximum level.
+     *
+     * @return true if the chest mass increment hasn't reached its maximum level, false otherwise
+     */
+    public boolean incChestMass() {
+        chestMass.increment();
+        return chestMass.getCount() < Constants.MAX_STATS_LEVEL;
+    }
+
+    /**
+     * Increments the mass value of the gym member's back.
+     * Returns true if the back mass increment hasn't reached its maximum level.
+     *
+     * @return true if the back mass increment hasn't reached its maximum level, false otherwise
+     */
+    public boolean incBackMass() {
+        backMass.increment();
+        return backMass.getCount() < Constants.MAX_STATS_LEVEL;
+    }
+
+    /**
+     * Increments the mass value of the gym member's legs.
+     * Returns true if the leg mass increment hasn't reached its maximum level.
+     *
+     * @return true if the leg mass increment hasn't reached its maximum level, false otherwise
+     */
+    public boolean incLegMass() {
+        legMass.increment();
+        return legMass.getCount() < Constants.MAX_STATS_LEVEL;
     }
 }
-
-

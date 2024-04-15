@@ -49,7 +49,7 @@ public final class Constants {
     /**
      * Main Class of the Java application.
      */
-    public static final int DAYS_MAX_COUNT = 20;
+    public static final int DAYS_MAX_COUNT_EASY = 20;
     private Constants() {
     }
 }
