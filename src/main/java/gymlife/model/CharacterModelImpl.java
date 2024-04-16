@@ -33,8 +33,8 @@ public class CharacterModelImpl implements CharacterModel {
     public void move(final Optional<Directions> dir) {
         dir.ifPresent(direction -> {
             final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
-            pos = newPosition.apply(pos.X() + Directions.getOffset(direction).get().X(), 
-                                     pos.Y() + Directions.getOffset(direction).get().Y());
+            pos = newPosition.apply(pos.X() + dir.get().getPos().X(), 
+                                     pos.Y() + dir.get().getPos().Y());
         });
         System.out.println("Character position: " + pos.X() + ", " + pos.Y());
     }

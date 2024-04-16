@@ -50,6 +50,18 @@ public final class Constants {
      * Main Class of the Java application.
      */
     public static final int DAYS_MAX_COUNT_EASY = 20;
+    /**
+     * Main Class of the Java application.
+     */
+    public static final int DIFFICULY_EASY = 1;
+    /**
+     * Main Class of the Java application.
+     */
+    public static final int DIFFICULY_MEDIUM = 2;
+    /**
+     * Main Class of the Java application.
+     */
+    public static final int DIFFICULY_HARD = 3;
     private Constants() {
     }
 }

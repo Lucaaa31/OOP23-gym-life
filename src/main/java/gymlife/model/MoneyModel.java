@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.model.api.AbstractCounter;
 
-public class ModeyModel extends AbstractCounter{
+public class MoneyModel extends AbstractCounter{
 
 
     public void decrement() {

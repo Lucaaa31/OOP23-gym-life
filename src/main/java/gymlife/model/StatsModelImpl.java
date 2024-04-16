@@ -8,11 +8,11 @@ import gymlife.utility.Constants;
  * Implementation of the StatsModel interface that represents the statistics of a gym member.
  */
 public final class StatsModelImpl implements StatsModel {
-    private static AbstractCounter humor;
-    private static AbstractCounter stamina;
-    private static AbstractCounter legMass;
-    private static AbstractCounter backMass;
-    private static AbstractCounter chestMass;
+    private static AbstractCounter humor = new AbstractCounter() {};
+    private static AbstractCounter stamina = new AbstractCounter() {};
+    private static AbstractCounter legMass = new AbstractCounter() {};
+    private static AbstractCounter backMass = new AbstractCounter() {};
+    private static AbstractCounter chestMass = new AbstractCounter() {};
 
     /**
      * Returns the total mass value of the gym member.

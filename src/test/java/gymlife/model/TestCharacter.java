@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -7,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
 
 import gymlife.model.api.CharacterModel;
 import gymlife.model.CharacterModelImpl;

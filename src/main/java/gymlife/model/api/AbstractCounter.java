@@ -4,7 +4,7 @@ package gymlife.model.api;
  * The AbstractCounter class represents a counter with basic increment operations, decrement in optionally overridden.
  */
 public abstract class AbstractCounter {
-    protected int count;
+    protected int count = 0;
     
     /**
      * Constructs a new AbstractCounter object with an initial count of 0.
@@ -19,7 +19,7 @@ public abstract class AbstractCounter {
      * @return the current count
      */
     public int getCount() {
-        return count;
+        return this.count;
     }
 
     /**

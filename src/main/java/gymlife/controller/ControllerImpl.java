@@ -3,22 +3,22 @@ package gymlife.controller;
 import java.util.Optional;
 
 import gymlife.utility.Directions;
+import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 import gymlife.model.CharacterModelImpl;
 import gymlife.model.api.DaysModel;
 import gymlife.model.DaysModelImpl;
-import gymlife.model.api.StatsModel;
-import gymlife.model.StatsModelImpl;
+import gymlife.model.StatsManagerImpl;
+import gymlife.model.api.StatsManager;
 
 /**
  * Class responsible for managing Character movements.
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private final DaysModel daysModel = new DaysModelImpl();
-    private final StatsModel statsModel = new StatsModelImpl();
+    private final StatsManager statsManager = new StatsManagerImpl(GameDifficulty.EASY);
     /**
      * Moves the character up.
      */

@@ -51,12 +51,8 @@ public enum Directions {
     * @param dir
     * @return Optional<Position>
     */
-    public static Optional<Position> getOffset(final Directions dir) {
-        for (final Directions elem : Directions.values()) {
-            if (elem.equals(dir)) {
-                return Optional.of(elem.pos);
-            }
-        }
-        return Optional.empty();
+
+    public Position getPos() {
+        return pos;
     }
 }
