@@ -17,7 +17,12 @@ public enum CellImpl implements Cell {
     HOUSE_KITCHEN01(8, true, Optional.empty()),
     HOUSE_KITCHEN02(9, true, Optional.empty()),
     HOUSE_KITCHEN03(10, true, Optional.empty()),
-    PLACEHOLDER(99, false, Optional.empty());
+    HOUSE_TABLE(11, true, Optional.empty()),
+    HOUSE_WEIGHTS(12, false, Optional.empty()),
+    HOUSE_EXIT(13, false, Optional.empty()),
+    HOUSE_KITCHEN_INTERACT(14, false, Optional.empty()),
+    SHOP_FLOOR(15, false, Optional.empty()),
+    PLACEHOLDER(-1, false, Optional.empty());
 
     private int id;
     private boolean collision;
@@ -48,7 +53,7 @@ public enum CellImpl implements Cell {
     }
 
     @Override
-    public String getImage() {
+    public String getName() {
         return this.getClass()
             .getName()
             .toLowerCase();

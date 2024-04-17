@@ -6,8 +6,13 @@ import java.util.Map;
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.Pair;
+import gymlife.utilities.MapConstants;
+import gymlife.utilities.MapLoader;
 
-public class GameMapImpl implements GameMap {
+public enum GameMapImpl implements GameMap {
+    HOUSEMAP(0, "house", MapLoader.load("housemap.txt")),
+    GYMMAP(1, "gym", MapLoader.load("gymmap.txt")),
+    MARKETMAP(2, "market", MapLoader.load("marketmap.txt"));
 
     private int id;
     private String name;
@@ -15,11 +20,11 @@ public class GameMapImpl implements GameMap {
     private int dimX;
     private Map<Pair<Integer, Integer>, Cell> map;
 
-    public GameMapImpl(final int id, final String name, final int dimX, final int dimY, final Map<Pair<Integer, Integer>, Cell> map) {
+    private GameMapImpl(final int id, final String name, final Map<Pair<Integer, Integer>, Cell> map) {
         this.id = id;
         this.name = name;
-        this.dimX = dimX;
-        this.dimY = dimY;
+        this.dimX = MapConstants.MAP_X_DIM;
+        this.dimY = MapConstants.MAP_Y_DIM;
         this.map = map;
     }
 

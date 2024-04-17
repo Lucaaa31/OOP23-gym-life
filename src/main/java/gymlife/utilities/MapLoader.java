@@ -17,7 +17,7 @@ public class MapLoader {
         int counterX = 0;
         int counterY = 0;
         try {
-            File myObj = new File("OOP23-gym-life/src/main/resources/" + fileName);
+            File myObj = new File(MapConstants.MAP_FILES_PATH + fileName);
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
