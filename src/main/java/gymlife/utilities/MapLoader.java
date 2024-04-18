@@ -12,19 +12,19 @@ import gymlife.model.api.Cell;
 import gymlife.model.api.Pair;
 
 public class MapLoader {
-    public static Map<Pair<Integer, Integer>, Cell> load(final String fileName){
-        Map<Pair<Integer, Integer>, Cell> tempMap = new HashMap<>();
+    public static Map<Pair<Integer, Integer>, Cell> load(final String fileName) {
+        final Map<Pair<Integer, Integer>, Cell> tempMap = new HashMap<>();
         int counterX = 0;
         int counterY = 0;
         try {
-            File myObj = new File(MapConstants.MAP_FILES_PATH + fileName);
-            Scanner myReader = new Scanner(myObj);
+            final File myObj = new File(MapConstants.MAP_FILES_PATH + fileName);
+            final Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] arr = data.split(" ");
+                final String data = myReader.nextLine();
+                final String[] arr = data.split(" ");
                 for (String string : arr) {
-                    Pair<Integer, Integer> coord = new PairImpl<>(counterX, counterY);
-                    Cell cell = CellImpl.getCellfromId(Integer.parseInt(string));
+                    final Pair<Integer, Integer> coord = new PairImpl<>(counterX, counterY);
+                    final Cell cell = CellImpl.getCellfromId(Integer.parseInt(string));
                     tempMap.put(coord, cell);
                     counterX++;
                 }
@@ -34,9 +34,7 @@ public class MapLoader {
             myReader.close();
             return tempMap;
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-            return null;
+            return Map.of();
         }
     }
 }

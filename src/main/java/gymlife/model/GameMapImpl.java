@@ -12,7 +12,7 @@ import gymlife.utilities.MapLoader;
 public enum GameMapImpl implements GameMap {
     HOUSEMAP(0, "house", MapLoader.load("housemap.txt")),
     GYMMAP(1, "gym", MapLoader.load("gymmap.txt")),
-    MARKETMAP(2, "market", MapLoader.load("marketmap.txt"));
+    SHOPMAP(2, "shop", MapLoader.load("shopmap.txt"));
 
     private int id;
     private String name;

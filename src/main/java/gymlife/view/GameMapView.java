@@ -6,18 +6,23 @@ import javax.swing.*;
 import gymlife.controller.Controller;
 import gymlife.model.api.Pair;
 
-public class GameMapView extends JFrame{
+public class GameMapView extends JPanel{
 
     private Controller controller;
     private Map<Pair<Integer,Integer>, JPanel> cells;
-    private final int DIMENSIONS = 100;
-
+    
     public GameMapView(){
         this.controller = new Controller();
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
+        
+        
         this.setVisible(true);
+    }
+    public Map<Pair<Integer, Integer>, JPanel> getCells() {
+        return cells;
+    }
+    
+    public Controller getController(){
+        return this.controller;
     }
 
 }

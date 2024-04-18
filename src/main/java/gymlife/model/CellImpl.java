@@ -22,6 +22,16 @@ public enum CellImpl implements Cell {
     HOUSE_EXIT(13, false, Optional.empty()),
     HOUSE_KITCHEN_INTERACT(14, false, Optional.empty()),
     SHOP_FLOOR(15, false, Optional.empty()),
+    SHOP_EXIT(16, false, Optional.empty()),
+    SHOP_FRIDGE(17, true, Optional.empty()),
+    SHOP_HAMBURGER(18, true, Optional.empty()),
+    SHOP_BROCCOLI(19, true, Optional.empty()),
+    SHOP_MEAT(20, true, Optional.empty()),
+    SHOP_HAMBURGER_INTERACT(21, false, Optional.empty()),
+    SHOP_BROCCOLI_INTERACT(22, false, Optional.empty()),
+    SHOP_MEAT_INTERACT(23, false, Optional.empty()),
+    SHOP_MONEY(24, false, Optional.empty()),
+    SHOP_ATM(25, true, Optional.empty()),
     PLACEHOLDER(-1, false, Optional.empty());
 
     private int id;

@@ -1,5 +1,9 @@
 package gymlife.model.api;
-
+/**
+ * An object that contains information on specific parts of the {@code GameMap}.
+ * A Cell should contain information on what type it is, wether the player can
+ * collide with it or not, and if there is any interaction when the player is on it.
+ */
 public interface Cell {
 
     /**
