@@ -1,6 +1,6 @@
 package gymlife.model.api;
 
-import java.util.Optional;
+
 
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -17,6 +17,6 @@ public interface CharacterModel {
     *  Keylistener responsable for managing movement inputs.
     * @param dir
     */
-    void setDir(Optional<Directions> dir);
+    void move(Directions dir);
 
 }

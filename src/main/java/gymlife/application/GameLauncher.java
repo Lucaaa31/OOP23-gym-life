@@ -7,7 +7,6 @@ package gymlife.application;
 public final class GameLauncher {
 
     private GameLauncher() {
-
     }
 
     /**
@@ -15,5 +14,6 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
+
     }
 }
