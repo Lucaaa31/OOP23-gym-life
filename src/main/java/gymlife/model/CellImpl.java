@@ -28,7 +28,7 @@ public enum CellImpl implements Cell {
     private boolean collision;
     private Optional<Runnable> interaction;
 
-    private CellImpl(final int id, final boolean collision, final Optional<Runnable> interaction) {
+    CellImpl(final int id, final boolean collision, final Optional<Runnable> interaction) {
         this.id = id;
         this.collision = collision;
         this.interaction = interaction;

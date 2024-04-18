@@ -1,12 +1,27 @@
 package gymlife.model.api;
 
-public interface Pair<T1,T2>{
-    
-    T1 getX();
+public interface Pair<T,R>{
+    /**
+     * 
+     * @return Returns the first element of the pair.
+     */
+    T getX();
 
-    T2 getY();
+    /**
+     * 
+     * @return Returns the second element of the pair.
+     */
+    R getY();
 
-    void setX(final T1 x);
+    /**
+     * 
+     * @param x New value to assign to first element.
+     */
+    void setX(T x);
 
-    void setY(final T2 y);
+    /**
+     * 
+     * @param y New value to assign to second element.
+     */
+    void setY(R y);
 }

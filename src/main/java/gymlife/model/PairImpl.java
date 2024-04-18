@@ -2,33 +2,33 @@ package gymlife.model;
 
 import gymlife.model.api.Pair;
 
-public class PairImpl<T1, T2> implements Pair<T1, T2> {
+public class PairImpl<T, R> implements Pair<T, R> {
 
-	private T1 x;
-	private T2 y;
+	private T x;
+	private R y;
 
-	public PairImpl(final T1 x, final T2 y) {
+	public PairImpl(final T x, final R y) {
 		this.x = x;
 		this.y = y;
 	}
 
 	@Override
-	public T1 getX() {
+	public T getX() {
 		return this.x;
 	}
 
 	@Override
-	public T2 getY() {
+	public R getY() {
 		return this.y;
 	}
 
 	@Override
-	public void setX(final T1 x) {
+	public void setX(final T x) {
 		this.x = x;
 	}
 
 	@Override
-	public void setY(final T2 y) {
+	public void setY(final R y) {
 		this.y = y;
 	}
 
@@ -43,24 +43,31 @@ public class PairImpl<T1, T2> implements Pair<T1, T2> {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
-		PairImpl other = (PairImpl) obj;
+		}
+		final PairImpl other = (PairImpl) obj;
 		if (x == null) {
-			if (other.x != null)
+			if (other.x != null){
 				return false;
-		} else if (!x.equals(other.x))
+			}
+		} else if (!x.equals(other.x)){
 			return false;
+		}
 		if (y == null) {
-			if (other.y != null)
+			if (other.y != null){
 				return false;
-		} else if (!y.equals(other.y))
+			}
+		} else if (!y.equals(other.y)){
 			return false;
+		}
 		return true;
 	}
 

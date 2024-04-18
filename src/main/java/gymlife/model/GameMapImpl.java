@@ -20,7 +20,7 @@ public enum GameMapImpl implements GameMap {
     private int dimX;
     private Map<Pair<Integer, Integer>, Cell> map;
 
-    private GameMapImpl(final int id, final String name, final Map<Pair<Integer, Integer>, Cell> map) {
+    GameMapImpl(final int id, final String name, final Map<Pair<Integer, Integer>, Cell> map) {
         this.id = id;
         this.name = name;
         this.dimX = MapConstants.MAP_X_DIM;
@@ -29,17 +29,17 @@ public enum GameMapImpl implements GameMap {
     }
 
     @Override
-    public boolean isCellCollidable(Pair<Integer, Integer> coord) {
+    public boolean isCellCollidable(final Pair<Integer, Integer> coord) {
         return this.getCellAtCoord(coord).getCollision();
     }
 
     @Override
-    public Cell getCellAtCoord(Pair<Integer, Integer> coord) {
+    public Cell getCellAtCoord(final Pair<Integer, Integer> coord) {
         return map.get(coord);
     }
 
     @Override
-    public boolean checkBorders(Pair<Integer, Integer> coord) {
+    public boolean checkBorders(final Pair<Integer, Integer> coord) {
         return coord.getX() >= 0 && coord.getX() < this.dimX && coord.getY() >= 0 && coord.getY() < this.dimY;
     }
 
