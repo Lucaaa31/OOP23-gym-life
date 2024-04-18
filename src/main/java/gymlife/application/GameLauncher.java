@@ -9,7 +9,6 @@ import gymlife.view.MainView;
 public final class GameLauncher {
 
     private GameLauncher() {
-
     }
 
     /**

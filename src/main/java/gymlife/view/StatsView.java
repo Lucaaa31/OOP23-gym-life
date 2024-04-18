@@ -2,18 +2,11 @@ package gymlife.view;
 
 import javax.swing.JPanel;
 
-import gymlife.controller.api.Controller;
-
 /**
- * 
- * Main Class of the Java application.
+ * The StatsView class represents a JPanel that displays statistics related to
+ * the gym.
+ * It is a part of the GUI of the Java application.
  */
-public class StatsView extends JPanel{
-    final Controller controller;
-
-    public StatsView(Controller controller) {
-        this.controller = controller;
-        
-    }   
-
+public class StatsView extends JPanel {
+    public static final long serialVersionUID = 4328743;
 }

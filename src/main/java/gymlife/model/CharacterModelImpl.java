@@ -1,6 +1,6 @@
 package gymlife.model;
 
-import java.util.Optional;
+
 import java.util.function.BiFunction;
 
 import gymlife.utility.Position;
@@ -14,7 +14,7 @@ import gymlife.model.api.CharacterModel;
  */
 public class CharacterModelImpl implements CharacterModel {
 
-    private static Position pos = Constants.CHARACTER_START_POS;
+    private Position pos = Constants.CHARACTER_START_POS;
 
     /**
      * Retrieves the current position of the character.
@@ -30,12 +30,8 @@ public class CharacterModelImpl implements CharacterModel {
      * @param dir The new direction for the character's movement.
      */
     @Override
-    public void move(final Optional<Directions> dir) {
-        dir.ifPresent(direction -> {
-            final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
-            pos = newPosition.apply(pos.X() + dir.get().getPos().X(), 
-                                     pos.Y() + dir.get().getPos().Y());
-        });
-        System.out.println("Character position: " + pos.X() + ", " + pos.Y());
+    public void move(final Directions dir) {
+        final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
+        pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
     }
 }

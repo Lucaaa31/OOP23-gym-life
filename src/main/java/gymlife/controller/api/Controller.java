@@ -1,5 +1,6 @@
 package gymlife.controller.api;
 
+import gymlife.utility.Directions;
 import gymlife.utility.Position;
 
 /**
@@ -7,29 +8,16 @@ import gymlife.utility.Position;
  */
 public interface Controller {
     /**
-     * Moves the character up.
+     * Moves the character in the specified direction.
+     * 
+     * @param dir the direction in which to move the character
      */
-    public void moveUp();
+    void moveCharacter(Directions dir);
 
-    /**
-     * Moves the character down.
-     */
-    public void moveDown();
-
-    /**
-     * Moves the character to the right.
-     */
-    public void moveRight();
-
-    /**
-     * Moves the character to the left.
-     */
-    public void moveLeft();
-    
     /**
      * Returns the current position of the character.
      * 
      * @return the position of the character
      */
-    public Position getCharacterPos();
+    Position getCharacterPos();
 }
