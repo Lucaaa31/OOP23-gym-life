@@ -9,32 +9,26 @@ public enum StatsType {
      * Represents the humor level of the Character.
      */
     HUMOR,
-
     /**
      * Represents the stamina level of the Character.
      */
     STAMINA,
-
     /**
      * Represents the overall mass of the Character.
      */
     MASS,
-
     /**
      * Represents the mass of the legs of the Character.
      */
     LEG_MASS,
-
     /**
      * Represents the mass of the back of the Character.
      */
     BACK_MASS,
-
     /**
      * Represents the mass of the chest of the Character.
      */
     CHEST_MASS,
-
     /**
      * Represents the number of days left for finishing the game.
      */

@@ -1,53 +1,48 @@
 package gymlife.model.api;
 
+import java.util.Map;
+
+import gymlife.utility.StatsType;
+
 /**
  * This interface represents the stats model for a gym life application.
- * It provides methods to retrieve and update various stats related to the user's body.
+ * It provides methods to retrieve and update various stats related to the Character's body.
  */
 public interface StatsModel {
     /**
-     * Returns the mass of the user.
-     * @return the mass of the user
+     * Increases the specified stat by 1.
+     * 
+     * @param stats the type of stat to increase
      */
-    int getMass();
+    public void increase(StatsType stats);
     /**
-     * Returns the mass of the user's back.
-     * @return the mass of the user's back
+     * Decreases the specified stat by 1.
+     * 
+     * @param stats the type of stat to decrease
      */
-    int getBackMass();
+    public void decrease(StatsType stats);
     /**
-     * Returns the mass of the user's legs.
-     * @return the mass of the user's legs
+     * Retrieves the value of the specified stat.
+     * 
+     * @param stats the type of stat to retrieve
+     * @return the value of the specified stat
      */
-    int getLegMass();
+    public int getStats(StatsType stats);
     /**
-     * Returns the mass of the user's chest.
-     * @return the mass of the user's chest
+     * Retrieves the map of stats and their corresponding values.
+     * 
+     * @return the map of stats and their corresponding values
      */
-    int getChestMass();
+    public Map<StatsType, Counter> getMap();
     /**
-     * Returns the stamina of the user.
-     * @return the stamina of the user
+     * Increases the specified stat by the given value.
+     * 
+     * @param stats the type of stat to increase
+     * @param value the value to increase the stat by
      */
-    int getStamina();
+    public void multiIncrement(StatsType stats, int value);
     /**
-     * Returns the humor level of the user.
-     * @return the humor level of the user
+     * Reset all stats to 0.
      */
-    int getHumor();
-    /**
-     * Increases the mass of the user.
-     * @return true if the mass was successfully increased, false otherwise
-     */
-    boolean incMass();
-    /**
-     * Increases the stamina of the user.
-     * @return true if the stamina was successfully increased, false otherwise
-     */
-    boolean incStamina();
-    /**
-     * Increases the humor level of the user.
-     * @return true if the humor level was successfully increased, false otherwise
-     */
-    boolean incHumor();
+    public void resetAll();
 }

@@ -12,5 +12,5 @@ public interface StatsManager {
      *
      * @return a map of statistics
      */
-    Map<StatsType, Integer> getStats();
+    Map<StatsType, Counter> getStats();
 }

@@ -30,5 +30,23 @@ public class Counter {
     */
     public void decrement() {
         count--;
+        if (count < 0) {
+            count = 0;
+        }
+    }
+    /**
+    * Increments or Decrements the count by specified int.
+    */
+    public void multiIncrement(final int value) {
+        count += value;
+        if (count < 0) {
+            count = 0;
+        }
+    }
+    /**
+    * Reset count to 0.
+    */
+    public void resetCount() {
+        count = 0;
     }
 }

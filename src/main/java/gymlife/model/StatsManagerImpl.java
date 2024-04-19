@@ -1,9 +1,9 @@
 package gymlife.model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import gymlife.model.api.StatsModel;
+import gymlife.model.api.Counter;
 import gymlife.model.api.DaysModel;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.StatsType;
@@ -32,15 +32,15 @@ public class StatsManagerImpl implements StatsManager {
      * @return a map of StatsType and their corresponding values
      */
     @Override
-    public Map<StatsType, Integer> getStats() {
-        final Map<StatsType, Integer> stats = new HashMap<>();
-        stats.put(StatsType.BACK_MASS, gameStats.getBackMass());
-        stats.put(StatsType.CHEST_MASS, gameStats.getChestMass());
-        stats.put(StatsType.LEG_MASS, gameStats.getLegMass());
-        stats.put(StatsType.MASS, gameStats.getStamina());
-        stats.put(StatsType.STAMINA, gameStats.getStamina());
-        stats.put(StatsType.HUMOR, gameStats.getHumor());
-        stats.put(StatsType.DAYS_LEFT, gameDays.dayLeft());
-        return stats;
+    public Map<StatsType, Counter> getStats() {
+        return gameStats.getMap();
+    }
+    /**
+     * Retrieves the game days as a map of DaysType and their corresponding values.
+     * 
+     * @return a map of DaysType and their corresponding values
+     */
+    public int getDays() {
+        return gameDays.dayLeft();
     }
 }
