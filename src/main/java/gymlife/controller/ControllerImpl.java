@@ -36,7 +36,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void setDifficulty(final MinigameDifficulty selecteDifficulty) {
-        minigameManager.setDifficulty(selecteDifficulty);
+    public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
+        minigameManager.setDifficulty(selectedDifficulty);
     }
 }
