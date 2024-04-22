@@ -71,6 +71,6 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public boolean checkWin() {
-        return (gameStats.getMass() >= StatsConstants.MAX_MASS_LEVEL ? true : false);
+        return (gameStats.getStats(StatsType.MASS) >= StatsConstants.MAX_MASS_LEVEL ? true : false);
     }
 }

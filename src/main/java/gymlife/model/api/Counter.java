@@ -55,4 +55,10 @@ public class Counter {
     public void resetCount() {
         count = 0;
     }
+    /**
+    * Reset count to 0.
+    */
+    public void setCount(int amount) {
+        count = amount;
+    }
 }

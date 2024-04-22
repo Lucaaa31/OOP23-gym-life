@@ -3,7 +3,6 @@ package gymlife.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import gymlife.model.StatsManagerImpl;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.StatsConstants;
 import gymlife.utility.StatsType;
@@ -19,6 +18,7 @@ public class TestStatsmanager {
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.LEG_MASS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.BACK_MASS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.CHEST_MASS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL * 3, stats.getStats().get(StatsType.MASS).getCount());
     }
 
     @Test

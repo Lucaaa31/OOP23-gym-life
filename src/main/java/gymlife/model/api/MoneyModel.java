@@ -17,4 +17,12 @@ public interface MoneyModel {
      * Decrements the amount of money by 1.
      */
     void decrementMoney();
+     /**
+     * set the money's level to amount.
+     */
+    void setMoney(int amount);
+    /**
+     * increment the money's level up to amount.
+     */
+    void multiIncrementMoney(int amount);
 }

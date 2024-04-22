@@ -19,6 +19,42 @@ public final class StatsModelImpl implements StatsModel {
     private static Counter legMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
     private static Counter backMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
     private static Counter chestMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
+    private static Counter mass = new Counter(StatsConstants.STARTING_STATS_LEVEL) {
+        @Override
+        public void resetCount() {
+            backMass.resetCount();
+            chestMass.resetCount();
+            legMass.resetCount();
+        }
+        @Override
+        public void setCount(final int value) {
+            backMass.setCount(value);
+            chestMass.setCount(value);
+            legMass.setCount(value);
+        }
+        @Override
+        public void increment() {
+            backMass.increment();
+            chestMass.increment();
+            legMass.increment();
+        }
+        @Override
+        public void decrement() {
+            backMass.decrement();
+            chestMass.decrement();
+            legMass.decrement();
+        }
+        @Override
+        public void multiIncrement(final int value) {
+            backMass.multiIncrement(value);
+            chestMass.multiIncrement(value);
+            legMass.multiIncrement(value);
+        }
+        @Override
+        public int getCount() {
+            return backMass.getCount() + chestMass.getCount() + legMass.getCount();
+        }
+    };
     /**
      * Returns the total mass value of the gym member.
      *
@@ -28,6 +64,7 @@ public final class StatsModelImpl implements StatsModel {
         gameStats.put(StatsType.BACK_MASS, backMass);
         gameStats.put(StatsType.CHEST_MASS, chestMass);
         gameStats.put(StatsType.LEG_MASS, legMass);
+        gameStats.put(StatsType.MASS, mass);
         gameStats.put(StatsType.STAMINA, stamina);
         gameStats.put(StatsType.HUMOR, humor);
     }
@@ -72,7 +109,7 @@ public final class StatsModelImpl implements StatsModel {
     }
 
     @Override
-    public void multiIncrement(final StatsType stats, final int value) {
+    public void multiIncrementStats(final StatsType stats, final int value) {
         if (gameStats.get(stats).equals(StatsType.MASS)) {
             gameStats.get(StatsType.BACK_MASS).multiIncrement(value);
             gameStats.get(StatsType.CHEST_MASS).multiIncrement(value);
@@ -86,13 +123,7 @@ public final class StatsModelImpl implements StatsModel {
     @Override
     public void resetAll() {
         for (StatsType stats : gameStats.keySet()) {
-            gameStats.get(stats).multiIncrement(StatsConstants.STARTING_STATS_LEVEL);
+            gameStats.get(stats).setCount(StatsConstants.STARTING_STATS_LEVEL);
         }
-    }
-    @Override
-    public int getMass() {
-        return gameStats.get(StatsType.BACK_MASS).getCount() + 
-        gameStats.get(StatsType.CHEST_MASS).getCount() +
-        gameStats.get(StatsType.LEG_MASS).getCount();
     }
 }

@@ -33,4 +33,12 @@ public class MoneyModelImpl extends Counter implements MoneyModel {
     public void decrementMoney() {
         this.decrement();
     }
+    @Override
+    public void setMoney(int amount) {
+        this.setCount(amount);
+    }
+    @Override
+    public void multiIncrementMoney(int amount) {
+        this.multiIncrement(amount);
+    }
 }

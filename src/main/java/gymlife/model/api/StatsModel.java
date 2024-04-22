@@ -40,13 +40,9 @@ public interface StatsModel {
      * @param stats the type of stat to increase
      * @param value the value to increase the stat by
      */
-    public void multiIncrement(StatsType stats, int value);
+    public void multiIncrementStats(StatsType stats, int value);
     /**
      * Reset all stats to 0.
      */
     public void resetAll();
-    /**
-    * Return total mass level.
-    */
-   public int getMass();
 }
