@@ -43,4 +43,9 @@ public class StatsManagerImpl implements StatsManager {
     public int getDays() {
         return gameDays.dayLeft();
     }
+    @Override
+    public boolean isGameOver() {
+        return gameDays.isDayOver();
+    }
+    
 }

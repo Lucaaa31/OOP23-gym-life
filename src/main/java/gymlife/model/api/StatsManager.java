@@ -13,4 +13,6 @@ public interface StatsManager {
      * @return a map of statistics
      */
     Map<StatsType, Counter> getStats();
+    int getDays();
+    boolean isGameOver();
 }

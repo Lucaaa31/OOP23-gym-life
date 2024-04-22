@@ -42,6 +42,7 @@ public enum Directions {
 
     /**
      * Returns an Optional containing the Directions enum value associated with the given character key.
+     * Used to convert the key pressed into a direction, into the 
      *
      * @param key the character key
      * @return an Optional containing the Directions enum value, or an empty Optional if no match is found

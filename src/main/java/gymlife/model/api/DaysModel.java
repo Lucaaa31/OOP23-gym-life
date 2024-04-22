@@ -9,7 +9,7 @@ public interface DaysModel {
      * 
      * @return true if the days are over, false otherwise
      */
-    boolean daysAreOver();
+    boolean isDayOver();
     /**
      * Moves to a new day.
      */
