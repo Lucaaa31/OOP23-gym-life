@@ -45,4 +45,8 @@ public interface StatsModel {
      * Reset all stats to 0.
      */
     public void resetAll();
+    /**
+    * Return total mass level.
+    */
+   public int getMass();
 }

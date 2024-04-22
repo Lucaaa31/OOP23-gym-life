@@ -36,14 +36,6 @@ public final class Constants {
      * The starting position of the character.
      */
     public static final Position CHARACTER_START_POS = new Position(50, 50);
-    /**
-     * The starting level of the character's stats.
-     */
-    public static final int STARTING_STATS_LEVEL = 0;
-    /**
-     * The maximum level of the character's stats.
-     */
-    public static final int MAX_STATS_LEVEL = 12;
     private Constants() {
     }
 }

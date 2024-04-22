@@ -6,6 +6,7 @@ import gymlife.model.api.StatsModel;
 import gymlife.model.api.Counter;
 import gymlife.model.api.DaysModel;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.StatsConstants;
 import gymlife.utility.StatsType;
 import gymlife.model.api.StatsManager;
 
@@ -36,16 +37,40 @@ public class StatsManagerImpl implements StatsManager {
         return gameStats.getMap();
     }
     /**
-     * Retrieves the game days as a map of DaysType and their corresponding values.
+     * Retrieves the number of days left in the game.
      * 
-     * @return a map of DaysType and their corresponding values
+     * @return the number of days left
      */
     public int getDays() {
         return gameDays.dayLeft();
-    }
+    }    
+    /**
+     * Checks if the game is over.
+     * The game is considered over if either one of the stats is zero or all the days are over.
+     * 
+     * @return true if the game is over, false otherwise
+     */
     @Override
     public boolean isGameOver() {
-        return gameDays.isDayOver();
+        if (gameDays.isDayOver()) {
+            return true;
+        }
+        final Map<StatsType, Counter> statsMap = gameStats.getMap();
+        for (final StatsType stats : statsMap.keySet()) {
+            if (statsMap.get(stats).getCount() == 0) {
+                return true;
+            }
+        }
+        return false;
     }
-    
+    /**
+     * Checks if the player has won the game.
+     * The player is considered to have won if the total mass is equal to the maximum mass level.
+     * 
+     * @return true if the player has won, false otherwise
+     */
+    @Override
+    public boolean checkWin() {
+        return (gameStats.getMass() >= StatsConstants.MAX_MASS_LEVEL ? true : false);
+    }
 }

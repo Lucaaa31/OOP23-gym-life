@@ -6,10 +6,16 @@ package gymlife.model.api;
 public class Counter {
     private int count;
     /**
-     * Constructs a new AbstractCounter object with an initial count of 0.
+     * Constructs a new Counter object with an initial count of the passed int.
+     */
+    public Counter(int count) {
+        this.count = count;
+    }
+    /**
+     * Constructs a new Counter object with an initial count of 0.
      */
     public Counter() {
-        count = 0;
+        this.count = 0;
     }
     /**
      * Returns the current count.

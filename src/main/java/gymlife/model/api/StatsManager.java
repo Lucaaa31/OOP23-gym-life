@@ -15,4 +15,5 @@ public interface StatsManager {
     Map<StatsType, Counter> getStats();
     int getDays();
     boolean isGameOver();
+    boolean checkWin();
 }
