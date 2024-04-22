@@ -1,6 +1,7 @@
 package gymlife.controller.api;
 
 import gymlife.utility.Directions;
+import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.Position;
 
 /**
@@ -20,4 +21,6 @@ public interface Controller {
      * @return the position of the character
      */
     Position getCharacterPos();
+
+    void setDifficulty(MinigameDifficulty actualDifficulty);
 }
