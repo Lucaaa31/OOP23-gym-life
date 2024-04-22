@@ -10,15 +10,15 @@ import gymlife.utilities.MapConstants;
 import gymlife.utilities.MapLoader;
 
 public enum GameMapImpl implements GameMap {
-    HOUSEMAP(0, "house", MapLoader.load("housemap.txt")),
-    GYMMAP(1, "gym", MapLoader.load("gymmap.txt")),
-    SHOPMAP(2, "shop", MapLoader.load("shopmap.txt"));
+    HOUSE_MAP(0, "house", MapLoader.load("maps/housemap.txt")),
+    GYM_MAP(1, "gym", MapLoader.load("gymmap.txt")),
+    SHOP_MAP(2, "shop", MapLoader.load("maps/shopmap.txt"));
 
-    private int id;
-    private String name;
-    private int dimY;
-    private int dimX;
-    private Map<Pair<Integer, Integer>, Cell> map;
+    private final int id;
+    private final String name;
+    private final int dimY;
+    private final int dimX;
+    private final Map<Pair<Integer, Integer>, Cell> map;
 
     GameMapImpl(final int id, final String name, final Map<Pair<Integer, Integer>, Cell> map) {
         this.id = id;

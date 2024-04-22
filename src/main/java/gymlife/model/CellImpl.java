@@ -34,9 +34,9 @@ public enum CellImpl implements Cell {
     SHOP_ATM(25, true, Optional.empty()),
     PLACEHOLDER(-1, false, Optional.empty());
 
-    private int id;
-    private boolean collision;
-    private Optional<Runnable> interaction;
+    private final int id;
+    private final boolean collision;
+    private final Optional<Runnable> interaction;
 
     CellImpl(final int id, final boolean collision, final Optional<Runnable> interaction) {
         this.id = id;
@@ -44,7 +44,7 @@ public enum CellImpl implements Cell {
         this.interaction = interaction;
     }
 
-    public static Cell getCellfromId(final int id) {
+    public static Cell getCellFromId(final int id) {
         return Arrays
                 .stream(CellImpl.values())
                 .filter(cell -> cell.getId() == id)
@@ -65,11 +65,11 @@ public enum CellImpl implements Cell {
     @Override
     public String getName() {
         return this.getClass()
-            .getName()
-            .toLowerCase();
+                .getName()
+                .toLowerCase();
     }
 
-    public Optional<Runnable> getInteraction(){
+    public Optional<Runnable> getInteraction() {
         return this.interaction;
     }
 

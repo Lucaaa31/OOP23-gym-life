@@ -1,7 +1,7 @@
 package gymlife.utilities;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.file.FileSystems;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,27 +14,24 @@ import gymlife.model.api.Pair;
 public class MapLoader {
     public static Map<Pair<Integer, Integer>, Cell> load(final String fileName) {
         final Map<Pair<Integer, Integer>, Cell> tempMap = new HashMap<>();
-        int counterX = 0;
-        int counterY = 0;
-        try {
-            final File myObj = new File(MapConstants.MAP_FILES_PATH + fileName);
-            final Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                final String data = myReader.nextLine();
-                final String[] arr = data.split(" ");
-                for (String string : arr) {
-                    final Pair<Integer, Integer> coord = new PairImpl<>(counterX, counterY);
-                    final Cell cell = CellImpl.getCellfromId(Integer.parseInt(string));
-                    tempMap.put(coord, cell);
-                    counterX++;
+        final InputStream in = ClassLoader.getSystemResourceAsStream(fileName);
+        if (in != null) {
+            final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            try {
+                for (int i = 0; i < MapConstants.MAP_Y_DIM; i++) {
+                    String[] buffer = br.readLine().split(" ");
+                    for (int j = 0; j < MapConstants.MAP_X_DIM; j++) {
+                        int cellId = Integer.parseInt(buffer[j]);
+                        tempMap.put(new PairImpl<>(j, i), CellImpl.getCellFromId(cellId));
+                    }
+
                 }
-                counterX = 0;
-                counterY++;
+                return tempMap;
+            } catch (IOException e) {
+                return Map.of();
             }
-            myReader.close();
-            return tempMap;
-        } catch (FileNotFoundException e) {
-            return Map.of();
+
         }
+        return tempMap;
     }
 }
