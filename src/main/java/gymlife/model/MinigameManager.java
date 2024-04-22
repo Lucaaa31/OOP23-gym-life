@@ -1,11 +1,13 @@
 package gymlife.model;
 
+import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameScenario;
 
 public class MinigameManager {
     private BenchMinigame benchMinigame;
     private SquatMinigame squatMinigame;    
     private LatMachineMinigame latMachineMinigame;
+    private MinigameDifficulty difficulty;
 
     public MinigameManager() {
         this.benchMinigame = new BenchMinigame();
@@ -14,6 +16,7 @@ public class MinigameManager {
     }
 
     public void startMinigame(MinigameScenario minigame){
+        
         switch(minigame){
             case BENCH_PRESS:
                 benchMinigame.start();
@@ -25,6 +28,11 @@ public class MinigameManager {
                 latMachineMinigame.start();
                 break;
         }
+    }
+
+    public void setDifficulty(final MinigameDifficulty difficulty){
+        this.difficulty = difficulty;
+        System.out.println("Difficulty set to: " + difficulty);
     }
 
 }
