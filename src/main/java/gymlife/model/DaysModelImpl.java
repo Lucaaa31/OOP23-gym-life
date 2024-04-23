@@ -13,7 +13,7 @@ public class DaysModelImpl extends Counter implements DaysModel {
      * @param numDays the number of days for the model
      */
     public DaysModelImpl(final int numDays) {
-        this.multiIncrement(numDays);
+        this.setCount(numDays);
     }
     /**
      * Increases the number of days by 1.

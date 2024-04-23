@@ -13,7 +13,27 @@ public interface StatsManager {
      * @return a map of statistics
      */
     Map<StatsType, Counter> getStats();
+    /**
+     * Returns the number of days in the gym life.
+     *
+     * @return the number of days
+     */
     int getDays();
+    /**
+     * Checks if the game is over.
+     *
+     * @return true if the game is over, false otherwise
+     */
     boolean isGameOver();
+    /**
+     * Checks if the player has won the game.
+     *
+     * @return true if the player has won, false otherwise
+     */
     boolean checkWin();
+    /**
+     * Reset all the stats to the starting value. 
+     * 
+    */
+    void resetAll();
 }

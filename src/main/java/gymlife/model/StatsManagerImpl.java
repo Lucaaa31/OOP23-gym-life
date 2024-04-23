@@ -41,9 +41,10 @@ public class StatsManagerImpl implements StatsManager {
      * 
      * @return the number of days left
      */
+    @Override
     public int getDays() {
         return gameDays.dayLeft();
-    }    
+    }
     /**
      * Checks if the game is over.
      * The game is considered over if either one of the stats is zero or all the days are over.
@@ -56,8 +57,8 @@ public class StatsManagerImpl implements StatsManager {
             return true;
         }
         final Map<StatsType, Counter> statsMap = gameStats.getMap();
-        for (final StatsType stats : statsMap.keySet()) {
-            if (statsMap.get(stats).getCount() == 0) {
+        for (final Map.Entry<StatsType, Counter> entry : statsMap.entrySet()) {
+            if (entry.getValue().getCount() == 0) {
                 return true;
             }
         }
@@ -71,6 +72,13 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public boolean checkWin() {
-        return (gameStats.getStats(StatsType.MASS) >= StatsConstants.MAX_MASS_LEVEL ? true : false);
+        return gameStats.getStats(StatsType.MASS) >= StatsConstants.MAX_MASS_LEVEL;
+    }
+    /**
+     * Resets all the game statistics to their initial values.
+     */
+    @Override
+    public void resetAll() {
+        gameStats.resetAll();
     }
 }

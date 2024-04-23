@@ -1,14 +1,16 @@
 package gymlife.model.api;
 
 /**
- * The AbstractCounter class represents a counter with basic increment operations, decrement is optionally overridden.
+ * The Counter class represents a counter with basic increment and decrement operations.
  */
 public class Counter {
     private int count;
     /**
-     * Constructs a new Counter object with an initial count of the passed int.
+     * Constructs a new Counter object with an initial count of the specified value.
+     *
+     * @param count the initial count value
      */
-    public Counter(int count) {
+    public Counter(final int count) {
         this.count = count;
     }
     /**
@@ -19,7 +21,7 @@ public class Counter {
     }
     /**
      * Returns the current count.
-     * 
+     *
      * @return the current count
      */
     public int getCount() {
@@ -32,8 +34,8 @@ public class Counter {
         count++;
     }
     /**
-    * Decrements the count by 1.
-    */
+     * Decrements the count by 1. If the count becomes negative, it is set to 0.
+     */
     public void decrement() {
         count--;
         if (count < 0) {
@@ -41,8 +43,10 @@ public class Counter {
         }
     }
     /**
-    * Increments or Decrements the count by specified int.
-    */
+     * Increments or decrements the count by the specified value.
+     *
+     * @param value the value to increment or decrement the count by
+     */
     public void multiIncrement(final int value) {
         count += value;
         if (count < 0) {
@@ -50,15 +54,17 @@ public class Counter {
         }
     }
     /**
-    * Reset count to 0.
-    */
+     * Resets the count to 0.
+     */
     public void resetCount() {
         count = 0;
     }
     /**
-    * Reset count to 0.
-    */
-    public void setCount(int amount) {
+     * Sets the count to the specified amount.
+     *
+     * @param amount the new count value
+     */
+    public void setCount(final int amount) {
         count = amount;
     }
 }

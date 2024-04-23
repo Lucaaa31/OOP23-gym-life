@@ -1,14 +1,14 @@
-/**
- * The MoneyModel class represents a model for tracking money in a gym.
- * It extends the AbstractCounter class, which provides common functionality for counters.
- */
 package gymlife.model;
 
 import gymlife.model.api.Counter;
 import gymlife.model.api.MoneyModel;
+
 /**
-* Class that implements MoneyModel.
-*/
+ * The MoneyModelImpl class represents a model for tracking money in a gym.
+ * It extends the Counter class, which provides common functionality for counters.
+ * 
+ * This class implements the MoneyModel interface, which defines methods for managing money in the gym.
+ */
 public class MoneyModelImpl extends Counter implements MoneyModel {
     /**
      * Returns the current amount of money.
@@ -33,12 +33,22 @@ public class MoneyModelImpl extends Counter implements MoneyModel {
     public void decrementMoney() {
         this.decrement();
     }
+    /**
+     * Sets the amount of money to the specified amount.
+     * 
+     * @param amount the new amount of money
+     */
     @Override
-    public void setMoney(int amount) {
+    public void setMoney(final int amount) {
         this.setCount(amount);
     }
+    /**
+     * Increments the amount of money by the specified amount.
+     * 
+     * @param amount the amount to increment by
+     */
     @Override
-    public void multiIncrementMoney(int amount) {
+    public void multiIncrementMoney(final int amount) {
         this.multiIncrement(amount);
     }
 }

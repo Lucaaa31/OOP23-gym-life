@@ -6,18 +6,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import gymlife.model.api.MoneyModel;
 
 
-public class TestMoney {
+class TestMoney {
     @Test
     void testInitiation() {
-        MoneyModel money = new MoneyModelImpl();
+        final MoneyModel money = new MoneyModelImpl();
         assertEquals(0, money.getMoney());
     }
     @Test
     void testIncrement() {
-        MoneyModel money = new MoneyModelImpl();
-        money.setMoney(10);
-        assertEquals(10, money.getMoney());
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, money.getMoney());
         money.incrementMoney();
-        assertEquals(11, money.getMoney());
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + 1, money.getMoney());
+    }
+    @Test
+    void testMultiIncrement() {
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, money.getMoney());
+        money.multiIncrementMoney(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
+        assertEquals(2, money.getMoney());
+        money.multiIncrementMoney(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
+        assertEquals(0, money.getMoney());
     }
 }

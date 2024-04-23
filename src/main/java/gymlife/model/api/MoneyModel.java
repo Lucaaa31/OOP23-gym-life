@@ -1,6 +1,7 @@
 package gymlife.model.api;
+
 /**
- *The MoneyModel interface represents the money holded by the Character.
+ * The MoneyModel interface represents the money held by the Character.
  */
 public interface MoneyModel {
     /**
@@ -17,12 +18,16 @@ public interface MoneyModel {
      * Decrements the amount of money by 1.
      */
     void decrementMoney();
-     /**
-     * set the money's level to amount.
+    /**
+     * Sets the money's level to the specified amount.
+     * 
+     * @param amount the amount to set the money's level to
      */
     void setMoney(int amount);
     /**
-     * increment the money's level up to amount.
+     * Increments the money's level by the specified amount.
+     * 
+     * @param amount the amount to increment the money's level by
      */
     void multiIncrementMoney(int amount);
 }

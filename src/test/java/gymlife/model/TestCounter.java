@@ -4,49 +4,41 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import gymlife.model.api.Counter;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestCounter {
+class TestCounter {
     private Counter counter;
-
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         counter = new Counter();
     }
-
     @Test
-    public void testGetCount() {
+    void testGetCount() {
         assertEquals(0, counter.getCount());
     }
-
     @Test
-    public void testIncrement() {
+    void testIncrement() {
         counter.increment();
         assertEquals(1, counter.getCount());
     }
-
     @Test
-    public void testDecrement() {
+    void testDecrement() {
         counter.decrement();
         assertEquals(0, counter.getCount());
-        
         counter.increment();
         counter.decrement();
         assertEquals(0, counter.getCount());
     }
-
     @Test
-    public void testMultiIncrement() {
-        counter.multiIncrement(5);
-        assertEquals(5, counter.getCount());
+    void testMultiIncrement() {
+        counter.multiIncrement(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, counter.getCount());
 
-        counter.multiIncrement(-3);
+        counter.multiIncrement(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
         assertEquals(2, counter.getCount());
     }
-
     @Test
-    public void testResetCount() {
+    void testResetCount() {
         counter.multiIncrement(10);
         counter.resetCount();
         assertEquals(0, counter.getCount());
