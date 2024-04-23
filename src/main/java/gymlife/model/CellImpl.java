@@ -1,18 +1,16 @@
 package gymlife.model;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 
 import gymlife.model.api.Cell;
 
 /**
- * CellImpl is an enum that contains all the possible cells present in the game. Each cell has a name, the first part
- * of the name is the map that should contain said cell, the second part of the name is the specific item contained in
- * the cell. A cell is identified by a unique id, useful when reading a map from file. A cell also contains information
- * on whether the player can go on it or not, represented by a boolean {@code collision}. If a cell has collision it
- * wouldn't make sense for them to be interactable since the player can never be on them, so collidable cells are never
- * interactable. The interaction of a cell is represented by a lambda function that executes a {@code GameContainer}
- * method.
+ * CellImpl is an enum that contains all the possible cells present in the game. A cell is identified by a unique id,
+ * useful when reading a map from file. A cell also contains information on whether the player can go on it or not,
+ * represented by a boolean {@code collision}. The interaction of a cell is represented by a lambda function that
+ * executes a {@code GameContainer} method.
  */
 public enum CellImpl implements Cell {
     /**
@@ -128,17 +126,44 @@ public enum CellImpl implements Cell {
      */
     GYM_EXIT(27, false, Optional.empty()),
     /**
-     * the cell with a regular bench, with collisions and not interactable
+     * The cell with a regular bench, with collisions and not interactable
      */
     GYM_BENCH(28, true, Optional.empty()),
+    /**
+     * The cell with the bench press, with collisions not interactable.
+     */
     GYM_CHEST(29, true, Optional.empty()),
+    /**
+     * The cell that allows players to train chest, no collisions and interactable.
+     */
     GYM_CHEST_INTERACT(30, false, Optional.empty()),
+    /**
+     * The cell with the lat machine, with collisions not interactable.
+     */
     GYM_LAT(31, true, Optional.empty()),
+    /**
+     * The cell that allows players to train back, no collisions and interactable.
+     */
     GYM_LAT_INTERACT(32, false, Optional.empty()),
+    /**
+     * The cell with the squat rack, with collisions not interactable.
+     */
     GYM_SQUAT(33, true, Optional.empty()),
+    /**
+     * The cell that allows players to train legs, no collisions and interactable.
+     */
     GYM_SQUAT_INTERACT(34, false, Optional.empty()),
+    /**
+     * The cell with a couple of weights, with collisions and not interactable.
+     */
     GYM_WEIGHTS01(35, true, Optional.empty()),
+    /**
+     * The cell with a couple of weights, with collisions and not interactable.
+     */
     GYM_WEIGHTS02(36, true, Optional.empty()),
+    /**
+     * The placeholder cell, it is inserted in a map if the MapLoader does not recognize the cell id in a file.
+     */
     PLACEHOLDER(-1, false, Optional.empty());
 
     private final int id;
@@ -173,7 +198,7 @@ public enum CellImpl implements Cell {
     public String getName() {
         return this.getClass()
                 .getName()
-                .toLowerCase();
+                .toLowerCase(new Locale("en"));
     }
 
     public Optional<Runnable> getInteraction() {
