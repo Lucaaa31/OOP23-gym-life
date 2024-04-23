@@ -29,7 +29,9 @@ public final class BankGameView extends JFrame {
         final BankGameComponentImpl planeLayer = new AirplaneGameView();
         final BankGameComponentImpl skyLayer = new SkyGameView();
 
-        planeLayer.setBounds(screenDims.width / 4, screenDims.height / 4, screenDims.height / 2, screenDims.height / 2);
+        planeLayer.setBounds(screenDims.width / 4, screenDims.height / 4,
+                screenDims.height / 2,
+                screenDims.height / 2);
         skyLayer.setBounds(0, 0, screenDims.width, screenDims.height);
 
         layers.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
@@ -51,7 +53,9 @@ public final class BankGameView extends JFrame {
         final Dimension newSize = this.getSize();
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
-        planeLabel.setBounds(newSize.width / 4, newSize.height / 4, newSize.height / 2, newSize.height / 2);
+        planeLabel.setBounds(newSize.width / 4,
+                newSize.height / 4, newSize.height / 2,
+                newSize.height / 2);
         planeLabel.reload();
     }
 

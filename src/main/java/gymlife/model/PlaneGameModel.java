@@ -13,6 +13,7 @@ public final class PlaneGameModel implements Runnable {
     private static final Random R = new Random();
     private final float treshold;
     private float multiplier;
+    private float multiplierShort;
 
     /**
      * This is the constructor of the PlaneGameModel class.
@@ -20,6 +21,7 @@ public final class PlaneGameModel implements Runnable {
     public PlaneGameModel() {
         multiplier = 1.0f;
         treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplierShort = 0;
     }
 
     /**
@@ -28,8 +30,8 @@ public final class PlaneGameModel implements Runnable {
      * @return true if the variable treshold is equal to the multiplier variable.
      */
     public boolean boundControl() {
-        final float n = (float) (Math.round(multiplier * 1000.0) / 1000.0);
-        return Float.compare(treshold, n) == 0;
+        multiplierShort = (float) (Math.round(multiplier * 1000.0) / 1000.0);
+        return Float.compare(treshold, multiplierShort) == 0;
     }
 
     @Override
@@ -46,4 +48,21 @@ public final class PlaneGameModel implements Runnable {
         }
     }
 
+    /**
+     * This method returns the treshold value.
+     * 
+     * @return treshold value.
+     */
+    public float getTreshold() {
+        return treshold;
+    }
+
+    /**
+     * This method returns the multiplierShort value.
+     * 
+     * @return multiplierShort value.
+     */
+    public float getMultiplierShort() {
+        return multiplierShort;
+    }
 }
