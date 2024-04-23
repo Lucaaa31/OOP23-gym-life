@@ -1,12 +1,13 @@
 package gymlife.controller;
 
-import gymlife.utility.Directions;
-import gymlife.utility.MinigameDifficulty;
-import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
-import gymlife.model.api.CharacterModel;
 import gymlife.model.CharacterModelImpl;
 import gymlife.model.MinigameManager;
+import gymlife.model.api.CharacterModel;
+import gymlife.utility.Directions;
+import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.MinigameType;
+import gymlife.utility.Position;
 
 /**
  * Class responsible for managing Character movements.
@@ -17,7 +18,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Moves the character in the specified direction.
-     * 
+     *
      * @param dir the direction in which to move the character
      */
     @Override
@@ -27,7 +28,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Retrieves the current position of the character.
-     * 
+     *
      * @return the current position of the character
      */
     @Override
@@ -35,8 +36,41 @@ public class ControllerImpl implements Controller {
         return characterModel.getCharacterPos();
     }
 
-    @Override
-    public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
-        minigameManager.setDifficulty(selectedDifficulty);
+
+    public void setMinigame(final MinigameDifficulty difficulty) {
+        minigameManager.setDifficulty(difficulty)
+                .setCurrentMinigame(MinigameType.SQUAT)
+                .startMinigame();
     }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

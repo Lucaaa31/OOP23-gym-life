@@ -22,5 +22,6 @@ public interface Controller {
      */
     Position getCharacterPos();
 
-    void setDifficulty(MinigameDifficulty actualDifficulty);
+    void setMinigame(MinigameDifficulty difficulty);
+
 }

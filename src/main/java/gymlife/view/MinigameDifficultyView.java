@@ -1,19 +1,18 @@
 package gymlife.view;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import gymlife.controller.api.Controller;
-import gymlife.utility.BenchDifficulty;
+import gymlife.utility.MinigameDifficulty;
 
-public class DifficultyView extends JPanel{
+import javax.swing.*;
+
+public class MinigameDifficultyView extends JPanel{
     private Controller controller;
     private JButton easyButton;
     private JButton normalButton;
     private JButton hardButton;
 
     
-    public DifficultyView(final Controller controller) {
+    public MinigameDifficultyView(final Controller controller) {
         this.controller = controller;
         this.easyButton = new JButton("Easy");
         this.normalButton = new JButton("Normal");
@@ -24,15 +23,15 @@ public class DifficultyView extends JPanel{
         this.add(hardButton);
 
         easyButton.addActionListener(e -> {
-            controller.setDifficulty(BenchDifficulty.EASY);
+            controller.setMinigame(MinigameDifficulty.EASY);
         });
 
         normalButton.addActionListener(e -> {
-            controller.setDifficulty(BenchDifficulty.MEDIUM);
+            controller.setMinigame(MinigameDifficulty.MEDIUM);
         });
 
         hardButton.addActionListener(e -> {
-            controller.setDifficulty(BenchDifficulty.HARD);
+            controller.setMinigame(MinigameDifficulty.HARD);
         });
     }
 

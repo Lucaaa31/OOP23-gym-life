@@ -1,11 +1,12 @@
 package gymlife.utility;
 
 public enum MinigameDifficulty {
-    EASY,
-    MEDIUM,
-    HARD;
-
-    
+    EASY(),
+    MEDIUM(),
+    HARD();
 
 
+    private MinigameDifficulty() {
+
+    }
 }
