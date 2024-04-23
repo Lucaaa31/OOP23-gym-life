@@ -1,6 +1,8 @@
 package gymlife.utilities;
 
-
+/**
+ * Class containing useful constants for the usage and loading of {@code GameMaps}
+ */
 public final class MapConstants {
     /**
      * Standard horizontal dimensions of {@code GameMap}.
@@ -14,8 +16,4 @@ public final class MapConstants {
      * Standard path for Map files.
      */
     public static final String MAP_FILES_PATH = "maps/";
-
-    public MapConstants(){
-
-    }
 }

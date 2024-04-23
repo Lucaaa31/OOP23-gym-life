@@ -1,5 +1,8 @@
 package gymlife.model.api;
 
+/**
+ * GameMap represents maps in the game, has methods th check the borders, get a specific cell and get collisions of a cell.
+ */
 public interface GameMap {
     /**
      * 

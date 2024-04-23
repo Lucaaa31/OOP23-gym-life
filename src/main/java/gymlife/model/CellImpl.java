@@ -126,7 +126,7 @@ public enum CellImpl implements Cell {
      */
     GYM_EXIT(27, false, Optional.empty()),
     /**
-     * The cell with a regular bench, with collisions and not interactable
+     * The cell with a regular bench, with collisions and not interactable.
      */
     GYM_BENCH(28, true, Optional.empty()),
     /**
@@ -176,6 +176,11 @@ public enum CellImpl implements Cell {
         this.interaction = interaction;
     }
 
+    /**
+     * Static method that returns the right {@code Cell} given an id.
+     * @param id An integer that represents the Cell.
+     * @return Returns Cell with matching ID or a placeholder Cell if given id is invalid.
+     */
     public static Cell getCellFromId(final int id) {
         return Arrays
                 .stream(CellImpl.values())
@@ -185,7 +190,7 @@ public enum CellImpl implements Cell {
     }
 
     @Override
-    public boolean getCollision() {
+    public boolean isCollision() {
         return this.collision;
     }
 
@@ -201,6 +206,10 @@ public enum CellImpl implements Cell {
                 .toLowerCase(new Locale("en"));
     }
 
+    /**
+     * Method to get the interaction of the cell.
+     * @return An optional that can be either empty or contains a lambda function.
+     */
     public Optional<Runnable> getInteraction() {
         return this.interaction;
     }

@@ -1,8 +1,8 @@
 package gymlife.model;
 
 import gymlife.model.api.Pair;
-
-public class PairImpl<T, R> implements Pair<T, R> {
+//TODO add javadoc here
+public final class PairImpl<T, R> implements Pair<T, R> {
 
     private T x;
     private R y;

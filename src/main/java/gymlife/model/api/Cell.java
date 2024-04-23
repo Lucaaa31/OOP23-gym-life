@@ -10,7 +10,7 @@ public interface Cell {
      * 
      * @return Returns true if the cell has collisions (player cannot be on it).
      */
-    boolean getCollision();
+    boolean isCollision();
 
     /**
      * 

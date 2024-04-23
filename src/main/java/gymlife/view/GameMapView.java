@@ -3,25 +3,27 @@ package gymlife.view;
 import java.util.Map;
 
 import javax.swing.*;
+
 import gymlife.controller.Controller;
 import gymlife.model.api.Pair;
 
-public class GameMapView extends JPanel{
+public class GameMapView extends JPanel {
 
-    private Controller controller;
-    private Map<Pair<Integer,Integer>, JPanel> cells;
-    
-    public GameMapView(){
+    private final Controller controller;
+    private Map<Pair<Integer, Integer>, JPanel> cells;
+
+    public GameMapView() {
         this.controller = new Controller();
-        
-        
+
+
         this.setVisible(true);
     }
+
     public Map<Pair<Integer, Integer>, JPanel> getCells() {
         return cells;
     }
-    
-    public Controller getController(){
+
+    public Controller getController() {
         return this.controller;
     }
 

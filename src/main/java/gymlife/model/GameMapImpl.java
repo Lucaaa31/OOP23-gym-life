@@ -9,9 +9,21 @@ import gymlife.model.api.Pair;
 import gymlife.utilities.MapConstants;
 import gymlife.utilities.MapLoader;
 
+/**
+ * GameMapImpl is an enum with all the possible maps in the game, these are House, Shop, Gym.
+ */
 public enum GameMapImpl implements GameMap {
+    /**
+     * Map of the house.
+     */
     HOUSE_MAP(0, "house", MapLoader.load("housemap.txt")),
+    /**
+     * Map of the shop.
+     */
     GYM_MAP(1, "gym", MapLoader.load("gymmap.txt")),
+    /**
+     * Map of the gym.
+     */
     SHOP_MAP(2, "shop", MapLoader.load("shopmap.txt"));
 
     private final int id;
@@ -30,7 +42,7 @@ public enum GameMapImpl implements GameMap {
 
     @Override
     public boolean isCellCollidable(final Pair<Integer, Integer> coord) {
-        return this.getCellAtCoord(coord).getCollision();
+        return this.getCellAtCoord(coord).isCollision();
     }
 
     @Override
