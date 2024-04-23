@@ -1,7 +1,12 @@
 package gymlife.model;
 
 import gymlife.model.api.Pair;
-//TODO add javadoc here
+
+/**
+ *
+ * @param <T> Type of first element of pair.
+ * @param <R> Type of second element of pair.
+ */
 public final class PairImpl<T, R> implements Pair<T, R> {
 
     private T x;
