@@ -14,18 +14,20 @@ public class MinigameManager {
 
 
     public void startMinigame() {
-        currentMinigame.start();
+        System.out.println(currentMinigame.getClass().getName());
+        this.currentMinigame.start();
     }
 
-    public MinigameManager setCurrentMinigame(MinigameType minigameScenario) {
+    public MinigameManager setCurrentMinigame(final MinigameType minigameScenario) {
 
         try {
+            System.out.println(MinigameType.BENCH_PRESS.getName());
             this.currentMinigame = (Minigame) Class
-                    .forName(minigameScenario.getName())
-                    .getDeclaredConstructor()
-                    .newInstance();
+                    .forName(MinigameType.BENCH_PRESS.getName())
+                    .getDeclaredConstructor(difficulty.getClass())
+                    .newInstance(difficulty);
         } catch (Exception e) {
-
+            System.out.println("Error: " + e.getMessage());
         }
         return this;
     }

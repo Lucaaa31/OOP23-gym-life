@@ -11,7 +11,7 @@ public enum MinigameType{
 
     LAT_MACHINE(LatMachineMinigame.class.getCanonicalName());
 
-    private  String minigameType;
+    private final String minigameType;
 
     MinigameType(String minigameType){
         this.minigameType = minigameType;

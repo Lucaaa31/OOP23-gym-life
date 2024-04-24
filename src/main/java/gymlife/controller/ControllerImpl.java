@@ -39,7 +39,7 @@ public class ControllerImpl implements Controller {
 
     public void setMinigame(final MinigameDifficulty difficulty) {
         minigameManager.setDifficulty(difficulty)
-                .setCurrentMinigame(MinigameType.SQUAT)
+                .setCurrentMinigame(MinigameType.BENCH_PRESS)
                 .startMinigame();
     }
 
