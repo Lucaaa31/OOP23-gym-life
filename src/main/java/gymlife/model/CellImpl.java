@@ -162,7 +162,7 @@ public enum CellImpl implements Cell {
      */
     GYM_WEIGHTS02(36, true, Optional.empty()),
     /**
-     * The placeholder cell, it is inserted in a map if the MapLoader does not recognize the cell id in a file.
+     * The placeholder cell, it is inserted in a map if the {@code MapLoader} does not recognize the cell id in a file.
      */
     PLACEHOLDER(-1, false, Optional.empty());
 

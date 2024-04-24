@@ -18,11 +18,11 @@ public enum GameMapImpl implements GameMap {
      */
     HOUSE_MAP(0, "house", MapLoader.load("housemap.txt")),
     /**
-     * Map of the shop.
+     * Map of the gym.
      */
     GYM_MAP(1, "gym", MapLoader.load("gymmap.txt")),
     /**
-     * Map of the gym.
+     * Map of the shop.
      */
     SHOP_MAP(2, "shop", MapLoader.load("shopmap.txt"));
 
