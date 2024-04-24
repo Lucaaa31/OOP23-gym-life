@@ -1,6 +1,7 @@
 package gymlife.model;
 
 import gymlife.model.api.GameMap;
+import gymlife.model.api.MapManager;
 import gymlife.model.api.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class TestGameMapImpl {
+class TestMaps {
 
     private GameMap shop;
     private GameMap gym;
@@ -22,12 +23,14 @@ class TestGameMapImpl {
     private final Pair<Integer, Integer> testCoord6 = new PairImpl<>(4, 3);
     private final Pair<Integer, Integer> testCoord7 = new PairImpl<>(5, 5);
     private final Pair<Integer, Integer> testCoord8 = new PairImpl<>(1, 1);
+    private MapManager manager;
 
     @BeforeEach
     void initiate() {
         this.house = GameMapImpl.HOUSE_MAP;
         this.shop = GameMapImpl.SHOP_MAP;
         this.gym = GameMapImpl.GYM_MAP;
+        this.manager = new MapManagerImpl(house);
     }
 
     @Test
@@ -61,5 +64,14 @@ class TestGameMapImpl {
         assertTrue(gym.checkBorders(testCoord5));
         assertTrue(gym.isCellCollidable(testCoord7));
         assertFalse(gym.isCellCollidable(testCoord6));
+    }
+
+    @Test
+    void testManager() {
+        assertEquals(manager.getCurrentMap(), GameMapImpl.HOUSE_MAP);
+        manager.changeMap(gym);
+        assertEquals(manager.getCurrentMap(), GameMapImpl.GYM_MAP);
+        manager.changeMap(shop);
+        assertEquals(manager.getCurrentMap(), GameMapImpl.SHOP_MAP);
     }
 }
