@@ -48,6 +48,10 @@ public final class PlaneGameModel implements Runnable {
         }
     }
 
+    void stopMultiplier() {
+        flag = false;
+    }
+
     /**
      * This method returns the treshold value.
      * 
