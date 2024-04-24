@@ -6,8 +6,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 /**
- * This abstract class makes the images resizeable everytime that the frame
- * changes.
+ * This abstract class makes the images resizeable everytime that the frame changes.
  */
 public abstract class BankGameComponentImpl extends JLabel implements BankGameComponent {
 
