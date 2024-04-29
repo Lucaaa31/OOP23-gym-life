@@ -12,6 +12,11 @@ public final class PairImpl<T, R> implements Pair<T, R> {
     private T x;
     private R y;
 
+    /**
+     * Constructor to create a simple Pair.
+     * @param x first element of the pair.
+     * @param y second element of the pair.
+     */
     public PairImpl(final T x, final R y) {
         this.x = x;
         this.y = y;

@@ -1,9 +1,12 @@
 package gymlife.utilities;
 
 /**
- * Class containing useful constants for the usage and loading of {@code GameMaps}
+ * Class containing useful constants for the usage and loading of {@code GameMaps}.
  */
 public final class MapConstants {
+    private MapConstants() {
+
+    }
     /**
      * Standard horizontal dimensions of {@code GameMap}.
      */
