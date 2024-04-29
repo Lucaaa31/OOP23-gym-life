@@ -29,4 +29,6 @@ public abstract class BankGameComponentImpl extends JLabel implements BankGameCo
         final Image scaledImage = this.icon.getScaledInstance(bounds.width, bounds.height, Image.SCALE_DEFAULT);
         this.setIcon(new ImageIcon(scaledImage));
     }
+
+    
 }

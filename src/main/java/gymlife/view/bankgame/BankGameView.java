@@ -1,6 +1,7 @@
 package gymlife.view.bankgame;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import java.awt.Dimension;
@@ -13,6 +14,7 @@ import java.awt.event.ComponentEvent;
  */
 public final class BankGameView extends JFrame {
     private static final long serialVersionUID = -3972452455820596601L;
+    private JLabel numberLabel;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
@@ -25,6 +27,7 @@ public final class BankGameView extends JFrame {
                 Toolkit.getDefaultToolkit().getScreenSize().height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final JLayeredPane layers = new JLayeredPane();
+        JLabel numberLabel = new JLabel();
 
         final BankGameComponentImpl planeLayer = new AirplaneGameView();
         final BankGameComponentImpl skyLayer = new SkyGameView();
@@ -34,8 +37,11 @@ public final class BankGameView extends JFrame {
                 screenDims.height / 2);
         skyLayer.setBounds(0, 0, screenDims.width, screenDims.height);
 
+        numberLabel.setBounds(50, 50, 50, 20);
+
         layers.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         layers.add(planeLayer, JLayeredPane.PALETTE_LAYER);
+        layers.add(numberLabel, JLayeredPane.PALETTE_LAYER);
 
         this.setSize(screenDims.width / 3, screenDims.height / 3);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +53,10 @@ public final class BankGameView extends JFrame {
             }
         });
         this.setVisible(true);
+    }
+
+    public void updateMulti(float multi) {
+        numberLabel.setText(String.valueOf(multi));
     }
 
     private void setLayersNewSize(final BankGameComponentImpl skyLabel, final BankGameComponentImpl planeLabel) {
