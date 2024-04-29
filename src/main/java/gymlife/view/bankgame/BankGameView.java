@@ -27,7 +27,7 @@ public final class BankGameView extends JFrame {
                 Toolkit.getDefaultToolkit().getScreenSize().height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final JLayeredPane layers = new JLayeredPane();
-        JLabel numberLabel = new JLabel();
+        numberLabel = new JLabel();
 
         final BankGameComponentImpl planeLayer = new AirplaneGameView();
         final BankGameComponentImpl skyLayer = new SkyGameView();

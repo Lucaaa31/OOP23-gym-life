@@ -6,8 +6,8 @@ import java.util.Random;
  * This class create a multiplier.
  */
 public final class PlaneGameModel implements Runnable {
-    private static final float MAX_BOUND = 12.00f;
-    private static final int THREAD_WAIT = 5;
+    private static final float MAX_BOUND = 9.00f;
+    private static final int THREAD_WAIT = 8;
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();

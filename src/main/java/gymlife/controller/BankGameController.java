@@ -1,23 +1,31 @@
 package gymlife.controller;
 
-import javax.swing.JComponent;
-
 import gymlife.view.bankgame.BankGameView;
 
 import gymlife.model.PlaneGameModel;
 
-public class BankGameController extends JComponent{ 
-    private float multi;
+public class BankGameController {
+    private PlaneGameModel model;
     private BankGameView view;
 
-    public BankGameController(PlaneGameModel multi, BankGameView view) {
-        this.multi = multi.getMultiplierShort();
+    public BankGameController(PlaneGameModel model, BankGameView view) {
         this.view = view;
-    }
-    
-    public void updateview() {
-        view.updateMulti(multi);
+        this.model = model;
     }
 
+    public void startMultiplier() {
+        Thread threadMutliplier = new Thread(model);
+        threadMutliplier.start();
 
+        while (threadMutliplier.isAlive()) {
+            float multi = model.getMultiplierShort();
+
+            view.updateMulti(multi);
+            try {
+                Thread.sleep(105);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
