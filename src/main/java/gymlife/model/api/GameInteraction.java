@@ -5,7 +5,7 @@ package gymlife.model.api;
  * @param <T> Type of the game element on which the interaction has to happen.
  * @param <R> Type of the eventual input Object required by the interaction.
  */
-public interface GameInteraction <T, R> {
+public interface GameInteraction<T, R> {
     /**
      * Method to actually do the interaction. When implemented it should call a method of gameElementToChange.
      * @param gameElementToChange the Game element on which to do the interaction.
