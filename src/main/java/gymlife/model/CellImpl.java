@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.Optional;
 
 import gymlife.model.api.Cell;
+import gymlife.model.api.GameInteraction;
+import gymlife.model.api.GameMap;
 
 /**
  * CellImpl is an enum that contains all the possible cells present in the game. A cell is identified by a unique id,
@@ -68,7 +70,17 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, Optional.empty()),
+    HOUSE_EXIT(13, false, Optional.of(new GameInteraction<MapManagerImpl, GameMap>() {
+        @Override
+        public void interactWithInput(MapManagerImpl gameElementToChange, GameMap input) {
+            gameElementToChange.changeMap(input);
+        }
+
+        @Override
+        public void interact(MapManagerImpl gameElementToChange) {
+
+        }
+    })),
     /**
      * The cell used to interact with the kitchen, no collisions and interactable.
      */
@@ -168,9 +180,9 @@ public enum CellImpl implements Cell {
 
     private final int id;
     private final boolean collision;
-    private final Optional<Runnable> interaction;
+    private final Optional<GameInteraction> interaction;
 
-    CellImpl(final int id, final boolean collision, final Optional<Runnable> interaction) {
+    CellImpl(final int id, final boolean collision, final Optional<GameInteraction> interaction) {
         this.id = id;
         this.collision = collision;
         this.interaction = interaction;
@@ -210,7 +222,7 @@ public enum CellImpl implements Cell {
      * Method to get the interaction of the cell.
      * @return An optional that can be either empty or contains a lambda function.
      */
-    public Optional<Runnable> getInteraction() {
+    public Optional<GameInteraction> getInteraction() {
         return this.interaction;
     }
 
