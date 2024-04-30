@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameInteraction;
-import gymlife.model.api.MapManager;
 
 /**
  * CellImpl is an enum that contains all the possible cells present in the game. A cell is identified by a unique id,
@@ -215,8 +214,7 @@ public enum CellImpl implements Cell {
     public Optional<GameInteraction<?>> getInteraction() {
         if (this.interaction == null) {
             return Optional.empty();
-        }
-        else {
+        } else {
             return Optional.of(this.interaction);
         }
     }

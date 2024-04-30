@@ -39,6 +39,7 @@ public final class MapLoader {
                     }
 
                 }
+                br.close();
                 return tempMap;
             } catch (IOException e) {
                 return Map.of();
