@@ -26,7 +26,7 @@ class TestMaps {
     private MapManager manager;
 
     @BeforeEach
-    void initiate() {
+    void init() {
         this.house = GameMapImpl.HOUSE_MAP;
         this.shop = GameMapImpl.SHOP_MAP;
         this.gym = GameMapImpl.GYM_MAP;
