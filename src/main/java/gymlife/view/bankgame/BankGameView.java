@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import java.awt.Dimension;
+
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -38,6 +39,7 @@ public final class BankGameView extends JFrame {
         skyLayer.setBounds(0, 0, screenDims.width, screenDims.height);
 
         numberLabel.setBounds(50, 50, 50, 20);
+        
 
         layers.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         layers.add(planeLayer, JLayeredPane.PALETTE_LAYER);
@@ -55,7 +57,7 @@ public final class BankGameView extends JFrame {
         this.setVisible(true);
     }
 
-    public void updateMulti(float multi) {
+    public void updateMulti(final float multi) {
         numberLabel.setText(String.valueOf(multi));
     }
 

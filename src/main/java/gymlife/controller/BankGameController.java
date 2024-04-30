@@ -5,8 +5,8 @@ import gymlife.view.bankgame.BankGameView;
 import gymlife.model.PlaneGameModel;
 
 public class BankGameController {
-    private PlaneGameModel model;
-    private BankGameView view;
+    private final PlaneGameModel model;
+    private final BankGameView view;
 
     public BankGameController(PlaneGameModel model, BankGameView view) {
         this.view = view;
@@ -14,7 +14,7 @@ public class BankGameController {
     }
 
     public void startMultiplier() {
-        Thread threadMutliplier = new Thread(model);
+       final Thread threadMutliplier = new Thread(model);
         threadMutliplier.start();
 
         while (threadMutliplier.isAlive()) {

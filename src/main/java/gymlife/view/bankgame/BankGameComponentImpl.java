@@ -2,13 +2,14 @@ package gymlife.view.bankgame;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 
 /**
  * This abstract class makes the images resizeable everytime that the frame changes.
  */
-public abstract class BankGameComponentImpl extends JLabel implements BankGameComponent {
+public abstract class BankGameComponentImpl extends BGLabelView {
 
     private final Image icon;
     private static final long serialVersionUID = -8559784539802201917L;
@@ -29,6 +30,4 @@ public abstract class BankGameComponentImpl extends JLabel implements BankGameCo
         final Image scaledImage = this.icon.getScaledInstance(bounds.width, bounds.height, Image.SCALE_DEFAULT);
         this.setIcon(new ImageIcon(scaledImage));
     }
-
-    
 }
