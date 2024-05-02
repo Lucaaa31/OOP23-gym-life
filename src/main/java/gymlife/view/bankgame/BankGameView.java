@@ -2,9 +2,7 @@ package gymlife.view.bankgame;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -14,7 +12,7 @@ import java.awt.event.ComponentEvent;
  */
 public final class BankGameView extends JFrame {
     private static final long serialVersionUID = -3972452455820596601L;
-    private BGLabelView numberLabel;
+    private final BGLabelView numberLabel;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
@@ -44,20 +42,26 @@ public final class BankGameView extends JFrame {
         this.setSize(screenDims.width / 3, screenDims.height / 3);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(layers);
+
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                setLayersNewSize(skyLayer, planeLayer);
+                setLayersNewSize(skyLayer, planeLayer, numberLabel);
             }
         });
         this.setVisible(true);
     }
 
+    /**
+     * This method updates the display of the multiplier value in the associated label.
+     * @param multi The new multiplier value to be displayed.
+     */
     public void updateMulti(final float multi) {
         numberLabel.setText(String.valueOf(multi));
     }
 
-    private void setLayersNewSize(final BankGameComponentImpl skyLabel, final BankGameComponentImpl planeLabel) {
+    private void setLayersNewSize(final BankGameComponentImpl skyLabel, final BankGameComponentImpl planeLabel,
+            final BGLabelView numberLabel) {
         final Dimension newSize = this.getSize();
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
@@ -68,7 +72,6 @@ public final class BankGameView extends JFrame {
         numberLabel.setBounds(newSize.width / 3,
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
-        numberLabel.setFont(numberLabel.getFont().deriveFont(Font.BOLD, newSize.height / 11));
         numberLabel.reload();
     }
 

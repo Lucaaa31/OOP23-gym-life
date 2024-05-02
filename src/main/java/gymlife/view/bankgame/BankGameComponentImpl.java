@@ -1,7 +1,6 @@
 package gymlife.view.bankgame;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import java.awt.Image;
 import java.awt.Rectangle;

@@ -41,7 +41,6 @@ public final class PlaneGameModel implements Runnable {
             if (boundControl()) {
                 flag = false;
             }
-            getMultiplierShort();
             try {
                 Thread.sleep(THREAD_WAIT);
             } catch (InterruptedException e) {

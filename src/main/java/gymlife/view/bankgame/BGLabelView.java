@@ -1,17 +1,26 @@
 package gymlife.view.bankgame;
 
-
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JLabel;
 
+/**
+ * This abstract class extends JLabel and implements the BankGameComponent
+ * interface.
+ * It provides a method to reload the appearance of the multiplier.
+ */
 public abstract class BGLabelView extends JLabel implements BankGameComponent {
-    private Font originalFont;
+    private static final long serialVersionUID = -8840823320252661066L;
+    private static final float SIZE_NUM = 11;
+    /**
+     * Reloads the appearance of the label by updating its font.
+     * The font is set to bold and its size is adjusted based on the current height
+     * of the label.
+     */
     @Override
-    public void reload(){
-    
-        int newFontSize = (int) (getWidth() * 0.03); // Esempio: 3% della larghezza della finestra
-        Font resizedFont = originalFont.deriveFont(Font.PLAIN, newFontSize);
-        setFont(resizedFont);
+    public void reload() {
+         final Dimension newSize = this.getSize();
+         this.setFont(this.getFont().deriveFont(Font.BOLD, newSize.height / SIZE_NUM));
     }
 }
