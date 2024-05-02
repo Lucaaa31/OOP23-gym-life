@@ -1,0 +1,33 @@
+package gymlife.model;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import gymlife.model.api.MoneyModel;
+
+
+class TestMoney {
+    @Test
+    void testInitiation() {
+        final MoneyModel money = new MoneyModelImpl();
+        assertEquals(0, money.getMoney());
+    }
+    @Test
+    void testIncrement() {
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, money.getMoney());
+        money.incrementMoney();
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + 1, money.getMoney());
+    }
+    @Test
+    void testMultiIncrement() {
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, money.getMoney());
+        money.multiIncrementMoney(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
+        assertEquals(2, money.getMoney());
+        money.multiIncrementMoney(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
+        assertEquals(0, money.getMoney());
+    }
+}
