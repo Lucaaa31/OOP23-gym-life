@@ -1,4 +1,4 @@
-package gymlife.utilities;
+package gymlife.utility;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -11,7 +11,7 @@ import java.util.Map;
 import gymlife.model.CellImpl;
 import gymlife.model.PairImpl;
 import gymlife.model.api.Cell;
-import gymlife.model.api.Pair;
+import gymlife.utility.Position;
 
 /**
  * MapLoader is a static class used to load a map of pairs and Cells from file.
@@ -26,8 +26,8 @@ public final class MapLoader {
      * @param fileName The name of the file to load.
      * @return Returns a map of Pairs and Cells.
      */
-    public static Map<Pair<Integer, Integer>, Cell> load(final String fileName) {
-        final Map<Pair<Integer, Integer>, Cell> tempMap = new HashMap<>();
+    public static Map<Position, Cell> load(final String fileName) {
+        final Map<Position, Cell> tempMap = new HashMap<>();
         final BufferedReader br = getReaderFromFile(fileName);
         if (br != null) {
             for (int i = 0; i < MapConstants.MAP_Y_DIM; i++) {
@@ -37,7 +37,7 @@ public final class MapLoader {
                         final String[] stringArray = buffer.split(" ");
                         for (int j = 0; j < MapConstants.MAP_X_DIM; j++) {
                             final int cellId = Integer.parseInt(stringArray[j]);
-                            tempMap.put(new PairImpl<>(j, i), CellImpl.getCellFromId(cellId));
+                            tempMap.put(new Position(j, i), CellImpl.getCellFromId(cellId));
                         }
                     }
                 } catch (IOException e) {

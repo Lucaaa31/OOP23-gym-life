@@ -1,30 +1,32 @@
 package gymlife.model.api;
 
+import gymlife.utility.Position;
+
 /**
  * GameMap represents maps in the game, has methods th check the borders, get a specific cell and get collisions of a cell.
  */
 public interface GameMap {
     /**
      * 
-     * @param coord A specific position (Pair).
+     * @param coord A specific position (Position).
      * @return Returns true if the cell in the given position is collidable.
      */
-    boolean isCellCollidable(Pair<Integer, Integer> coord);
+    boolean isCellCollidable(Position coord);
 
     /**
      * 
-     * @param coord A specific position (Pair).
+     * @param coord A specific position (Position).
      * @return Returns the cell in the given position.
      */
-    Cell getCellAtCoord(Pair<Integer, Integer> coord);
+    Cell getCellAtCoord(Position coord);
 
     /**
      * 
-     * @param coord A specific position (Pair).
+     * @param coord A specific position (Position).
      * @return Returns true if the given coordinate is within the borders of the
      *         map.
      */
-    boolean checkBorders(Pair<Integer, Integer> coord);
+    boolean checkBorders(Position coord);
 
     /**
      * 

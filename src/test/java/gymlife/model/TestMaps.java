@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
-import gymlife.model.api.Pair;
+import gymlife.utility.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +15,14 @@ class TestMaps {
     private GameMap shop;
     private GameMap gym;
     private GameMap house;
-    private final Pair<Integer, Integer> testCoord1 = new PairImpl<>(0, 0);
-    private final Pair<Integer, Integer> testCoord2 = new PairImpl<>(2, 1);
-    private final Pair<Integer, Integer> testCoord3 = new PairImpl<>(2, 5);
-    private final Pair<Integer, Integer> testCoord4 = new PairImpl<>(-2, 20);
-    private final Pair<Integer, Integer> testCoord5 = new PairImpl<>(2, 4);
-    private final Pair<Integer, Integer> testCoord6 = new PairImpl<>(4, 3);
-    private final Pair<Integer, Integer> testCoord7 = new PairImpl<>(5, 5);
-    private final Pair<Integer, Integer> testCoord8 = new PairImpl<>(1, 1);
+    private final Position testCoord1 = new Position(0, 0);
+    private final Position testCoord2 = new Position(2, 1);
+    private final Position testCoord3 = new Position(2, 5);
+    private final Position testCoord4 = new Position(-2, 20);
+    private final Position testCoord5 = new Position(2, 4);
+    private final Position testCoord6 = new Position(4, 3);
+    private final Position testCoord7 = new Position(5, 5);
+    private final Position testCoord8 = new Position(1, 1);
     private MapManager manager;
 
     @BeforeEach

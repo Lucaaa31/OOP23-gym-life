@@ -1,10 +1,10 @@
 package gymlife.view;
 
+import gymlife.controller.api.Controller;
+
 import java.io.Serial;
 
 import javax.swing.JPanel;
-
-import gymlife.controller.Controller;
 
 /**
  * JPanel that shows the current map on which teh character is. it shows all the cells of the map loaded.
@@ -14,7 +14,7 @@ public final class GameMapView extends JPanel {
     @Serial
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
-    //private transient Map<Pair<Integer, Integer>, JPanel> cells;
+    //private transient Map<Position, JPanel> cells;
 
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.

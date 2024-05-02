@@ -1,4 +1,4 @@
-package gymlife.utilities;
+package gymlife.utility;
 
 /**
  * Class containing useful constants for the usage and loading of {@code GameMaps}.

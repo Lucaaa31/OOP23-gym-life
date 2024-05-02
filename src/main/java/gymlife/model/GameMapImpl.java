@@ -6,8 +6,9 @@ import java.util.Map;
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.Pair;
-import gymlife.utilities.MapConstants;
-import gymlife.utilities.MapLoader;
+import gymlife.utility.MapConstants;
+import gymlife.utility.MapLoader;
+import gymlife.utility.Position;
 
 /**
  * GameMapImpl is an enum with all the possible maps in the game, these are House, Shop, Gym.
@@ -30,9 +31,9 @@ public enum GameMapImpl implements GameMap {
     private final String name;
     private final int dimY;
     private final int dimX;
-    private final Map<Pair<Integer, Integer>, Cell> map;
+    private final transient Map<Position, Cell> map;
 
-    GameMapImpl(final int id, final String name, final Map<Pair<Integer, Integer>, Cell> map) {
+    GameMapImpl(final int id, final String name, final Map<Position, Cell> map) {
         this.id = id;
         this.name = name;
         this.dimX = MapConstants.MAP_X_DIM;
@@ -41,18 +42,18 @@ public enum GameMapImpl implements GameMap {
     }
 
     @Override
-    public boolean isCellCollidable(final Pair<Integer, Integer> coord) {
+    public boolean isCellCollidable(final Position coord) {
         return this.getCellAtCoord(coord).isCollision();
     }
 
     @Override
-    public Cell getCellAtCoord(final Pair<Integer, Integer> coord) {
+    public Cell getCellAtCoord(final Position coord) {
         return map.get(coord);
     }
 
     @Override
-    public boolean checkBorders(final Pair<Integer, Integer> coord) {
-        return coord.getX() >= 0 && coord.getX() < this.dimX && coord.getY() >= 0 && coord.getY() < this.dimY;
+    public boolean checkBorders(final Position coord) {
+        return coord.X() >= 0 && coord.X() < this.dimX && coord.Y() >= 0 && coord.Y() < this.dimY;
     }
 
     @Override
