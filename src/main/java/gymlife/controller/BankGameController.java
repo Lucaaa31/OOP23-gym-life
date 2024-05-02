@@ -19,7 +19,7 @@ public class BankGameController {
      * @param model model The model component of the MVC architecture.
      * @param view  The view component of the MVC architecture.
      */
-    protected BankGameController(final PlaneGameModel model, final BankGameView view) {
+    public BankGameController(final PlaneGameModel model, final BankGameView view) {
         this.model = model;
         this.view = view;
     }

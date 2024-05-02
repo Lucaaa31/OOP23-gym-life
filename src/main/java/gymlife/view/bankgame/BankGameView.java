@@ -1,5 +1,6 @@
 package gymlife.view.bankgame;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ public final class BankGameView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final JLayeredPane layers = new JLayeredPane();
         numberLabel = new MultiplierGameView();
+        JButton button = new JButton();
 
         final BankGameComponentImpl planeLayer = new AirplaneGameView();
         final BankGameComponentImpl skyLayer = new SkyGameView();
@@ -34,10 +36,13 @@ public final class BankGameView extends JFrame {
                 screenDims.height / 2,
                 screenDims.height / 2);
         skyLayer.setBounds(0, 0, screenDims.width, screenDims.height);
+        button.setBounds(10, 170, screenDims.width, screenDims.height);
+        button.setSize(90, 30);
 
         layers.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         layers.add(planeLayer, JLayeredPane.PALETTE_LAYER);
         layers.add(numberLabel, JLayeredPane.PALETTE_LAYER);
+        layers.add(button, JLayeredPane.PALETTE_LAYER);
 
         this.setSize(screenDims.width / 3, screenDims.height / 3);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
