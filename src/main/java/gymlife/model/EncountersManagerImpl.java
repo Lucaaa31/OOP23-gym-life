@@ -9,7 +9,7 @@ import gymlife.utility.StatsType;
 /**
  * Implementation of the EncountersManager interface.
  */
-public class EncountersManagerImpl implements EncountersManager{
+public class EncountersManagerImpl implements EncountersManager {
     private Optional<Encounters> encounter;
 
     /**

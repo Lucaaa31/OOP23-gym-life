@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import gymlife.utility.EncountersConstants;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
@@ -33,17 +34,19 @@ class TestEncounters {
         assertEquals(EncountersConstants.ROBBER_DENY, Encounters.ROBBER.getDenyCase());
     }
     @Test
-    void testGetEncounter() {
-        boolean isValid = false;
-        Optional<Encounters> encounters = Encounters.getRandomEncounter();
-        if (encounters.isEmpty() 
-        || encounters.get().equals(Encounters.GYM_BRO)
-        || encounters.get().equals(Encounters.ICE_CREAM)
-        || encounters.get().equals(Encounters.MONEY_BAG)
-        || encounters.get().equals(Encounters.PUSHER)
-        || encounters.get().equals(Encounters.ROBBER)) {
-            isValid = true;
+    void testGetRandomEncounter() {
+        for (int i = 0; i < 100000000; i++) {
+            boolean isValid = false;
+            Optional<Encounters> encounters = Encounters.getRandomEncounter();
+            if (encounters.get().name().equals("PUSHER")
+                || encounters.get().name().equals("ICE_CREAM")
+                || encounters.get().name().equals("MONEY_BAG")
+                || encounters.get().name().equals("ROBBER")
+                || encounters.get().name().equals("GYM_BRO")
+            ) {
+                isValid = true;
+            }
+            assertTrue(isValid);
         }
-        assertEquals(true, isValid);
     }
 }

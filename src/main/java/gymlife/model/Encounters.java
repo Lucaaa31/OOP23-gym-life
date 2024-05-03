@@ -15,7 +15,7 @@ public enum Encounters {
     /** 
      * Case where the player encounters a pusher.
      */
-    PUSHER ("A pusher offers you some steroids. Do you accept?",
+    PUSHER("A pusher offers you some steroids. Do you accept?",
     EncountersConstants.PUSHER_ACCEPT, EncountersConstants.PUSHER_DENY),
     /** 
      * Case where the player encounters an ice cream truck.
@@ -49,7 +49,8 @@ public enum Encounters {
      * @param acceptCase the map of stats type and corresponding values for accepting the encounter
      * @param denyCase the map of stats type and corresponding values for denying the encounter
      */
-    private Encounters(final String description, final Map<StatsType, Integer> acceptCase, final Map<StatsType, Integer> denyCase) {
+    Encounters(final String description, final Map<StatsType, Integer> acceptCase, 
+    final Map<StatsType, Integer> denyCase) {
         this.description = description;
         this.acceptCase = acceptCase;
         this.denyCase = denyCase;
@@ -78,14 +79,13 @@ public enum Encounters {
     public Map<StatsType, Integer> getDenyCase() {
         return this.denyCase;
     }
-
+    /**
+     * Returns a random encounter from the Encounters enum.
+     * 
+     * @return an Optional containing a random encounter, or an empty Optional if no encounter is chosen
+     */
     public static Optional<Encounters> getRandomEncounter() {
-    if (Math.random() < EncountersConstants.ENCOUNTER_CHANCE) {
-        int pick = new Random().nextInt(Encounters.values().length);
-        return Optional.of(Encounters.values()[pick]);
-    }
-    return Optional.empty();
+        final Random random = new Random();
+        return Optional.of(Encounters.values()[random.nextInt(Encounters.values().length)]);
     }
 }
-    
-

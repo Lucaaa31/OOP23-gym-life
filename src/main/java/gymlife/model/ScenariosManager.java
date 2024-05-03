@@ -24,7 +24,7 @@ public class ScenariosManager {
                 actualScenariosType = ScenariosType.MINIGAME_GYM;
                 break;
             case MAIN_MAP:
-                actualScenariosType = ScenariosType.MINIGAME_GYM;
+                actualScenariosType = ScenariosType.MAIN_MAP;
                 break;
             default:
                 break;
