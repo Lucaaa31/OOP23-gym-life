@@ -7,7 +7,6 @@ import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
-import gymlife.utility.ScenariosType;
 
 /**
  * Class responsible for managing Character movements.
@@ -16,6 +15,7 @@ public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
+    private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
 
     /**
      * Moves the character in the specified direction.
@@ -51,5 +51,13 @@ public class ControllerImpl implements Controller {
      */
     public GameMap getCurrentMap() {
         return mapManager.getCurrentMap();
+    }
+
+    public void cellInteraction() {
+        mapManager.getCurrentMap()
+                .getCellAtCoord(characterModel.getCharacterPos())
+                .getInteraction()
+                .get()
+                .interact(interactionsManager);
     }
 }

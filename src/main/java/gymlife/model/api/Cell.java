@@ -1,4 +1,10 @@
 package gymlife.model.api;
+
+import gymlife.model.InteractionsManager;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+
 /**
  * An object that contains information on specific parts of the {@code GameMap}.
  * A Cell should contain information on what type it is, wether the player can
@@ -23,4 +29,6 @@ public interface Cell {
      * @return Returns the name of the object through reflection.
      */
     String getName();
+
+    Optional<GameInteraction> getInteraction();
 }

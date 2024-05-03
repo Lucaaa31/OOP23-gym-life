@@ -3,9 +3,11 @@ package gymlife.model;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameInteraction;
+import gymlife.utility.ScenariosType;
 
 /**
  * CellImpl is an enum that contains all the possible cells present in the game. A cell is identified by a unique id,
@@ -69,7 +71,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, null),
+    HOUSE_EXIT(13, false, (e) -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell used to interact with the kitchen, no collisions and interactable.
      */
@@ -169,9 +171,9 @@ public enum CellImpl implements Cell {
 
     private final int id;
     private final boolean collision;
-    private final GameInteraction<?> interaction;
+    private final GameInteraction interaction;
 
-    CellImpl(final int id, final boolean collision, final GameInteraction<?> interaction) {
+    CellImpl(final int id, final boolean collision, final GameInteraction interaction) {
         this.id = id;
         this.collision = collision;
         this.interaction = interaction;
@@ -211,7 +213,7 @@ public enum CellImpl implements Cell {
      * Method to get the interaction of the cell.
      * @return An optional that can be either empty or contains a lambda function.
      */
-    public Optional<GameInteraction<?>> getInteraction() {
+    public Optional<GameInteraction> getInteraction() {
         if (this.interaction == null) {
             return Optional.empty();
         } else {
