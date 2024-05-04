@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import gymlife.controller.api.Controller;
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameType;
@@ -38,4 +39,7 @@ public class MinigameManager {
     }
 
 
+    public Minigame getCurrentMinigame() {
+        return this.currentMinigame;
+    }
 }

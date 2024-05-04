@@ -1,8 +1,11 @@
 package gymlife.controller.api;
 
+import gymlife.model.Minigame.Timer;
 import gymlife.utility.Directions;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.Position;
+
+import java.util.List;
 
 /**
  * Interface that handles key inputs from the keyboard to move the character.
@@ -24,4 +27,9 @@ public interface Controller {
 
     void setMinigame(MinigameDifficulty difficulty);
 
+    void notifyKeyPressed(char keyChar);
+
+    List<Integer> getTime();
+
+    void getTimer(Timer timer);
 }

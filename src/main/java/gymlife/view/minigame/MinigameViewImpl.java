@@ -1,6 +1,8 @@
 package gymlife.view;
 
 
+import gymlife.controller.api.Controller;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,11 +10,13 @@ import java.awt.*;
 
 public class MinigameViewImpl{
 
-    public MinigameViewImpl(){
+    public MinigameViewImpl(Controller controller){
 
         /**
          * Creating the frame manually, but already exist in the full implementation
          */
+
+
 
         JFrame mainFrame = new JFrame("TEMPORARY");
         Dimension screenSeize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,14 +47,15 @@ public class MinigameViewImpl{
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
 
-        TimerView panelTimer = new TimerView(height);
+        TimerView panelTimer = new TimerView(height, controller);
 
         panelTimer.setPreferredSize(new Dimension(widht/5, height/5));
         
         panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelTimer.setVisible(true);
         panel1.add(panelTimer);
 
-        panelTimer.setVisible(true);
+
     }
 
 
