@@ -1,6 +1,10 @@
 package gymlife.model.api;
 
+import gymlife.model.Minigame.Timer;
+
 public interface Minigame {
 
-    public void start();
+    void notifyKeyPressed(char keyChar);
+
+    void setTimer(Timer timer);
 }

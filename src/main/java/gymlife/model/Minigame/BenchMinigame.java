@@ -1,33 +1,56 @@
-package gymlife.model;
+package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
 
-public class BenchMinigame implements Minigame {
-    private int counterReps;
-    private int counterMistakes;
-    private boolean keyPressed;
-    private MinigameDifficulty difficulty;
+import java.util.Random;
+
+public class BenchMinigame implements Minigame, Runnable {
+    private MinigameDifficulty difficulty = MinigameDifficulty.EASY;
+    private Thread timerThread;
+    private boolean isPressed;
+    private char actualKey;
 
 
-
-    public BenchMinigame(final MinigameDifficulty difficulty){
-        this.difficulty = difficulty;
-        start();
+    public BenchMinigame(MinigameDifficulty difficulty) {
     }
 
-    public void start() {
+    private void checkIfCorrect() {
 
     }
 
-
-    //metodo astratto (?)
-    public void notifyTimerExpired() {
-        counterMistakes++;
-        if (counterMistakes > difficulty.getMaxMistakes()) {
-            System.out.println("Game Over");
-        }
+    @Override
+    public void notifyKeyPressed(char keyChar) {
+        isPressed = true;
     }
 
+    @Override
+    public void setTimer(Timer timer) {
+        timerThread = new Thread(timer);
+        timer.setRunningTime(difficulty.getReactionTime());
+    }
 
+    public void setActualKey() {
+        Random random = new Random();
+        actualKey = (char) (random.nextInt(26) + 'a');
+    }
+
+    @Override
+    public void run() {
+        new Thread(() -> {
+            for (int numReps = 0; numReps < difficulty.getMaxReps(); numReps++) {
+                setActualKey();
+                System.out.println("Key: " + actualKey);
+                timerThread.start();
+                while (timerThread.isAlive()) {
+                    if (isPressed) {
+                        System.out.println("Pressed");
+                        isPressed = false;
+                    }
+                }
+                timerThread.interrupt();
+            }
+        }).start();
+
+    }
 }

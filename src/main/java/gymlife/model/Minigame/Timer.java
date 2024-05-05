@@ -13,7 +13,7 @@ public class Timer implements Runnable{
 
     @Override
     public void run() {
-        while (runningTime > 0) {
+        while (runningTime > 0 && !Thread.currentThread().isInterrupted()) {
             isRunning = true;
             try {
                 Thread.sleep(1);

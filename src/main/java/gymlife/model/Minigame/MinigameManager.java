@@ -1,6 +1,5 @@
-package gymlife.model;
+package gymlife.model.Minigame;
 
-import gymlife.controller.api.Controller;
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameType;
@@ -15,14 +14,13 @@ public class MinigameManager {
 
 
     public void startMinigame() {
-        System.out.println(currentMinigame.getClass().getName());
-        this.currentMinigame.start();
+        Thread thread = new Thread((Runnable) currentMinigame);
+        thread.start();
     }
 
     public MinigameManager setCurrentMinigame(final MinigameType minigameScenario) {
 
         try {
-            System.out.println(MinigameType.BENCH_PRESS.getName());
             this.currentMinigame = (Minigame) Class
                     .forName(MinigameType.BENCH_PRESS.getName())
                     .getDeclaredConstructor(difficulty.getClass())
@@ -41,5 +39,10 @@ public class MinigameManager {
 
     public Minigame getCurrentMinigame() {
         return this.currentMinigame;
+    }
+
+    public MinigameManager setTimer(final Timer timer) {
+        this.currentMinigame.setTimer(timer);
+        return this;
     }
 }

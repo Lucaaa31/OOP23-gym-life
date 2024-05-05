@@ -31,5 +31,4 @@ public interface Controller {
 
     List<Integer> getTime();
 
-    void getTimer(Timer timer);
 }

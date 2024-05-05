@@ -18,7 +18,7 @@ import java.util.List;
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MinigameManager minigameManager = new MinigameManager();
-    private Timer timer;
+    private Timer timer = new Timer();
 
     /**
      * Moves the character in the specified direction.
@@ -53,9 +53,6 @@ public class ControllerImpl implements Controller {
         minigameManager.getCurrentMinigame().notifyKeyPressed(keyChar);
     }
 
-    public void getTimer(final Timer timer){
-        this.timer = timer;
-    }
 
     @Override
     public List<Integer> getTime() {
