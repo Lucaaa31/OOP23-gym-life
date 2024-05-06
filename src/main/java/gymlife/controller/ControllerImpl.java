@@ -1,13 +1,11 @@
 package gymlife.controller;
 
-import gymlife.model.CharacterModelImpl;
-import gymlife.model.InteractionsManager;
-import gymlife.model.MapManagerImpl;
-import gymlife.model.ScenariosManager;
-import gymlife.model.GameMapImpl;
+import gymlife.model.*;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
+import gymlife.model.api.StatsManager;
 import gymlife.utility.Directions;
+import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
@@ -19,7 +17,11 @@ public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
-    private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
+    private final StatsManager statsManager = new StatsManagerImpl(GameDifficulty.EASY);
+    private final InteractionsManager interactionsManager = new InteractionsManager(
+            scenariosManager,
+            statsManager
+            );
 
     /**
      * Moves the character in the specified direction.
@@ -45,7 +47,7 @@ public class ControllerImpl implements Controller {
      * Method to directly change the current map to parameter newMap.
      * @param newMap GameMap to switch the current map to.
      */
-    public void goToGym(final GameMap newMap) {
+    public void goToNewMap(final GameMap newMap) {
         mapManager.changeMap(newMap);
     }
 

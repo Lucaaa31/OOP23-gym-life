@@ -42,8 +42,8 @@ public class StatsManagerImpl implements StatsManager {
      * @return the number of days left
      */
     @Override
-    public int getDays() {
-        return gameDays.dayLeft();
+    public DaysModel getDays() {
+        return gameDays;
     }
     /**
      * Checks if the game is over.

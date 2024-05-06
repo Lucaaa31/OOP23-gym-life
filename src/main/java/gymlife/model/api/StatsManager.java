@@ -16,9 +16,9 @@ public interface StatsManager {
     /**
      * Returns the number of days in the gym life.
      *
-     * @return the number of days
+     * @return the counter of Days.
      */
-    int getDays();
+    DaysModel getDays();
     /**
      * Checks if the game is over.
      *

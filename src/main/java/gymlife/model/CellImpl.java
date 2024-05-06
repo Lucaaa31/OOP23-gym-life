@@ -46,7 +46,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell used to interact with bed, no collision and interactable.
      */
-    HOUSE_BED_INTERACT(7, false, null),
+    HOUSE_BED_INTERACT(7, false, InteractionsManager::daysInteraction),
     /**
      * The kitchen is divided in 3 cells, all of them with collisions and not interactable.
      */
@@ -70,7 +70,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, (e) -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    HOUSE_EXIT(13, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell used to interact with the kitchen, no collisions and interactable.
      */
@@ -82,7 +82,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    SHOP_EXIT(16, false, null),
+    SHOP_EXIT(16, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell with a non interactable fridge, with collisions and not interactable.
      */
@@ -126,7 +126,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    GYM_EXIT(27, false, null),
+    GYM_EXIT(27, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell with a regular bench, with collisions and not interactable.
      */
