@@ -49,14 +49,18 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void notifyKeyPressed(char keyChar) {
-        minigameManager.getCurrentMinigame().notifyKeyPressed(keyChar);
+    public void notifyButtonPressed() {
+        minigameManager.getCurrentMinigame().notifyButtonPressed();
     }
 
 
     @Override
     public List<Integer> getTime() {
         return timer.getRunningTime();
+    }
+
+    public int getState() {
+        return minigameManager.getCurrentMinigame().getState();
     }
 }
 

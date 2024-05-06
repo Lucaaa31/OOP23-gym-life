@@ -3,25 +3,21 @@ package gymlife.model.Minigame;
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
 
-import java.util.Random;
-
 public class BenchMinigame implements Minigame, Runnable {
     private MinigameDifficulty difficulty = MinigameDifficulty.EASY;
     private Thread timerThread;
     private boolean isPressed;
-    private char actualKey;
+    private int nTimesPressed;
+    private int state;
 
 
     public BenchMinigame(MinigameDifficulty difficulty) {
     }
 
-    private void checkIfCorrect() {
-
-    }
 
     @Override
-    public void notifyKeyPressed(char keyChar) {
-        isPressed = true;
+    public void notifyButtonPressed() {
+        this.isPressed = true;
     }
 
     @Override
@@ -30,27 +26,34 @@ public class BenchMinigame implements Minigame, Runnable {
         timer.setRunningTime(difficulty.getReactionTime());
     }
 
-    public void setActualKey() {
-        Random random = new Random();
-        actualKey = (char) (random.nextInt(26) + 'a');
-    }
+
 
     @Override
     public void run() {
-        new Thread(() -> {
-            for (int numReps = 0; numReps < difficulty.getMaxReps(); numReps++) {
-                setActualKey();
-                System.out.println("Key: " + actualKey);
-                timerThread.start();
-                while (timerThread.isAlive()) {
-                    if (isPressed) {
-                        System.out.println("Pressed");
-                        isPressed = false;
+        for (int numReps = 0; numReps < difficulty.getRequiredReps(); numReps++) {
+            //timerThread.start();
+            while (true) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                }
+                if (isPressed) {
+                    nTimesPressed++;
+                    System.out.println("Pressed");
+                    isPressed = false;
+                    if (nTimesPressed == difficulty.getnRepsForSwitchState()) {
+                        System.out.println("Switch state");
+                        state++;
+                        nTimesPressed = 0;
+
+                        break;
                     }
                 }
-                timerThread.interrupt();
             }
-        }).start();
+        }
+    }
 
+    public int getState() {
+        return state;
     }
 }

@@ -1,56 +1,54 @@
 package gymlife.utility;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public enum MinigameDifficulty {
     EASY(
             2,
             3,
             7000,
-            new HashSet<Character>(Set.of('Q', 'W', 'E', 'R', 'T', 'Y'))
+            3
     ),
     MEDIUM(
             3,
             1,
             5000,
-            new HashSet<Character>(Set.of('Q', 'W', 'E', 'R', 'T', 'Y',
-                    'A', 'S', 'D', 'F', 'Z', 'X', 'C'))
+            5
     ),
     HARD(
             5,
             0,
             3000,
-            new HashSet<Character>(Set.of('Q', 'W', 'E', 'R', 'T', 'Y',
-                    'A', 'S', 'D', 'F', 'Z', 'X', 'C', 'U', 'I',
-                    'O', 'P', 'G', 'H', 'J', 'K', 'L', 'B', 'N', 'M'))
+            10
     );
 
-    private Set<Character> keys;
-    private int nReps;
-    private int nMistakes;
-    private int reactionTime;
+    private final int nRepsForSwitchState;
+    private final int requiredReps;
+    private final int maxMistakes;
+    private final int reactionTime;
 
-    MinigameDifficulty(final int nReps, final int nMistakes, final int reactionTime, final Set<Character> keys) {
-        this.keys = keys;
-        this.nReps = nReps;
-        this.nMistakes = nMistakes;
+    MinigameDifficulty(final int requiredReps, final int maxMistakes, final int reactionTime, final int nRepsForSwitchState) {
+        this.nRepsForSwitchState = nRepsForSwitchState;
+        this.requiredReps = requiredReps;
+        this.maxMistakes = maxMistakes;
         this.reactionTime = reactionTime;
     }
 
-    public Set<Character> getKeys() {
-        return keys;
+
+
+    public int getRequiredReps() {
+        return requiredReps;
     }
 
-    public int getnReps() {
-        return nReps;
-    }
-
-    public int getnMistakes() {
-        return nMistakes;
+    public int getMaxMistakes() {
+        return maxMistakes;
     }
 
     public int getReactionTime() {
         return reactionTime;
+    }
+
+    public int getnRepsForSwitchState() {
+        return nRepsForSwitchState;
     }
 }

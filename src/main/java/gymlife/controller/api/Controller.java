@@ -5,6 +5,7 @@ import gymlife.utility.Directions;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.Position;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -27,8 +28,9 @@ public interface Controller {
 
     void setMinigame(MinigameDifficulty difficulty);
 
-    void notifyKeyPressed(char keyChar);
+    void notifyButtonPressed();
 
     List<Integer> getTime();
 
+    int getState();
 }

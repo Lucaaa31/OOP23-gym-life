@@ -4,7 +4,9 @@ import gymlife.model.Minigame.Timer;
 
 public interface Minigame {
 
-    void notifyKeyPressed(char keyChar);
+    void notifyButtonPressed();
 
     void setTimer(Timer timer);
+
+    int getState();
 }

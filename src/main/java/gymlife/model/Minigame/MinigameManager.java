@@ -14,8 +14,7 @@ public class MinigameManager {
 
 
     public void startMinigame() {
-        Thread thread = new Thread((Runnable) currentMinigame);
-        thread.start();
+        new Thread((Runnable) currentMinigame).start();
     }
 
     public MinigameManager setCurrentMinigame(final MinigameType minigameScenario) {
