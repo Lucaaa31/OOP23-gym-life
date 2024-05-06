@@ -15,6 +15,7 @@ public final class InteractionsManager {
      * Constructor of the interactionsManager. All the managers of the game are given to it in order to act as a filter
      * for the interactions.
      * @param scenariosManager the scenarioManager on which the interactions will occur.
+     * @param statsManager The StatsManager on which the interactions will occur.
      */
     public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager) {
         this.scenariosManager = scenariosManager;
