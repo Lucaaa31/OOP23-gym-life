@@ -5,7 +5,6 @@ import java.util.Map;
 
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameMap;
-import gymlife.model.api.Pair;
 import gymlife.utility.MapConstants;
 import gymlife.utility.MapLoader;
 import gymlife.utility.Position;

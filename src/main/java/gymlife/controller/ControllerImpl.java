@@ -1,6 +1,10 @@
 package gymlife.controller;
 
-import gymlife.model.*;
+import gymlife.model.CharacterModelImpl;
+import gymlife.model.InteractionsManager;
+import gymlife.model.MapManagerImpl;
+import gymlife.model.ScenariosManager;
+import gymlife.model.GameMapImpl;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.utility.Directions;

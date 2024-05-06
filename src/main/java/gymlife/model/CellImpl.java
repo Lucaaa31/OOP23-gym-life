@@ -3,7 +3,6 @@ package gymlife.model;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import gymlife.model.api.Cell;
 import gymlife.model.api.GameInteraction;
@@ -213,6 +212,7 @@ public enum CellImpl implements Cell {
      * Method to get the interaction of the cell.
      * @return An optional that can be either empty or contains a lambda function.
      */
+    @Override
     public Optional<GameInteraction> getInteraction() {
         if (this.interaction == null) {
             return Optional.empty();

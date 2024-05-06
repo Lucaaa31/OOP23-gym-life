@@ -1,9 +1,6 @@
 package gymlife.model.api;
 
-import gymlife.model.InteractionsManager;
-
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * An object that contains information on specific parts of the {@code GameMap}.
@@ -30,5 +27,9 @@ public interface Cell {
      */
     String getName();
 
+    /**
+     * Method to get the interaction of the cell.
+     * @return if the cell has no interaction it returns Optional.empty(), otherwise it returns a GameInteraction;
+     */
     Optional<GameInteraction> getInteraction();
 }

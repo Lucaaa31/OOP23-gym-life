@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import gymlife.model.CellImpl;
-import gymlife.model.PairImpl;
 import gymlife.model.api.Cell;
-import gymlife.utility.Position;
 
 /**
  * MapLoader is a static class used to load a map of pairs and Cells from file.
