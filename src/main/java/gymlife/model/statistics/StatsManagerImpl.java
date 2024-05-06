@@ -3,7 +3,11 @@ package gymlife.model.statistics;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounters;
-import gymlife.model.api.*;
+import gymlife.model.api.StatsManager;
+import gymlife.model.api.DaysModel;
+import gymlife.model.api.MoneyModel;
+import gymlife.model.api.StatsModel;
+import gymlife.model.api.Counter;
 import gymlife.utility.GameDifficulty;
 
 /**
