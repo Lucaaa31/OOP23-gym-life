@@ -1,5 +1,6 @@
 package gymlife.controller.api;
 
+import gymlife.model.api.GameMap;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 
@@ -20,4 +21,21 @@ public interface Controller {
      * @return the position of the character
      */
     Position getCharacterPos();
+
+    /**
+     * Method to go to a new map.
+     * @param newMap new map to go to.
+     */
+    void goToNewMap(GameMap newMap);
+
+    /**
+     * Method to get the current map.
+     * @return Returns the current map.
+     */
+    GameMap getCurrentMap();
+
+    /**
+     * Executes whatever action is associated with cell on which the character currently is.
+     */
+    void cellInteraction();
 }

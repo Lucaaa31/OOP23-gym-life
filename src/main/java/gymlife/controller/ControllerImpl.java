@@ -52,6 +52,7 @@ public class ControllerImpl implements Controller {
      * Method to directly change the current map to parameter newMap.
      * @param newMap GameMap to switch the current map to.
      */
+    @Override
     public void goToNewMap(final GameMap newMap) {
         mapManager.changeMap(newMap);
     }
@@ -60,6 +61,7 @@ public class ControllerImpl implements Controller {
      * Method to return the current map, taken from the MapManager.
      * @return Returns the current {@code GameMap}.
      */
+    @Override
     public GameMap getCurrentMap() {
         return mapManager.getCurrentMap();
     }
@@ -67,6 +69,7 @@ public class ControllerImpl implements Controller {
     /**
      * Method to execute the action relative to the cell on which the player is standing.
      */
+    @Override
     public void cellInteraction() {
         mapManager.getCurrentMap()
                 .getCellAtCoord(characterModel.getCharacterPos())
