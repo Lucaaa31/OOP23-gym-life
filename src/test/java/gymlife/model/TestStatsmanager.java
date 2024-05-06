@@ -53,4 +53,16 @@ class TestStatsmanager {
         stats.getStats().get(StatsType.MASS).multiIncrement(-StatsConstants.MAX_MASS_LEVEL);
         stats.resetAll();
     }
+
+    @Test
+    void testAcceptEncounter() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        /*
+         * add for each type of mass the exact amount 
+         */
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        stats.acceptEncounter(Encounters.GYM_BRO);
+        stats.resetAll();
+    }
+
 }

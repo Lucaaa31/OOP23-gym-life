@@ -5,6 +5,7 @@ import java.util.Map;
 import gymlife.model.api.StatsModel;
 import gymlife.model.api.Counter;
 import gymlife.model.api.DaysModel;
+import gymlife.model.api.MoneyModel;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.StatsConstants;
 import gymlife.utility.StatsType;
@@ -17,6 +18,7 @@ import gymlife.model.api.StatsManager;
 public class StatsManagerImpl implements StatsManager {
     private final StatsModel gameStats;
     private final DaysModel gameDays;
+    private final MoneyModel gameMoney;
     /**
      * Constructs a StatsManagerImpl object with the given game difficulty.
      * Initializes the gameStats and gameDays objects.
@@ -26,6 +28,7 @@ public class StatsManagerImpl implements StatsManager {
     public StatsManagerImpl(final GameDifficulty difficulty) {
         gameStats = new StatsModelImpl();
         gameDays = new DaysModelImpl(difficulty.getDays());
+        gameMoney = new MoneyModelImpl(difficulty.getDays());
     }
     /**
      * Retrieves the game statistics as a map of StatsType and their corresponding values.
@@ -46,6 +49,14 @@ public class StatsManagerImpl implements StatsManager {
         return gameDays.dayLeft();
     }
     /**
+     * Increments the number of days by one.
+     * 
+     */
+    @Override
+    public void newDay() {
+        gameDays.newDay();
+    }
+    /**
      * Checks if the game is over.
      * The game is considered over if either one of the stats is zero or all the days are over.
      * 
@@ -53,7 +64,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public boolean isGameOver() {
-        if (gameDays.isDayOver()) {
+        if (gameDays.isDayOver() || gameMoney.isOver()) {
             return true;
         }
         final Map<StatsType, Counter> statsMap = gameStats.getMap();
@@ -80,5 +91,37 @@ public class StatsManagerImpl implements StatsManager {
     @Override
     public void resetAll() {
         gameStats.resetAll();
+    }
+    /**
+     * Modifies the game statistics according to the encounter type and the accept case of the specific encounter.
+     * 
+     * @param encounter the encounter to accept
+     */
+    @Override
+    public void acceptEncounter(final Encounters encounter) {
+        final Map<StatsType, Integer> acceptCase = encounter.getAcceptCase();
+        for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
+            if (entry.getKey() == StatsType.MONEY) {
+                gameMoney.multiIncrementMoney(entry.getValue());
+            } else {
+                gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+    /**
+     * Modifies the game statistics according to the encounter type and the deny case of the specific encounter.
+     * 
+     * @param encounter the encounter to deny
+     */
+    @Override
+    public void denyEncounter(final Encounters encounter) {
+        final Map<StatsType, Integer> denyCase = encounter.getDenyCase();
+        for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
+            if (entry.getKey() == StatsType.MONEY) {
+                gameMoney.multiIncrementMoney(entry.getValue());
+            } else {
+                gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+            }
+        }
     }
 }

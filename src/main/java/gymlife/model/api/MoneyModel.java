@@ -30,4 +30,9 @@ public interface MoneyModel {
      * @param amount the amount to increment the money's level by
      */
     void multiIncrementMoney(int amount);
+    /**
+     * Return true if money is over false otherwise.
+     * @return true if money is over false otherwise
+     */
+    boolean isOver();
 }

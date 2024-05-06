@@ -20,6 +20,12 @@ public class ScenariosManager {
             case MINGAME_BANK:
                 actualScenariosType = ScenariosType.MINGAME_BANK;
                 break;
+            case MINIGAME_GYM:
+                actualScenariosType = ScenariosType.MINIGAME_GYM;
+                break;
+            case MAIN_MAP:
+                actualScenariosType = ScenariosType.MAIN_MAP;
+                break;
             default:
                 break;
         }

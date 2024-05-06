@@ -104,9 +104,7 @@ public final class StatsModelImpl implements StatsModel {
      */
     @Override
     public Map<StatsType, Counter> getMap() {
-        final Map<StatsType, Counter> retStats = new HashMap<>();
-        retStats.putAll(gameStats);
-        return retStats;
+        return Map.copyOf(gameStats);
     }
     /**
      * Increases the specified stat by the specified value.

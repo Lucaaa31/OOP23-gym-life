@@ -1,6 +1,8 @@
 package gymlife.model.api;
 
 import java.util.Map;
+
+import gymlife.model.Encounters;
 import gymlife.utility.StatsType;
 
 /**
@@ -20,6 +22,11 @@ public interface StatsManager {
      */
     int getDays();
     /**
+     * Decrement the number of day of one.
+     *
+     */
+    void newDay();
+    /**
      * Checks if the game is over.
      *
      * @return true if the game is over, false otherwise
@@ -36,4 +43,14 @@ public interface StatsManager {
      * 
     */
     void resetAll();
+    /**
+     * Modify the stats according to the encounter type, and the accept case of the specific encounter. 
+     * @param encounter the encounter to deny
+    */
+    void acceptEncounter(Encounters encounter);
+    /**
+     * Modify the stats according to the encounter type, and the deny case of the specific encounter.
+     * @param encounter the encounter to deny
+    */
+    void denyEncounter(Encounters encounter);
 }
