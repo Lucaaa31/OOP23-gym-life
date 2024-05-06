@@ -32,5 +32,9 @@ public enum StatsType {
     /**
      * Represents the number of days left for finishing the game.
      */
-    DAYS_LEFT;
+    DAYS,
+    /**
+     * Represents the money of the character.
+     */
+    MONEY;
 }

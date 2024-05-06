@@ -11,6 +11,20 @@ import gymlife.model.api.MoneyModel;
  */
 public class MoneyModelImpl extends Counter implements MoneyModel {
     /**
+     * Constructor of the class.
+     * @param count the initial amount of money
+     */
+    public MoneyModelImpl(final int count) {
+        this.setCount(count);
+    }
+    /**
+     * Constructor of the class.
+     * 
+     */
+    public MoneyModelImpl() {
+        this.setCount(0);
+    }
+    /**
      * Returns the current amount of money.
      * 
      * @return the current amount of money
@@ -50,5 +64,14 @@ public class MoneyModelImpl extends Counter implements MoneyModel {
     @Override
     public void multiIncrementMoney(final int amount) {
         this.multiIncrement(amount);
+    }
+    /**
+     * Return true if the amount of money over (equal zero), false otherwise.
+     * 
+     * @return true if the amount of money over, false otherwise.
+     */
+    @Override
+    public boolean isOver() {
+        return this.getCount() <= 0;
     }
 }

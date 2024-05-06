@@ -11,7 +11,7 @@ public interface DaysModel {
      */
     boolean isDayOver();
     /**
-     * Moves to a new day.
+     * Decrement the days count by one.
      */
     void newDay();
     /**

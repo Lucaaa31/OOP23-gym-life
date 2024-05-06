@@ -16,7 +16,7 @@ public class DaysModelImpl extends Counter implements DaysModel {
         this.setCount(numDays);
     }
     /**
-     * Increases the number of days by 1.
+     * Decrement the days count by one.
      */
     @Override
     public void newDay() {

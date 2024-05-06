@@ -22,6 +22,11 @@ public interface StatsManager {
      */
     int getDays();
     /**
+     * Decrement the number of day of one.
+     *
+     */
+    void newDay();
+    /**
      * Checks if the game is over.
      *
      * @return true if the game is over, false otherwise
@@ -48,5 +53,4 @@ public interface StatsManager {
      * @param encounter the encounter to deny
     */
     void denyEncounter(Encounters encounter);
-
 }
