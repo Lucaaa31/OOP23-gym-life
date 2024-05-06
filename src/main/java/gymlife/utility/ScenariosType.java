@@ -5,15 +5,20 @@ package gymlife.utility;
  */
 public enum ScenariosType {
     /**
-     * Rapresents the main map scenario.
+     * Represents the main map scenario.
     */
     MAIN_MAP,
     /**
-    * Rapresents the gym scenario.
+    * Represents the gym scenario.
     */
     MINIGAME_GYM,
     /**
-    * Rapresents the bank scenario.
+    * Represents the bank scenario.
     */
-    MINGAME_BANK;
+    MINGAME_BANK,
+    /**
+     * Represents the indoor maps' scenario.
+     */
+    INDOOR_MAP,
+    ;
 }
