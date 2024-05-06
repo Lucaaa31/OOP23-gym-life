@@ -53,11 +53,13 @@ public class ControllerImpl implements Controller {
         return mapManager.getCurrentMap();
     }
 
+    /**
+     * Method to execute the action relative to the cell on which the player is standing.
+     */
     public void cellInteraction() {
         mapManager.getCurrentMap()
                 .getCellAtCoord(characterModel.getCharacterPos())
                 .getInteraction()
-                .get()
-                .interact(interactionsManager);
+                .ifPresent((e) -> e.interact(interactionsManager));
     }
 }
