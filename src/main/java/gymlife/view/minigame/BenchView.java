@@ -1,29 +1,57 @@
 package gymlife.view.minigame;
 
-import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import gymlife.controller.api.Controller;
-import gymlife.model.Minigame.QuickTimeEvent;
-import gymlife.utility.MinigameDifficulty;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
 
 public class BenchView extends JPanel{
     private final Controller controller;
-    private QuickTimeEvent quickTimeEvent;
+    private final JButton button = new JButton("Press me!");
+    private ImageIcon image;
+    private JLabel label = new JLabel();
 
     public BenchView(final Controller controller){
         this.controller = controller;
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                System.out.println("Key typed: " + e.getKeyChar());
-                controller.notifyKeyPressed(e.getKeyChar());
-            }
+        this.setLayout(new BorderLayout());
+        updateImage(controller.getState());
+        label.setPreferredSize(new Dimension(500, 300));
+        //this.button.setBorder(BorderFactory.createEmptyBorder());
+        button.addActionListener(e -> {
+            controller.notifyButtonPressed();
+            setRandomPositionButton();
+            new Thread(() -> {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException p) {
+                }
+                SwingUtilities.invokeLater(() -> {
+                    updateImage(controller.getState());
+                });
+            }).start();
         });
+        this.setFocusable(true);
+        this.requestFocusInWindow();
         this.setVisible(true);
+
+    }
+
+    private void updateImage(int state) {
+        this.image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_" + state + ".png");
+        this.label.setIcon(image);
+        this.label.setLayout(new FlowLayout());
+        this.label.add(button);
+        this.add(label, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+    }
+
+    private void setRandomPositionButton(){
+        int x = (int) (Math.random() * 250);
+        int y = (int) (Math.random() * 300);
+        this.button.setBounds(x, y, button.getWidth(), button.getHeight());
     }
 
 

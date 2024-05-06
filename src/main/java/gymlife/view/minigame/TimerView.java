@@ -51,7 +51,7 @@ public class TimerView extends JPanel {
         setVisible(true);
 
 
-        update();
+        //update();
     }
 
 

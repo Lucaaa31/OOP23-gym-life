@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.minigame;
 
 
 import gymlife.controller.api.Controller;
@@ -20,24 +20,27 @@ public class MinigameViewImpl{
 
         JFrame mainFrame = new JFrame("TEMPORARY");
         Dimension screenSeize = Toolkit.getDefaultToolkit().getScreenSize();
-        int widht = (int)screenSeize.getWidth();
-        int height = (int)screenSeize.getHeight();
+        int widht = 500;
+        int height = 300;
 
 
-        mainFrame.setSize(widht, height);
+        mainFrame.setSize(widht/2, height/2);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 
-        JPanel panel1 = new JPanel();
-        panel1.setBackground(Color.BLUE); 
-        panel1.setPreferredSize(new Dimension(widht - (widht/3), height)); 
+//        JPanel panel1 = new JPanel();
+//        panel1.setBackground(Color.BLUE);
+//        panel1.setPreferredSize(new Dimension(widht - (widht/3), height));
 
         JPanel panel2 = new JPanel();
-        //panel2.setBackground(Color.RED); // Set background color for illustration
-        panel2.setPreferredSize(new Dimension(widht/3, height)); 
+        panel2.setBackground(Color.RED);
+        panel2.setPreferredSize(new Dimension(widht/3, height));
 
-        mainPanel.add(panel1);
+        BenchView benchView = new BenchView(controller);
+        benchView.setPreferredSize(new Dimension(widht - (widht/3), height));
+
+        mainPanel.add(benchView);
         mainPanel.add(panel2);
 
         mainFrame.setContentPane(mainPanel);
@@ -47,13 +50,25 @@ public class MinigameViewImpl{
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
 
-        TimerView panelTimer = new TimerView(height, controller);
+        //TimerView panelTimer = new TimerView(height, controller);
 
-        panelTimer.setPreferredSize(new Dimension(widht/5, height/5));
+
+       // panelTimer.setPreferredSize(new Dimension(widht/5, height/5));
         
-        panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelTimer.setVisible(true);
-        panel1.add(panelTimer);
+        benchView.setLayout(new FlowLayout(FlowLayout.LEFT));
+       // panelTimer.setVisible(true);
+       // benchView.add(panelTimer);
+
+
+        benchView.setVisible(true);
+        //benchView.setBackground(Color.BLACK);
+        benchView.setFocusable(true);
+
+        benchView.setVisible(true);
+        panel2.setVisible(true);
+        mainPanel.setVisible(true);
+        mainFrame.setVisible(true);
+
 
 
     }
