@@ -3,8 +3,8 @@ package gymlife.model.api;
 import java.util.Map;
 import java.util.Optional;
 
-import gymlife.model.Encounters;
-import gymlife.utility.StatsType;
+import gymlife.model.encounter.Encounters;
+import gymlife.model.statistics.StatsType;
 
 /**
  * The EncountersManager interface represents a manager for gym encounters.

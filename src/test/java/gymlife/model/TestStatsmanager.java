@@ -1,5 +1,7 @@
 package gymlife.model;
 
+import gymlife.model.encounter.Encounters;
+import gymlife.model.statistics.StatsManagerImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.StatsConstants;
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsConstants;
+import gymlife.model.statistics.StatsType;
 import gymlife.model.api.StatsManager;
 
 class TestStatsmanager {

@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import gymlife.model.statistics.DaysModelImpl;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

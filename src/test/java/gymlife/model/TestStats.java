@@ -1,13 +1,14 @@
 package gymlife.model;
 
+import gymlife.model.statistics.StatsModelImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import gymlife.model.api.StatsModel;
-import gymlife.utility.StatsConstants;
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsConstants;
+import gymlife.model.statistics.StatsType;
 
 /**
  * This class contains unit tests for the StatsModel implementation.

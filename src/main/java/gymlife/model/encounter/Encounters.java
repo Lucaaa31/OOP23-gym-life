@@ -1,9 +1,9 @@
-package gymlife.model;
+package gymlife.model.encounter;
 
 import java.util.Map;
 import java.util.Optional;
 
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
 
 /**
  * The Encounters enum represents different encounters that can happen in the gym.

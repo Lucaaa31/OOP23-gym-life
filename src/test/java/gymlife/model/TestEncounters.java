@@ -1,5 +1,7 @@
 package gymlife.model;
 
+import gymlife.model.encounter.Encounters;
+import gymlife.model.encounter.EncountersCases;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

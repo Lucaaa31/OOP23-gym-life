@@ -1,15 +1,10 @@
-package gymlife.model;
+package gymlife.model.statistics;
 
 import java.util.Map;
 
-import gymlife.model.api.StatsModel;
-import gymlife.model.api.Counter;
-import gymlife.model.api.DaysModel;
-import gymlife.model.api.MoneyModel;
+import gymlife.model.encounter.Encounters;
+import gymlife.model.api.*;
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.StatsConstants;
-import gymlife.utility.StatsType;
-import gymlife.model.api.StatsManager;
 
 /**
  * Implementation of the StatsManager interface.

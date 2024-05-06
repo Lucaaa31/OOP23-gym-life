@@ -1,4 +1,4 @@
-package gymlife.model;
+package gymlife.model.statistics;
 
 import gymlife.model.api.Counter;
 import gymlife.model.api.MoneyModel;

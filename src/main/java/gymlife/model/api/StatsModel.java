@@ -2,7 +2,7 @@ package gymlife.model.api;
 
 import java.util.Map;
 
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
 
 /**
  * This interface represents the stats model for a gym life application.

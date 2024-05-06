@@ -1,10 +1,10 @@
-package gymlife.model;
+package gymlife.model.encounter;
 
 import java.util.Map;
 import java.util.Optional;
 
 import gymlife.model.api.EncountersManager;
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
 
 /**
  * Implementation of the EncountersManager interface.

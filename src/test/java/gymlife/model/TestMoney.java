@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import gymlife.model.statistics.MoneyModelImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

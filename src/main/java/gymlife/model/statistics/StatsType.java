@@ -1,4 +1,4 @@
-package gymlife.utility;
+package gymlife.model.statistics;
 
 /**
  * The StatsType enum represents different types of statistics related to gym life.

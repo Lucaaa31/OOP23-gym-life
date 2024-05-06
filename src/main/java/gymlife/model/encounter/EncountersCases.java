@@ -1,9 +1,9 @@
-package gymlife.model;
+package gymlife.model.encounter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
 
 /**
  * EncountersCases class contains constants and methods related to different encounter cases in the application.
