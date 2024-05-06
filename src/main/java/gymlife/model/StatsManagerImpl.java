@@ -81,4 +81,28 @@ public class StatsManagerImpl implements StatsManager {
     public void resetAll() {
         gameStats.resetAll();
     }
+    /**
+     * Modifies the game statistics according to the encounter type and the accept case of the specific encounter.
+     * 
+     * @param encounter the encounter to accept
+     */
+    @Override
+    public void acceptEncounter(final Encounters encounter) {
+        final Map<StatsType, Integer> acceptCase = encounter.getAcceptCase();
+        for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
+            gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+        }
+    }
+    /**
+     * Modifies the game statistics according to the encounter type and the deny case of the specific encounter.
+     * 
+     * @param encounter the encounter to deny
+     */
+    @Override
+    public void denyEncounter(final Encounters encounter) {
+        final Map<StatsType, Integer> denyCase = encounter.getDenyCase();
+        for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
+            gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+        }
+    }
 }

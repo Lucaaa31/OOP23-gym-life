@@ -1,6 +1,8 @@
 package gymlife.model.api;
 
 import java.util.Map;
+
+import gymlife.model.Encounters;
 import gymlife.utility.StatsType;
 
 /**
@@ -36,4 +38,15 @@ public interface StatsManager {
      * 
     */
     void resetAll();
+    /**
+     * Modify the stats according to the encounter type, and the accept case of the specific encounter. 
+     * @param encounter the encounter to deny
+    */
+    void acceptEncounter(Encounters encounter);
+    /**
+     * Modify the stats according to the encounter type, and the deny case of the specific encounter.
+     * @param encounter the encounter to deny
+    */
+    void denyEncounter(Encounters encounter);
+
 }
