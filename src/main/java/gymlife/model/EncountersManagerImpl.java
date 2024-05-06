@@ -11,7 +11,13 @@ import gymlife.utility.StatsType;
  */
 public class EncountersManagerImpl implements EncountersManager {
     private Optional<Encounters> encounter;
-
+    /**
+     * Constructor of the class  EncountersManagerImpl.
+     * 
+     */
+    public EncountersManagerImpl() {
+        this.encounter = Optional.empty();
+    }
     /**
      * Retrieves a random encounter .
      * 
@@ -22,7 +28,6 @@ public class EncountersManagerImpl implements EncountersManager {
         this.encounter =  Encounters.getRandomEncounter();
         return encounter;
     }
-
     /**
      * Retrieves the map of accept cases for the current encounter.
      * 
@@ -32,7 +37,6 @@ public class EncountersManagerImpl implements EncountersManager {
     public Map<StatsType, Integer> getAcceptMap() {
         return encounter.get().getAcceptCase();
     }
-
     /**
      * Retrieves the map of deny cases for the current encounter.
      * 
