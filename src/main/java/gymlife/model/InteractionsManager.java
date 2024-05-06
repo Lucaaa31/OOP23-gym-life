@@ -33,6 +33,6 @@ public final class InteractionsManager {
      * Method to advance the days, decreasing the Days counter.
      */
     public void daysInteraction() {
-        this.statsManager.getDays().newDay();
+        this.statsManager.newDay();
     }
 }
