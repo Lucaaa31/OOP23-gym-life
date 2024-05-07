@@ -4,7 +4,7 @@ import gymlife.model.statistics.MoneyModelImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import gymlife.model.api.MoneyModel;
+import gymlife.model.statistics.api.MoneyModel;
 
 
 class TestMoney {

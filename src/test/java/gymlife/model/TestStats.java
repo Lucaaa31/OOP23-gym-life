@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-import gymlife.model.api.StatsModel;
+import gymlife.model.statistics.api.StatsModel;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 

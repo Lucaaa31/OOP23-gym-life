@@ -1,6 +1,7 @@
 package gymlife.model;
 
-import gymlife.model.encounter.Encounters;
+import gymlife.model.encounter.Encounter;
+import gymlife.model.encounter.EncountersConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import gymlife.utility.GameDifficulty;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.api.StatsManager;
+import gymlife.model.statistics.api.StatsManager;
 
 class TestStatsmanager {
 
@@ -59,11 +60,13 @@ class TestStatsmanager {
     @Test
     void testAcceptEncounter() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        Encounter encounter = new Encounter("GYM_BRO", "prova",
+                EncountersConstants.gymBroAccept(), EncountersConstants.gymBroDeny());
         /*
          * add for each type of mass the exact amount 
          */
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
-        stats.acceptEncounter(Encounters.GYM_BRO);
+        stats.acceptEncounter(encounter);
         stats.resetAll();
     }
 

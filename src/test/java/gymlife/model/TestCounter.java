@@ -3,7 +3,7 @@ package gymlife.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gymlife.model.api.Counter;
+import gymlife.model.statistics.Counter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestCounter {
