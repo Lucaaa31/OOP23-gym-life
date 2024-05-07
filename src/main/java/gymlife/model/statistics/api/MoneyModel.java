@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.statistics.api;
 
 /**
  * The MoneyModel interface represents the money held by the Character.

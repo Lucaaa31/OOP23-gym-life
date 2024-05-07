@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.statistics;
 
 /**
  * The Counter class represents a counter with basic increment and decrement operations.

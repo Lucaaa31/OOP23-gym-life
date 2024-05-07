@@ -1,7 +1,8 @@
-package gymlife.model.api;
+package gymlife.model.statistics.api;
 
 import java.util.Map;
 
+import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 
 /**

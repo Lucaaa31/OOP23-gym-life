@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.statistics.api;
 
 /**
  * The DaysModel interface represents a model for tracking days.
