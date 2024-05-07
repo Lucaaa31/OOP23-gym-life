@@ -146,7 +146,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train back, no collisions and interactable.
      */
-    GYM_LAT_INTERACT(32, false, null),
+    GYM_BACK_INTERACT(32, false, null),
     /**
      * The cell with the squat rack, with collisions not interactable.
      */
@@ -154,7 +154,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train legs, no collisions and interactable.
      */
-    GYM_SQUAT_INTERACT(34, false, null),
+    GYM_LEGS_INTERACT(34, false, null),
     /**
      * The cell with a couple of weights, with collisions and not interactable.
      */
@@ -203,9 +203,7 @@ public enum CellImpl implements Cell {
 
     @Override
     public String getName() {
-        return this.getClass()
-                .getName()
-                .toLowerCase(new Locale("en"));
+        return this.toString().toLowerCase(new Locale("en"));
     }
 
     /**
