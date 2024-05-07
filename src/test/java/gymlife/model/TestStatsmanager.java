@@ -60,7 +60,7 @@ class TestStatsmanager {
     @Test
     void testAcceptEncounter() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
-        Encounter encounter = new Encounter("GYM_BRO", "prova",
+        final Encounter encounter = new Encounter("GYM_BRO", "prova",
                 EncountersConstants.gymBroAccept(), EncountersConstants.gymBroDeny());
         /*
          * add for each type of mass the exact amount 

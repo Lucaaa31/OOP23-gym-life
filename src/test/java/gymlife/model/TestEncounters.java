@@ -1,11 +1,9 @@
 package gymlife.model;
 
 import gymlife.model.encounter.Encounter;
-import gymlife.model.encounter.EncountersConstants;
 import gymlife.model.encounter.EncountersFactoryImpl;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -17,11 +15,11 @@ class TestEncounters {
             boolean isValid = false;
             final Optional<Encounter> encounters = EncountersFactoryImpl.getRandomEncounter();
             if (encounters.isEmpty() 
-                || "PUSHER".equals(encounters.get().getName())
-                || "ICE_CREAM".equals(encounters.get().getName())
-                || "MONEY_BAG".equals(encounters.get().getName())
-                || "ROBBER".equals(encounters.get().getName())
-                || "GYM_BRO".equals(encounters.get().getName())
+                || "PUSHER".equals(encounters.get().name())
+                || "ICE_CREAM".equals(encounters.get().name())
+                || "MONEY_BAG".equals(encounters.get().name())
+                || "ROBBER".equals(encounters.get().name())
+                || "GYM_BRO".equals(encounters.get().name())
             ) {
                 isValid = true;
             }

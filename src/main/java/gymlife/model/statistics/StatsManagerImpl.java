@@ -96,7 +96,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void acceptEncounter(final Encounter encounter) {
-        final Map<StatsType, Integer> acceptCase = encounter.getAcceptCase();
+        final Map<StatsType, Integer> acceptCase = encounter.acceptCase();
         for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
                 gameMoney.multiIncrementMoney(entry.getValue());
@@ -112,7 +112,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void denyEncounter(final Encounter encounter) {
-        final Map<StatsType, Integer> denyCase = encounter.getDenyCase();
+        final Map<StatsType, Integer> denyCase = encounter.denyCase();
         for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
                 gameMoney.multiIncrementMoney(entry.getValue());

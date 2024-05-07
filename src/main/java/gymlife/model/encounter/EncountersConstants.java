@@ -6,7 +6,7 @@ import java.util.Map;
 import gymlife.model.statistics.StatsType;
 
 /**
- * EncountersCases class contains constants and methods related to different encounter cases in the application.
+ * EncountersConstants class contains constants and methods related to different encounter cases in the application.
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
@@ -124,38 +124,89 @@ public final class EncountersConstants {
     }
     /**
      * The chance of encountering an event.
-     * @return a double with the denial criteria for the casual encounter.
+     * 
+     * @return a double representing the chance of encountering an event
      */
     public static double encounterChance() {
         return ENCOUNTER_CHANCE;
     }
+    /**
+     * The chance of encountering a robber.
+     * 
+     * @return a double representing the chance of encountering a robber
+     */
     public static double robberChance() {
         return ROBBER_CHANCE;
     }
+    /**
+     * The chance of encountering an ice cream truck.
+     * 
+     * @return a double representing the chance of encountering an ice cream truck
+     */
     public static double iceCreamChance() {
         return ICE_CREAM_CHANCE;
     }
+    /**
+     * The chance of encountering a gym bro.
+     * 
+     * @return a double representing the chance of encountering a gym bro
+     */
     public static double gymBroChance() {
         return GYM_BRO_CHANCE;
     }
+    /**
+     * The chance of encountering a money bag.
+     * 
+     * @return a double representing the chance of encountering a money bag
+     */
     public static double moneyBagChance() {
         return MONEY_BAG_CHANCE;
     }
+    /**
+     * The chance of encountering a pusher.
+     * 
+     * @return a double representing the chance of encountering a pusher
+     */
     public static double pusherChance() {
         return PUSHER_CHANCE;
     }
+    /**
+     * The description of a pusher encounter.
+     * 
+     * @return a string representing the description of a pusher encounter
+     */
     public static String pusherDescription() {
         return PUSHER_DESCRIPTION;
     }
+    /**
+     * The description of an ice cream encounter.
+     * 
+     * @return a string representing the description of an ice cream encounter
+     */
     public static String iceCreamDescription() {
         return ICE_CREAM_DESCRIPTION;
     }
+    /**
+     * The description of a money bag encounter.
+     * 
+     * @return a string representing the description of a money bag encounter
+     */
     public static String moneyBagDescription() {
         return MONEY_BAG_DESCRIPTION;
     }
+    /**
+     * The description of a robber encounter.
+     * 
+     * @return a string representing the description of a robber encounter
+     */
     public static String robberDescription() {
         return ROBBER_DESCRIPTION;
     }
+    /**
+     * The description of a gym bro encounter.
+     * 
+     * @return a string representing the description of a gym bro encounter
+     */
     public static String gymBroDescription() {
         return GYM_BRO_DESCRIPTION;
     }
