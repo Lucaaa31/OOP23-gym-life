@@ -10,7 +10,6 @@ public class BankGameController {
     private final PlaneGameModel model;
     float multi;
 
-
     /**
      * Constructs a new BankGameController with the specified model and view.
      * 
@@ -27,13 +26,10 @@ public class BankGameController {
      * and waits for the thread to finish.
      */
     public void startMultiplier() {
-  /*        Thread threadMutliplier = new Thread(model);
-        threadMutliplier.start(); */
         model.run();
-        
     }
+
     public float getMultiplier() {
-    
         return model.getMultiplierShort();
     }
 

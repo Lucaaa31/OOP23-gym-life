@@ -5,7 +5,8 @@ package gymlife.view.bankgame;
  */
 public final class MultiplierGameView extends TextLabelView {
     private static final long serialVersionUID = -2109720273400189091L;
+    
     public void updateText(final float multiplierValue){
-        super.setText(String.format("%f",multiplierValue));
+        super.setText(String.format("%.3f",multiplierValue));
     }
 }

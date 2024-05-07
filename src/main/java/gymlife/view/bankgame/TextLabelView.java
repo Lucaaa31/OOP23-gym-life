@@ -12,7 +12,7 @@ import javax.swing.JLabel;
  */
 public abstract class TextLabelView extends JLabel implements BankGameComponent {
     private static final long serialVersionUID = -8840823320252661066L;
-    private static final float SIZE_NUM = 11;
+    private static final float SIZE_NUM = 15;
     /**
      * Reloads the appearance of the label by updating its font.
      * The font is set to bold and its size is adjusted based on the current height
