@@ -8,9 +8,20 @@ import gymlife.model.statistics.StatsType;
 /**
  * EncountersCases class contains constants and methods related to different encounter cases in the application.
  */
-public final class EncountersCases {
+public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
     private static final double ENCOUNTER_CHANCE = 0.5;
+    private static final double ICE_CREAM_CHANCE = 1;
+    private static final double GYM_BRO_CHANCE = 0.8;
+    private static final double PUSHER_CHANCE = 0.6;
+    private static final double ROBBER_CHANCE = 0.4;
+    private static final double MONEY_BAG_CHANCE = 0.2;
+    private static final String PUSHER_DESCRIPTION = "A pusher offers you some steroids. Do you accept?";
+    private static final String ICE_CREAM_DESCRIPTION = "An ice cream truck is parked outside the gym. Do you accept?";
+    private static final String MONEY_BAG_DESCRIPTION = "You find a bag of money on the ground. Do you take it?";
+    private static final String ROBBER_DESCRIPTION = "A robber tries to steal your wallet. Do you fight back?";
+    private static final String GYM_BRO_DESCRIPTION = "A gym bro stop you in the street. Do you accept?";
+
     /**
      * Returns a map representing the acceptance criteria for the pusher encounter.
      * 
@@ -118,6 +129,37 @@ public final class EncountersCases {
     public static double encounterChance() {
         return ENCOUNTER_CHANCE;
     }
-    private EncountersCases() {
+    public static double robberChance() {
+        return ROBBER_CHANCE;
+    }
+    public static double iceCreamChance() {
+        return ICE_CREAM_CHANCE;
+    }
+    public static double gymBroChance() {
+        return GYM_BRO_CHANCE;
+    }
+    public static double moneyBagChance() {
+        return MONEY_BAG_CHANCE;
+    }
+    public static double pusherChance() {
+        return PUSHER_CHANCE;
+    }
+    public static String pusherDescription() {
+        return PUSHER_DESCRIPTION;
+    }
+    public static String iceCreamDescription() {
+        return ICE_CREAM_DESCRIPTION;
+    }
+    public static String moneyBagDescription() {
+        return MONEY_BAG_DESCRIPTION;
+    }
+    public static String robberDescription() {
+        return ROBBER_DESCRIPTION;
+    }
+    public static String gymBroDescription() {
+        return GYM_BRO_DESCRIPTION;
+    }
+
+    private EncountersConstants() {
     }
 }

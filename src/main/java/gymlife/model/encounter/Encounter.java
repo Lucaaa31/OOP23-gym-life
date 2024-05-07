@@ -5,9 +5,10 @@ import gymlife.model.statistics.StatsType;
 import java.util.Map;
 
 public class Encounter {
-    private String description;
-    private Map<StatsType, Integer> acceptCase;
-    private Map<StatsType, Integer> denyCase;
+    private final String name;
+    private final String description;
+    private final Map<StatsType, Integer> acceptCase;
+    private final Map<StatsType, Integer> denyCase;
 
     /**
      * Constructs an Encounters object with the given description, accept case, and deny case.
@@ -16,8 +17,9 @@ public class Encounter {
      * @param acceptCase the map of stats type and corresponding values for accepting the encounter
      * @param denyCase the map of stats type and corresponding values for denying the encounter
      */
-    public Encounter(final String description, final Map<StatsType, Integer> acceptCase,
+    public Encounter(final String name, final String description, final Map<StatsType, Integer> acceptCase,
                      final Map<StatsType, Integer> denyCase) {
+        this.name = name;
         this.description = description;
         this.acceptCase = acceptCase;
         this.denyCase = denyCase;
@@ -45,5 +47,13 @@ public class Encounter {
      */
     public Map<StatsType, Integer> getDenyCase() {
         return Map.copyOf(denyCase);
+    }
+    /**
+     * Returns the map of stats type and corresponding values for denying the encounter.
+     *
+     * @return the map of stats type and corresponding values for denying the encounter
+     */
+    public String getName() {
+        return name;
     }
 }
