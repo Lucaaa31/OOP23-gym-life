@@ -76,6 +76,18 @@ public enum CellImpl implements Cell {
      */
     HOUSE_KITCHEN_INTERACT(14, false, null),
     /**
+     * The cell that contains a part of the house couch, with collisions and not interactable.
+     */
+    HOUSE_COUCH01(37, true, null),
+    /**
+     * The cell that contains a part of the house couch, with collisions and not interactable.
+     */
+    HOUSE_COUCH02(38, true, null),
+    /**
+     * The cell that contains the tv, with collisions and not interactable.
+     */
+    HOUSE_TV(39, true, null),
+    /**
      * The base floor of the shop {@code GameMap}, no collisions and not interactable.
      */
     SHOP_FLOOR(15, false, null),
