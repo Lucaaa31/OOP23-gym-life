@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestInteractions {
+class TestInteractions {
 
     private ScenariosManager scenariosManager;
     private StatsManager statsManager;
@@ -19,7 +19,7 @@ public class TestInteractions {
     private MapManager mapManager;
 
     @BeforeEach
-    public void init() {
+    void init() {
         scenariosManager = new ScenariosManager();
         scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
         statsManager = new StatsManagerImpl(GameDifficulty.EASY);
@@ -28,7 +28,7 @@ public class TestInteractions {
     }
 
     @Test
-    public void testBed() {
+    void testBed() {
         final int expectedDays = 39;
         final Position pos = new Position(1, 2);
         interactOnCell(pos);
@@ -36,7 +36,7 @@ public class TestInteractions {
     }
 
     @Test
-    public void testExit() {
+    void testExit() {
         final Position pos = new Position(7, 2);
         interactOnCell(pos);
         assertEquals(ScenariosType.MAIN_MAP, scenariosManager.getActualScenariosType());
