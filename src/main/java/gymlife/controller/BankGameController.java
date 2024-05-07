@@ -1,7 +1,5 @@
 package gymlife.controller;
 
-import gymlife.view.bankgame.BankGameView;
-
 import gymlife.model.PlaneGameModel;
 
 /**
@@ -10,8 +8,8 @@ import gymlife.model.PlaneGameModel;
  */
 public class BankGameController {
     private final PlaneGameModel model;
-    private final BankGameView view;
-    private static final int THREAD_WAITING = 105;
+    float multi;
+
 
     /**
      * Constructs a new BankGameController with the specified model and view.
@@ -19,9 +17,8 @@ public class BankGameController {
      * @param model model The model component of the MVC architecture.
      * @param view  The view component of the MVC architecture.
      */
-    public BankGameController(final PlaneGameModel model, final BankGameView view) {
+    public BankGameController(final PlaneGameModel model) {
         this.model = model;
-        this.view = view;
     }
 
     /**
@@ -30,17 +27,17 @@ public class BankGameController {
      * and waits for the thread to finish.
      */
     public void startMultiplier() {
-        final Thread threadMutliplier = new Thread(model);
-        threadMutliplier.start();
+  /*        Thread threadMutliplier = new Thread(model);
+        threadMutliplier.start(); */
+        model.run();
+        
+    }
+    public float getMultiplier() {
+    
+        return model.getMultiplierShort();
+    }
 
-        while (threadMutliplier.isAlive()) {
-            final float multi = model.getMultiplierShort();
-
-            view.updateMulti(multi);
-            try {
-                Thread.sleep(THREAD_WAITING);
-            } catch (InterruptedException e) {
-            }
-        }
+    public float getTreshold() {
+        return model.getTreshold();
     }
 }

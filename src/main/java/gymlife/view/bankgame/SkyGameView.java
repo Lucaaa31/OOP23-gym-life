@@ -3,7 +3,7 @@ package gymlife.view.bankgame;
 /**
  * This class sets the serial version UID and calls the constructor of the superclass.
  */
-public class SkyGameView extends BankGameComponentImpl {
+public class SkyGameView extends ImageLabelView {
     private static final long serialVersionUID = 495323337747115744L;
 
     /**

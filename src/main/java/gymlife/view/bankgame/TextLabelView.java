@@ -10,7 +10,7 @@ import javax.swing.JLabel;
  * interface.
  * It provides a method to reload the appearance of the multiplier.
  */
-public abstract class BGLabelView extends JLabel implements BankGameComponent {
+public abstract class TextLabelView extends JLabel implements BankGameComponent {
     private static final long serialVersionUID = -8840823320252661066L;
     private static final float SIZE_NUM = 11;
     /**

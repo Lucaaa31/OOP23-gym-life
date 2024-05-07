@@ -1,72 +1,53 @@
 package gymlife.view.bankgame;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import gymlife.controller.BankGameController;
 import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.Serial;
 
 /**
  * This class groups all the panels and shows them on screen.
  */
-public final class BankGameView extends JFrame {
+public final class BankGameView extends JLayeredPane {
+    @Serial
     private static final long serialVersionUID = -3972452455820596601L;
-    private final BGLabelView numberLabel;
+
+    //BankGameController controller;
+    //float num;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
      * moreover it sets the images' layering.
      */
     public BankGameView() {
-        super("Plane Game");
-        final Dimension screenDims = new Dimension(
-                Toolkit.getDefaultToolkit().getScreenSize().width,
-                Toolkit.getDefaultToolkit().getScreenSize().height);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final JLayeredPane layers = new JLayeredPane();
-        numberLabel = new MultiplierGameView();
-        JButton button = new JButton();
+        final TextLabelView numberLabel = new MultiplierGameView();
+        final ImageLabelView planeLayer = new AirplaneGameView();
+        final ImageLabelView skyLayer = new SkyGameView();
 
-        final BankGameComponentImpl planeLayer = new AirplaneGameView();
-        final BankGameComponentImpl skyLayer = new SkyGameView();
-
-        planeLayer.setBounds(screenDims.width / 4, screenDims.height / 4,
-                screenDims.height / 2,
-                screenDims.height / 2);
-        skyLayer.setBounds(0, 0, screenDims.width, screenDims.height);
-        button.setBounds(10, 170, screenDims.width, screenDims.height);
-        button.setSize(90, 30);
-
-        layers.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
-        layers.add(planeLayer, JLayeredPane.PALETTE_LAYER);
-        layers.add(numberLabel, JLayeredPane.PALETTE_LAYER);
-        layers.add(button, JLayeredPane.PALETTE_LAYER);
-
-        this.setSize(screenDims.width / 3, screenDims.height / 3);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(layers);
+        this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
+        this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
+        this.add(numberLabel, JLayeredPane.MODAL_LAYER);
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 setLayersNewSize(skyLayer, planeLayer, numberLabel);
             }
-        });
+        }); 
+
+        //Test
+        if (numberLabel instanceof MultiplierGameView mpgv){
+            mpgv.updateText(0.2534f);
+        }
+
         this.setVisible(true);
     }
 
-    /**
-     * This method updates the display of the multiplier value in the associated label.
-     * @param multi The new multiplier value to be displayed.
-     */
-    public void updateMulti(final float multi) {
-        numberLabel.setText(String.valueOf(multi));
-    }
-
-    private void setLayersNewSize(final BankGameComponentImpl skyLabel, final BankGameComponentImpl planeLabel,
-            final BGLabelView numberLabel) {
+    private void setLayersNewSize(final ImageLabelView skyLabel, final ImageLabelView planeLabel,
+            final TextLabelView numberLabel) {
         final Dimension newSize = this.getSize();
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
@@ -78,12 +59,5 @@ public final class BankGameView extends JFrame {
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
         numberLabel.reload();
-    }
-
-    /**
-     * This method closes the window of the game and frees the memory.
-     */
-    public void destroy() {
-        this.dispose();
     }
 }
