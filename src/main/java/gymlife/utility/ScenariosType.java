@@ -19,6 +19,5 @@ public enum ScenariosType {
     /**
      * Represents the indoor maps' scenario.
      */
-    INDOOR_MAP,
-    ;
+    INDOOR_MAP;
 }
