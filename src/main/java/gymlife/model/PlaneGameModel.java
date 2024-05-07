@@ -48,7 +48,7 @@ public final class PlaneGameModel implements Runnable {
         }
     }
 
-    void stopMultiplier() {
+    public void stopMultiplier() {
         flag = false;
     }
 

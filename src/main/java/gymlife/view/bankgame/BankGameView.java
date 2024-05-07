@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.io.Serial;
 
 /**
@@ -18,8 +17,9 @@ public final class BankGameView extends JLayeredPane {
     @Serial
     private static final long serialVersionUID = -3972452455820596601L;
 
-    final TextLabelView numberLabel;
-    // float num;
+    private final TextLabelView numberLabel;
+    private final static float START_MULTIPLIER = 1;
+    private static boolean STARTED = false;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
@@ -36,6 +36,8 @@ public final class BankGameView extends JLayeredPane {
         this.add(numberLabel, JLayeredPane.MODAL_LAYER);
         this.add(button, JLayeredPane.MODAL_LAYER);
 
+        numberLabel.setText(String.format("%.0fx", START_MULTIPLIER));
+
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
@@ -46,8 +48,14 @@ public final class BankGameView extends JLayeredPane {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateMulti(controller);
-                showsMulti(controller);
+                if (STARTED == false) {
+                    updateMulti(controller);
+                    showsMulti(controller);
+                    STARTED = true;
+                } else if (STARTED == true) {
+                    controller.controllerStopMultiplier();
+                }
+
             }
         });
 

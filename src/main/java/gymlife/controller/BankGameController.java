@@ -36,4 +36,8 @@ public class BankGameController {
     public float getTreshold() {
         return model.getTreshold();
     }
+
+    public void controllerStopMultiplier() {
+        model.stopMultiplier();
+    }
 }
