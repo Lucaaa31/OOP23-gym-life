@@ -21,21 +21,12 @@ public class BenchView extends JPanel{
         //this.button.setBorder(BorderFactory.createEmptyBorder());
         button.addActionListener(e -> {
             controller.notifyButtonPressed();
+            updateImage(controller.getState());
             setRandomPositionButton();
-            new Thread(() -> {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException p) {
-                }
-                SwingUtilities.invokeLater(() -> {
-                    updateImage(controller.getState());
-                });
-            }).start();
         });
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.setVisible(true);
-
     }
 
     private void updateImage(int state) {
@@ -44,7 +35,6 @@ public class BenchView extends JPanel{
         this.label.setLayout(new FlowLayout());
         this.label.add(button);
         this.add(label, BorderLayout.CENTER);
-        this.revalidate();
         this.repaint();
     }
 
