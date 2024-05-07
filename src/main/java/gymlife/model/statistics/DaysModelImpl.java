@@ -1,7 +1,6 @@
 package gymlife.model.statistics;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.DaysModel;
+import gymlife.model.statistics.api.DaysModel;
 
 /**
  * Implementation of the DaysModel interface.

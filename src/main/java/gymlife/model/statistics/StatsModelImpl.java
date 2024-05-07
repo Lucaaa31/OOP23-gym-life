@@ -3,8 +3,7 @@ package gymlife.model.statistics;
 import java.util.HashMap;
 import java.util.Map;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.StatsModel;
+import gymlife.model.statistics.api.StatsModel;
 
 /**
  * Implementation of the StatsModel interface that represents the statistics of a gym member.

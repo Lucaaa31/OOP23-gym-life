@@ -1,7 +1,6 @@
 package gymlife.model.statistics;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.MoneyModel;
+import gymlife.model.statistics.api.MoneyModel;
 
 /**
  * The MoneyModelImpl class represents a model for tracking money in a gym.

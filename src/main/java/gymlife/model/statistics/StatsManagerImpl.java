@@ -2,14 +2,12 @@ package gymlife.model.statistics;
 
 import java.util.Map;
 
-import gymlife.model.encounter.Encounters;
-import gymlife.model.api.StatsManager;
-import gymlife.model.api.DaysModel;
-import gymlife.model.api.MoneyModel;
-import gymlife.model.api.StatsModel;
-import gymlife.model.api.Counter;
+import gymlife.model.encounter.Encounter;
+import gymlife.model.statistics.api.StatsManager;
+import gymlife.model.statistics.api.DaysModel;
+import gymlife.model.statistics.api.MoneyModel;
+import gymlife.model.statistics.api.StatsModel;
 import gymlife.utility.GameDifficulty;
-
 /**
  * Implementation of the StatsManager interface.
  * This class manages the game statistics and provides methods to retrieve the stats.
@@ -27,7 +25,7 @@ public class StatsManagerImpl implements StatsManager {
     public StatsManagerImpl(final GameDifficulty difficulty) {
         gameStats = new StatsModelImpl();
         gameDays = new DaysModelImpl(difficulty.getDays());
-        gameMoney = new MoneyModelImpl(difficulty.getDays());
+        gameMoney = new MoneyModelImpl(StatsConstants.STARTING_STATS_LEVEL);
     }
     /**
      * Retrieves the game statistics as a map of StatsType and their corresponding values.
@@ -97,7 +95,7 @@ public class StatsManagerImpl implements StatsManager {
      * @param encounter the encounter to accept
      */
     @Override
-    public void acceptEncounter(final Encounters encounter) {
+    public void acceptEncounter(final Encounter encounter) {
         final Map<StatsType, Integer> acceptCase = encounter.getAcceptCase();
         for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
@@ -113,7 +111,7 @@ public class StatsManagerImpl implements StatsManager {
      * @param encounter the encounter to deny
      */
     @Override
-    public void denyEncounter(final Encounters encounter) {
+    public void denyEncounter(final Encounter encounter) {
         final Map<StatsType, Integer> denyCase = encounter.getDenyCase();
         for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
