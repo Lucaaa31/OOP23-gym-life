@@ -16,6 +16,7 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-        MainView mainView = new MainView();
+        final MainView mainView = new MainView();
+        mainView.start();
     }
 }

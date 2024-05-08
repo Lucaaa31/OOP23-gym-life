@@ -3,12 +3,13 @@ package gymlife.view;
 import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 import gymlife.utility.Constants;
-import gymlife.utility.ScenariosType;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.CardLayout;
+//import gymlife.utility.ScenariosType;
+//import java.util.HashMap;
+//import java.util.Map;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -19,8 +20,8 @@ public class StatsView extends JFrame {
     public static final long serialVersionUID = 4328743;
     private final transient Controller controller = new ControllerImpl();
     private final CharacterView charView = new CharacterView(controller);
-    private final GameMapView gameMapView = new GameMapView(controller);
-    private final Map<ScenariosType, JPanel> scenariosMap = new HashMap<>();
+//    private final GameMapView gameMapView = new GameMapView(controller);
+//    private final Map<ScenariosType, JPanel> scenariosMap = new HashMap<>();
 
     /**
      * Starts the main view of the application.

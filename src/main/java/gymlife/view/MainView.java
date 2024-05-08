@@ -1,18 +1,21 @@
 package gymlife.view;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
 
-import java.awt.*;
+
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.HashMap;
-import java.util.Map;
-
-import gymlife.controller.api.Controller;
-import gymlife.controller.ControllerImpl;
 import gymlife.utility.Constants;
-import gymlife.utility.ScenariosType;
+
+//import java.util.HashMap;
+//import java.util.Map;
+//import gymlife.controller.api.Controller;
+//import gymlife.controller.ControllerImpl;
+//import gymlife.utility.ScenariosType;
 
 /**
  * The MainView class represents the main view of the application.
@@ -20,13 +23,13 @@ import gymlife.utility.ScenariosType;
  */
 public class MainView extends JFrame {
     public static final long serialVersionUID = 4328743;
-    private final transient  Controller controller = new ControllerImpl();
+//    private final transient  Controller controller = new ControllerImpl();
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
-    private final CharacterView charView = new CharacterView(controller);
-    private final GameMapView gameMapView = new GameMapView(controller);
-    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
+//    private final CharacterView charView = new CharacterView(controller);
+//    private final GameMapView gameMapView = new GameMapView(controller);
+//    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
 
     /**
      * Starts the main view of the application.
@@ -34,7 +37,7 @@ public class MainView extends JFrame {
      * Sets the size, layout, and visibility of the character view panel.
      * Adds the character view panel to the main frame and makes it visible.
      */
-    public MainView() {
+    public void start() {
         this.setSize(Constants.FRAME_WIDTH, Constants.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -48,7 +51,7 @@ public class MainView extends JFrame {
         final BorderLayout b = new BorderLayout();
         mainPanel.setLayout(b);
 
-        this.getContentPane().add(mainPanel);
+        this.add(mainPanel);
 
         mainPanel.add(scenariosContainer, BorderLayout.WEST);
         mainPanel.add(sideContainer, BorderLayout.CENTER);
@@ -58,7 +61,7 @@ public class MainView extends JFrame {
         // Aggiunta del ComponentListener per gestire il ridimensionamento della finestra
         this.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
+            public void componentResized(final ComponentEvent e) {
                 resizeComponents();
             }
         });
@@ -68,12 +71,12 @@ public class MainView extends JFrame {
 
     // Metodo per ridimensionare i pannelli proporzionalmente
     private void resizeComponents() {
-        int newFrameWidth = getWidth();
-        int newFrameHeight = getHeight();
+        final int newFrameWidth = getWidth();
+        final int newFrameHeight = getHeight();
 
         // Calcola le nuove dimensioni proporzionali per i pannelli
-        int newScenarioWidth = (int) (newFrameWidth * Constants.SCENARIO_WIDTH / (double) Constants.FRAME_WIDTH);
-        int newSideWidth = (int) (newFrameWidth * Constants.SIDE_WIDTH / (double) Constants.FRAME_WIDTH);
+        final int newScenarioWidth = (int) (newFrameWidth * Constants.SCENARIO_WIDTH / (double) Constants.FRAME_WIDTH);
+        final int newSideWidth = (int) (newFrameWidth * Constants.SIDE_WIDTH / (double) Constants.FRAME_WIDTH);
 
         // Imposta le nuove dimensioni per i pannelli
         scenariosContainer.setPreferredSize(new Dimension(newScenarioWidth, newFrameHeight));
@@ -82,9 +85,5 @@ public class MainView extends JFrame {
         // Aggiorna il layout
         mainPanel.revalidate();
         mainPanel.repaint();
-    }
-
-    public static void main(String[] args) {
-        new MainView();
     }
 }
