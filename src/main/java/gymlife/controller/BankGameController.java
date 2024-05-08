@@ -9,6 +9,7 @@ import gymlife.model.PlaneGameModel;
 public class BankGameController {
     private final PlaneGameModel model;
     float multi;
+    float money;
 
     /**
      * Constructs a new BankGameController with the specified model and view.
@@ -25,8 +26,8 @@ public class BankGameController {
      * the current multiplier value,
      * and waits for the thread to finish.
      */
-    public void startMultiplier() {
-        model.run();
+    public void startMultiplier(float money) {
+        model.runMultiplier(money);
     }
 
     public float getMultiplier() {

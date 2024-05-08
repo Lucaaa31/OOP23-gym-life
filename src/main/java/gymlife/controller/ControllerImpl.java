@@ -3,6 +3,7 @@ package gymlife.controller;
 import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.MapManagerImpl;
+import gymlife.model.PlaneGameModel;
 import gymlife.model.ScenariosManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.api.GameMap;
@@ -20,6 +21,9 @@ public class ControllerImpl implements Controller {
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
+    private final PlaneGameModel model = new PlaneGameModel();
+    float multi;
+    float money;
 
     /**
      * Moves the character in the specified direction.
@@ -65,5 +69,26 @@ public class ControllerImpl implements Controller {
                 .getCellAtCoord(characterModel.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
+    }
+
+    /**
+     * This method starts the multiplier thread, continuously updates the view with
+     * the current multiplier value,
+     * and waits for the thread to finish.
+     */
+    public void startMultiplier(float money) {
+        model.runMultiplier(money);
+    }
+
+    public float getMultiplier() {
+        return model.getMultiplierShort();
+    }
+
+    public float getTreshold() {
+        return model.getTreshold();
+    }
+
+    public void controllerStopMultiplier() {
+        model.stopMultiplier();
     }
 }

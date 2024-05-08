@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * This class create a multiplier.
  */
-public final class PlaneGameModel implements Runnable {
+public final class PlaneGameModel {
     private static final float MAX_BOUND = 9.00f;
     private static final int THREAD_WAIT = 8;
     private static final float INCREMENT = 0.001f;
@@ -14,6 +14,7 @@ public final class PlaneGameModel implements Runnable {
     private final float treshold;
     private float multiplier;
     private float multiplierShort;
+    float moneyMultiplied = 1;
 
     /**
      * This is the constructor of the PlaneGameModel class.
@@ -34,18 +35,22 @@ public final class PlaneGameModel implements Runnable {
         return Float.compare(treshold, multiplierShort) == 0;
     }
 
-    @Override
-    public void run() {
-        while (flag) {
-            multiplier += INCREMENT;
-            if (boundControl()) {
-                flag = false;
+    public void runMultiplier(float money) {
+        Thread multipluThread = new Thread(() -> {
+            while (flag) {
+                multiplier += INCREMENT;
+                moneyMultiplied = multiplier * money;
+                System.out.println(moneyMultiplied);
+                if (boundControl()) {
+                    flag = false;
+                }
+                try {
+                    Thread.sleep(THREAD_WAIT);
+                } catch (InterruptedException e) {
+                }
             }
-            try {
-                Thread.sleep(THREAD_WAIT);
-            } catch (InterruptedException e) {
-            }
-        }
+        });
+        multipluThread.start();
     }
 
     public void stopMultiplier() {
@@ -68,5 +73,9 @@ public final class PlaneGameModel implements Runnable {
      */
     public float getMultiplierShort() {
         return multiplierShort;
+    }
+
+    public float getMoneyMultiplied() {
+        return moneyMultiplied;
     }
 }

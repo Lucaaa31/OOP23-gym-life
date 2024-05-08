@@ -20,4 +20,15 @@ public interface Controller {
      * @return the position of the character
      */
     Position getCharacterPos();
+    
+    void startMultiplier(float money);
+
+    float getTreshold();
+
+    float getMultiplier();
+
+    void controllerStopMultiplier();
+
+    
+
 }

@@ -1,17 +1,28 @@
 package gymlife.view.bankgame;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import gymlife.controller.BankGameController;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+
+import gymlife.controller.api.Controller;
+
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.Serial;
-import java.util.Timer;
 
 /**
  * This class groups all the panels and shows them on screen.
@@ -23,26 +34,42 @@ public final class BankGameView extends JLayeredPane {
     private final TextLabelView numberLabel;
     private final static float START_MULTIPLIER = 1;
     private static boolean STARTED = false;
-    Timer timer;
+    private JTextField text_money;
+    Font myFont = new Font("PLAIN", Font.PLAIN, 20);
+    float moneyToPlay = 4;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
      * moreover it sets the images' layering.
      */
-    public BankGameView(BankGameController controller) {
+    public BankGameView(Controller controller) {
         numberLabel = new MultiplierGameView();
         final ImageLabelView planeLayer = new AirplaneGameView();
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
-         timer = new Timer();
+        text_money = new JTextField();
         
 
         this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
         this.add(numberLabel, JLayeredPane.MODAL_LAYER);
         this.add(button, JLayeredPane.MODAL_LAYER);
+        this.add(text_money, JLayeredPane.MODAL_LAYER);
 
         numberLabel.setText(String.format("%.0fx", START_MULTIPLIER));
+
+        
+        text_money.setFont(myFont);
+        //text_money.setEditable(false);
+       text_money.addKeyListener(new KeyAdapter() {
+        @Override
+        public void keyTyped(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                e.consume();
+            }
+        }
+       });
+
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -69,7 +96,7 @@ public final class BankGameView extends JLayeredPane {
     }
 
 
-    public void showsMulti(BankGameController controller) {
+    public void showsMulti(Controller controller) {
         new Thread(() -> {
             while (controller.getMultiplier() != controller.getTreshold()) {
                 float multiplier = controller.getMultiplier();
@@ -81,9 +108,9 @@ public final class BankGameView extends JLayeredPane {
         }).start();
     }
 
-    public void updateMulti(BankGameController controller) {
+    public void updateMulti(Controller controller) {
         new Thread(() -> {
-            controller.startMultiplier();
+            controller.startMultiplier(moneyToPlay);
         }).start();
     }
 
@@ -103,5 +130,8 @@ public final class BankGameView extends JLayeredPane {
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
         numberLabel.reload();
+        text_money.setBounds(newSize.width / 3,
+        newSize.height / 3, newSize.height / 12,
+        newSize.height / 10);
     }
 }
