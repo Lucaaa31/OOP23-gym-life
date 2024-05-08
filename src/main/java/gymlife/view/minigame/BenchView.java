@@ -3,6 +3,7 @@ package gymlife.view.minigame;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 
 import java.awt.*;
@@ -12,17 +13,17 @@ public class BenchView extends JPanel{
     private final JButton button = new JButton("Press me!");
     private ImageIcon image;
     private JLabel label = new JLabel();
+    private TimerView timerView;
 
-    public BenchView(final Controller controller){
+    public BenchView(final ControllerImpl controller){
         this.controller = controller;
+        timerView = new TimerView(controller);
         this.setLayout(new BorderLayout());
         updateImage(controller.getState());
-        label.setPreferredSize(new Dimension(500, 300));
-        //this.button.setBorder(BorderFactory.createEmptyBorder());
+        label.setPreferredSize(new Dimension(1000, 700));
         button.addActionListener(e -> {
             controller.notifyButtonPressed();
             updateImage(controller.getState());
-            setRandomPositionButton();
         });
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -33,8 +34,10 @@ public class BenchView extends JPanel{
         this.image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_" + state + ".png");
         this.label.setIcon(image);
         this.label.setLayout(new FlowLayout());
-        this.label.add(button);
-        this.add(label, BorderLayout.CENTER);
+        setRandomPositionButton();
+        this.add(button);
+        this.label.add(timerView, BoxLayout.X_AXIS);
+        this.add(label);
         this.repaint();
     }
 
