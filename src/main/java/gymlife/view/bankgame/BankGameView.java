@@ -4,11 +4,14 @@ import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import gymlife.controller.BankGameController;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.Serial;
+import java.util.Timer;
 
 /**
  * This class groups all the panels and shows them on screen.
@@ -20,6 +23,7 @@ public final class BankGameView extends JLayeredPane {
     private final TextLabelView numberLabel;
     private final static float START_MULTIPLIER = 1;
     private static boolean STARTED = false;
+    Timer timer;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
@@ -30,6 +34,8 @@ public final class BankGameView extends JLayeredPane {
         final ImageLabelView planeLayer = new AirplaneGameView();
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
+         timer = new Timer();
+        
 
         this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
@@ -61,6 +67,7 @@ public final class BankGameView extends JLayeredPane {
 
         this.setVisible(true);
     }
+
 
     public void showsMulti(BankGameController controller) {
         new Thread(() -> {
