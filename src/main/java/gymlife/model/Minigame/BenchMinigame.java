@@ -2,16 +2,22 @@ package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.MinigameType;
 
 public class BenchMinigame implements Minigame, Runnable {
-    private MinigameDifficulty difficulty = MinigameDifficulty.EASY;
+    private MinigameDifficulty difficulty;
     private Thread timerThread;
     private boolean isPressed;
     private int nTimesPressed;
     private int state;
+    private int numReps;
 
 
-    public BenchMinigame(MinigameDifficulty difficulty) {
+    public BenchMinigame() {
+        this.isPressed = false;
+        this.nTimesPressed = 0;
+        this.state = 0;
+        this.numReps = 0;
     }
 
 
@@ -26,28 +32,25 @@ public class BenchMinigame implements Minigame, Runnable {
         timer.setRunningTime(difficulty.getReactionTime());
     }
 
-
-
     @Override
     public void run() {
-        for (int numReps = 0; numReps < difficulty.getRequiredReps(); numReps++) {
-            //timerThread.start();
-            while (true) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                }
-                if (isPressed) {
-                    nTimesPressed++;
-                    System.out.println("Pressed");
-                    isPressed = false;
-                    if (nTimesPressed == difficulty.getnRepsForSwitchState()) {
-                        System.out.println("Switch state");
-                        state++;
-                        nTimesPressed = 0;
-
-                        break;
+        timerThread.start();
+        while(timerThread.isAlive() && numReps < difficulty.getRequiredReps() ){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {}
+            if (isPressed) {
+                nTimesPressed++;
+                System.out.println("Pressed");
+                isPressed = false;
+                if (nTimesPressed == difficulty.getnRepsForSwitchState()) {
+                    System.out.println("Switch state");
+                    state++;
+                    if (state == 4) {
+                        numReps++;
+                        state=0;
                     }
+                    nTimesPressed = 0;
                 }
             }
         }
@@ -56,4 +59,11 @@ public class BenchMinigame implements Minigame, Runnable {
     public int getState() {
         return state;
     }
+
+    @Override
+    public void setDifficulty(MinigameDifficulty selectedDifficulty) {
+        this.difficulty = selectedDifficulty;
+    }
+
+
 }

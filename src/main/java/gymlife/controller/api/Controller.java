@@ -1,8 +1,10 @@
 package gymlife.controller.api;
 
+import gymlife.model.Minigame.MinigameManager;
 import gymlife.model.Minigame.Timer;
 import gymlife.utility.Directions;
 import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.MinigameType;
 import gymlife.utility.Position;
 
 import java.awt.*;
@@ -26,11 +28,15 @@ public interface Controller {
      */
     Position getCharacterPos();
 
-    void setMinigame(MinigameDifficulty difficulty);
+    void setDifficulty(MinigameDifficulty difficulty);
 
     void notifyButtonPressed();
 
     List<Integer> getTime();
 
     int getState();
+
+    MinigameType getMinigameType();
+
+    void setMinigameManager(MinigameManager minigameManager);
 }

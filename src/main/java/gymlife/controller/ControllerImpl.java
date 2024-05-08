@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private final MinigameManager minigameManager = new MinigameManager();
+    private MinigameManager minigameManager;
     private Timer timer = new Timer();
 
     /**
@@ -40,56 +40,68 @@ public class ControllerImpl implements Controller {
         return characterModel.getCharacterPos();
     }
 
-
-    public void setMinigame(final MinigameDifficulty difficulty) {
+    /**
+     * Sets the difficulty level of the current minigame.
+     *
+     * @param difficulty the difficulty level to set
+     */
+    public void setDifficulty(final MinigameDifficulty difficulty) {
         minigameManager.setDifficulty(difficulty)
-                .setCurrentMinigame(MinigameType.BENCH_PRESS)
-                .setTimer(timer)
-                .startMinigame();
+                .getCurrentMinigame()
+                .setTimer(timer);
+        minigameManager.startMinigame();
     }
 
+    public Timer getTimer(){
+        return this.timer;
+    }
+
+    /**
+     * Notifies the current minigame that a button has been pressed,
+     * during the Minigame.
+     */
     @Override
     public void notifyButtonPressed() {
         minigameManager.getCurrentMinigame().notifyButtonPressed();
     }
 
-
+    /**
+     * Retrieves the running time of the Timer of the minigame.
+     *
+     * @return a list of integers representing the running time
+     */
     @Override
     public List<Integer> getTime() {
         return timer.getRunningTime();
     }
 
+    /**
+     * Retrieves the state of the current minigame,
+     * used by the view for updating herself.
+     *
+     * @return the state of the current minigame
+     */
     public int getState() {
         return minigameManager.getCurrentMinigame().getState();
     }
+
+    /**
+     * Retrieves the type of the current minigame,
+     * used by the view for create the istance of the minigame.
+     *
+     * @return the type of the current minigame
+     */
+    @Override
+    public MinigameType getMinigameType() {
+        return minigameManager.getMinigameType();
+    }
+
+    /**
+     * Sets the minigame manager for this controller.
+     *
+     * @param minigameManager the minigame manager to set
+     */
+    public void setMinigameManager(final MinigameManager minigameManager) {
+        this.minigameManager = minigameManager;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

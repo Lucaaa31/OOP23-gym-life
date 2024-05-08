@@ -6,7 +6,8 @@ import gymlife.utility.MinigameType;
 
 public class MinigameManager {
     private Minigame currentMinigame;
-    private MinigameDifficulty difficulty;
+    private MinigameType currentMinigameType;
+
 
 
     public MinigameManager() {
@@ -17,13 +18,13 @@ public class MinigameManager {
         new Thread((Runnable) currentMinigame).start();
     }
 
-    public MinigameManager setCurrentMinigame(final MinigameType minigameScenario) {
-
+    public MinigameManager setCurrentMinigame(final MinigameType minigameType) {
+        this.currentMinigameType = minigameType;
         try {
             this.currentMinigame = (Minigame) Class
-                    .forName(MinigameType.BENCH_PRESS.getName())
-                    .getDeclaredConstructor(difficulty.getClass())
-                    .newInstance(difficulty);
+                    .forName(minigameType.getName())
+                    .getDeclaredConstructor()
+                    .newInstance();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -31,7 +32,7 @@ public class MinigameManager {
     }
 
     public MinigameManager setDifficulty(final MinigameDifficulty selectedDifficulty) {
-        this.difficulty = selectedDifficulty;
+        this.currentMinigame.setDifficulty(selectedDifficulty);
         return this;
     }
 
@@ -43,5 +44,9 @@ public class MinigameManager {
     public MinigameManager setTimer(final Timer timer) {
         this.currentMinigame.setTimer(timer);
         return this;
+    }
+
+    public MinigameType getMinigameType() {
+        return currentMinigameType;
     }
 }
