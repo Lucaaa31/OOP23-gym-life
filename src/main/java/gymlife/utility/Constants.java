@@ -9,21 +9,21 @@ public final class Constants {
      */
     public static final int MOVEMENT = 10;
     /**
+     * The height of the panel.
+     */
+    public static final int HEIGHT = 900;
+    /**
      * The width of the panel.
      */
-    public static final int PANEL_WIDTH = 640;
+    public static final int SCENARIO_WIDTH = 1200;
     /**
      * The height of the panel.
      */
-    public static final int PANEL_HEIGHT = 480;
-    /**
-     * The height of the frame.
-     */
-    public static final int FRAME_HEIGHT = 480;
+    public static final int SIDE_WIDTH = 400;
     /**
      * The width of the frame.
      */
-    public static final int FRAME_WIDTH = 740;
+    public static final int FRAME_WIDTH = 1600;
     /**
      * The width of the character.
      */
