@@ -14,6 +14,7 @@ import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
+import gymlife.utility.StatsType;
 
 /**
  * Class responsible for managing Character movements.
@@ -75,5 +76,9 @@ public class ControllerImpl implements Controller {
                 .getCellAtCoord(characterModel.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
+    }
+
+    public int getPlayerLevel() {
+        return statsManager.getStats().get(StatsType.MASS).getCount()/75;
     }
 }
