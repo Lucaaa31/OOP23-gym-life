@@ -14,7 +14,7 @@ public final class PlaneGameModel {
     private final float treshold;
     private float multiplier;
     private float multiplierShort;
-    float moneyMultiplied = 1;
+    private float moneyMultiplied = 1;
 
     /**
      * This is the constructor of the PlaneGameModel class.
@@ -35,20 +35,32 @@ public final class PlaneGameModel {
         return Float.compare(treshold, multiplierShort) == 0;
     }
 
+    /**
+     * Starts the multiplier thread with the specified money value.
+     * The multiplier continuously increments the multiplier value by a constant
+     * increment and calculates the money multiplied value,
+     * until the flag is set to false, which means the multiplier has reach his
+     * threshold.
+     * 
+     * @param money The money value to be multiplied with the multiplier.
+     */
     public void runMultiplier(float money) {
-            while (flag) {
-                multiplier += INCREMENT;
-                moneyMultiplied = multiplier * money;
-                if (boundControl()) {
-                    flag = false;
-                }
-                try {
-                    Thread.sleep(THREAD_WAIT);
-                } catch (InterruptedException e) {
-                }
+        while (flag) {
+            multiplier += INCREMENT;
+            moneyMultiplied = multiplier * money;
+            if (boundControl()) {
+                flag = false;
             }
+            try {
+                Thread.sleep(THREAD_WAIT);
+            } catch (InterruptedException e) {
+            }
+        }
     }
 
+    /**
+     * This method stops the runMultiplier method by setting the flag to false.
+     */
     public void stopMultiplier() {
         flag = false;
     }
@@ -71,6 +83,9 @@ public final class PlaneGameModel {
         return multiplierShort;
     }
 
+    /**
+     * This method returns the value of moneyMultiplied.
+     */
     public float getMoneyMultiplied() {
         return moneyMultiplied;
     }

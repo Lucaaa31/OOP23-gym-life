@@ -20,17 +20,38 @@ public interface Controller {
      * @return the position of the character
      */
     Position getCharacterPos();
-    
+
+    /**
+     * Starts the multiplier with the specified money value.
+     * 
+     * @param money the money value.
+     */
     void startMultiplier(float money);
 
+    /**
+     * Returns the threshold of the multiplier.
+     * 
+     * @return The value of the multiplier's threshold.
+     */
     float getTreshold();
 
+    /**
+     * Return the current value of the multiplier.
+     * 
+     * @return the current value of the multiplier.
+     */
     float getMultiplier();
 
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
     void controllerStopMultiplier();
 
+    /**
+     * Returns the value of the money controlled by the controller.
+     * 
+     * @return the current value of the money.
+     */
     float controllerGetMoney();
-
-    
 
 }

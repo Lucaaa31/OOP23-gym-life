@@ -22,8 +22,6 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
     private final PlaneGameModel model = new PlaneGameModel();
-    float multi;
-    float money;
 
     /**
      * Moves the character in the specified direction.
@@ -47,6 +45,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to directly change the current map to parameter newMap.
+     * 
      * @param newMap GameMap to switch the current map to.
      */
     public void goToGym(final GameMap newMap) {
@@ -55,6 +54,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to return the current map, taken from the MapManager.
+     * 
      * @return Returns the current {@code GameMap}.
      */
     public GameMap getCurrentMap() {
@@ -62,7 +62,8 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to execute the action relative to the cell on which the player is standing.
+     * Method to execute the action relative to the cell on which the player is
+     * standing.
      */
     public void cellInteraction() {
         mapManager.getCurrentMap()
@@ -75,24 +76,49 @@ public class ControllerImpl implements Controller {
      * This method starts the multiplier thread, continuously updates the view with
      * the current multiplier value,
      * and waits for the thread to finish.
+     * 
+     * @param money the money value with which to start the multiplier.
      */
+    @Override
     public void startMultiplier(float money) {
         model.runMultiplier(money);
     }
 
+    /**
+     * Returns the current value of the multiplier.
+     * 
+     * @return The current value of the multiplier.
+     */
+    @Override
     public float getMultiplier() {
         return model.getMultiplierShort();
     }
 
+    /**
+     * Returns the threshold of the multiplier.
+     * 
+     * @return The value of the multiplier's threshold.
+     */
+    @Override
     public float getTreshold() {
         return model.getTreshold();
     }
 
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
+    @Override
     public void controllerStopMultiplier() {
         model.stopMultiplier();
     }
 
+    /**
+     * Returns the value of the money.
+     * 
+     * @return The current value of the money.
+     */
+    @Override
     public float controllerGetMoney() {
-       return model.getMoneyMultiplied();
+        return model.getMoneyMultiplied();
     }
 }
