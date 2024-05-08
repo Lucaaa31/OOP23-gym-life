@@ -7,10 +7,19 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
+import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.StatsModelImpl;
+import gymlife.model.statistics.StatsType;
+import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
+import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
+
+import java.rmi.MarshalledObject;
+import java.util.Map;
 
 /**
  * Class responsible for managing Character movements.
@@ -20,7 +29,11 @@ public class ControllerImpl implements Controller {
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
+    private final StatsManager statsManager;
 
+    public ControllerImpl(final GameDifficulty difficulty) {
+        statsManager = new StatsManagerImpl(difficulty);
+    }
     /**
      * Moves the character in the specified direction.
      * 
@@ -39,6 +52,16 @@ public class ControllerImpl implements Controller {
     @Override
     public Position getCharacterPos() {
         return characterModel.getCharacterPos();
+    }
+
+    /**
+     * Retrieves the current position of the character.
+     *
+     * @return the current position of the character
+     */
+    @Override
+    public Map<StatsType, Counter> getStatistics() {
+        return statsManager.getAllStats();
     }
 
     /**

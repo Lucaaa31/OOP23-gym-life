@@ -21,7 +21,7 @@ public interface StatsManager {
      *
      * @return the number of days
      */
-    int getDays();
+    Counter getDays();
     /**
      * Decrement the number of day of one.
      *
@@ -54,4 +54,17 @@ public interface StatsManager {
      * @param encounter the encounter to deny
     */
     void denyEncounter(Encounter encounter);
+    /**
+     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
+     * including the money and days.
+     *
+     * @return a map of StatsType and their corresponding values
+     */
+    Map<StatsType, Counter> getAllStats();
+    /**
+     * Retrieves the money of the game.
+     *
+     * @return the money of the game
+     */
+    Counter getMoney();
 }

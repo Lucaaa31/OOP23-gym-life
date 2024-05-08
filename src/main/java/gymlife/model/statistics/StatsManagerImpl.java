@@ -1,5 +1,6 @@
 package gymlife.model.statistics;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
@@ -37,13 +38,37 @@ public class StatsManagerImpl implements StatsManager {
         return gameStats.getMap();
     }
     /**
+     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
+     * including the money and days.
+     *
+     * @return a map of StatsType and their corresponding values
+     */
+    @Override
+    public Map<StatsType, Counter> getAllStats() {
+        final Map<StatsType, Counter> statsMap = new HashMap<>(this.getStats());
+        statsMap.put(StatsType.MONEY, this.getMoney());
+        statsMap.put(StatsType.DAYS, this.getDays());
+        return Map.copyOf(statsMap);
+    }
+
+    /**
+     * Retrieves the money of the game.
+     *
+     * @return the money of the game
+     */
+    @Override
+    public Counter getMoney() {
+        return new Counter(gameMoney.getMoney());
+    }
+
+    /**
      * Retrieves the number of days left in the game.
      * 
      * @return the number of days left
      */
     @Override
-    public int getDays() {
-        return gameDays.dayLeft();
+    public Counter getDays() {
+        return new Counter(gameDays.dayLeft());
     }
     /**
      * Increments the number of days by one.
@@ -61,7 +86,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public boolean isGameOver() {
-        if (gameDays.isDayOver() || gameMoney.isOver()) {
+        if (gameDays.isDayOver()) {
             return true;
         }
         final Map<StatsType, Counter> statsMap = gameStats.getMap();

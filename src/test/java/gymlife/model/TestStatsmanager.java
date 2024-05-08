@@ -70,4 +70,20 @@ class TestStatsmanager {
         stats.resetAll();
     }
 
+    @Test
+    void testGetAllStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+
+        /*
+         * add for each type of mass the exact amount
+         */
+    assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getAllStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL * 3, stats.getStats().get(StatsType.MASS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney().getCount());
+        assertEquals(GameDifficulty.EASY.getDays(), stats.getDays().getCount());
+        stats.resetAll();
+    }
+
 }
