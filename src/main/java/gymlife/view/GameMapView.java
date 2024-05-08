@@ -1,20 +1,28 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.MapConstants;
+import gymlife.utility.Position;
 
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serial;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * JPanel that shows the current map on which teh character is. it shows all the cells of the map loaded.
  */
-public final class GameMapView extends JPanel {
+public final class GameMapView extends JFrame {
 
     @Serial
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
-    //private transient Map<Position, JPanel> cells;
+    private transient Map<Position, JLayeredPane> cells = new HashMap<>();
 
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
@@ -22,9 +30,21 @@ public final class GameMapView extends JPanel {
      */
     public GameMapView(final Controller controller) {
         this.controller = controller;
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSize(800, 600);
+        JPanel mainPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
+        this.getContentPane().add(mainPanel);
+
+
+
 
 
         this.setVisible(true);
+    }
+    @Serial
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        cells = new HashMap<>();
     }
 
     /**
@@ -33,6 +53,17 @@ public final class GameMapView extends JPanel {
      */
     public Controller getController() {
         return this.controller;
+    }
+
+
+
+    /**
+     * Method to get a JLayered pane from a position.
+     * @param pos position.
+     * @return returns the JLayered pane.
+     */
+    public JLayeredPane getCellFromPosition(final Position pos) {
+        return cells.get(pos);
     }
 
 }
