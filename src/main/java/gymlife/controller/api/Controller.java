@@ -29,6 +29,8 @@ public interface Controller {
 
     void controllerStopMultiplier();
 
+    float controllerGetMoney();
+
     
 
 }

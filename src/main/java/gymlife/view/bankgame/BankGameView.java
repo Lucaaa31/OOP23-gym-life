@@ -1,21 +1,11 @@
 package gymlife.view.bankgame;
 
-import javax.swing.AbstractAction;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-
 import gymlife.controller.api.Controller;
-
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -32,11 +22,10 @@ public final class BankGameView extends JLayeredPane {
     private static final long serialVersionUID = -3972452455820596601L;
 
     private final TextLabelView numberLabel;
-    private final static float START_MULTIPLIER = 1;
     private static boolean STARTED = false;
-    private JTextField text_money;
+    private static JTextField text_money;
     Font myFont = new Font("PLAIN", Font.PLAIN, 20);
-    float moneyToPlay = 4;
+    float moneyToPlay = 10;
 
     /**
      * This method sets the dimensions of the plane image and the sky image,
@@ -48,7 +37,6 @@ public final class BankGameView extends JLayeredPane {
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
         text_money = new JTextField();
-        
 
         this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
@@ -56,20 +44,25 @@ public final class BankGameView extends JLayeredPane {
         this.add(button, JLayeredPane.MODAL_LAYER);
         this.add(text_money, JLayeredPane.MODAL_LAYER);
 
-        numberLabel.setText(String.format("%.0fx", START_MULTIPLIER));
-
-        
         text_money.setFont(myFont);
-        //text_money.setEditable(false);
-       text_money.addKeyListener(new KeyAdapter() {
-        @Override
-        public void keyTyped(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-                e.consume();
+        // text_money.setEditable(false);
+        text_money.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    e.consume();
+                }
             }
-        }
-       });
+        });
 
+        text_money.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String temp = text_money.getText();
+                moneyToPlay = Float.parseFloat(temp);
+                first();
+            }
+        });
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -95,17 +88,21 @@ public final class BankGameView extends JLayeredPane {
         this.setVisible(true);
     }
 
-
     public void showsMulti(Controller controller) {
         new Thread(() -> {
             while (controller.getMultiplier() != controller.getTreshold()) {
                 float multiplier = controller.getMultiplier();
-                multiplier = Math.round(multiplier * 1000.0f) / 1000.0f;
+                moneyToPlay = controller.controllerGetMoney();
                 if (numberLabel instanceof MultiplierGameView mpgv) {
-                    mpgv.updateText(multiplier);
+                    mpgv.updateText(multiplier, moneyToPlay);
                 }
+
             }
         }).start();
+    }
+
+    public void first() {
+        numberLabel.setText(String.format("%.2f", moneyToPlay));
     }
 
     public void updateMulti(Controller controller) {
@@ -131,7 +128,8 @@ public final class BankGameView extends JLayeredPane {
                 newSize.height / 1);
         numberLabel.reload();
         text_money.setBounds(newSize.width / 3,
-        newSize.height / 3, newSize.height / 12,
-        newSize.height / 10);
+                newSize.height / 3, newSize.height / 12,
+                newSize.height / 10);
+
     }
 }

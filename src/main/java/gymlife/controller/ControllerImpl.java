@@ -91,4 +91,8 @@ public class ControllerImpl implements Controller {
     public void controllerStopMultiplier() {
         model.stopMultiplier();
     }
+
+    public float controllerGetMoney() {
+       return model.getMoneyMultiplied();
+    }
 }
