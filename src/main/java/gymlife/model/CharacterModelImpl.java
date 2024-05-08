@@ -1,39 +1,38 @@
 package gymlife.model;
 
-import java.util.Optional;
+
 import java.util.function.BiFunction;
 
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
-import gymlife.model.api.CharacterModel;
 import gymlife.utility.Directions;
-import gymlife.view.CharacterViewImpl;
+import gymlife.model.api.CharacterModel;
+
 /**
-*  Keylistener responsable for managing movement inputs.
-*/
+ * Implementation of the CharacterModel interface.
+ * This class represents the character in the game and provides methods for managing its movement.
+ */
 public class CharacterModelImpl implements CharacterModel {
 
-    private static Position pos = Constants.CHARACTER_START_POS;
+    private Position pos = Constants.CHARACTER_START_POS;
 
     /**
-    *  Keylistener responsable for managing movement inputs.
-    * @return pos 
-    */
+     * Retrieves the current position of the character.
+     * @return The position of the character.
+     */
     @Override
     public Position getCharacterPos() {
         return pos;
     }
+
     /**
-    *  Keylistener responsable for managing movement inputs.
-    * @param dir
-    */
+     * Sets a new direction for the character's movement.
+     * @param dir The new direction for the character's movement.
+     */
     @Override
-    public void setDir(final Optional<Directions> dir) {
-        dir.ifPresent(direction -> {
-            final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
-            pos = newPosition.apply(pos.X() + Directions.getOffset(direction).get().X(), 
-                                     pos.Y() + Directions.getOffset(direction).get().Y());
-            CharacterViewImpl.update(pos);
-        });
+    public void move(final Directions dir) {
+        final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
+        pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
     }
+
 }

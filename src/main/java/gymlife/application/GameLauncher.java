@@ -8,7 +8,6 @@ package gymlife.application;
 public final class GameLauncher {
 
     private GameLauncher() {
-
     }
 
     /**

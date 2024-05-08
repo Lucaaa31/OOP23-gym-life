@@ -1,41 +1,41 @@
 package gymlife.utility;
 
 /**
- * Main Class of the Java application.
+ * Constants class contains various constants used in the application.
  */
 public final class Constants {
     /**
-     * Main Class of the Java application.
+     * The movement constant used for character movement.
      */
     public static final int MOVEMENT = 10;
     /**
-     * Main Class of the Java application.
+     * The width of the panel.
      */
-    public static final int PANEL_WIDTH = 600;
+    public static final int PANEL_WIDTH = 640;
     /**
-     * Main Class of the Java application.
+     * The height of the panel.
      */
-    public static final int PANEL_HEIGHT = 400;
+    public static final int PANEL_HEIGHT = 480;
     /**
-     * Main Class of the Java application.
+     * The height of the frame.
+     */
+    public static final int FRAME_HEIGHT = 480;
+    /**
+     * The width of the frame.
+     */
+    public static final int FRAME_WIDTH = 740;
+    /**
+     * The width of the character.
      */
     public static final int CHARACTER_WIDTH = 60;
     /**
-     * Main Class of the Java application.
+     * The height of the character.
      */
     public static final int CHARACTER_HEIGHT = 70;
     /**
-     * Main Class of the Java application.
+     * The starting position of the character.
      */
-    public static final Position CHARACTER_START_POS = new Position(0, 0);
-    /**
-     * Main Class of the Java application.
-     */
-    public static final int STARTING_STATS_LEVEL = 0;
-    /**
-     * Main Class of the Java application.
-     */
-    public static final int MAX_STATS_LEVEL = 12;
+    public static final Position CHARACTER_START_POS = new Position(50, 50);
     private Constants() {
     }
 }
