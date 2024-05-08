@@ -1,7 +1,5 @@
 package gymlife.application;
 
-
-
 /**
  * Main Class of the Java application.
  */
