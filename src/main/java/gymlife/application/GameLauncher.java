@@ -16,6 +16,5 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-       
     }
 }
