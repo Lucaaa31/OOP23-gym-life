@@ -22,6 +22,14 @@ class TestMoney {
         assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + 1, money.getMoney());
     }
     @Test
+    void testDecrement() {
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, money.getMoney());
+        money.decrementMoney();
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 - 1, money.getMoney());
+    }
+    @Test
     void testMultiIncrement() {
         final MoneyModel money = new MoneyModelImpl();
         money.setMoney(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);

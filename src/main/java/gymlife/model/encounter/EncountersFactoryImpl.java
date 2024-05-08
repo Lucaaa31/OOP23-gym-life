@@ -4,11 +4,13 @@ import java.util.Optional;
 
 
 /**
- * Implementation of the EncountersManager interface.
+ * Factory class that generate a random code Optional of Encounter based on the different probability of every encounter
+ * type. The probability of each encounter is defined in the EncountersConstants class.
+ *.
  */
 public final class EncountersFactoryImpl {
     /**
-     * Retrieves a random encounter .
+     * Create a random Optional Encounter or Optional empty, depending on if the encounter appened or not.
      * 
      * @return The random encounter.
      */
