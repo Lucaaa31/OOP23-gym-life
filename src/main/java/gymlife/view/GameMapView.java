@@ -32,8 +32,12 @@ public final class GameMapView extends JFrame {
         this.controller = controller;
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 600);
-        JPanel mainPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
+        JPanel mainPanel = new JPanel();
         this.getContentPane().add(mainPanel);
+        mainPanel.setBackground(new Color(50,50,50));
+        JPanel mapPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
+        mainPanel.add(mapPanel);
+
 
         for (int y = 0; y < MapConstants.MAP_Y_DIM; y++) {
             for (int x = 0; x < MapConstants.MAP_X_DIM; x++) {
@@ -43,7 +47,7 @@ public final class GameMapView extends JFrame {
                 JLabel lb = new JLabel();
                 ImageIcon imageIcon = new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(path)).getImage().getScaledInstance(this.getWidth()/8, this.getHeight()/6, Image.SCALE_SMOOTH));
                 lb.setIcon(imageIcon);
-                mainPanel.add(lb);
+                mapPanel.add(lb);
             }
         }
 
