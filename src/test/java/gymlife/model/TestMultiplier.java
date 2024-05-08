@@ -13,7 +13,8 @@ class TestMultiplier {
     @Test
     void equal() throws InterruptedException {
         final PlaneGameModel number = new PlaneGameModel();
-        number.run();
+        final float money = 20;
+        number.runMultiplier(money);
 
         assertEquals(number.getTreshold(), number.getMultiplierShort());
     }

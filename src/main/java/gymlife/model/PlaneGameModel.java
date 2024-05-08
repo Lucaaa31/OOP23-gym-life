@@ -36,11 +36,9 @@ public final class PlaneGameModel {
     }
 
     public void runMultiplier(float money) {
-        Thread multipluThread = new Thread(() -> {
             while (flag) {
                 multiplier += INCREMENT;
                 moneyMultiplied = multiplier * money;
-                System.out.println(moneyMultiplied);
                 if (boundControl()) {
                     flag = false;
                 }
@@ -49,8 +47,6 @@ public final class PlaneGameModel {
                 } catch (InterruptedException e) {
                 }
             }
-        });
-        multipluThread.start();
     }
 
     public void stopMultiplier() {
