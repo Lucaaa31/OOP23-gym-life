@@ -17,21 +17,21 @@ public final class EncountersFactoryImpl {
     public static Optional<Encounter> getRandomEncounter() {
         if (Math.random() < EncountersConstants.encounterChance()) {
             final double e = Math.random();
-            if (e < EncountersConstants.iceCreamChance()) {
-                return Optional.of(new Encounter("ICE_CREAM", EncountersConstants.iceCreamDescription(),
-                        EncountersConstants.iceCreamAccept(), EncountersConstants.iceCreamDeny()));
-            } else if (e < EncountersConstants.robberChance()) {
-                return Optional.of(new Encounter("ROBBER", EncountersConstants.robberDescription(),
-                        EncountersConstants.robberAccept(), EncountersConstants.robberDeny()));
-            } else if (e < EncountersConstants.gymBroChance()) {
-                return Optional.of(new Encounter("GYM_BRO", EncountersConstants.gymBroDescription(),
-                        EncountersConstants.gymBroAccept(), EncountersConstants.gymBroDeny()));
-            } else if (e < EncountersConstants.moneyBagChance()) {
-                return Optional.of(new Encounter("MONEY_BAG", EncountersConstants.moneyBagDescription(),
+            if (e < EncountersConstants.moneyBagChance()) {
+                return Optional.of(new Encounter("ICE_CREAM", EncountersConstants.moneyBagDescription(),
                         EncountersConstants.moneyBagAccept(), EncountersConstants.moneyBagDeny()));
+            } else if (e < EncountersConstants.robberChance()) {
+                return Optional.of(new Encounter("MONEY_BAG", EncountersConstants.robberDescription(),
+                        EncountersConstants.robberAccept(), EncountersConstants.robberDeny()));
             } else if (e < EncountersConstants.pusherChance()) {
-                return Optional.of(new Encounter("PUSHER", EncountersConstants.pusherDescription(),
+                return Optional.of(new Encounter("GYM_BRO", EncountersConstants.pusherDescription(),
                         EncountersConstants.pusherAccept(), EncountersConstants.pusherDeny()));
+            } else if (e < EncountersConstants.gymBroChance()) {
+                return Optional.of(new Encounter("ROBBER", EncountersConstants.gymBroDescription(),
+                        EncountersConstants.gymBroAccept(), EncountersConstants.gymBroDeny()));
+            } else if (e < EncountersConstants.iceCreamChance()) {
+                return Optional.of(new Encounter("PUSHER", EncountersConstants.iceCreamDescription(),
+                        EncountersConstants.iceCreamAccept(), EncountersConstants.iceCreamDeny()));
             }
         }
         return Optional.empty();
