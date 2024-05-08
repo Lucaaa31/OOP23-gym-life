@@ -35,6 +35,17 @@ public final class GameMapView extends JFrame {
         JPanel mainPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
         this.getContentPane().add(mainPanel);
 
+        for (int y = 0; y < MapConstants.MAP_Y_DIM; y++) {
+            for (int x = 0; x < MapConstants.MAP_X_DIM; x++) {
+                final Position pos = new Position(x, y);
+
+                final String path = "images/cells/" + controller.getCurrentMap().getCellAtCoord(pos).getName() + ".png";
+                JLabel lb = new JLabel();
+                ImageIcon imageIcon = new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(path)).getImage().getScaledInstance(this.getWidth()/8, this.getHeight()/6, Image.SCALE_SMOOTH));
+                lb.setIcon(imageIcon);
+                mainPanel.add(lb);
+            }
+        }
 
 
 
