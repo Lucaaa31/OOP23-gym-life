@@ -11,7 +11,7 @@ public final class PlaneGameModel {
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();
-    private final float treshold;
+    private float treshold;
     private float multiplier;
     private float multiplierShort;
     private float moneyMultiplied = 1;
@@ -21,7 +21,7 @@ public final class PlaneGameModel {
      */
     public PlaneGameModel() {
         multiplier = 1.0f;
-        treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        treshold = 0;
         multiplierShort = 0;
     }
 
@@ -58,6 +58,10 @@ public final class PlaneGameModel {
         }
     }
 
+    public float randomizeNewThreshold() {
+        treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        return treshold;
+    }
     /**
      * This method stops the runMultiplier method by setting the flag to false.
      */

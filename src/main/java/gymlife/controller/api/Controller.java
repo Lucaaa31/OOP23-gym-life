@@ -28,6 +28,8 @@ public interface Controller {
      */
     void startMultiplier(float money);
 
+    float randomizeNewThreshold();
+
     /**
      * Returns the threshold of the multiplier.
      * 

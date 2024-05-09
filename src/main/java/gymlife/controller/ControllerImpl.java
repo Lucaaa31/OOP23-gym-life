@@ -121,4 +121,9 @@ public class ControllerImpl implements Controller {
     public float controllerGetMoney() {
         return model.getMoneyMultiplied();
     }
+
+    @Override
+    public float randomizeNewThreshold() {
+        return model.randomizeNewThreshold();
+    }
 }
