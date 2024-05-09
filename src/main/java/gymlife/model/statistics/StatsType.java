@@ -8,7 +8,7 @@ public enum StatsType {
     /**
      * Represents the humor level of the Character.
      */
-    HUMOR,
+    HAPPINESS,
     /**
      * Represents the stamina level of the Character.
      */

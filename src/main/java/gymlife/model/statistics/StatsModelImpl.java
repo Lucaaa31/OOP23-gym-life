@@ -61,7 +61,7 @@ public final class StatsModelImpl implements StatsModel {
         gameStats.put(StatsType.LEG_MASS, legMass);
         gameStats.put(StatsType.MASS, mass);
         gameStats.put(StatsType.STAMINA, stamina);
-        gameStats.put(StatsType.HUMOR, humor);
+        gameStats.put(StatsType.HAPPINESS, humor);
     }
     /**
      * Increases the specified stat by 1.
@@ -131,7 +131,7 @@ public final class StatsModelImpl implements StatsModel {
      * @param value
      */
     @Override
-    public void setStats(StatsType stats, int value) {
+    public void setStats(final StatsType stats, final int value) {
         gameStats.get(stats).setCount(value);
     }
 }

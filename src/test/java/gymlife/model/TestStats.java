@@ -19,7 +19,7 @@ class TestStats {
     void testInitialization() {
         final StatsModel stats = new StatsModelImpl();
         stats.resetAll();
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.HUMOR));
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.HAPPINESS));
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.STAMINA));
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.LEG_MASS));
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.BACK_MASS));
@@ -82,8 +82,8 @@ class TestStats {
         assertEquals(0, stats.getStats(StatsType.STAMINA));
         stats.decrease(StatsType.STAMINA);
         assertEquals(0, stats.getStats(StatsType.STAMINA));
-        stats.increase(StatsType.HUMOR);
-        assertEquals(2, stats.getStats(StatsType.HUMOR));
+        stats.increase(StatsType.HAPPINESS);
+        assertEquals(2, stats.getStats(StatsType.HAPPINESS));
         stats.resetAll();
     }
 }
