@@ -67,4 +67,6 @@ public interface StatsManager {
      * @return the money of the game
      */
     Counter getMoney();
+    void multiIncrementStatst(StatsType stats, int value);
+    void setStats(StatsType stats, int value);
 }

@@ -61,6 +61,24 @@ public class StatsManagerImpl implements StatsManager {
         return new Counter(gameMoney.getMoney());
     }
 
+    @Override
+    public void multiIncrementStatst(StatsType stats, int value) {
+        if ("MONEY".equals(stats.toString())) {
+            gameMoney.setMoney(value);
+        } else {
+            gameStats.multiIncrementStats(stats, value);
+        }
+    }
+
+    @Override
+    public void setStats(StatsType stats, int value) {
+        if ("MONEY".equals(stats.toString())) {
+            gameMoney.setMoney(value);
+        } else {
+            gameStats.setStats(stats, value);
+        }
+    }
+
     /**
      * Retrieves the number of days left in the game.
      * 

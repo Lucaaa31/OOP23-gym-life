@@ -123,4 +123,15 @@ public final class StatsModelImpl implements StatsModel {
             entry.getValue().setCount(StatsConstants.STARTING_STATS_LEVEL);
         }
     }
+
+    /**
+     * Reset all stats to 0.
+     *
+     * @param stats
+     * @param value
+     */
+    @Override
+    public void setStats(StatsType stats, int value) {
+        gameStats.get(stats).setCount(value);
+    }
 }

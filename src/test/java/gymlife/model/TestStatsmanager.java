@@ -77,12 +77,28 @@ class TestStatsmanager {
         /*
          * add for each type of mass the exact amount
          */
-    assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getAllStats().get(StatsType.HUMOR).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL * 3, stats.getStats().get(StatsType.MASS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney().getCount());
         assertEquals(GameDifficulty.EASY.getDays(), stats.getDays().getCount());
+        stats.resetAll();
+    }
+
+    @Test
+    void testMultiIncrementStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.multiIncrementStatst(StatsType.HUMOR, 10);
+        assertEquals(11, stats.getStats().get(StatsType.HUMOR).getCount());
+        stats.resetAll();
+    }
+
+    @Test
+    void testSetStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.setStats(StatsType.HUMOR, 10);
+        assertEquals(10, stats.getStats().get(StatsType.HUMOR).getCount());
         stats.resetAll();
     }
 
