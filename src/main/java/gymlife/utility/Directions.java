@@ -9,22 +9,22 @@ public enum Directions {
     /**
      * Direction UP.
      */
-    UP('w', new Position(0, -10)),
+    UP('w', new Position(0, -1)),
 
     /**
      * Direction RIGHT.
      */
-    RIGHT('d', new Position(+10, 0)),
+    RIGHT('d', new Position(+1, 0)),
 
     /**
      * Direction Left.
      */
-    LEFT('a', new Position(-10, 0)),
+    LEFT('a', new Position(-1, 0)),
 
     /**
      * Direction DOWN.
      */
-    DOWN('s', new Position(0, +10));
+    DOWN('s', new Position(0, +1));
 
     private final char key;
     private final Position pos;
