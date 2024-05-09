@@ -36,7 +36,10 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void moveCharacter(final Directions dir) {
-        characterModel.move(dir);
+        Position positionToGo = new Position(getCharacterPos().X() + dir.getPos().X(), getCharacterPos().Y() + dir.getPos().Y());
+        if (mapManager.getCurrentMap().checkBorders(positionToGo) && !mapManager.getCurrentMap().isCellCollidable(positionToGo)){
+            characterModel.move(dir);
+        }
     }
 
     /**
@@ -78,6 +81,7 @@ public class ControllerImpl implements Controller {
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
 
+    @Override
     public int getPlayerLevel() {
         return statsManager.getStats().get(StatsType.MASS).getCount()/75;
     }

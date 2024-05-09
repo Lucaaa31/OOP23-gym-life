@@ -38,4 +38,6 @@ public interface Controller {
      * Executes whatever action is associated with cell on which the character currently is.
      */
     void cellInteraction();
+
+    int getPlayerLevel();
 }
