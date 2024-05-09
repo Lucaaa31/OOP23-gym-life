@@ -9,7 +9,7 @@ import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsManagerImpl;
-import gymlife.model.statistics.StatsModelImpl;
+
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
@@ -18,7 +18,7 @@ import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 
-import java.rmi.MarshalledObject;
+
 import java.util.Map;
 
 /**
@@ -30,7 +30,11 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
     private final StatsManager statsManager;
-
+    /**
+     * Create a new ControllerImpl object.
+     * 
+     * @param difficulty the difficulty of the game.
+     */
     public ControllerImpl(final GameDifficulty difficulty) {
         statsManager = new StatsManagerImpl(difficulty);
     }

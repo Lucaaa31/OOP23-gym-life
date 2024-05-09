@@ -60,25 +60,34 @@ public class StatsManagerImpl implements StatsManager {
     public Counter getMoney() {
         return new Counter(gameMoney.getMoney());
     }
-
+    /**
+     * Multincrement a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
     @Override
-    public void multiIncrementStatst(StatsType stats, int value) {
+    public void multiIncrementStat(final StatsType stats, final int value) {
         if ("MONEY".equals(stats.toString())) {
             gameMoney.setMoney(value);
         } else {
             gameStats.multiIncrementStats(stats, value);
         }
     }
-
+    /**
+     * Set a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
     @Override
-    public void setStats(StatsType stats, int value) {
+    public void setStat(final StatsType stats, final int value) {
         if ("MONEY".equals(stats.toString())) {
             gameMoney.setMoney(value);
         } else {
             gameStats.setStats(stats, value);
         }
     }
-
     /**
      * Retrieves the number of days left in the game.
      * 
@@ -98,7 +107,7 @@ public class StatsManagerImpl implements StatsManager {
     }
     /**
      * Checks if the game is over.
-     * The game is considered over if either one of the stats is zero or all the days are over.
+     * The game is considered over if either one of the stats is zero or the days are over.
      * 
      * @return true if the game is over, false otherwise
      */

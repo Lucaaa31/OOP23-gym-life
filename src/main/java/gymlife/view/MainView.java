@@ -31,6 +31,7 @@ public class MainView extends JFrame {
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final JPanel statsView = new SideStatsView(controller);
+
 //    private final CharacterView charView = new CharacterView(controller);
 //    private final GameMapView gameMapView = new GameMapView(controller);
 //    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
@@ -53,7 +54,7 @@ public class MainView extends JFrame {
 
         sideContainer.setPreferredSize(new Dimension(Constants.SIDE_WIDTH, Constants.HEIGHT));
         sideContainer.setLayout(new CardLayout());
-        sideContainer.setBackground(Color.RED);
+        sideContainer.setBackground(Color.BLACK);
 
         final BorderLayout b = new BorderLayout();
         mainPanel.setLayout(b);
@@ -72,6 +73,7 @@ public class MainView extends JFrame {
         });
         sideContainer.add(statsView);
         statsView.setVisible(true);
+        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
 
         this.setResizable(true);
         this.setVisible(true);

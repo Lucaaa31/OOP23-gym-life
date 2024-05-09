@@ -67,6 +67,18 @@ public interface StatsManager {
      * @return the money of the game
      */
     Counter getMoney();
-    void multiIncrementStatst(StatsType stats, int value);
-    void setStats(StatsType stats, int value);
+    /**
+     * Multincrement a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    void multiIncrementStat(StatsType stats, int value);
+    /**
+     * Set a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    void setStat(StatsType stats, int value);
 }

@@ -1,9 +1,5 @@
 package gymlife.utility;
 
-
-import java.awt.Font;
-
-
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -11,59 +7,41 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * The FontManager class is responsible for loading and managing the custom font
- * used in the application.
+ * The FontLoader class is responsible for loading a custom font and providing access to it.
  */
 public final class FontLoader {
-    private static final float DEFAULT_FONT_SIZE = 20f;
-
+    private static final float DEFAULT_FONT_SIZE = 25f;
     private static Font customFont;
-
     /**
-     * Private constructor to prevent instantiation of the utility class.
-     */
-    private FontLoader() {
-    }
-
-    /**
-     * Loads the custom font from the specified file path. If the loading fails, it
-     * falls back to a default font.
+     * Loads the custom font from the specified font file.
+     * If the font file is not found or an error occurs during loading, a default font will be used.
      */
     public static void loadFont() {
         try {
             final String fontPath = "src"
                     + File.separator
                     + "main" + File.separator
-                    + "java" + File.separator
-                    + "unibo" + File.separator
-                    + "exiled" + File.separator
                     + "resources" + File.separator
-                    + "font.ttf";
+                    + "Pixellari.ttf";
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(DEFAULT_FONT_SIZE);
             final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
         } catch (IOException | FontFormatException e) {
-            // If the custom font loading fails, use a fallback font (Arial, bold, size 16).
-            customFont = new Font("Arial", Font.BOLD, 16);
+            customFont = Font.getFont("Arial");
         }
     }
-
     /**
-     * Retrieves the custom font loaded by the FontManager.
+     * Returns the custom font with the specified font size.
      *
-     * @return The custom font.
+     * @param fontSize the size of the font
+     * @return the custom font with the specified font size
      */
-    public static Font getCustomFont() {
-        return customFont;
+    public static Font getCustomFont(final float fontSize) {
+        return customFont.deriveFont(fontSize);
     }
-
     /**
-     * Retrieves the custom font loaded by the FontManager with a specified size.
-     *
-     * @param size The size to set for the custom font.
-     * @return The custom font with the specified size.
+     * Private Constructor the custom font with the default font size.
      */
-    public static Font getCustomFont(final int size) {
-        return customFont.deriveFont((float) size);
+    private FontLoader() {
     }
 }
