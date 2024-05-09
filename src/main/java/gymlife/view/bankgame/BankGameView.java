@@ -95,9 +95,11 @@ public final class BankGameView extends JLayeredPane {
                     STARTED = true;
                     numberLabel.setVisible(true);
                     textMoney.setEditable(false);
+                    restarButton.setEnabled(false);
                 } else {
                     controller.controllerStopMultiplier();
                     textMoney.setEditable(true);
+                    restarButton.setEnabled(true);
                     STARTED = false;
                 }
             }
