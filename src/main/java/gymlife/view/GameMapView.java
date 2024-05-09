@@ -6,7 +6,9 @@ import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
 
 
-import java.awt.*;
+import java.awt.Point;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -15,7 +17,11 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 
 /**
  * JPanel that shows the current map on which teh character is. it shows all the cells of the map loaded.
@@ -62,6 +68,23 @@ public final class GameMapView extends JFrame {
             }
         }
 
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
+                moveCharacter(characterLabel);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         this.getContentPane().add(mainPanel);
 
