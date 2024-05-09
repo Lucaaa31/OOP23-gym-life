@@ -54,6 +54,8 @@ public final class BankGameView extends JLayeredPane {
 
         button.setText("Play");
         restarButton.setText("Restart");
+        button.setEnabled(false);
+        restarButton.setEnabled(false);
 
         textMoney.setFont(myFont);
 
@@ -76,8 +78,11 @@ public final class BankGameView extends JLayeredPane {
                 moneyStart = Float.parseFloat(temp);
                 moneyLabel.setText(String.format("%.2f", moneyStart));
                 moneyLabel.setVisible(true);
+                button.setEnabled(true);
+                restarButton.setEnabled(true);
             }
         });
+
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -101,6 +106,7 @@ public final class BankGameView extends JLayeredPane {
                     textMoney.setEditable(true);
                     restarButton.setEnabled(true);
                     STARTED = false;
+                    button.setEnabled(false);
                 }
             }
         });
@@ -110,6 +116,8 @@ public final class BankGameView extends JLayeredPane {
             public final void actionPerformed(final ActionEvent e) {
                 numberLabel.setVisible(false);
                 controller.randomizeNewThreshold();
+                restarButton.setEnabled(false);
+                moneyLabel.setVisible(false);
             }
         });
 
@@ -143,7 +151,8 @@ public final class BankGameView extends JLayeredPane {
     }
 
     private void setLayersNewSize(final ImageLabelView skyLabel, final ImageLabelView planeLabel,
-            final TextLabelView numberLabel, final JButton button, final JButton restartButton, final TextLabelView moneyLabel) {
+            final TextLabelView numberLabel, final JButton button, final JButton restartButton,
+            final TextLabelView moneyLabel) {
         final Dimension newSize = this.getSize();
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
@@ -163,7 +172,7 @@ public final class BankGameView extends JLayeredPane {
         numberLabel.reload();
         textMoney.setBounds(newSize.width / 40,
                 newSize.height / 2, newSize.height / 11,
-                newSize.height / 12);
+                newSize.height / 17);
         moneyLabel.setBounds(newSize.width / 40,
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
