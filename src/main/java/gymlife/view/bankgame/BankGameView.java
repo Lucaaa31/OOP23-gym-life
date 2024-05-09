@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.Serial;
 
 /**
@@ -22,7 +24,7 @@ public final class BankGameView extends JLayeredPane {
     private final TextLabelView numberLabel;
     private final TextLabelView moneyLabel;
     private boolean STARTED = false;
-    private final JTextField textMoney;
+    private final JTextField boxMoney;
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
     private float moneyMultiplied;
     private float moneyStart;
@@ -42,14 +44,14 @@ public final class BankGameView extends JLayeredPane {
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
         final JButton restarButton = new JButton();
-        textMoney = new JTextField();
+        boxMoney = new JTextField();
 
         this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
         this.add(numberLabel, JLayeredPane.MODAL_LAYER);
         this.add(button, JLayeredPane.MODAL_LAYER);
         this.add(restarButton, JLayeredPane.MODAL_LAYER);
-        this.add(textMoney, JLayeredPane.MODAL_LAYER);
+        this.add(boxMoney, JLayeredPane.MODAL_LAYER);
         this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
 
         button.setText("Play");
@@ -57,10 +59,10 @@ public final class BankGameView extends JLayeredPane {
         button.setEnabled(false);
         restarButton.setEnabled(false);
 
-        textMoney.setFont(myFont);
+        boxMoney.setFont(myFont);
 
         /*
-         * textMoney.addKeyListener(new KeyAdapter() {
+         * boxMoney.addKeyListener(new KeyAdapter() {
          * 
          * @Override
          * public void keyTyped(final KeyEvent e) {
@@ -71,18 +73,34 @@ public final class BankGameView extends JLayeredPane {
          * });
          */
 
-        textMoney.addActionListener(new ActionListener() {
+        boxMoney.addActionListener(new ActionListener() {
             @Override
             public final void actionPerformed(final ActionEvent e) {
-                String temp = textMoney.getText();
+                String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
-                moneyLabel.setText(String.format("%.2f", moneyStart));
+                if (moneyLabel instanceof MoneyGameView mpggv) {
+                    mpggv.updateText(moneyStart);
+                }
                 moneyLabel.setVisible(true);
                 button.setEnabled(true);
                 restarButton.setEnabled(true);
             }
         });
 
+        boxMoney.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
+                    e.consume();
+                    moneyLabel.setText("Wrong format, only numbers");
+                    try {
+                        moneyLabel.wait(1);
+                    } catch (InterruptedException e1) {
+                    }
+                }
+            }
+        });
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -99,11 +117,10 @@ public final class BankGameView extends JLayeredPane {
                     showsMulti(controller);
                     STARTED = true;
                     numberLabel.setVisible(true);
-                    textMoney.setEditable(false);
+                    boxMoney.setEditable(false);
                     restarButton.setEnabled(false);
                 } else {
                     controller.controllerStopMultiplier();
-                    textMoney.setEditable(true);
                     restarButton.setEnabled(true);
                     STARTED = false;
                     button.setEnabled(false);
@@ -118,6 +135,7 @@ public final class BankGameView extends JLayeredPane {
                 controller.randomizeNewThreshold();
                 restarButton.setEnabled(false);
                 moneyLabel.setVisible(false);
+                boxMoney.setEditable(true);
             }
         });
 
@@ -170,7 +188,7 @@ public final class BankGameView extends JLayeredPane {
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
         numberLabel.reload();
-        textMoney.setBounds(newSize.width / 40,
+        boxMoney.setBounds(newSize.width / 40,
                 newSize.height / 2, newSize.height / 11,
                 newSize.height / 17);
         moneyLabel.setBounds(newSize.width / 40,
