@@ -35,7 +35,7 @@ public final class Constants {
     /**
      * The starting position of the character.
      */
-    public static final Position CHARACTER_START_POS = new Position(50, 50);
+    public static final Position CHARACTER_START_POS = new Position(6, 2);
     private Constants() {
     }
 }
