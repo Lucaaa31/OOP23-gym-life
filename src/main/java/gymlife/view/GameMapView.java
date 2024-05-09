@@ -32,6 +32,7 @@ public final class GameMapView extends JFrame {
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
     private transient Map<Position, JLabel> cells = new HashMap<>();
+    private final JLabel characterLabel;
 
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
@@ -48,7 +49,7 @@ public final class GameMapView extends JFrame {
         mainPanel.setLayer(mapPanel, JLayeredPane.DEFAULT_LAYER);
         String p = "images/character/level1_down.png";
         ImageIcon img =new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(p)).getImage().getScaledInstance(this.getWidth()/8, this.getHeight()/6, Image.SCALE_SMOOTH));
-        JLabel characterLabel = new JLabel(img);
+        this.characterLabel = new JLabel(img);
         characterLabel.setSize(100, 100);
         mainPanel.add(characterLabel);
         mainPanel.setLayer(characterLabel, JLayeredPane.PALETTE_LAYER);
@@ -72,7 +73,7 @@ public final class GameMapView extends JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
-                moveCharacter(characterLabel);
+                moveCharacter();
             }
 
             @Override
@@ -91,7 +92,7 @@ public final class GameMapView extends JFrame {
         this.setVisible(true);
 
 
-        moveCharacter(characterLabel);
+        moveCharacter();
     }
 
     @Serial
@@ -109,8 +110,8 @@ public final class GameMapView extends JFrame {
     }
 
 
-    private void moveCharacter(JLabel jl) {
+    private void moveCharacter() {
         Point locationToGo = new Point(cells.get(controller.getCharacterPos()).getX(),cells.get(controller.getCharacterPos()).getY());
-        jl.setLocation(locationToGo);
+        characterLabel.setLocation(locationToGo);
     }
 }
