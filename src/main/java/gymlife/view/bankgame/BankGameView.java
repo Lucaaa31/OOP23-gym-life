@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.Serial;
 
 /**
@@ -22,6 +20,7 @@ public final class BankGameView extends JLayeredPane {
     private static final long serialVersionUID = -3972452455820596601L;
 
     private final TextLabelView numberLabel;
+    private final TextLabelView moneyLabel;
     private boolean STARTED = false;
     private final JTextField textMoney;
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
@@ -37,6 +36,7 @@ public final class BankGameView extends JLayeredPane {
      */
     public BankGameView(Controller controller) {
         numberLabel = new MultiplierGameView();
+        moneyLabel = new moneyGameView();
         final ImageLabelView planeLayer = new AirplaneGameView();
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
@@ -49,6 +49,7 @@ public final class BankGameView extends JLayeredPane {
         this.add(button, JLayeredPane.MODAL_LAYER);
         this.add(restarButton, JLayeredPane.MODAL_LAYER);
         this.add(textMoney, JLayeredPane.MODAL_LAYER);
+        this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
 
         button.setText("Parti!");
         restarButton.setText("Restart");
@@ -57,29 +58,30 @@ public final class BankGameView extends JLayeredPane {
 
         /*
          * textMoney.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(final KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-                    e.consume();
-                }
-            }
-        });
+         * 
+         * @Override
+         * public void keyTyped(final KeyEvent e) {
+         * if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+         * e.consume();
+         * }
+         * }
+         * });
          */
-        
 
         textMoney.addActionListener(new ActionListener() {
             @Override
             public final void actionPerformed(final ActionEvent e) {
                 String temp = textMoney.getText();
                 moneyToPlay = Float.parseFloat(temp);
-                first();
+               
+                moneyLabel.setText(String.format("%.2f", moneyToPlay));
             }
         });
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton);
+                setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton, moneyLabel);
             }
         });
 
@@ -95,7 +97,7 @@ public final class BankGameView extends JLayeredPane {
                 } else {
                     controller.controllerStopMultiplier();
                     textMoney.setEditable(true);
-                    textMoney.setText("");
+                    STARTED = false;
                 }
             }
         });
@@ -103,9 +105,8 @@ public final class BankGameView extends JLayeredPane {
         restarButton.addActionListener(new ActionListener() {
             @Override
             public final void actionPerformed(final ActionEvent e) {
-                controller.randomizeNewThreshold();
                 numberLabel.setVisible(false);
-                moneyToPlay = 0;
+                controller.randomizeNewThreshold();
             }
         });
 
@@ -124,10 +125,6 @@ public final class BankGameView extends JLayeredPane {
         }).start();
     }
 
-    public void first() {
-        numberLabel.setText(String.format("%.2f", moneyToPlay));
-    }
-
     /**
      * Starts a new thread to update the multiplier value by calling the
      * startMultiplier method
@@ -143,7 +140,7 @@ public final class BankGameView extends JLayeredPane {
     }
 
     private void setLayersNewSize(final ImageLabelView skyLabel, final ImageLabelView planeLabel,
-            final TextLabelView numberLabel, final JButton button, final JButton restartButton) {
+            final TextLabelView numberLabel, final JButton button, final JButton restartButton, final TextLabelView moneyLabel) {
         final Dimension newSize = this.getSize();
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
@@ -164,5 +161,9 @@ public final class BankGameView extends JLayeredPane {
         textMoney.setBounds(newSize.width / 40,
                 newSize.height / 2, newSize.height / 11,
                 newSize.height / 12);
+        moneyLabel.setBounds(newSize.width / 3,
+                newSize.height / 3, newSize.height / 1,
+                newSize.height / 1);
+        moneyLabel.reload();
     }
 }

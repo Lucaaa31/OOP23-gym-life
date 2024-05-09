@@ -9,7 +9,7 @@ public final class PlaneGameModel {
     private static final float MAX_BOUND = 9.00f;
     private static final int THREAD_WAIT = 8;
     private static final float INCREMENT = 0.001f;
-    private boolean flag = true;
+    private boolean flag;
     private static final Random R = new Random();
     private float treshold;
     private float multiplier;
@@ -45,6 +45,7 @@ public final class PlaneGameModel {
      * @param money The money value to be multiplied with the multiplier.
      */
     public void runMultiplier(float money) {
+        flag = true;
         while (flag) {
             multiplier += INCREMENT;
             moneyMultiplied = multiplier * money;
@@ -60,6 +61,7 @@ public final class PlaneGameModel {
 
     public float randomizeNewThreshold() {
         treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = 1;
         return treshold;
     }
     /**
