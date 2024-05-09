@@ -18,7 +18,7 @@ public class BenchView extends JPanel{
     public BenchView(final ControllerImpl controller){
         this.controller = controller;
         timerView = new TimerView(controller);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         updateImage(controller.getState());
         label.setPreferredSize(new Dimension(1000, 700));
         button.addActionListener(e -> {

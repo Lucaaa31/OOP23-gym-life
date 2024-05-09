@@ -15,8 +15,7 @@ public class MinigameViewImpl extends JPanel {
     private Controller controller;
     private JPanel minigamePanel;
     private MinigameDifficultyView difficultyView;
-
-  //  private TimerView timerView;
+    //private TimerView timerView;
 
 
     /**
@@ -26,7 +25,7 @@ public class MinigameViewImpl extends JPanel {
      */
     public MinigameViewImpl(Controller controller) {
         this.controller = controller;
-        //timerView = new TimerView(controller);
+       // timerView = new TimerView(controller);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         difficultyView = new MinigameDifficultyView(controller);
         this.add(difficultyView);
@@ -37,7 +36,8 @@ public class MinigameViewImpl extends JPanel {
         } catch (Exception e) {
 
         }
+        System.out.println("MinigameViewImpl: " + controller.getMinigameType().getViewName());
         this.add(minigamePanel);
-        //this.add(timerView, BoxLayout.X_AXIS);
+       // this.add(timerView, BoxLayout.X_AXIS);
     }
 }

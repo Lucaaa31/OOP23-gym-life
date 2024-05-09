@@ -1,13 +1,11 @@
 package gymlife.utility;
 
-import java.util.*;
-
 public enum MinigameDifficulty {
     EASY(
             2,
             3,
             7000,
-            3
+            1
     ),
     MEDIUM(
             3,

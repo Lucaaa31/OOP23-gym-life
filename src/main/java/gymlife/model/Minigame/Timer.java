@@ -6,7 +6,7 @@ import java.util.List;
  * The Timer class represents a timer that counts down from a specified time in milliseconds.
  * It implements the Runnable interface to allow it to be executed in a separate thread.
  */
-public class Timer implements Runnable {
+public class Timer extends Thread {
     private int milliseconds;
     private int runningTime;
     private boolean isRunning = false;
@@ -24,6 +24,7 @@ public class Timer implements Runnable {
     @Override
     public void run() {
         System.out.println("Running");
+
         while (runningTime > 0 && !Thread.currentThread().isInterrupted()) {
             isRunning = true;
             try {
@@ -41,11 +42,8 @@ public class Timer implements Runnable {
      *
      * @return the running time of the timer
      */
-    public List<Integer> getRunningTime() {
-        return List.of(runningTime / 10000,
-                (runningTime / 1000) % 10,
-                (runningTime / 100) % 10,
-                runningTime % 10);
+    public int getRunningTime() {
+        return runningTime;
     }
 
     /**

@@ -1,67 +1,55 @@
 package gymlife.view.minigame;
 
+import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.util.List;
-import java.util.function.Consumer;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
 
 
-public class TimerView extends JPanel {
+import javax.swing.*;
 
-    private static JLabel label1 = new JLabel("");
-    private static JLabel label2 = new JLabel("");
-    private static JLabel label3 = new JLabel(":");
-    private static JLabel label4 = new JLabel("");
-    private static JLabel label5 = new JLabel("");
+/**
+ * The TimerView class represents a JPanel that displays a timer.
+ * It updates the timer labels based on the time received from the controller.
+ */
+public class TimerView extends JLabel {
+
+   // private JLabel label1 = new JLabel("");
     private Controller controller;
 
-    private final Consumer<List<Integer>> labelUpdater = digits -> {
-        label1.setText(Integer.toString(digits.get(0)));
-        label2.setText(Integer.toString(digits.get(1)));
-        label4.setText(Integer.toString(digits.get(2)));
-        label5.setText(Integer.toString(digits.get(3)));
-    };
 
-    public TimerView(final int height, Controller controller){
+    /**
+     * Constructs a TimerView object with the specified controller.
+     * 
+     * @param controller the controller object used to get the time
+     */
+    public TimerView(final ControllerImpl controller) {
         this.controller = controller;
-        int n = 10;
 
         setBackground(Color.PINK);
+        this.setSize(200, 100);
+       // this.setLayout();
 
-        setLayout(new GridLayout(1, 5));
-
-        Consumer<JLabel> styleLabel = label -> label.setFont(new Font("Calibri", Font.ROMAN_BASELINE, height / n));
-        styleLabel.accept(label1);
-        styleLabel.accept(label2);
-        styleLabel.accept(label3);
-        styleLabel.accept(label4);
-        styleLabel.accept(label5);
-
-        add(label1);
-        add(label2);
-        add(label3);
-        add(label4);
-        add(label5);
-        setVisible(true);
-
-
-        //update();
-    }
-
-
-
-    public void update(){
-        new Thread (() -> {
-            while(!controller.getTime().isEmpty()){
-                labelUpdater.accept(controller.getTime());
+        new Thread(() -> {
+            while(true) {
+                System.out.println("START TIMER");
+                if(controller.getVisibilityTimer()){
+                    System.out.println("START kmnk n");
+                    startTimer();
+                    break;
+                }
             }
         }).start();
+
+    }
+
+    public void startTimer(){
+        System.out.println("START TIMER");
+            while (controller.getVisibilityTimer()) {
+                System.out.println("UPDATE" + controller.getTime());
+                this.setText(String.format("%d:%02d", controller.getTime() / 100, controller.getTime() % 100));
+            }
+
     }
 
 

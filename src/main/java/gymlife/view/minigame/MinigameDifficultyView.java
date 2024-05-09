@@ -29,6 +29,7 @@ public class MinigameDifficultyView extends JPanel {
         this.add(normalButton);
         this.add(hardButton);
 
+
         easyButton.addActionListener(e -> {
             controller.setDifficulty(MinigameDifficulty.EASY);
             this.setVisible(false);

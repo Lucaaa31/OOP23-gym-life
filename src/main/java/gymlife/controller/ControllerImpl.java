@@ -11,6 +11,7 @@ import gymlife.utility.MinigameType;
 import gymlife.utility.Position;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class responsible for managing Character movements.
@@ -52,6 +53,15 @@ public class ControllerImpl implements Controller {
         minigameManager.startMinigame();
     }
 
+    public boolean getVisibilityTimer() {
+        return minigameManager.getCurrentMinigame().isAlive();
+    }
+
+    @Override
+    public void notifyKeyPressed(char keyChar) {
+        minigameManager.getCurrentMinigame().notifyKeyPressed(keyChar);
+    }
+
     public Timer getTimer(){
         return this.timer;
     }
@@ -71,7 +81,7 @@ public class ControllerImpl implements Controller {
      * @return a list of integers representing the running time
      */
     @Override
-    public List<Integer> getTime() {
+    public int getTime() {
         return timer.getRunningTime();
     }
 
@@ -104,4 +114,5 @@ public class ControllerImpl implements Controller {
     public void setMinigameManager(final MinigameManager minigameManager) {
         this.minigameManager = minigameManager;
     }
+
 }

@@ -2,7 +2,6 @@ package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
-import gymlife.utility.MinigameType;
 
 public class BenchMinigame implements Minigame, Runnable {
     private MinigameDifficulty difficulty;
@@ -65,5 +64,16 @@ public class BenchMinigame implements Minigame, Runnable {
         this.difficulty = selectedDifficulty;
     }
 
+    public boolean isAlive(){
+        if (timerThread == null) {
+            return false;
+        }
+        return timerThread.isAlive();
+    }
+
+    @Override
+    public void notifyKeyPressed(char keyChar) {
+        this.isPressed = true;
+    }
 
 }

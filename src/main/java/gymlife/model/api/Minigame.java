@@ -35,4 +35,8 @@ public interface Minigame {
      * @param selectedDifficulty the selected difficulty level
      */
     void setDifficulty(MinigameDifficulty selectedDifficulty);
+
+    boolean isAlive();
+
+    void notifyKeyPressed(char keyChar);
 }

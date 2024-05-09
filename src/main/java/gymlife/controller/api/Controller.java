@@ -32,11 +32,15 @@ public interface Controller {
 
     void notifyButtonPressed();
 
-    List<Integer> getTime();
+    int getTime();
 
     int getState();
 
     MinigameType getMinigameType();
 
     void setMinigameManager(MinigameManager minigameManager);
+
+    boolean getVisibilityTimer();
+
+    void notifyKeyPressed(char keyChar);
 }
