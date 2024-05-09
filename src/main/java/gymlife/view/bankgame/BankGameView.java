@@ -24,7 +24,8 @@ public final class BankGameView extends JLayeredPane {
     private boolean STARTED = false;
     private final JTextField textMoney;
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
-    private float moneyToPlay;
+    private float moneyMultiplied;
+    private float moneyStart;
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -36,7 +37,7 @@ public final class BankGameView extends JLayeredPane {
      */
     public BankGameView(Controller controller) {
         numberLabel = new MultiplierGameView();
-        moneyLabel = new moneyGameView();
+        moneyLabel = new MoneyGameView();
         final ImageLabelView planeLayer = new AirplaneGameView();
         final ImageLabelView skyLayer = new SkyGameView();
         final JButton button = new JButton();
@@ -51,7 +52,7 @@ public final class BankGameView extends JLayeredPane {
         this.add(textMoney, JLayeredPane.MODAL_LAYER);
         this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
 
-        button.setText("Parti!");
+        button.setText("Play");
         restarButton.setText("Restart");
 
         textMoney.setFont(myFont);
@@ -72,9 +73,9 @@ public final class BankGameView extends JLayeredPane {
             @Override
             public final void actionPerformed(final ActionEvent e) {
                 String temp = textMoney.getText();
-                moneyToPlay = Float.parseFloat(temp);
-               
-                moneyLabel.setText(String.format("%.2f", moneyToPlay));
+                moneyStart = Float.parseFloat(temp);
+                moneyLabel.setText(String.format("%.2f", moneyStart));
+                moneyLabel.setVisible(true);
             }
         });
 
@@ -117,9 +118,9 @@ public final class BankGameView extends JLayeredPane {
         new Thread(() -> {
             float multiplier;
             while ((multiplier = controller.getMultiplier()) != controller.getTreshold()) {
-                moneyToPlay = controller.controllerGetMoney();
+                moneyMultiplied = controller.controllerGetMoney();
                 if (numberLabel instanceof MultiplierGameView mpgv) {
-                    mpgv.updateText(multiplier, moneyToPlay);
+                    mpgv.updateText(multiplier, moneyMultiplied);
                 }
             }
         }).start();
@@ -135,7 +136,7 @@ public final class BankGameView extends JLayeredPane {
      */
     public void updateMulti(final Controller controller) {
         new Thread(() -> {
-            controller.startMultiplier(moneyToPlay);
+            controller.startMultiplier(moneyStart);
         }).start();
     }
 
@@ -161,7 +162,7 @@ public final class BankGameView extends JLayeredPane {
         textMoney.setBounds(newSize.width / 40,
                 newSize.height / 2, newSize.height / 11,
                 newSize.height / 12);
-        moneyLabel.setBounds(newSize.width / 3,
+        moneyLabel.setBounds(newSize.width / 40,
                 newSize.height / 3, newSize.height / 1,
                 newSize.height / 1);
         moneyLabel.reload();
