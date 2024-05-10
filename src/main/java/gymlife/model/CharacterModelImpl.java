@@ -34,4 +34,5 @@ public class CharacterModelImpl implements CharacterModel {
         final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
         pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
     }
+
 }

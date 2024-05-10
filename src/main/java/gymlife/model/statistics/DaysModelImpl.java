@@ -1,38 +1,25 @@
-package gymlife.model;
+package gymlife.model.statistics;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.DaysModel;
+import gymlife.model.statistics.api.DaysModel;
 
 /**
  * Implementation of the DaysModel interface.
  */
 public class DaysModelImpl extends Counter implements DaysModel {
-
-    private final int numDays;
-
     /**
      * Constructs a new DaysModelImpl object with the specified number of days.
      *
      * @param numDays the number of days for the model
      */
     public DaysModelImpl(final int numDays) {
-        this.numDays = numDays;
+        this.setCount(numDays);
     }
     /**
-     * Checks if the days are over.
-     *
-     * @return true if the days are over, false otherwise
-     */
-    @Override
-    public boolean daysAreOver() {
-        return this.getCount() < numDays;
-    }
-    /**
-     * Increases the number of days by 1.
+     * Decrement the days count by one.
      */
     @Override
     public void newDay() {
-        this.increment();
+        this.decrement();
     }
     /**
      * Returns the number of days left.
@@ -41,6 +28,15 @@ public class DaysModelImpl extends Counter implements DaysModel {
      */
     @Override
     public int dayLeft() {
-        return numDays - this.getCount();
+        return this.getCount();
+    }
+    /**
+     * Checks if the days are over.
+     *
+     * @return true if the days are over, false otherwise
+     */
+    @Override
+    public boolean isDayOver() {
+        return this.getCount() == 0;
     }
 }

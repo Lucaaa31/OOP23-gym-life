@@ -1,11 +1,15 @@
 package gymlife.controller.api;
 
+import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsType;
 import gymlife.model.Minigame.MinigameManager;
 import gymlife.model.Minigame.Timer;
 import gymlife.utility.Directions;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameType;
 import gymlife.utility.Position;
+
+import java.util.Map;
 
 import java.awt.*;
 import java.util.List;
@@ -43,4 +47,10 @@ public interface Controller {
     boolean getVisibilityTimer();
 
     void notifyKeyPressed(char keyChar);
+    /**
+     * Returns a Map that represents the current values of the statistics in the game.
+     *
+     * @return a Map of the statistics
+     */
+    Map<StatsType, Counter> getStatistics();
 }

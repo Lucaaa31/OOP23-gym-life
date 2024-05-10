@@ -1,4 +1,4 @@
-package gymlife.utility;
+package gymlife.model.statistics;
 
 /**
  * The StatsType enum represents different types of statistics related to gym life.
@@ -8,35 +8,33 @@ public enum StatsType {
     /**
      * Represents the humor level of the Character.
      */
-    HUMOR,
-
+    HAPPINESS,
     /**
      * Represents the stamina level of the Character.
      */
     STAMINA,
-
     /**
      * Represents the overall mass of the Character.
      */
     MASS,
-
     /**
      * Represents the mass of the legs of the Character.
      */
     LEG_MASS,
-
     /**
      * Represents the mass of the back of the Character.
      */
     BACK_MASS,
-
     /**
      * Represents the mass of the chest of the Character.
      */
     CHEST_MASS,
-
     /**
      * Represents the number of days left for finishing the game.
      */
-    DAYS_LEFT;
+    DAYS,
+    /**
+     * Represents the money of the character.
+     */
+    MONEY;
 }
