@@ -2,7 +2,9 @@
 package gymlife.model.api;
 
 import java.util.Map;
-import gymlife.utility.StatsType;
+
+import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsType;
 
 /**
  * The StatsManager interface provides methods to retrieve statistics related to gym life.

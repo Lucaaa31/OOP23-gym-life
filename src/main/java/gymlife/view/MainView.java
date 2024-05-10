@@ -4,10 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import gymlife.utility.Constants;
@@ -31,9 +28,9 @@ public class MainView extends JFrame {
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final JPanel statsView = new SideStatsView(controller);
+    private final JPanel gameMapView = new GameMapView(controller);
 
 //    private final CharacterView charView = new CharacterView(controller);
-//    private final GameMapView gameMapView = new GameMapView(controller);
 //    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
 
     /**
@@ -71,10 +68,17 @@ public class MainView extends JFrame {
                 resizeComponents();
             }
         });
-        sideContainer.add(statsView);
+        sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
-        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
 
+
+        scenariosContainer.add(gameMapView);
+
+        gameMapView.setVisible(true);
+
+        sideContainer.setVisible(true);
+
+        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(true);
         this.setVisible(true);
     }

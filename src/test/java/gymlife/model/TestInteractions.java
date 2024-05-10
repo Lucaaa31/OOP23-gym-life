@@ -1,7 +1,8 @@
 package gymlife.model;
 
 import gymlife.model.api.MapManager;
-import gymlife.model.api.StatsManager;
+import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;

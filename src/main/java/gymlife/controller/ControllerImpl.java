@@ -4,7 +4,7 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
-import gymlife.model.StatsManagerImpl;
+import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
@@ -13,42 +13,45 @@ import gymlife.model.statistics.StatsManagerImpl;
 
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.model.api.StatsManager;
+import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
+import gymlife.utility.ScenariosType;
 
 
 import java.util.Map;
 
 /**
- * Class responsible for managing Character movements.
+ * This class implements the Controller interface and is responsible for managing Character movements.
+ * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
-    private final ScenariosManager scenariosManager = new ScenariosManager();
-    private final StatsManager statsManager = new StatsManagerImpl(GameDifficulty.EASY);
-    private final InteractionsManager interactionsManager = new InteractionsManager(
-            scenariosManager,
-            statsManager
-    );
-
-    private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
+    private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
+    private final InteractionsManager interactionsManager;
+
     /**
-     * Create a new ControllerImpl object.
+     * Constructs a new ControllerImpl object with the specified game difficulty.
      *
      * @param difficulty the difficulty of the game.
      */
     public ControllerImpl(final GameDifficulty difficulty) {
-        statsManager = new StatsManagerImpl(difficulty);
+        this.statsManager = new StatsManagerImpl(difficulty);
+        this.scenariosManager = new ScenariosManager();
+        this.interactionsManager = new InteractionsManager(
+                scenariosManager,
+                statsManager
+        );
     }
+
     /**
-     * Moves the character in the specified direction.
+     * Moves the character in the specified direction if the destination cell is within the map borders and is not collidable.
      *
      * @param dir the direction in which to move the character
      */
@@ -74,9 +77,9 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Retrieves the current position of the character.
+     * Retrieves the current game statistics.
      *
-     * @return the current position of the character
+     * @return a Map of the current game statistics
      */
     @Override
     public Map<StatsType, Counter> getStatistics() {
@@ -84,9 +87,9 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to directly change the current map to parameter newMap.
+     * Changes the current game map to the specified new map.
      *
-     * @param newMap GameMap to switch the current map to.
+     * @param newMap the new map to switch to
      */
     @Override
     public void goToNewMap(final GameMap newMap) {
@@ -94,9 +97,9 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to return the current map, taken from the MapManager.
+     * Retrieves the current game map.
      *
-     * @return Returns the current {@code GameMap}.
+     * @return the current game map
      */
     @Override
     public GameMap getCurrentMap() {
@@ -104,7 +107,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to execute the action relative to the cell on which the player is standing.
+     * Executes the action associated with the cell on which the character is currently standing.
      */
     @Override
     public void cellInteraction() {
@@ -115,12 +118,23 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to get the level of mass of the character.
-     * @return an int representing the level of mass from 1 to 4.
+     * Retrieves the level of mass of the character.
+     *
+     * @return an int representing the level of mass from 1 to 4
      */
     @Override
     public int getPlayerLevel() {
         final int div = 75;
         return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
+    }
+
+    /**
+     * Retrieves the current scenario type.
+     *
+     * @return the current scenario type
+     */
+    @Override
+    public ScenariosType getActualScenario(){
+        return scenariosManager.getActualScenariosType();
     }
 }

@@ -6,9 +6,7 @@ import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
 
 
-import java.awt.Point;
-import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -26,14 +24,14 @@ import javax.swing.JLayeredPane;
 /**
  * JPanel that shows the current map on which teh character is. it shows all the cells of the map loaded.
  */
-public final class GameMapView extends JFrame {
+public final class GameMapView extends JPanel {
 
     @Serial
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
     private transient Map<Position, JLabel> cells = new HashMap<>();
-    private final JLabel characterLabel;
-    private static final int SIZE = 100;
+    private final CharacterView characterLabel;
+    private static final int SIZE = 140;
 
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
@@ -42,20 +40,23 @@ public final class GameMapView extends JFrame {
      */
     public GameMapView(final Controller controller) {
         this.controller = controller;
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(MapConstants.MAP_X_DIM * SIZE, MapConstants.MAP_Y_DIM * SIZE);
         final JLayeredPane mainPanel = new JLayeredPane();
         final JPanel mapPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
+        this.setLayout(new BorderLayout());
         mapPanel.setSize(this.getSize());
         mainPanel.add(mapPanel);
         mainPanel.setLayer(mapPanel, JLayeredPane.DEFAULT_LAYER);
-        final String p = "images/character/level1_down.png";
-        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(p)).getImage().getScaledInstance(
-                this.getWidth() / MapConstants.MAP_X_DIM,
-                this.getHeight() / MapConstants.MAP_Y_DIM,
-                Image.SCALE_SMOOTH));
-        this.characterLabel = new JLabel(img);
-        characterLabel.setSize(SIZE, SIZE);
+
+//        final String p = "images/character/level1_down.png";
+//        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.getSystemResource(p)).getImage().getScaledInstance(
+//                this.getWidth() / MapConstants.MAP_X_DIM,
+//                this.getHeight() / MapConstants.MAP_Y_DIM,
+//                Image.SCALE_SMOOTH));
+//        this.characterLabel = new JLabel(img);
+//        characterLabel.setSize(SIZE, SIZE);
+
+        characterLabel = new CharacterView();
         mainPanel.add(characterLabel);
         mainPanel.setLayer(characterLabel, JLayeredPane.PALETTE_LAYER);
 
@@ -81,6 +82,7 @@ public final class GameMapView extends JFrame {
             @Override
             public void keyTyped(final KeyEvent e) {
                 controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
+                characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(e.getKeyChar()).get());
                 moveCharacter();
             }
 
@@ -95,12 +97,11 @@ public final class GameMapView extends JFrame {
             }
         });
 
-        this.getContentPane().add(mainPanel);
-
-        this.setVisible(true);
-
-
+        this.add(mainPanel, BorderLayout.CENTER);
         moveCharacter();
+        this.setFocusable(true);
+
+
     }
 
     @Serial

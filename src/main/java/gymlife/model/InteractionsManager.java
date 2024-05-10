@@ -1,6 +1,6 @@
 package gymlife.model;
 
-import gymlife.model.api.StatsManager;
+import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 
 /**

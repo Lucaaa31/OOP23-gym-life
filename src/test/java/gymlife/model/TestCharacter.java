@@ -29,6 +29,7 @@ class TestCharacter {
         Position pos = Constants.CHARACTER_START_POS;
 
         character.move(Directions.UP);
+        assertEquals("up", Directions.UP.toString().toLowerCase());
         pos = new Position(pos.X(), pos.Y() - Constants.MOVEMENT);
         assertEquals(pos, character.getCharacterPos());
 
