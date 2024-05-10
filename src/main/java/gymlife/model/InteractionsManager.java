@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import gymlife.model.api.StatsManager;
 import gymlife.utility.ScenariosType;
 
 /**
@@ -8,14 +9,17 @@ import gymlife.utility.ScenariosType;
 public final class InteractionsManager {
 
     private final ScenariosManager scenariosManager;
+    private final StatsManager statsManager;
 
     /**
      * Constructor of the interactionsManager. All the managers of the game are given to it in order to act as a filter
      * for the interactions.
      * @param scenariosManager the scenarioManager on which the interactions will occur.
+     * @param statsManager The StatsManager on which the interactions will occur.
      */
-    public InteractionsManager(final ScenariosManager scenariosManager) {
+    public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager) {
         this.scenariosManager = scenariosManager;
+        this.statsManager = statsManager;
     }
 
     /**
@@ -24,5 +28,12 @@ public final class InteractionsManager {
      */
     public void scenarioInteraction(final ScenariosType newScenario) {
         this.scenariosManager.updateScenarios(newScenario);
+    }
+
+    /**
+     * Method to advance the days, decreasing the Days counter.
+     */
+    public void daysInteraction() {
+        this.statsManager.newDay();
     }
 }

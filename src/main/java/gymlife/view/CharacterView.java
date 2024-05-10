@@ -15,7 +15,7 @@ import gymlife.utility.Directions;
  * The CharacterView class represents a panel that displays a character.
  * It extends the JPanel class and implements the KeyListener interface to handle keyboard events.
  */
-public class CharacterView extends JPanel {
+public class CharacterView extends JLabel {
     public static final long serialVersionUID = 4328742;
     private static final JLabel LABEL = new JLabel();
     /**

@@ -2,6 +2,7 @@ package gymlife.controller.api;
 
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
+import gymlife.model.api.GameMap;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 
@@ -30,4 +31,27 @@ public interface Controller {
      * @return a Map of the statistics
      */
     Map<StatsType, Counter> getStatistics();
+
+    /**
+     * Method to go to a new map.
+     * @param newMap new map to go to.
+     */
+    void goToNewMap(GameMap newMap);
+
+    /**
+     * Method to get the current map.
+     * @return Returns the current map.
+     */
+    GameMap getCurrentMap();
+
+    /**
+     * Executes whatever action is associated with cell on which the character currently is.
+     */
+    void cellInteraction();
+
+    /**
+     * Method to get the level of mass of the character.
+     * @return an int representing the level of mass from 1 to 4.
+     */
+    int getPlayerLevel();
 }
