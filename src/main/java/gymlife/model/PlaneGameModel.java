@@ -61,6 +61,7 @@ public final class PlaneGameModel {
     public float randomizeNewThreshold() {
         treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplier = 1;
+        flag = true;
         return treshold;
     }
     /**
