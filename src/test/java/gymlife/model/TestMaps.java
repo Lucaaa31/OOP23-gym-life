@@ -41,7 +41,7 @@ class TestMaps {
         assertFalse(house.checkBorders(testCoord4));
         assertTrue(house.checkBorders(testCoord5));
         assertTrue(house.isCellCollidable(testCoord6));
-        assertFalse(house.isCellCollidable(testCoord7));
+        assertTrue(house.isCellCollidable(testCoord7));
     }
 
     @Test

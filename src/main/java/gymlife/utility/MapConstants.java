@@ -17,6 +17,10 @@ public final class MapConstants {
      */
     public static final String MAP_FILES_PATH = "maps/";
     /**
+     * Standard path for cells images.
+     */
+    public static final String CELLS_FILES_PATH = "images/cells/";
+    /**
      * The position on which the player must spawn when going into the House map.
      */
     public static final Position HOUSE_INITIAL_POSITION = new Position(6, 2);

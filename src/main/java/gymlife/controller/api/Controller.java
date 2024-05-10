@@ -39,5 +39,9 @@ public interface Controller {
      */
     void cellInteraction();
 
+    /**
+     * Method to get the level of mass of the character.
+     * @return an int representing the level of mass from 1 to 4.
+     */
     int getPlayerLevel();
 }

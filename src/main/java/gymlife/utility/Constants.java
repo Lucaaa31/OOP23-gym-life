@@ -7,7 +7,7 @@ public final class Constants {
     /**
      * The movement constant used for character movement.
      */
-    public static final int MOVEMENT = 10;
+    public static final int MOVEMENT = 1;
     /**
      * The width of the panel.
      */

@@ -27,24 +27,27 @@ public class ControllerImpl implements Controller {
     private final InteractionsManager interactionsManager = new InteractionsManager(
             scenariosManager,
             statsManager
-            );
+    );
 
     /**
      * Moves the character in the specified direction.
-     * 
+     *
      * @param dir the direction in which to move the character
      */
     @Override
     public void moveCharacter(final Directions dir) {
-        Position positionToGo = new Position(getCharacterPos().X() + dir.getPos().X(), getCharacterPos().Y() + dir.getPos().Y());
-        if (mapManager.getCurrentMap().checkBorders(positionToGo) && !mapManager.getCurrentMap().isCellCollidable(positionToGo)){
+        final Position positionToGo = new Position(
+                getCharacterPos().X() + dir.getPos().X(),
+                getCharacterPos().Y() + dir.getPos().Y());
+        if (mapManager.getCurrentMap().checkBorders(positionToGo)
+                && !mapManager.getCurrentMap().isCellCollidable(positionToGo)) {
             characterModel.move(dir);
         }
     }
 
     /**
      * Retrieves the current position of the character.
-     * 
+     *
      * @return the current position of the character
      */
     @Override
@@ -54,6 +57,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to directly change the current map to parameter newMap.
+     *
      * @param newMap GameMap to switch the current map to.
      */
     @Override
@@ -63,6 +67,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to return the current map, taken from the MapManager.
+     *
      * @return Returns the current {@code GameMap}.
      */
     @Override
@@ -81,8 +86,13 @@ public class ControllerImpl implements Controller {
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
 
+    /**
+     * Method to get the level of mass of the character.
+     * @return an int representing the level of mass from 1 to 4.
+     */
     @Override
     public int getPlayerLevel() {
-        return statsManager.getStats().get(StatsType.MASS).getCount()/75;
+        final int div = 75;
+        return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
     }
 }
