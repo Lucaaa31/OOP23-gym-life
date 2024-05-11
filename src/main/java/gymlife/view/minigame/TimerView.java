@@ -1,12 +1,11 @@
 package gymlife.view.minigame;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
+
 import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
-
-import java.awt.*;
-
-
-import javax.swing.*;
 
 /**
  * The TimerView class represents a JPanel that displays a timer.
@@ -14,9 +13,8 @@ import javax.swing.*;
  */
 public class TimerView extends JLabel {
 
-   // private JLabel label1 = new JLabel("");
+    // private JLabel label1 = new JLabel("");
     private Controller controller;
-
 
     /**
      * Constructs a TimerView object with the specified controller.
@@ -28,12 +26,16 @@ public class TimerView extends JLabel {
 
         setBackground(Color.PINK);
         this.setSize(200, 100);
-       // this.setLayout();
+        // this.setLayout();
 
         new Thread(() -> {
-            while(true) {
-                System.out.println("START TIMER");
-                if(controller.getVisibilityTimer()){
+            while (true) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+
+                }
+                if (controller.getVisibilityTimer()) {
                     System.out.println("START kmnk n");
                     startTimer();
                     break;
@@ -43,15 +45,14 @@ public class TimerView extends JLabel {
 
     }
 
-    public void startTimer(){
-        System.out.println("START TIMER");
-            while (controller.getVisibilityTimer()) {
-                System.out.println("UPDATE" + controller.getTime());
-                this.setText(String.format("%d:%02d", controller.getTime() / 100, controller.getTime() % 100));
-            }
+    /**
+     * Updates the timer label based on the time received from the controller.
+     */
+    public void startTimer() {
+        while (controller.getVisibilityTimer()) {
+            this.setText(String.format("%d:%02d", controller.getTime() / 100, controller.getTime() % 100));
+        }
 
     }
-
-
 
 }

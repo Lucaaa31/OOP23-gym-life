@@ -5,7 +5,8 @@ import gymlife.utility.MinigameDifficulty;
 
 /**
  * The Minigame interface represents a game that can be played within the gym.
- * It provides methods for notifying button presses, setting a timer, getting the current state,
+ * It provides methods for notifying button presses, setting a timer, getting
+ * the current state,
  * and setting the difficulty level of the minigame.
  */
 public interface Minigame {
@@ -36,7 +37,11 @@ public interface Minigame {
      */
     void setDifficulty(MinigameDifficulty selectedDifficulty);
 
+    /**
+     * Returns whether the timer of the minigame is running.
+     * 
+     * @return
+     */
     boolean isAlive();
 
-    void notifyKeyPressed(char keyChar);
 }

@@ -7,35 +7,64 @@ import gymlife.view.LatMachineView;
 import gymlife.view.minigame.SquatView;
 import gymlife.view.minigame.BenchView;
 
-public enum MinigameType{
+/**
+ * The MinigameType enum represents the different types of minigames available
+ * in the gym life application.
+ * Each minigame type is associated with a specific minigame class and view
+ * class.
+ */
+public enum MinigameType {
+    /**
+     * Bench press minigame type.
+     */
     BENCH_PRESS(
             BenchMinigame.class.getCanonicalName(),
-            BenchView.class.getCanonicalName()
-            ),
+            BenchView.class.getCanonicalName()),
+    /**
+     * Squat minigame type.
+     */
     SQUAT(
             SquatMinigame.class.getCanonicalName(),
-            SquatView.class.getCanonicalName()
-            ),
+            SquatView.class.getCanonicalName()),
+    /**
+     * Lat machine minigame type.
+     */
     LAT_MACHINE(
             LatMachineMinigame.class.getCanonicalName(),
-            LatMachineView.class.getCanonicalName()
-            );
+            LatMachineView.class.getCanonicalName());
 
     private final String minigameType;
     private final String minigameViewType;
 
-    MinigameType(String minigameType, String minigameViewType){
+    /**
+     * Constructs a MinigameType enum constant with the specified minigame type and
+     * minigame view type.
+     * 
+     * @param minigameType     the fully qualified name of the minigame class
+     *                         associated with this minigame type
+     * @param minigameViewType the fully qualified name of the minigame view class
+     *                         associated with this minigame type
+     */
+    MinigameType(String minigameType, String minigameViewType) {
         this.minigameType = minigameType;
         this.minigameViewType = minigameViewType;
     }
 
-    public String getName(){
+    /**
+     * Returns the name of the minigame type.
+     * 
+     * @return the name of the minigame type
+     */
+    public String getName() {
         return this.minigameType;
     }
 
-    public String getViewName(){
+    /**
+     * Returns the name of the minigame view type.
+     * 
+     * @return the name of the minigame view type
+     */
+    public String getViewName() {
         return this.minigameViewType;
     }
-
-
 }

@@ -1,37 +1,23 @@
 package gymlife.view.minigame;
 
 import gymlife.controller.ControllerImpl;
-import gymlife.controller.api.Controller;
 
-import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javax.swing.JPanel;
 
-public class SquatView extends JPanel implements KeyListener {
-    final Controller controller;
-    JButton squatButton = new JButton("Squat");
+/**
+ * The SquatView class represents the view component for the Squat mini-game.
+ * It extends the JPanel class and provides the necessary UI elements and
+ * functionality
+ * for the Squat mini-game.
+ */
+public class SquatView extends JPanel {
 
-    public SquatView(final ControllerImpl controller){
-        this.controller = controller;
-        addKeyListener(this);
-        this.add(squatButton);
-        squatButton.addActionListener(e -> System.out.println("Squat button pressed"));
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        System.out.println("Key typed: " + e.getKeyChar());
-    }
-
-    @Override
-    public void keyPressed(final KeyEvent e) {
-        System.out.println("Key pressed: " + e.getKeyChar());
-        controller.notifyKeyPressed(e.getKeyChar());
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
+    /**
+     * Constructs a new SquatView object with the specified controller.
+     * 
+     * @param controller
+     */
+    public SquatView(final ControllerImpl controller) {
 
     }
 

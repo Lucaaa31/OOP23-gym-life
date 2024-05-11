@@ -1,26 +1,41 @@
 package gymlife.view.minigame;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import gymlife.controller.ControllerImpl;
-import gymlife.controller.api.Controller;
+import gymlife.utility.Constants;
 
-import java.awt.*;
-
-public class BenchView extends JPanel{
-    private final Controller controller;
+/**
+ * The BenchView class represents a panel that displays the bench press
+ * mini-game in the GymLife application.
+ * It extends the JPanel class and contains a button, an image label, and a
+ * timer view.
+ */
+public class BenchView extends JPanel {
     private final JButton button = new JButton("Press me!");
     private ImageIcon image;
     private JLabel label = new JLabel();
     private TimerView timerView;
 
-    public BenchView(final ControllerImpl controller){
-        this.controller = controller;
+    /**
+     * Constructs a BenchView object with the specified controller.
+     * Initializes the timer view and sets the layout of the panel.
+     * Sets up the button action listener and makes the panel focusable.
+     * 
+     * @param controller the controller implementation
+     */
+    public BenchView(final ControllerImpl controller) {
         timerView = new TimerView(controller);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         updateImage(controller.getState());
-        label.setPreferredSize(new Dimension(1000, 700));
+        label.setPreferredSize(new Dimension(Constants.SCENARIO_WIDTH, Constants.HEIGHT));
         button.addActionListener(e -> {
             controller.notifyButtonPressed();
             updateImage(controller.getState());
@@ -30,7 +45,15 @@ public class BenchView extends JPanel{
         this.setVisible(true);
     }
 
-    private void updateImage(int state) {
+    /**
+     * Updates the image displayed on the panel based on the current state.
+     * Sets the image icon, layout, and position of the button.
+     * Adds the button, timer view, and image label to the panel.
+     * Repaints the panel to reflect the changes.
+     * 
+     * @param state the current state of the mini-game
+     */
+    private void updateImage(final int state) {
         this.image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_" + state + ".png");
         this.label.setIcon(image);
         this.label.setLayout(new FlowLayout());
@@ -41,11 +64,12 @@ public class BenchView extends JPanel{
         this.repaint();
     }
 
-    private void setRandomPositionButton(){
+    /**
+     * Sets a random position for the button within the panel.
+     */
+    private void setRandomPositionButton() {
         int x = (int) (Math.random() * 250);
         int y = (int) (Math.random() * 300);
         this.button.setBounds(x, y, button.getWidth(), button.getHeight());
     }
-
-
 }

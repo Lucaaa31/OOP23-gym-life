@@ -5,18 +5,17 @@ import gymlife.controller.api.Controller;
 import javax.swing.BoxLayout;
 
 import javax.swing.JPanel;
-import java.awt.*;
 
 /**
- * The MinigameViewImpl class represents the view component for the minigame feature in the GymLife application.
- * It extends the JPanel class and provides a graphical user interface for the minigame.
+ * The MinigameViewImpl class represents the view component for the minigame
+ * feature in the GymLife application.
+ * It extends the JPanel class and provides a graphical user interface for the
+ * minigame.
  */
 public class MinigameViewImpl extends JPanel {
-    private Controller controller;
     private JPanel minigamePanel;
     private MinigameDifficultyView difficultyView;
-    //private TimerView timerView;
-
+    // private TimerView timerView;
 
     /**
      * Constructs a MinigameViewImpl object with the specified controller.
@@ -24,8 +23,7 @@ public class MinigameViewImpl extends JPanel {
      * @param controller the controller object that handles the minigame logic
      */
     public MinigameViewImpl(Controller controller) {
-        this.controller = controller;
-       // timerView = new TimerView(controller);
+        // timerView = new TimerView(controller);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         difficultyView = new MinigameDifficultyView(controller);
         this.add(difficultyView);
@@ -36,8 +34,7 @@ public class MinigameViewImpl extends JPanel {
         } catch (Exception e) {
 
         }
-        System.out.println("MinigameViewImpl: " + controller.getMinigameType().getViewName());
         this.add(minigamePanel);
-       // this.add(timerView, BoxLayout.X_AXIS);
+        // this.add(timerView, BoxLayout.X_AXIS);
     }
 }

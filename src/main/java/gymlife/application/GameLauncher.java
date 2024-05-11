@@ -2,9 +2,9 @@ package gymlife.application;
 
 import gymlife.controller.ControllerImpl;
 import gymlife.model.Minigame.MinigameManager;
+import gymlife.utility.GameDifficulty;
 import gymlife.utility.MinigameType;
 import gymlife.view.minigame.MinigameViewImpl;
-import gymlife.view.minigame.TimerView;
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,7 +15,7 @@ public final class GameLauncher {
 
     public static void main(final String[] args) {
 
-        ControllerImpl controller = new ControllerImpl();
+        ControllerImpl controller = new ControllerImpl(GameDifficulty.EASY);
         MinigameManager minigameManager = new MinigameManager();
 
         controller.setMinigameManager(minigameManager);

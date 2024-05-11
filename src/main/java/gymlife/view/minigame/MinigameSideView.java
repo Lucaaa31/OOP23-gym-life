@@ -1,27 +1,22 @@
 package gymlife.view.minigame;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import gymlife.controller.ControllerImpl;
-import gymlife.controller.api.Controller;
 
-import java.awt.*;
+/**
+ * The MinigameSideView class represents a JPanel that displays the side view of
+ * a minigame.
+ * It extends the JPanel class and is used in the GymLife application.
+ */
+public class MinigameSideView extends JPanel {
 
-public class MinigameSideView extends JPanel{
-    private TimerView timerView;
-    
-
-    public MinigameSideView(final ControllerImpl controller){
-        timerView = new TimerView(controller);
-        this.add(timerView);
-        //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-
-        timerView.setPreferredSize(new Dimension(1000, 500));
-        this.setVisible(true);
-
+    /**
+     * Constructs a new MinigameSideView object with the specified controller.
+     * 
+     * @param controller the controller implementation for the minigame
+     */
+    public MinigameSideView(final ControllerImpl controller) {
 
     }
-
-
 }
