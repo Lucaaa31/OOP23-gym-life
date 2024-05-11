@@ -81,24 +81,27 @@ public final class GameMapView extends JPanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
+                if (Directions.getDir(e.getKeyChar()).isPresent()) {
+                    controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
+                    characterLabel.changeImage(1, Directions.getDir(e.getKeyChar()).get());
+                    moveCharacter();
+                }
+                if (e.getKeyChar() == '+') {
+                    dimensionGetter.incScreenDimension();
+                    resizeComponents();
+                }
+                if (e.getKeyChar() == '-') {
+                    dimensionGetter.decScreenDimension();
+                    resizeComponents();
+                }
             }
 
             @Override
             public void keyPressed(final KeyEvent e) {
-                controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
-                characterLabel.changeImage(4, Directions.getDir(e.getKeyChar()).get());
-                moveCharacter();
-
             }
 
             @Override
             public void keyReleased(final KeyEvent e) {
-            }
-        });
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(final ComponentEvent e) {
-                resizeComponents();
             }
         });
 
