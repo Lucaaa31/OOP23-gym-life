@@ -19,7 +19,7 @@ import gymlife.utility.MapConstants;
  */
 public class CharacterView extends JLabel {
     public static final long serialVersionUID = 4328742;
-    private static final int SIZE = 140;
+    private static final int SIZE = Constants.SCENARIO_WIDTH / MapConstants.MAP_X_DIM;
     /**
      * Constructs a CharacterView object with the specified controller.
      */

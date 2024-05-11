@@ -22,7 +22,7 @@ public final class FontLoader {
                     + File.separator
                     + "main" + File.separator
                     + "resources" + File.separator
-                    + "Pixellari.ttf";
+                    + "font/Pixellari.ttf";
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File(fontPath)).deriveFont(DEFAULT_FONT_SIZE);
             final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);

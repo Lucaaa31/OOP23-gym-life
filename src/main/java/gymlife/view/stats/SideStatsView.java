@@ -42,7 +42,6 @@ public class SideStatsView extends JPanel {
         this.setPreferredSize(new Dimension(Constants.SIDE_WIDTH, Constants.HEIGHT));
         this.setBackground(Color.GRAY);
         this.controller = controller;
-
         final JPanel statsPanel1 = new JPanel();
         final JPanel statsPanel2 = new JPanel();
         final JPanel statsPanel3 = new JPanel();
@@ -60,6 +59,13 @@ public class SideStatsView extends JPanel {
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
 
+
+        statsPanel1.setBorder(BORDER);
+        statsPanel2.setBorder(BORDER);
+        statsPanel3.setBorder(BORDER);
+        statsPanel4.setBorder(BORDER);
+
+        this.setBackground(Color.BLACK);
         this.add(statsPanel1);
         this.add(statsPanel2);
         this.add(statsPanel3);

@@ -1,12 +1,14 @@
 package gymlife.view;
 
-import javax.swing.JPanel;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import gymlife.utility.Constants;
 
 //import java.util.HashMap;
@@ -29,6 +31,7 @@ public class MainView extends JFrame {
     private final JPanel sideContainer = new JPanel();
     private final JPanel statsView = new SideStatsView(controller);
     private final JPanel gameMapView = new GameMapView(controller);
+    private final DimensionGetter dimensionGetter = new DimensionGetter();
 
 //    private final CharacterView charView = new CharacterView(controller);
 //    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
@@ -40,44 +43,56 @@ public class MainView extends JFrame {
      * Adds the character view panel to the main frame and makes it visible.
      */
     public void start() {
-        this.setSize(Constants.FRAME_WIDTH, Constants.HEIGHT);
+        this.setSize(dimensionGetter.getFrameDimension());
+        System.out.println("Screen width: " + dimensionGetter.getFrameDimension().width + " Screen height: " + dimensionGetter.getFrameDimension().height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainPanel.setPreferredSize(new Dimension(Constants.FRAME_WIDTH, Constants.HEIGHT));
+        mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
+        mainPanel.setLayout(new BorderLayout());
 
-        scenariosContainer.setPreferredSize(new Dimension(Constants.SCENARIO_WIDTH, Constants.HEIGHT));
+        scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
         scenariosContainer.setLayout(new CardLayout());
-        scenariosContainer.setBackground(Color.BLUE);
+        scenariosContainer.setBackground(Color.RED);
 
-        sideContainer.setPreferredSize(new Dimension(Constants.SIDE_WIDTH, Constants.HEIGHT));
+        sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
         sideContainer.setLayout(new CardLayout());
-        sideContainer.setBackground(Color.BLACK);
-
-        final BorderLayout b = new BorderLayout();
-        mainPanel.setLayout(b);
-
-        this.add(mainPanel);
+        sideContainer.setBackground(Color.BLUE);
 
         mainPanel.add(scenariosContainer, BorderLayout.WEST);
         mainPanel.add(sideContainer, BorderLayout.CENTER);
 
-        // Aggiunta del ComponentListener per gestire il ridimensionamento della finestra
-        this.addComponentListener(new ComponentAdapter() {
+        this.addKeyListener(new KeyListener() {
             @Override
-            public void componentResized(final ComponentEvent e) {
-                resizeComponents();
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == '+') {
+                    dimensionGetter.incScreenDimension();
+                    resizeComponents();
+                }
+                if (e.getKeyChar() == '-') {
+                    dimensionGetter.decScreenDimension();
+                    resizeComponents();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
             }
         });
+
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
-
-
-        scenariosContainer.add(gameMapView);
+        //scenariosContainer.add(gameMapView, SwingConstants.CENTER);
 
         gameMapView.setVisible(true);
-
         sideContainer.setVisible(true);
-
+        this.setUndecorated(true);
+        this.add(mainPanel);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(true);
         this.setVisible(true);
@@ -85,19 +100,25 @@ public class MainView extends JFrame {
 
     // Metodo per ridimensionare i pannelli proporzionalmente
     private void resizeComponents() {
-        final int newFrameWidth = getWidth();
-        final int newFrameHeight = getHeight();
-
         // Calcola le nuove dimensioni proporzionali per i pannelli
-        final int newScenarioWidth = (int) (newFrameWidth * Constants.SCENARIO_WIDTH / (double) Constants.FRAME_WIDTH);
-        final int newSideWidth = (int) (newFrameWidth * Constants.SIDE_WIDTH / (double) Constants.FRAME_WIDTH);
+        scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
+        sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
+        mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
+        this.setPreferredSize(dimensionGetter.getFrameDimension());
 
-        // Imposta le nuove dimensioni per i pannelli
-        scenariosContainer.setPreferredSize(new Dimension(newScenarioWidth, newFrameHeight));
-        sideContainer.setPreferredSize(new Dimension(newSideWidth, newFrameHeight));
+        System.out.println("Main view " + this.getSize().width + " " + this.getSize().height);
+        System.out.println("Main Panel " + mainPanel.getSize().width + " " + mainPanel.getSize().height);
+        System.out.println("Screen width: " + dimensionGetter.getFrameDimension().width + " Screen height: " + dimensionGetter.getFrameDimension().height);
+
 
         // Aggiorna il layout
-        mainPanel.revalidate();
-        mainPanel.repaint();
+        sideContainer.revalidate();
+        sideContainer.repaint();
+        scenariosContainer.revalidate();
+        scenariosContainer.repaint();
+
+        mainPanel.repaint();;
+        this.pack();
+        this.repaint();
     }
 }

@@ -1,9 +1,12 @@
 package gymlife.utility;
 
+import java.awt.*;
+
 /**
  * Constants class contains various constants used in the application.
  */
 public final class Constants {
+    public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     /**
      * The movement constant used for character movement.
      */
@@ -15,7 +18,7 @@ public final class Constants {
     /**
      * The width of the panel.
      */
-    public static final int SCENARIO_WIDTH = 1200;
+    public static final int SCENARIO_WIDTH = 1600;
     /**
      * The height of the panel.
      */
@@ -23,7 +26,8 @@ public final class Constants {
     /**
      * The width of the frame.
      */
-    public static final int FRAME_WIDTH = 1600;
+
+    public static final int FRAME_WIDTH = screenSize.width;
     /**
      * The width of the character.
      */
