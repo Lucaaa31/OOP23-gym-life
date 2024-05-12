@@ -45,9 +45,8 @@ public final class GameMapView extends JPanel {
 
         mainPanel = new JLayeredPane();
         mapPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
-
+        mapPanel.setSize(dimensionGetter.getScenarioDimension());
         mainPanel.setPreferredSize(dimensionGetter.getScenarioDimension());
-        mapPanel.setSize(new Dimension(1200, 900));
         mapPanel.setPreferredSize(dimensionGetter.getScenarioDimension());
 
         mainPanel.add(mapPanel);
@@ -60,6 +59,10 @@ public final class GameMapView extends JPanel {
                 final String fileName = controller.getCurrentMap().getCellAtCoord(pos).getName() + ".png";
                 final String path = MapConstants.CELLS_FILES_PATH + fileName;
                 final JLabel lb = new JLabel();
+                lb.setSize(dimensionGetter.getCellDimension());
+                lb.setPreferredSize(dimensionGetter.getCellDimension());
+                System.out.println("CELL DIMENSION " + lb.getSize().width + " " + lb.getSize().height);
+                System.out.println("Panel DIMENSION " + mapPanel.getSize().width + " " + mapPanel.getSize().height);
                 final Image imgToResize = new ImageIcon(ClassLoader.getSystemResource(path)).getImage();
                 final ImageIcon imageIcon = new ImageIcon(imgToResize.getScaledInstance(
                         dimensionGetter.getCellDimension().width,
@@ -146,7 +149,7 @@ public final class GameMapView extends JPanel {
 
     }
 
-    private void resizeComponents() {
+    public void resizeComponents() {
         // Calcola le nuove dimensioni proporzionali per i pannelli
         this.setPreferredSize(this.getSize());
 
@@ -163,7 +166,6 @@ public final class GameMapView extends JPanel {
                             dimensionGetter.getCellDimension().width,
                             dimensionGetter.getCellDimension().height,
                             Image.SCALE_SMOOTH);
-
                     entry.getValue().setIcon(new ImageIcon(scaledImage));
                 }
             }

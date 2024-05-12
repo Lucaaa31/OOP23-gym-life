@@ -91,7 +91,7 @@ public class MainView extends JFrame {
 
         gameMapView.setVisible(true);
         sideContainer.setVisible(true);
-        //this.setUndecorated(true);
+        this.setUndecorated(true);
         this.add(mainPanel);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);

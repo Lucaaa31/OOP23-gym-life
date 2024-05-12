@@ -7,11 +7,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class DimensionGetter {
-    private static final double RIDIMENTION_PRPORTION = 1.2;
+    private static final double RIDIMENTION_PROPORTION = 2;
     private static final int INCREMENT = 5;
     private final Dimension actualFrameDimension = new Dimension(
-            (int) (Toolkit.getDefaultToolkit().getScreenSize().width / RIDIMENTION_PRPORTION) ,
-            (int) (Toolkit.getDefaultToolkit().getScreenSize().height / RIDIMENTION_PRPORTION));
+            (int) (Toolkit.getDefaultToolkit().getScreenSize().width / RIDIMENTION_PROPORTION) ,
+            (int) (Toolkit.getDefaultToolkit().getScreenSize().height / RIDIMENTION_PROPORTION));
 
     public DimensionGetter() {
     }
@@ -29,7 +29,8 @@ public class DimensionGetter {
     }
 
     public Dimension getCellDimension() {
-        return new Dimension(actualFrameDimension.width / MapConstants.MAP_X_DIM, actualFrameDimension.height / MapConstants.MAP_Y_DIM);
+        return new Dimension((int) (actualFrameDimension.width * 0.75) / MapConstants.MAP_X_DIM,
+                actualFrameDimension.height / MapConstants.MAP_Y_DIM);
     }
 
     public void incScreenDimension() {
