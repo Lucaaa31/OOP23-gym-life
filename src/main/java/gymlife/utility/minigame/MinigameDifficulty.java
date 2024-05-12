@@ -1,4 +1,4 @@
-package gymlife.utility;
+package gymlife.utility.minigame;
 
 /**
  * The MinigameDifficulty enum represents the difficulty levels for a minigame.
@@ -8,7 +8,7 @@ public enum MinigameDifficulty {
      * Easy difficulty level.
      */
     EASY(
-            2,
+            5,
             3,
             20000,
             1),

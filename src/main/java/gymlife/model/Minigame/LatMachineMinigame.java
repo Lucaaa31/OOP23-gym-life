@@ -1,4 +1,4 @@
-package gymlife.model;
+package gymlife.model.Minigame;
 
 /**
  * The LatMachineMinigame class represents a minigame that simulates a lat machine

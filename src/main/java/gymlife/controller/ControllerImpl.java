@@ -19,8 +19,8 @@ import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.MinigameDifficulty;
-import gymlife.utility.MinigameType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameType;
 import gymlife.utility.Position;
 
 
@@ -29,7 +29,7 @@ import gymlife.utility.Position;
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private MinigameManager minigameManager = new MinigameManager();
+    private final MinigameManager minigameManager = new MinigameManager();
     private final TimerImpl timer = new TimerImpl();
 
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
@@ -73,9 +73,8 @@ public class ControllerImpl implements Controller {
      * @param difficulty the difficulty level to set
      */
     public void setDifficulty(final MinigameDifficulty difficulty) {
-        minigameManager.setDifficulty(difficulty)
-                .getCurrentMinigame()
-                .setTimer(timer);
+        minigameManager.setDifficulty(difficulty);
+        minigameManager.setTimer(timer);
         minigameManager.startMinigame();
     }
 
@@ -86,7 +85,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public boolean isTimerRunning() {
-        return minigameManager.getCurrentMinigame().isAlive();
+        return minigameManager.isTimerRunning();
     }
 
     /**
@@ -94,7 +93,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void notifyButtonPressed() {
-        minigameManager.getCurrentMinigame().notifyButtonPressed();
+        minigameManager.notifyUserAction();
     }
 
     /**
@@ -113,7 +112,7 @@ public class ControllerImpl implements Controller {
      * @return the state of the current minigame
      */
     public int getState() {
-        return minigameManager.getCurrentMinigame().getState();
+        return minigameManager.getState();
     }
 
     /**
@@ -125,16 +124,6 @@ public class ControllerImpl implements Controller {
     public MinigameType getMinigameType() {
         return minigameManager.getMinigameType();
     }
-
-    /**
-     * Sets the minigame manager.
-     *
-     * @param minigameManager the minigame manager to set
-     */
-    public void setMinigameManager(final MinigameManager minigameManager) {
-        this.minigameManager = minigameManager;
-    }
-
 
 
     /**

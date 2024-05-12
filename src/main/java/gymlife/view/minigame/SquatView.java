@@ -1,6 +1,6 @@
 package gymlife.view.minigame;
 
-import gymlife.controller.ControllerImpl;
+import gymlife.controller.api.Controller;
 
 import javax.swing.JPanel;
 
@@ -11,14 +11,14 @@ import javax.swing.JPanel;
  * for the Squat mini-game.
  */
 public class SquatView extends JPanel {
-
+    private final transient Controller controller;
     /**
      * Constructs a new SquatView object with the specified controller.
-     * 
-     * @param controller
+     *
+     * @param controller the controller for the mini-game
      */
-    public SquatView(final ControllerImpl controller) {
-
+    public SquatView(final Controller controller) {
+        this.controller = controller;
     }
 
 }

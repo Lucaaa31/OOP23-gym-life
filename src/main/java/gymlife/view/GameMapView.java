@@ -1,6 +1,5 @@
 package gymlife.view;
 
-import gymlife.controller.api.Controller;
 
 import java.io.Serial;
 
@@ -13,15 +12,15 @@ public final class GameMapView extends JPanel {
 
     @Serial
     private static final long serialVersionUID = -3544425405075144844L;
-    private final transient Controller controller;
+   // private final transient Controller controller;
     //private transient Map<Position, JPanel> cells;
 
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
-     * @param controller Controller given.
+
      */
-    public GameMapView(final Controller controller) {
-        this.controller = controller;
+    public GameMapView() {
+        //this.controller = controller;
 
 
         this.setVisible(true);
@@ -31,8 +30,8 @@ public final class GameMapView extends JPanel {
      * Method to return the controller.
      * @return Returns the controller.
      */
-    public Controller getController() {
-        return this.controller;
-    }
+    //public Controller getController() {
+    //    return this.controller;
+    //}
 
 }

@@ -1,7 +1,7 @@
 package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
-import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameDifficulty;
 
 /**
  * Represents a bench minigame that implements the Minigame interface and the
@@ -33,7 +33,7 @@ public class BenchMinigame implements Minigame, Runnable {
      * Sets the isPressed variable to true.
      */
     @Override
-    public void notifyButtonPressed() {
+    public void notifyUserAction() {
         this.isPressed = true;
     }
 

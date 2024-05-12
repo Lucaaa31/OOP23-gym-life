@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameDifficulty;
 
 /**
  * The MinigameDifficultyView class represents a JPanel that allows the user to

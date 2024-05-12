@@ -30,10 +30,10 @@ public class MinigameViewImpl extends JPanel {
         this.add(difficultyView, BorderLayout.NORTH);
         try {
             minigamePanel = (JPanel) Class.forName(controller.getMinigameType().getViewName())
-                    .getDeclaredConstructor(controller.getClass())
+                    .getDeclaredConstructor(Controller.class)
                     .newInstance(controller);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
-                | InvocationTargetException ignored) {
+                 | InvocationTargetException ignored) {
 
         }
         this.add(minigamePanel, BorderLayout.CENTER);

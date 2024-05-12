@@ -1,8 +1,8 @@
 package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
-import gymlife.utility.MinigameDifficulty;
-import gymlife.utility.MinigameType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameType;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -33,6 +33,15 @@ public class MinigameManager {
     }
 
     /**
+     * Sets the timer for the current minigame.
+     *
+     * @param timer taken by te Controller
+     */
+    public void setTimer(final TimerImpl timer) {
+        currentMinigame.setTimer(timer);
+    }
+
+    /**
      * Sets the current minigame type.
      *
      * @param minigameType the minigame type to set
@@ -53,22 +62,35 @@ public class MinigameManager {
      * Sets the difficulty level of the current minigame.
      *
      * @param selectedDifficulty the difficulty level to set
-     * @return the updated MinigameManager instance
      */
-    public MinigameManager setDifficulty(final MinigameDifficulty selectedDifficulty) {
+    public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
         this.currentMinigame.setDifficulty(selectedDifficulty);
-        return this;
     }
 
     /**
-     * Retrieves the current minigame instance.
-     *
-     * @return the current minigame instance
+     * Notifies the current minigame that the player has done something.
      */
-    public Minigame getCurrentMinigame() {
-        return currentMinigame;
+    public void notifyUserAction() {
+        currentMinigame.notifyUserAction();
     }
 
+    /**
+     * Check if the timer in the current minigame is running.
+     *
+     * @return true if the timer is running, false otherwise
+     */
+    public boolean isTimerRunning() {
+        return currentMinigame.isAlive();
+    }
+
+    /**
+     * Retrieves the current state of the minigame.
+     *
+     * @return the current state of the minigame
+     */
+    public int getState() {
+        return currentMinigame.getState();
+    }
 
     /**
      * Retrieves the current minigame type.

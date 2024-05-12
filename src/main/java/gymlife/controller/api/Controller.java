@@ -2,13 +2,12 @@ package gymlife.controller.api;
 
 import java.util.Map;
 
-import gymlife.model.Minigame.MinigameManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
-import gymlife.utility.MinigameDifficulty;
-import gymlife.utility.MinigameType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameType;
 import gymlife.utility.Position;
 
 /**
@@ -17,21 +16,21 @@ import gymlife.utility.Position;
 public interface Controller {
     /**
      * Moves the character in the specified direction.
-     * 
+     *
      * @param dir the direction in which to move the character
      */
     void moveCharacter(Directions dir);
 
     /**
      * Returns the current position of the character.
-     * 
+     *
      * @return the position of the character
      */
     Position getCharacterPos();
 
     /**
      * Sets the difficulty level of the minigame.
-     * 
+     *
      * @param difficulty the difficulty level to set
      */
     void setDifficulty(MinigameDifficulty difficulty);
@@ -43,21 +42,21 @@ public interface Controller {
 
     /**
      * Returns the current time in the game.
-     * 
+     *
      * @return the current time
      */
     int getTime();
 
     /**
      * Returns the current state of the game.
-     * 
+     *
      * @return the current state
      */
     int getState();
 
     /**
      * Returns the type of the current minigame.
-     * 
+     *
      * @return the minigame type
      */
     MinigameType getMinigameType();
@@ -65,7 +64,7 @@ public interface Controller {
 
     /**
      * Returns the visibility status of the timer.
-     * 
+     *
      * @return true if the timer is visible, false otherwise
      */
     boolean isTimerRunning();
@@ -99,9 +98,4 @@ public interface Controller {
     void cellInteraction();
 
 
-    /**
-     * temporary.
-     * @param minigameManager temporary.
-     */
-    void setMinigameManager(MinigameManager minigameManager);
 }

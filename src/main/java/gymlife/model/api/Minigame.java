@@ -1,7 +1,7 @@
 package gymlife.model.api;
 
 import gymlife.model.Minigame.TimerImpl;
-import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameDifficulty;
 
 /**
  * The Minigame interface represents a game that can be played within the gym.
@@ -14,7 +14,7 @@ public interface Minigame {
     /**
      * Notifies the minigame that a button has been pressed.
      */
-    void notifyButtonPressed();
+    void notifyUserAction();
 
     /**
      * Sets the timer for the minigame.

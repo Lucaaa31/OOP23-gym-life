@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.minigame;
 
 /**
  * The LatMachineView class represents the view component for the Lat Machine mini-game.

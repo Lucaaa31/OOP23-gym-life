@@ -1,7 +1,7 @@
 package gymlife.model.Minigame;
 
 import gymlife.model.api.Minigame;
-import gymlife.utility.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameDifficulty;
 
 /**
  * Represents a Squat Minigame.
@@ -9,6 +9,7 @@ import gymlife.utility.MinigameDifficulty;
  * methods to start and manage the game.
  */
 public class SquatMinigame implements Minigame {
+
 
     /**
      * Starts the Squat Minigame.
@@ -22,7 +23,7 @@ public class SquatMinigame implements Minigame {
      * Sets the isPressed variable to true.
      */
     @Override
-    public void notifyButtonPressed() {
+    public void notifyUserAction() {
     }
 
     /**
@@ -47,7 +48,7 @@ public class SquatMinigame implements Minigame {
 
     /**
      * Sets the difficulty level of the Squat Minigame.
-     * 
+     *
      * @param selectedDifficulty the difficulty level to set
      */
     @Override
@@ -57,7 +58,7 @@ public class SquatMinigame implements Minigame {
 
     /**
      * Gets if the Timer is running.
-     * 
+     *
      * @return true if the Timer is running, false otherwise
      */
     @Override

@@ -9,7 +9,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
 
-import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 import gymlife.utility.Constants;
 
@@ -35,7 +34,7 @@ public class BenchView extends JPanel {
      *
      * @param controller the controller implementation
      */
-    public BenchView(final ControllerImpl controller) {
+    public BenchView(final Controller controller) {
         this.controller = controller;
         //this.setBackground(Color.CYAN);
 

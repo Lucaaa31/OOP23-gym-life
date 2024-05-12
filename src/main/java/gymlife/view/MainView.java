@@ -10,8 +10,8 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.Serial;
 
-import gymlife.model.Minigame.MinigameManager;
 import gymlife.utility.Constants;
 
 //import java.util.HashMap;
@@ -19,7 +19,6 @@ import gymlife.utility.Constants;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.MinigameType;
 import gymlife.view.minigame.MinigameViewImpl;
 import gymlife.view.stats.SideStatsView;
 //import gymlife.utility.ScenariosType;
@@ -29,8 +28,9 @@ import gymlife.view.stats.SideStatsView;
  * It extends the JFrame class and provides methods to start and display the main view.
  */
 public class MainView extends JFrame {
-    public static final long serialVersionUID = 4328743;
-    private final transient  Controller controller = new ControllerImpl(GameDifficulty.EASY);
+    @Serial
+    private static final long serialVersionUID = 4328743;
+    private final transient Controller controller = new ControllerImpl(GameDifficulty.EASY);
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
@@ -64,13 +64,6 @@ public class MainView extends JFrame {
         mainPanel.setLayout(b);
 
         this.add(mainPanel);
-
-
-
-//        MinigameManager minigameManager = new MinigameManager();
-//        controller.setMinigameManager(minigameManager);
-//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
-
 
 
         mainPanel.add(new MinigameViewImpl(controller), BorderLayout.CENTER);

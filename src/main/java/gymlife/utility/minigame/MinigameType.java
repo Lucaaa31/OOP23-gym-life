@@ -1,9 +1,9 @@
-package gymlife.utility;
+package gymlife.utility.minigame;
 
 import gymlife.model.Minigame.BenchMinigame;
-import gymlife.model.LatMachineMinigame;
+import gymlife.model.Minigame.LatMachineMinigame;
 import gymlife.model.Minigame.SquatMinigame;
-import gymlife.view.LatMachineView;
+import gymlife.view.minigame.LatMachineView;
 import gymlife.view.minigame.SquatView;
 import gymlife.view.minigame.BenchView;
 
