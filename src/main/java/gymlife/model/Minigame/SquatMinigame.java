@@ -31,7 +31,7 @@ public class SquatMinigame implements Minigame {
      * difficulty level.
      */
     @Override
-    public void setTimer(final Timer timer) {
+    public void setTimer(final TimerImpl timer) {
 
     }
 

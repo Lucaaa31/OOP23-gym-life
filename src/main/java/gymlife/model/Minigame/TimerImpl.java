@@ -6,7 +6,7 @@ package gymlife.model.Minigame;
  * It implements the Runnable interface to allow it to be executed in a separate
  * thread.
  */
-public class Timer extends Thread {
+public class TimerImpl extends Thread {
     private int milliseconds;
     private int runningTime;
     private boolean isRunning = false;
@@ -14,7 +14,7 @@ public class Timer extends Thread {
     /**
      * Constructs a Timer object with default values.
      */
-    public Timer() {
+    public TimerImpl() {
     }
 
     /**

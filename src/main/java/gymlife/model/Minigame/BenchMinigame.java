@@ -24,6 +24,8 @@ public class BenchMinigame implements Minigame, Runnable {
         this.nTimesPressed = 0;
         this.state = 0;
         this.numReps = 0;
+        this.timerThread = null;
+        this.difficulty = null;
     }
 
     /**
@@ -41,7 +43,7 @@ public class BenchMinigame implements Minigame, Runnable {
      * difficulty level.
      */
     @Override
-    public void setTimer(Timer timer) {
+    public void setTimer(final TimerImpl timer) {
         timerThread = new Thread(timer);
         timer.setRunningTime(difficulty.getReactionTime());
     }
@@ -90,7 +92,7 @@ public class BenchMinigame implements Minigame, Runnable {
      * @param selectedDifficulty the selected difficulty level for the minigame
      */
     @Override
-    public void setDifficulty(MinigameDifficulty selectedDifficulty) {
+    public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
         this.difficulty = selectedDifficulty;
     }
 

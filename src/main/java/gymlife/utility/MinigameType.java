@@ -39,20 +39,20 @@ public enum MinigameType {
     /**
      * Constructs a MinigameType enum constant with the specified minigame type and
      * minigame view type.
-     * 
+     *
      * @param minigameType     the fully qualified name of the minigame class
      *                         associated with this minigame type
      * @param minigameViewType the fully qualified name of the minigame view class
      *                         associated with this minigame type
      */
-    MinigameType(String minigameType, String minigameViewType) {
+    MinigameType(final String minigameType, final String minigameViewType) {
         this.minigameType = minigameType;
         this.minigameViewType = minigameViewType;
     }
 
     /**
      * Returns the name of the minigame type.
-     * 
+     *
      * @return the name of the minigame type
      */
     public String getName() {
@@ -61,7 +61,7 @@ public enum MinigameType {
 
     /**
      * Returns the name of the minigame view type.
-     * 
+     *
      * @return the name of the minigame view type
      */
     public String getViewName() {

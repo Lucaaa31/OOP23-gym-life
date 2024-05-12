@@ -9,7 +9,7 @@ import gymlife.model.InteractionsManager;
 import gymlife.model.MapManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.Minigame.MinigameManager;
-import gymlife.model.Minigame.Timer;
+import gymlife.model.Minigame.TimerImpl;
 import gymlife.model.api.CharacterModel;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
@@ -23,13 +23,14 @@ import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameType;
 import gymlife.utility.Position;
 
+
 /**
  * Class responsible for managing Character movements.
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private MinigameManager minigameManager;
-    private Timer timer = new Timer();
+    private MinigameManager minigameManager = new MinigameManager();
+    private final TimerImpl timer = new TimerImpl();
 
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
@@ -83,7 +84,8 @@ public class ControllerImpl implements Controller {
      *
      * @return true if the timer is running, false otherwise
      */
-    public boolean getVisibilityTimer() {
+    @Override
+    public boolean isTimerRunning() {
         return minigameManager.getCurrentMinigame().isAlive();
     }
 
@@ -125,13 +127,15 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Sets the minigame manager for this controller.
+     * Sets the minigame manager.
      *
      * @param minigameManager the minigame manager to set
      */
     public void setMinigameManager(final MinigameManager minigameManager) {
         this.minigameManager = minigameManager;
     }
+
+
 
     /**
      * Retrieves the statistics of the game.
@@ -170,4 +174,6 @@ public class ControllerImpl implements Controller {
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
+
+
 }

@@ -2,9 +2,11 @@ package gymlife.view.minigame;
 
 import gymlife.controller.api.Controller;
 
-import javax.swing.BoxLayout;
-
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.io.Serial;
+import java.lang.reflect.InvocationTargetException;
+
 
 /**
  * The MinigameViewImpl class represents the view component for the minigame
@@ -14,27 +16,29 @@ import javax.swing.JPanel;
  */
 public class MinigameViewImpl extends JPanel {
     private JPanel minigamePanel;
-    private MinigameDifficultyView difficultyView;
-    // private TimerView timerView;
+    @Serial
+    private static final long serialVersionUID = 7421500249399144105L;
 
     /**
      * Constructs a MinigameViewImpl object with the specified controller.
-     * 
+     *
      * @param controller the controller object that handles the minigame logic
      */
-    public MinigameViewImpl(Controller controller) {
-        // timerView = new TimerView(controller);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        difficultyView = new MinigameDifficultyView(controller);
-        this.add(difficultyView);
+    public MinigameViewImpl(final Controller controller) {
+        this.setLayout(new BorderLayout());
+        MinigameDifficultyView difficultyView = new MinigameDifficultyView(controller);
+        this.add(difficultyView, BorderLayout.NORTH);
         try {
             minigamePanel = (JPanel) Class.forName(controller.getMinigameType().getViewName())
                     .getDeclaredConstructor(controller.getClass())
                     .newInstance(controller);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
+                | InvocationTargetException ignored) {
 
         }
-        this.add(minigamePanel);
-        // this.add(timerView, BoxLayout.X_AXIS);
+        this.add(minigamePanel, BorderLayout.CENTER);
+        this.setVisible(true);
     }
+
+
 }

@@ -1,6 +1,6 @@
 package gymlife.model.api;
 
-import gymlife.model.Minigame.Timer;
+import gymlife.model.Minigame.TimerImpl;
 import gymlife.utility.MinigameDifficulty;
 
 /**
@@ -21,7 +21,7 @@ public interface Minigame {
      *
      * @param timer the timer to be set
      */
-    void setTimer(Timer timer);
+    void setTimer(TimerImpl timer);
 
     /**
      * Gets the current state of the minigame.
@@ -40,7 +40,7 @@ public interface Minigame {
     /**
      * Returns whether the timer of the minigame is running.
      * 
-     * @return
+     * @return true if the timer is running, false otherwise
      */
     boolean isAlive();
 

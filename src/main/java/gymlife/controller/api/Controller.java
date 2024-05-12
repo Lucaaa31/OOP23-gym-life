@@ -3,6 +3,7 @@ package gymlife.controller.api;
 import java.util.Map;
 
 import gymlife.model.Minigame.MinigameManager;
+import gymlife.model.api.GameMap;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
@@ -61,19 +62,13 @@ public interface Controller {
      */
     MinigameType getMinigameType();
 
-    /**
-     * Sets the minigame manager for the controller.
-     * 
-     * @param minigameManager the minigame manager to set
-     */
-    void setMinigameManager(MinigameManager minigameManager);
 
     /**
      * Returns the visibility status of the timer.
      * 
      * @return true if the timer is visible, false otherwise
      */
-    boolean getVisibilityTimer();
+    boolean isTimerRunning();
 
     /**
      * Returns a Map that represents the current values of the statistics in the
@@ -82,4 +77,31 @@ public interface Controller {
      * @return a Map of the statistics
      */
     Map<StatsType, Counter> getStatistics();
+
+    /**
+     * javadoc.
+     *
+     * @param newMap javadoc.
+     */
+    void goToGym(GameMap newMap);
+
+    /**
+     * javadoc.
+     *
+     * @return javadoc.
+     */
+    GameMap getCurrentMap();
+
+
+    /**
+     * javadoc.
+     */
+    void cellInteraction();
+
+
+    /**
+     * temporary.
+     * @param minigameManager temporary.
+     */
+    void setMinigameManager(MinigameManager minigameManager);
 }

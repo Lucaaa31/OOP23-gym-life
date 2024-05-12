@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.io.Serial;
 import java.util.Map;
 import  gymlife.utility.FontLoader;
 
@@ -25,7 +26,8 @@ import  gymlife.utility.FontLoader;
  * It is a part of the GUI of the Java application.
  */
 public class SideStatsView extends JPanel {
-    public static final long serialVersionUID = 4324743;
+    @Serial
+    private static final long serialVersionUID = 4324743;
     private final transient Controller controller;
     private static final float FONT_SIZE = 50f;
     private static final int BORDER_SIZE = 3;

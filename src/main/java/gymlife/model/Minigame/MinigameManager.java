@@ -4,6 +4,8 @@ import gymlife.model.api.Minigame;
 import gymlife.utility.MinigameDifficulty;
 import gymlife.utility.MinigameType;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * The MinigameManager class is responsible for managing the current minigame in
  * the gym life application.
@@ -19,6 +21,8 @@ public class MinigameManager {
      * Constructs a new MinigameManager object.
      */
     public MinigameManager() {
+        this.currentMinigame = null;
+        this.currentMinigameType = null;
     }
 
     /**
@@ -32,18 +36,17 @@ public class MinigameManager {
      * Sets the current minigame type.
      *
      * @param minigameType the minigame type to set
-     * @return the updated MinigameManager instance
      */
-    public MinigameManager setCurrentMinigame(final MinigameType minigameType) {
+    public void setCurrentMinigame(final MinigameType minigameType) {
         this.currentMinigameType = minigameType;
         try {
             this.currentMinigame = (Minigame) Class
                     .forName(minigameType.getName())
                     .getDeclaredConstructor()
                     .newInstance();
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
+                 | InvocationTargetException ignored) {
         }
-        return this;
     }
 
     /**
@@ -63,19 +66,9 @@ public class MinigameManager {
      * @return the current minigame instance
      */
     public Minigame getCurrentMinigame() {
-        return this.currentMinigame;
+        return currentMinigame;
     }
 
-    /**
-     * Sets the timer for the current minigame.
-     *
-     * @param timer the timer to set
-     * @return the updated MinigameManager instance
-     */
-    public MinigameManager setTimer(final Timer timer) {
-        this.currentMinigame.setTimer(timer);
-        return this;
-    }
 
     /**
      * Retrieves the current minigame type.

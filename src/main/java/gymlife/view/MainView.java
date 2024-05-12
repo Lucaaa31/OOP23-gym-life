@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+
+import gymlife.model.Minigame.MinigameManager;
 import gymlife.utility.Constants;
 
 //import java.util.HashMap;
@@ -17,6 +19,8 @@ import gymlife.utility.Constants;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.MinigameType;
+import gymlife.view.minigame.MinigameViewImpl;
 import gymlife.view.stats.SideStatsView;
 //import gymlife.utility.ScenariosType;
 
@@ -61,8 +65,16 @@ public class MainView extends JFrame {
 
         this.add(mainPanel);
 
-        mainPanel.add(scenariosContainer, BorderLayout.WEST);
-        mainPanel.add(sideContainer, BorderLayout.CENTER);
+
+
+//        MinigameManager minigameManager = new MinigameManager();
+//        controller.setMinigameManager(minigameManager);
+//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
+
+
+
+        mainPanel.add(new MinigameViewImpl(controller), BorderLayout.CENTER);
+        mainPanel.add(sideContainer, BorderLayout.EAST);
 
         // Aggiunta del ComponentListener per gestire il ridimensionamento della finestra
         this.addComponentListener(new ComponentAdapter() {
@@ -75,6 +87,7 @@ public class MainView extends JFrame {
         statsView.setVisible(true);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
 
+        this.pack();
         this.setResizable(true);
         this.setVisible(true);
     }
