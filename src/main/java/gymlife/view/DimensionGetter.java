@@ -23,6 +23,7 @@ public class DimensionGetter {
     private static final int SMALL_FONT_SIZE = 35;
     private static final int FRAME_HEIGTH = 9;
     private static final int FRAME_WIDTH = 16;
+    private static final int SQUARE_STATS = 10;
     public DimensionGetter() {
     }
 
@@ -60,6 +61,15 @@ public class DimensionGetter {
     }
 
     /**
+     * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     * @return the cell dimension
+     */
+    public Dimension getSquareStatsDimension() {
+        return new Dimension(actualFrameDimension.height / SQUARE_STATS,
+                actualFrameDimension.height / SQUARE_STATS);
+    }
+
+    /**
      * Returns the big font size which is the frame width divided by 32.
      * @return the big font size
      */
@@ -90,4 +100,6 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
                 actualFrameDimension.height - INCREMENT * FRAME_HEIGTH);
     }
+
+
 }

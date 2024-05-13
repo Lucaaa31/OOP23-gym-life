@@ -5,14 +5,11 @@ import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
-import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.io.Serial;
 import java.util.Map;
 import  gymlife.utility.FontLoader;
@@ -61,12 +58,12 @@ public class SideStatsView extends JPanel {
         statsPanel2.add(getStaminaLabel());
         statsPanel2.add(getMassLabel());
 
-        statsPanel3.setLayout(new GridLayout(2, 1));
+        statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
         statsPanel1.setBorder(BORDER);
 
-        statsPanel4.setLayout(new GridLayout(2, 1));
+        statsPanel4.setLayout(new GridLayout(1, 2));
         statsPanel4.add(getMoneyLabel());
         statsPanel4.add(getDaysLabel());
         statsPanel4.setBorder(BORDER);
@@ -77,10 +74,10 @@ public class SideStatsView extends JPanel {
         statsPanel3.setBorder(BORDER);
         statsPanel4.setBorder(BORDER);
 
-        statsPanel1.setBackground(Color.blue);
-        statsPanel2.setBackground(Color.red);
-        statsPanel3.setBackground(Color.green);
-        statsPanel4.setBackground(Color.yellow);
+//        statsPanel1.setBackground(Color.blue);
+//        statsPanel2.setBackground(Color.red);
+//        statsPanel3.setBackground(Color.green);
+//        statsPanel4.setBackground(Color.yellow);
 
         this.add(statsPanel1);
         this.add(statsPanel2);
@@ -113,118 +110,141 @@ public class SideStatsView extends JPanel {
         statsPanel4.setBorder(BORDER);
     }
     private JLabel getHappinessLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
-        final JLabel labelText = new JLabel("H", SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.HAPPINESS).getCount()), 
+        final int happinessValue = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final JLabel labelImage = new JLabel();
+
+
+        this.setSize(dimensionGetter.getCellDimension());
+        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
             SwingConstants.CENTER);
+
         final JLabel happinessLabel = new JLabel();
 
-        happinessLabel.setLayout(new BorderLayout());
-        happinessLabel.add(labelText, BorderLayout.NORTH);
-        happinessLabel.add(lablelNumber, BorderLayout.CENTER);
+        happinessLabel.setLayout(new GridLayout(2, 1));
+        happinessLabel.add(labelImage);
+        happinessLabel.add(lablelNumber);
+
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        labelImage.setIcon(getIcon("images/icons/happy.png"));
+
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
-        labelText.setBorder(BORDER);
-        lablelNumber.setBorder(BORDER);
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
 
-        labelText.setBackground(Color.BLUE);
+        labelImage.setBorder(new MatteBorder(3, 5, 0, 0, Color.BLACK));
+        lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
     private JLabel getStaminaLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
+        final int happinessValue = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final JLabel labelImage = new JLabel();
 
-        final JLabel labelText = new JLabel("S", SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.STAMINA).getCount()), 
-            SwingConstants.CENTER);
-        final JLabel staminaLabel = new JLabel();
 
-        staminaLabel.setLayout(new BorderLayout());
-        staminaLabel.add(labelText, BorderLayout.NORTH);
-        staminaLabel.add(lablelNumber, BorderLayout.CENTER);
+        this.setSize(dimensionGetter.getCellDimension());
+        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
+                SwingConstants.CENTER);
+
+        final JLabel happinessLabel = new JLabel();
+
+        happinessLabel.setLayout(new GridLayout(2, 1));
+        happinessLabel.add(labelImage);
+        happinessLabel.add(lablelNumber);
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        labelImage.setIcon(getIcon("images/icons/stamina.png"));
+
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
-        labelText.setHorizontalTextPosition(SwingConstants.CENTER);
-        lablelNumber.setHorizontalTextPosition(SwingConstants.CENTER);
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+        labelImage.setBorder(new MatteBorder(3, 0, 0, 0, Color.BLACK));
 
-        labelText.setBorder(BORDER);
         lablelNumber.setBorder(BORDER);
-
-        staminaLabel.setBackground(Color.RED);
-
-        return staminaLabel;
+        return happinessLabel;
     }
     private JLabel getMassLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
+        final int happinessValue = controller.getStatistics().get(StatsType.MASS).getCount();
+        final JLabel labelImage = new JLabel();
 
-        final JLabel labelText = new JLabel("M", SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.MASS).getCount()), 
-            SwingConstants.CENTER);
-        final JLabel massLabel = new JLabel();
+        this.setSize(dimensionGetter.getCellDimension());
+        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
+                SwingConstants.CENTER);
 
-        massLabel.setLayout(new BorderLayout());
-        massLabel.add(labelText, BorderLayout.NORTH);
-        massLabel.add(lablelNumber, BorderLayout.CENTER);
+        final JLabel happinessLabel = new JLabel();
+
+        happinessLabel.setLayout(new GridLayout(2, 1));
+        happinessLabel.add(labelImage);
+        happinessLabel.add(lablelNumber);
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        labelImage.setIcon(getIcon("images/icons/mass.png"));
+
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
-        labelText.setHorizontalTextPosition(SwingConstants.CENTER);
-        lablelNumber.setHorizontalTextPosition(SwingConstants.CENTER);
-
-        labelText.setBorder(BORDER);
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+        labelImage.setBorder(new MatteBorder(3, 0, 0, 5, Color.BLACK));
         lablelNumber.setBorder(BORDER);
-
-
-        return massLabel;
+        return happinessLabel;
     }
     private JLabel getMoneyLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
+        final int moneyValue = controller.getStatistics().get(StatsType.MONEY).getCount();
+        final JLabel labelImage = new JLabel();
 
-        final JLabel labelText = new JLabel("MONEY", SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.MONEY).getCount()), 
+        final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
-        moneyLablel.setLayout(new GridLayout(1, 2));
+        moneyLablel.setLayout(new GridLayout(2, 1));
 
-        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        labelImage.setIcon(getIcon("images/icons/money.png"));
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
         lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
-        moneyLablel.add(labelText);
+        moneyLablel.add(labelImage);
         moneyLablel.add(lablelNumber);
 
-        labelText.setBorder(BORDER);
-        lablelNumber.setBorder(BORDER);
-
+        this.setBorder(BORDER);
+        labelImage.setBorder(new MatteBorder(5, 5, 0, 5, Color.BLACK));
+        lablelNumber.setBorder(new MatteBorder(0, 5, 5, 5, Color.BLACK));
         return moneyLablel;
     }
     private JLabel getDaysLabel() {
         final Map<StatsType, Counter> statistics = controller.getStatistics();
 
-        final JLabel labelText = new JLabel("DAYS", SwingConstants.CENTER);
+        final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
+                SwingConstants.CENTER);
         final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()), 
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
-        moneyLablel.setLayout(new GridLayout(1, 2));
+        moneyLablel.setLayout(new GridLayout(2, 1));
 
         labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
         lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
         moneyLablel.add(labelText);
         moneyLablel.add(lablelNumber);
-
-        labelText.setBorder(BORDER);
-        lablelNumber.setBorder(BORDER);
-
+        labelText.setBorder(new MatteBorder(5, 5, 0, 5, Color.BLACK));
+        lablelNumber.setBorder(new MatteBorder(0, 5, 5, 5, Color.BLACK));
+        this.setBorder(BORDER);
         return moneyLablel;
     }
-
+    private ImageIcon getIcon(String path) {
+        return new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource(path))
+                .getImage()
+                .getScaledInstance(dimensionGetter.getSquareStatsDimension().width,
+                        dimensionGetter.getSquareStatsDimension().height,
+                        Image.SCALE_FAST));
+    }
 }
