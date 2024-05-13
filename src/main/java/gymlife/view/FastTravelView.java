@@ -36,9 +36,9 @@ public final class FastTravelView extends JFrame {
         final JPanel mapPanel = new JPanel(new BorderLayout());
         mapPanel.setBackground(new Color(4, 35, 0));
         final JPanel buttonsPanel = new JPanel(new BorderLayout());
-        final JButton gymButton = new JButton("GYM_MAP");
-        final JButton houseButton = new JButton("house_map");
-        final JButton shopButton = new JButton("shop_map");
+        final JButton gymButton = new JButton("gym");
+        final JButton houseButton = new JButton("house");
+        final JButton shopButton = new JButton("shop");
         buttonsPanel.add(gymButton, BorderLayout.EAST);
         buttonsPanel.add(houseButton, BorderLayout.CENTER);
         buttonsPanel.add(shopButton, BorderLayout.WEST);
@@ -80,7 +80,7 @@ public final class FastTravelView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final String loc = ((JButton) e.getSource()).getText();
-                controller.goToNewMap(GameMapImpl.valueOf(loc));
+                controller.goToNewMap(GameMapImpl.fromString(loc));
             }
         };
 
@@ -103,14 +103,14 @@ public final class FastTravelView extends JFrame {
     }
 
     private void showWay(final String whereToGo) {
-        final String fileName = getMap() + "_map_to_" + whereToGo + "_map.png";
+        final String fileName = getMap() + "_to_" + whereToGo + ".png";
         final ImageIcon img = new ImageIcon(ClassLoader.getSystemResource(
                 "images/fastTravelMap/" + fileName));
         mapLabel.setIcon(img);
     }
 
     private void changeLocation() {
-        final String fileName = "current_" + getMap() + "_map.png";
+        final String fileName = "current_" + getMap() + ".png";
         final ImageIcon img = new ImageIcon(ClassLoader.getSystemResource(
                 "images/fastTravelMap/" + fileName));
         mapLabel.setIcon(img);
