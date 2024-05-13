@@ -18,19 +18,23 @@ import gymlife.utility.MapConstants;
  * It extends the JPanel class and implements the KeyListener interface to handle keyboard events.
  */
 public class CharacterView extends JLabel {
-    public static final long serialVersionUID = 4328742;
-    private static final int SIZE = Constants.SCENARIO_WIDTH / MapConstants.MAP_X_DIM;
+    public static final long serialVersionUID = -3544425405375144844L;
+    private final DimensionGetter dimensionGetter;
+
     /**
      * Constructs a CharacterView object with the specified controller.
      */
-    public CharacterView() {
+    public CharacterView(DimensionGetter dimensionGetter) {
+        this.dimensionGetter = dimensionGetter;
         final String p = "images/character/level1_down.png";
         final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
                 getSystemResource(p)).
                 getImage().
-                getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH));
+                getScaledInstance(dimensionGetter.getCellDimension().width,
+                        dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
         this.setIcon(img);
-        this.setSize(SIZE, SIZE);
+        this.setSize(dimensionGetter.getCellDimension());
     }
 
     public void changeImage(int level, Directions dir) {
@@ -38,7 +42,21 @@ public class CharacterView extends JLabel {
         final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
                 getSystemResource(p)).
                 getImage().
-                getScaledInstance(SIZE, SIZE, Image.SCALE_SMOOTH));
+                getScaledInstance(dimensionGetter.getCellDimension().width,
+                        dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
+        System.out.println("IMAGE   " + img.getIconHeight());
         this.setIcon(img);
+    }
+
+    public void resizeImage() {
+        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource("images/character/level1_down.png")).
+                getImage().
+                getScaledInstance(dimensionGetter.getCellDimension().width,
+                        dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
+        this.setIcon(img);
+        this.setSize(dimensionGetter.getCellDimension());
     }
 }

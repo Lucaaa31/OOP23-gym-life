@@ -1,13 +1,13 @@
 package gymlife.view;
 
 import gymlife.utility.MapConstants;
+import gymlife.utility.Position;
 
 import javax.swing.plaf.DimensionUIResource;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 
 public class DimensionGetter {
-    private static final double RIDIMENTION_PROPORTION = 2;
+    private static final double RIDIMENTION_PROPORTION = 1.2;
     private static final int INCREMENT = 5;
     private final Dimension actualFrameDimension = new Dimension(
             (int) (Toolkit.getDefaultToolkit().getScreenSize().width / RIDIMENTION_PROPORTION) ,
@@ -42,5 +42,4 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * 16,
                 actualFrameDimension.height - INCREMENT * 9);
     }
-
 }

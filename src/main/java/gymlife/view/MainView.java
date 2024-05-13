@@ -1,13 +1,13 @@
 package gymlife.view;
 
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
+import java.io.Serial;
 
 import gymlife.utility.Constants;
 
@@ -24,14 +24,15 @@ import gymlife.view.stats.SideStatsView;
  * It extends the JFrame class and provides methods to start and display the main view.
  */
 public class MainView extends JFrame {
-    public static final long serialVersionUID = 4328743;
+    @Serial
+    private static final long serialVersionUID = -3544425205075144844L;
     private final transient  Controller controller = new ControllerImpl(GameDifficulty.EASY);
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final JPanel statsView = new SideStatsView(controller);
-    private final JPanel gameMapView = new GameMapView(controller);
     private final DimensionGetter dimensionGetter = new DimensionGetter();
+    private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
 
 //    private final CharacterView charView = new CharacterView(controller);
 //    private final Map<ScenariosType,JPanel> scenariosMap = new HashMap<>();
@@ -61,29 +62,57 @@ public class MainView extends JFrame {
         mainPanel.add(scenariosContainer, BorderLayout.WEST);
         mainPanel.add(sideContainer, BorderLayout.CENTER);
 
-        this.addKeyListener(new KeyListener() {
+//        this.addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                if (e.getKeyChar() == '+') {
+//                    dimensionGetter.incScreenDimension();
+//                    System.out.println("Main view resized");
+//                    resizeComponents();
+//                    ((GameMapView) gameMapView).resizeComponents(); // Aggiunta la chiamata al metodo resizeComponents() della classe GameMapView
+//                }
+//                if (e.getKeyChar() == '-') {
+//                    dimensionGetter.decScreenDimension();
+//                    resizeComponents();
+//                    ((GameMapView) gameMapView).resizeComponents(); // Aggiunta la chiamata al metodo resizeComponents() della classe GameMapView
+//                }
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//
+//            }
+//        });
+
+        // Creazione dell'azione per il tasto '+'
+        Action increaseSizeAction = new AbstractAction() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                if (e.getKeyChar() == '+') {
-                    dimensionGetter.incScreenDimension();
-                    resizeComponents();
-                }
-                if (e.getKeyChar() == '-') {
-                    dimensionGetter.decScreenDimension();
-                    resizeComponents();
-                }
+            public void actionPerformed(ActionEvent e) {
+                dimensionGetter.incScreenDimension();
+                System.out.println("Main view resized");
+                resizeComponents();
+                ((GameMapView) gameMapView).resizeComponents();
             }
+        };
 
+        // Creazione dell'azione per il tasto '-'
+        Action decreaseSizeAction = new AbstractAction() {
             @Override
-            public void keyPressed(KeyEvent e) {
-
+            public void actionPerformed(ActionEvent e) {
+                dimensionGetter.decScreenDimension();
+                resizeComponents();
+                ((GameMapView) gameMapView).resizeComponents();
             }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
+        };
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('+'), "increase size");
+        mainPanel.getActionMap().put("increase size", increaseSizeAction);
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('-'), "decrease size");
+        mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
 
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
@@ -96,6 +125,9 @@ public class MainView extends JFrame {
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);
         this.setVisible(true);
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        gameMapView.requestFocusInWindow();
     }
 
     // Metodo per ridimensionare i pannelli proporzionalmente
@@ -106,9 +138,6 @@ public class MainView extends JFrame {
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         this.setPreferredSize(dimensionGetter.getFrameDimension());
 
-        System.out.println("Main view " + this.getSize().width + " " + this.getSize().height);
-        System.out.println("Main Panel " + mainPanel.getSize().width + " " + mainPanel.getSize().height);
-        System.out.println("Screen width: " + dimensionGetter.getFrameDimension().width + " Screen height: " + dimensionGetter.getFrameDimension().height);
 
 
         // Aggiorna il layout
@@ -120,5 +149,11 @@ public class MainView extends JFrame {
         mainPanel.repaint();;
         this.pack();
         this.repaint();
+        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
+
+        System.out.println("Main view " + this.getSize().width + " " + this.getSize().height);
+        System.out.println("Main Panel " + mainPanel.getSize().width + " " + mainPanel.getSize().height);
+        System.out.println("Screen width: " + dimensionGetter.getFrameDimension().width + " Screen height: "
+                + dimensionGetter.getFrameDimension().height + "\n");
     }
 }
