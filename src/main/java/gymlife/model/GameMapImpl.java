@@ -1,6 +1,7 @@
 package gymlife.model;
 
 
+import java.util.Locale;
 import java.util.Map;
 
 import gymlife.model.api.Cell;
@@ -73,6 +74,11 @@ public enum GameMapImpl implements GameMap {
     @Override
     public String getName() {
         return this.name;
+    }
+
+
+    public static GameMapImpl fromString(final String name) {
+        return valueOf(name.toUpperCase(new Locale("en")) + "_MAP");
     }
 
 }
