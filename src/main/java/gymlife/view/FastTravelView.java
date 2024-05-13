@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
+import java.util.Locale;
 
 /**
  * Interface for when the player has to move from his current location to a different map.
@@ -32,16 +33,21 @@ public final class FastTravelView extends JFrame {
         this.size = 100;
         this.setSize(MapConstants.MAP_X_DIM * size, MapConstants.MAP_Y_DIM * size);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        final JPanel mainPanel = new JPanel(new BorderLayout());
+
+        final JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(new Color(4, 35, 0));
+
+        GridBagConstraints constraints = new GridBagConstraints();
+
         final JPanel mapPanel = new JPanel(new BorderLayout());
         mapPanel.setBackground(new Color(4, 35, 0));
-        final JPanel buttonsPanel = new JPanel(new BorderLayout());
-        final JButton gymButton = new JButton("gym");
-        final JButton houseButton = new JButton("house");
-        final JButton shopButton = new JButton("shop");
-        buttonsPanel.add(gymButton, BorderLayout.EAST);
-        buttonsPanel.add(houseButton, BorderLayout.CENTER);
-        buttonsPanel.add(shopButton, BorderLayout.WEST);
+        final JPanel buttonsPanel = new JPanel(new GridLayout(1, 3));
+        final JButton gymButton = new JButton("Gym");
+        final JButton houseButton = new JButton("House");
+        final JButton shopButton = new JButton("Shop");
+        buttonsPanel.add(gymButton);
+        buttonsPanel.add(houseButton);
+        buttonsPanel.add(shopButton);
 
         final MouseListener ml = new MouseListener() {
             @Override
@@ -61,7 +67,7 @@ public final class FastTravelView extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                final String loc = ((JButton) e.getSource()).getText();
+                final String loc = ((JButton) e.getSource()).getText().toLowerCase(new Locale("en"));
                 if (!loc.equals(getMap())){
                     showWay(loc);
                 }
@@ -81,6 +87,7 @@ public final class FastTravelView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 final String loc = ((JButton) e.getSource()).getText();
                 controller.goToNewMap(GameMapImpl.fromString(loc));
+                changeLocation();
             }
         };
 
@@ -94,8 +101,24 @@ public final class FastTravelView extends JFrame {
 
 
         this.getContentPane().add(mainPanel);
-        mainPanel.add(mapPanel, BorderLayout.CENTER);
-        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
+        constraints.weightx = 1;
+        constraints.weighty = 0.75;
+        mainPanel.add(mapPanel, constraints);
+
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridy = 1;
+        constraints.gridheight = 1;
+        constraints.gridwidth = 1;
+        constraints.weightx = 0.33;
+        constraints.weighty = 0.25;
+        mainPanel.add(shopButton, constraints);
+        constraints.gridx = 1;
+        mainPanel.add(houseButton, constraints);
+        constraints.gridx = 2;
+        mainPanel.add(gymButton, constraints);
         this.mapLabel = new JLabel();
         changeLocation();
         mapPanel.add(mapLabel);
