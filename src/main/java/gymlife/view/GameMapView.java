@@ -15,10 +15,12 @@ import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
+import javax.swing.ImageIcon;
 
-import static java.lang.Thread.sleep;
+//import static java.lang.Thread.sleep;
 
 /**
  * JPanel that shows the current map on which teh character is. it shows all the cells of the map loaded.
@@ -29,11 +31,9 @@ public final class GameMapView extends JPanel {
     private final transient Controller controller;
     private transient Map<Position, JLabel> cells = new HashMap<>();
     private final CharacterView characterLabel;
-    private static final int SIZE = Constants.SCENARIO_WIDTH / MapConstants.MAP_X_DIM;
     private final DimensionGetter dimensionGetter;
     private  JLayeredPane mainPanel;
     private  JPanel mapPanel;
-    private static final Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
      *
@@ -42,7 +42,7 @@ public final class GameMapView extends JPanel {
     public GameMapView(final Controller controller, final DimensionGetter dimensionGetter) {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
-        this.setSize(new Dimension(Constants.SCENARIO_WIDTH, Constants.HEIGHT));
+        this.setSize(dimensionGetter.getScenarioDimension());
         this.setLayout(new BorderLayout());
 
         mainPanel = new JLayeredPane();
@@ -121,13 +121,13 @@ public final class GameMapView extends JPanel {
         return this.controller;
     }
 
-
     private void moveCharacter() {
         final Point locationToGo = new Point(
                 cells.get(controller.getCharacterPos()).getX() ,
                 cells.get(controller.getCharacterPos()).getY());
 
-//        final Point locationMid = new Point( (int) (( characterLabel.getX() + locationToGo.getX()) / 2) ,  (int) ((characterLabel.getY() + locationToGo.getY()) / 2));
+//        final Point locationMid = new Point( (int) (( characterLabel.getX() + locationToGo.getX()) / 2) ,
+//        (int) ((characterLabel.getY() + locationToGo.getY()) / 2));
 
 //        characterLabel.setLocation(locationMid);
 //
@@ -178,7 +178,7 @@ public final class GameMapView extends JPanel {
         }
 
         characterLabel.resizeImage();
-        System.out.println("Character resized" + characterLabel.getSize().width + " " + characterLabel.getSize().height);
+//        System.out.println("Character resized" + characterLabel.getSize().width + " " + characterLabel.getSize().height);
         characterLabel.setLocation(controller.getCharacterPos().X() * dimensionGetter.getCellDimension().width,
                 controller.getCharacterPos().Y() * dimensionGetter.getCellDimension().height);
         mainPanel.add(characterLabel);
@@ -190,17 +190,16 @@ public final class GameMapView extends JPanel {
         mainPanel.setPreferredSize(dimensionGetter.getScenarioDimension());
         mapPanel.setPreferredSize(dimensionGetter.getScenarioDimension());
 
-        System.out.println("Dimensiongetter.cell" + dimensionGetter.getCellDimension().width + " " + dimensionGetter.getCellDimension().height);
-        System.out.println("CELL DIMENSION " + cells.get(new Position(2,1)).getSize().width + " "
-                + cells.get(new Position(1,1)).getSize().height + "\n");
-        System.out.println("Cell Position" + cells.get(new Position(2,1)).getX()
-                + " " + cells.get(new Position(1,1)).getY());
-        System.out.println("MAP view " + this.getSize().width + " " + this.getSize().height);
-        System.out.println("MAIN MAP Panel " + mainPanel.getSize().width + " " + mainPanel.getSize().height);
-        System.out.println("MAP Panel " + mapPanel.getSize().width + " " + mapPanel.getSize().height);
-        System.out.println("Frame " + dimensionGetter.getFrameDimension() + "\n");
-;
-
+//        System.out.println("Dimensiongetter.cell" + dimensionGetter.getCellDimension().width + " "
+//                + dimensionGetter.getCellDimension().height);
+//        System.out.println("CELL DIMENSION " + cells.get(new Position(2,1)).getSize().width + " "
+//                + cells.get(new Position(1,1)).getSize().height + "\n");
+//        System.out.println("Cell Position" + cells.get(new Position(2,1)).getX()
+//                + " " + cells.get(new Position(1,1)).getY());
+//        System.out.println("MAP view " + this.getSize().width + " " + this.getSize().height);
+//        System.out.println("MAIN MAP Panel " + mainPanel.getSize().width + " " + mainPanel.getSize().height);
+//        System.out.println("MAP Panel " + mapPanel.getSize().width + " " + mapPanel.getSize().height);
+//        System.out.println("Frame " + dimensionGetter.getFrameDimension() + "\n");
         // Aggiorna il layout
         mapPanel.revalidate();
         mainPanel.revalidate();

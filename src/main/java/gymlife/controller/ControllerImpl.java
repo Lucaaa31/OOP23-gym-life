@@ -9,17 +9,14 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.model.statistics.Counter;
-import gymlife.model.statistics.StatsManagerImpl;
 
 import gymlife.model.statistics.StatsType;
-import gymlife.model.statistics.api.StatsManager;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
-import gymlife.model.statistics.StatsType;
 import gymlife.utility.ScenariosType;
 
 
@@ -134,7 +131,7 @@ public class ControllerImpl implements Controller {
      * @return the current scenario type
      */
     @Override
-    public ScenariosType getActualScenario(){
+    public ScenariosType getActualScenario() {
         return scenariosManager.getActualScenariosType();
     }
 }

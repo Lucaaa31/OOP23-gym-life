@@ -1,22 +1,17 @@
 package gymlife.view;
 
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serial;
 
-import gymlife.utility.Constants;
-
 //import java.util.HashMap;
 //import java.util.Map;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.GameDifficulty;
-import gymlife.view.stats.SideStatsView;
 //import gymlife.utility.ScenariosType;
 
 /**
@@ -111,6 +106,7 @@ public class MainView extends JFrame {
                 ((SideStatsView) statsView).resizeStats();
             }
         };
+
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('+'), "increase size");
         mainPanel.getActionMap().put("increase size", increaseSizeAction);
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('-'), "decrease size");
@@ -139,8 +135,6 @@ public class MainView extends JFrame {
         sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         this.setPreferredSize(dimensionGetter.getFrameDimension());
-
-
 
         // Aggiorna il layout
         sideContainer.revalidate();

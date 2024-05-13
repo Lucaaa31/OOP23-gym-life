@@ -69,5 +69,5 @@ public interface Controller {
      *
      * @return the current scenario type
      */
-    public ScenariosType getActualScenario();
+    ScenariosType getActualScenario();
 }

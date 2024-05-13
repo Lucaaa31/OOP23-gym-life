@@ -1,10 +1,8 @@
-package gymlife.view.stats;
+package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
-import gymlife.utility.Constants;
-
 
 
 import javax.swing.JPanel;
@@ -15,11 +13,9 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Dimension;
 import java.io.Serial;
 import java.util.Map;
 import  gymlife.utility.FontLoader;
-import gymlife.view.DimensionGetter;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -48,7 +44,7 @@ public class SideStatsView extends JPanel {
      */
     public SideStatsView(final Controller controller, DimensionGetter dimensionGetter) {
         this.dimensionGetter = dimensionGetter;
-        this.setPreferredSize(new Dimension(Constants.SIDE_WIDTH, Constants.HEIGHT));
+        this.setPreferredSize(dimensionGetter.getSideDimension());
         this.setBackground(Color.BLACK);
         this.controller = controller;
         this.setBorder(BORDER);
@@ -81,6 +77,10 @@ public class SideStatsView extends JPanel {
         statsPanel3.setBorder(BORDER);
         statsPanel4.setBorder(BORDER);
 
+        statsPanel1.setBackground(Color.blue);
+        statsPanel2.setBackground(Color.red);
+        statsPanel3.setBackground(Color.green);
+        statsPanel4.setBackground(Color.yellow);
 
         this.add(statsPanel1);
         this.add(statsPanel2);
