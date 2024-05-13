@@ -2,6 +2,7 @@ package gymlife.application;
 
 import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
+import gymlife.view.FastTravelView;
 import gymlife.view.GameMapView;
 
 /**
@@ -19,6 +20,6 @@ public final class GameLauncher {
      */
     public static void main(final String[] args) {
         final Controller con = new ControllerImpl();
-        new GameMapView(con);
+        new FastTravelView(con);
     }
 }
