@@ -4,8 +4,14 @@ import gymlife.controller.api.Controller;
 import gymlife.model.GameMapImpl;
 import gymlife.utility.MapConstants;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -20,71 +26,77 @@ public final class FastTravelView extends JFrame {
 
     @Serial
     private static final long serialVersionUID = -5960084209507548196L;
+    /**
+     * Constant to set percentage of vertical screen taken by map.
+     */
+    public static final double MAP_WEIGHT_Y = 0.75;
+    /**
+     * Constant to set percentage of horizontal screen taken by buttons.
+     */
+    public static final double BUTTONS_WEIGHT_X = 0.33;
+    /**
+     * Constant to set percentage of vertical screen taken by buttons.
+     */
+    public static final double BUTTONS_WEIGHT_Y = 0.25;
     private final transient Controller controller;
-    private final int size;
     private final JLabel mapLabel;
 
     /**
      * Constructor for the Interface.
+     *
      * @param controller takes the unique controller given by the MainView.
      */
     public FastTravelView(final Controller controller) {
         this.controller = controller;
-        this.size = 100;
+        final int size = 100;
         this.setSize(MapConstants.MAP_X_DIM * size, MapConstants.MAP_Y_DIM * size);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(new Color(4, 35, 0));
+        mainPanel.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
 
-        GridBagConstraints constraints = new GridBagConstraints();
+        final GridBagConstraints constraints = new GridBagConstraints();
 
         final JPanel mapPanel = new JPanel(new BorderLayout());
-        mapPanel.setBackground(new Color(4, 35, 0));
-        final JPanel buttonsPanel = new JPanel(new GridLayout(1, 3));
+        mapPanel.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
         final JButton gymButton = new JButton("Gym");
         final JButton houseButton = new JButton("House");
         final JButton shopButton = new JButton("Shop");
-        buttonsPanel.add(gymButton);
-        buttonsPanel.add(houseButton);
-        buttonsPanel.add(shopButton);
 
         final MouseListener ml = new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(final MouseEvent e) {
 
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(final MouseEvent e) {
 
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public void mouseReleased(final MouseEvent e) {
 
             }
 
             @Override
-            public void mouseEntered(MouseEvent e) {
+            public void mouseEntered(final MouseEvent e) {
                 final String loc = ((JButton) e.getSource()).getText().toLowerCase(new Locale("en"));
-                if (!loc.equals(getMap())){
+                if (!loc.equals(getMap())) {
                     showWay(loc);
                 }
-
-
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 changeLocation();
 
             }
         };
 
-        ActionListener al = new ActionListener() {
+        final ActionListener al = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 final String loc = ((JButton) e.getSource()).getText();
                 controller.goToNewMap(GameMapImpl.fromString(loc));
                 changeLocation();
@@ -105,15 +117,15 @@ public final class FastTravelView extends JFrame {
         constraints.gridy = 0;
         constraints.gridwidth = 3;
         constraints.weightx = 1;
-        constraints.weighty = 0.75;
+        constraints.weighty = MAP_WEIGHT_Y;
         mainPanel.add(mapPanel, constraints);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridy = 1;
         constraints.gridheight = 1;
         constraints.gridwidth = 1;
-        constraints.weightx = 0.33;
-        constraints.weighty = 0.25;
+        constraints.weightx = BUTTONS_WEIGHT_X;
+        constraints.weighty = BUTTONS_WEIGHT_Y;
         mainPanel.add(shopButton, constraints);
         constraints.gridx = 1;
         mainPanel.add(houseButton, constraints);

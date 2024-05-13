@@ -76,7 +76,11 @@ public enum GameMapImpl implements GameMap {
         return this.name;
     }
 
-
+    /**
+     * Static method to get an instance of GameMapImpl given a string.
+     * @param name This string should be the simple name of the GameMap.
+     * @return Returns the correspondent GameMap.
+     */
     public static GameMapImpl fromString(final String name) {
         return valueOf(name.toUpperCase(new Locale("en")) + "_MAP");
     }

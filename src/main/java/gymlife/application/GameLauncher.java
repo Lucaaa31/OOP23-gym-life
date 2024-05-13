@@ -3,7 +3,6 @@ package gymlife.application;
 import gymlife.controller.ControllerImpl;
 import gymlife.controller.api.Controller;
 import gymlife.view.FastTravelView;
-import gymlife.view.GameMapView;
 
 /**
  *

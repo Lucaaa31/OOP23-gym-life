@@ -1,6 +1,5 @@
 package gymlife.model.api;
 
-import gymlife.model.GameMapImpl;
 import gymlife.utility.Position;
 
 /**
