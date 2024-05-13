@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
+import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.Constants;
@@ -19,6 +20,8 @@ import gymlife.utility.Constants;
  * timer view.
  */
 public class BenchView extends JPanel {
+    @Serial
+    private static final long serialVersionUID = -2554575966007368L;
     private final JButton button = new JButton("Press me!");
     private final JLabel label = new JLabel();
     private final JLabel timerView = new JLabel();
@@ -66,7 +69,7 @@ public class BenchView extends JPanel {
 //                        .getResource("/images/Minigame/bench_press/gymBackground.png")));
 
 
-        ImageIcon image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_"
+        final ImageIcon image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_"
                 + state + ".png");
 
         //this.backgroundLabel.setIcon(background);
@@ -105,8 +108,8 @@ public class BenchView extends JPanel {
      * Sets a random position for the button within the panel.
      */
     private void setRandomPositionButton() {
-        int x = (int) (Math.random() * Constants.FRAME_WIDTH - button.getWidth());
-        int y = (int) (Math.random() * Constants.HEIGHT - button.getHeight());
+        final int x = (int) (Math.random() * Constants.FRAME_WIDTH - button.getWidth());
+        final int y = (int) (Math.random() * Constants.HEIGHT - button.getHeight());
         this.button.setBounds(x, y, button.getWidth(), button.getHeight());
     }
 

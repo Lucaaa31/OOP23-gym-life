@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
  * minigame.
  */
 public class MinigameViewImpl extends JPanel {
-    private JPanel minigamePanel;
+
     @Serial
     private static final long serialVersionUID = 7421500249399144105L;
 
@@ -26,17 +26,18 @@ public class MinigameViewImpl extends JPanel {
      */
     public MinigameViewImpl(final Controller controller) {
         this.setLayout(new BorderLayout());
-        MinigameDifficultyView difficultyView = new MinigameDifficultyView(controller);
+        final MinigameDifficultyView difficultyView = new MinigameDifficultyView(controller);
         this.add(difficultyView, BorderLayout.NORTH);
+        JPanel minigamePanel;
         try {
             minigamePanel = (JPanel) Class.forName(controller.getMinigameType().getViewName())
                     .getDeclaredConstructor(Controller.class)
                     .newInstance(controller);
+            this.add(minigamePanel, BorderLayout.CENTER);
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
                  | InvocationTargetException ignored) {
 
         }
-        this.add(minigamePanel, BorderLayout.CENTER);
         this.setVisible(true);
     }
 

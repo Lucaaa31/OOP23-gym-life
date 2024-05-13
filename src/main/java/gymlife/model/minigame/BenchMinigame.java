@@ -1,4 +1,4 @@
-package gymlife.model.Minigame;
+package gymlife.model.minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
@@ -62,10 +62,8 @@ public class BenchMinigame implements Minigame, Runnable {
             }
             if (isPressed) {
                 nTimesPressed++;
-                System.out.println("Pressed");
                 isPressed = false;
                 if (nTimesPressed == difficulty.getnRepsForSwitchState()) {
-                    System.out.println("Switch state");
                     state++;
                     if (state == 4) {
                         numReps++;
@@ -82,6 +80,7 @@ public class BenchMinigame implements Minigame, Runnable {
      *
      * @return the current state of the bench minigame
      */
+    @Override
     public int getState() {
         return state;
     }
@@ -101,6 +100,7 @@ public class BenchMinigame implements Minigame, Runnable {
      *
      * @return true if the timer thread is alive, false otherwise
      */
+    @Override
     public boolean isAlive() {
         if (timerThread == null) {
             return false;

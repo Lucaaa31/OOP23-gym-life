@@ -1,4 +1,4 @@
-package gymlife.model.Minigame;
+package gymlife.model.minigame;
 
 /**
  * The Timer class represents a timer that counts down from a specified time in
@@ -9,13 +9,8 @@ package gymlife.model.Minigame;
 public class TimerImpl extends Thread {
     private int milliseconds;
     private int runningTime;
-    private boolean isRunning = false;
+    private boolean isRunning;
 
-    /**
-     * Constructs a Timer object with default values.
-     */
-    public TimerImpl() {
-    }
 
     /**
      * Runs the timer by decrementing the running time until it reaches 0 or the

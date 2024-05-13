@@ -1,6 +1,6 @@
 package gymlife.model.api;
 
-import gymlife.model.Minigame.TimerImpl;
+import gymlife.model.minigame.TimerImpl;
 import gymlife.utility.minigame.MinigameDifficulty;
 
 /**

@@ -8,8 +8,8 @@ import gymlife.model.GameMapImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.MapManagerImpl;
 import gymlife.model.ScenariosManager;
-import gymlife.model.Minigame.MinigameManager;
-import gymlife.model.Minigame.TimerImpl;
+import gymlife.model.minigame.MinigameManager;
+import gymlife.model.minigame.TimerImpl;
 import gymlife.model.api.CharacterModel;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
@@ -72,6 +72,7 @@ public class ControllerImpl implements Controller {
      *
      * @param difficulty the difficulty level to set
      */
+    @Override
     public void setDifficulty(final MinigameDifficulty difficulty) {
         minigameManager.setDifficulty(difficulty);
         minigameManager.setTimer(timer);
@@ -111,6 +112,7 @@ public class ControllerImpl implements Controller {
      *
      * @return the state of the current minigame
      */
+    @Override
     public int getState() {
         return minigameManager.getState();
     }
@@ -141,6 +143,7 @@ public class ControllerImpl implements Controller {
      *
      * @param newMap the new map to switch to
      */
+    @Override
     public void goToGym(final GameMap newMap) {
         mapManager.changeMap(newMap);
     }
@@ -150,6 +153,7 @@ public class ControllerImpl implements Controller {
      *
      * @return the current game map
      */
+    @Override
     public GameMap getCurrentMap() {
         return mapManager.getCurrentMap();
     }
@@ -157,6 +161,7 @@ public class ControllerImpl implements Controller {
     /**
      * Executes the action relative to the cell on which the player is standing.
      */
+    @Override
     public void cellInteraction() {
         mapManager.getCurrentMap()
                 .getCellAtCoord(characterModel.getCharacterPos())

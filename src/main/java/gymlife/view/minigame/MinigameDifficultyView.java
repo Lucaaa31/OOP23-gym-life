@@ -6,14 +6,15 @@ import javax.swing.JPanel;
 import gymlife.controller.api.Controller;
 import gymlife.utility.minigame.MinigameDifficulty;
 
+import java.io.Serial;
+
 /**
  * The MinigameDifficultyView class represents a JPanel that allows the user to
  * select the difficulty level for the minigame.
  */
 public class MinigameDifficultyView extends JPanel {
-    private JButton easyButton;
-    private JButton normalButton;
-    private JButton hardButton;
+    @Serial
+    private static final long serialVersionUID = -6009318744152514288L;
 
     /**
      * Constructs a MinigameDifficultyView object with the specified controller.
@@ -21,9 +22,9 @@ public class MinigameDifficultyView extends JPanel {
      * @param controller the controller object used to handle user interactions
      */
     public MinigameDifficultyView(final Controller controller) {
-        this.easyButton = new JButton("Easy");
-        this.normalButton = new JButton("Normal");
-        this.hardButton = new JButton("Hard");
+        final JButton easyButton = new JButton("Easy");
+        final JButton normalButton = new JButton("Normal");
+        final JButton hardButton = new JButton("Hard");
 
         this.add(easyButton);
         this.add(normalButton);

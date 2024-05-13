@@ -1,4 +1,4 @@
-package gymlife.model.Minigame;
+package gymlife.model.minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;

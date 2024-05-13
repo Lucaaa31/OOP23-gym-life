@@ -65,6 +65,10 @@ public class MainView extends JFrame {
 
         this.add(mainPanel);
 
+//        MinigameManager minigameManager = new MinigameManager();
+//        controller.setMinigameManager(minigameManager);
+//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
+
 
         mainPanel.add(new MinigameViewImpl(controller), BorderLayout.CENTER);
         mainPanel.add(sideContainer, BorderLayout.EAST);

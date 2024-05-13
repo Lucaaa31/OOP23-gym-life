@@ -10,9 +10,12 @@ import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.utility.Position;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * Interface that handles key inputs from the keyboard to move the character.
  */
+@Immutable
 public interface Controller {
     /**
      * Moves the character in the specified direction.
@@ -96,6 +99,5 @@ public interface Controller {
      * javadoc.
      */
     void cellInteraction();
-
 
 }

@@ -1,8 +1,8 @@
 package gymlife.view.minigame;
 
-import gymlife.controller.api.Controller;
 
 import javax.swing.JPanel;
+import java.io.Serial;
 
 /**
  * The SquatView class represents the view component for the Squat mini-game.
@@ -11,14 +11,8 @@ import javax.swing.JPanel;
  * for the Squat mini-game.
  */
 public class SquatView extends JPanel {
-    private final transient Controller controller;
-    /**
-     * Constructs a new SquatView object with the specified controller.
-     *
-     * @param controller the controller for the mini-game
-     */
-    public SquatView(final Controller controller) {
-        this.controller = controller;
-    }
+    @Serial
+    private static final long serialVersionUID = -5624416626690898281L;
+
 
 }

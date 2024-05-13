@@ -10,7 +10,7 @@ public enum MinigameDifficulty {
     EASY(
             5,
             3,
-            20000,
+            20_000,
             1),
     /**
      * Medium difficulty level.
@@ -18,7 +18,7 @@ public enum MinigameDifficulty {
     MEDIUM(
             3,
             1,
-            20000,
+            20_000,
             5),
     /**
      * Hard difficulty level.
@@ -26,7 +26,7 @@ public enum MinigameDifficulty {
     HARD(
             5,
             0,
-            20000,
+            20_000,
             10);
 
     private final int nRepsForSwitchState;
