@@ -1,6 +1,7 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.model.GameMapImpl;
 import gymlife.utility.MapConstants;
 
 import javax.swing.*;
@@ -35,9 +36,9 @@ public final class FastTravelView extends JFrame {
         final JPanel mapPanel = new JPanel(new BorderLayout());
         mapPanel.setBackground(new Color(4, 35, 0));
         final JPanel buttonsPanel = new JPanel(new BorderLayout());
-        final JButton gymButton = new JButton("gym");
-        final JButton houseButton = new JButton("house");
-        final JButton shopButton = new JButton("shop");
+        final JButton gymButton = new JButton("GYM_MAP");
+        final JButton houseButton = new JButton("house_map");
+        final JButton shopButton = new JButton("shop_map");
         buttonsPanel.add(gymButton, BorderLayout.EAST);
         buttonsPanel.add(houseButton, BorderLayout.CENTER);
         buttonsPanel.add(shopButton, BorderLayout.WEST);
@@ -79,14 +80,17 @@ public final class FastTravelView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 final String loc = ((JButton) e.getSource()).getText();
-
-                changeLocation();
+                controller.goToNewMap(GameMapImpl.valueOf(loc));
             }
         };
 
         gymButton.addMouseListener(ml);
         houseButton.addMouseListener(ml);
         shopButton.addMouseListener(ml);
+
+        gymButton.addActionListener(al);
+        houseButton.addActionListener(al);
+        shopButton.addActionListener(al);
 
 
         this.getContentPane().add(mainPanel);
