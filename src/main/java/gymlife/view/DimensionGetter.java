@@ -33,6 +33,14 @@ public class DimensionGetter {
                 actualFrameDimension.height / MapConstants.MAP_Y_DIM);
     }
 
+    public float getBigFontSize() {
+        return (float) actualFrameDimension.width / 32;
+    }
+
+    public float getSmallFontSize() {
+        return (float) actualFrameDimension.width / 35;
+    }
+
     public void incScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width + INCREMENT * 16,
                 actualFrameDimension.height + INCREMENT * 9);
@@ -42,4 +50,5 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * 16,
                 actualFrameDimension.height - INCREMENT * 9);
     }
+
 }

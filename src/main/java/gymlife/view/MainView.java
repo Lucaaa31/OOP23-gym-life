@@ -30,8 +30,8 @@ public class MainView extends JFrame {
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
-    private final JPanel statsView = new SideStatsView(controller);
     private final DimensionGetter dimensionGetter = new DimensionGetter();
+    private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
     private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
 
 //    private final CharacterView charView = new CharacterView(controller);
@@ -97,6 +97,7 @@ public class MainView extends JFrame {
                 System.out.println("Main view resized");
                 resizeComponents();
                 ((GameMapView) gameMapView).resizeComponents();
+                ((SideStatsView) statsView).resizeStats();
             }
         };
 
@@ -107,6 +108,7 @@ public class MainView extends JFrame {
                 dimensionGetter.decScreenDimension();
                 resizeComponents();
                 ((GameMapView) gameMapView).resizeComponents();
+                ((SideStatsView) statsView).resizeStats();
             }
         };
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('+'), "increase size");

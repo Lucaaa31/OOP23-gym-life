@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import static java.lang.Thread.sleep;
 
@@ -32,6 +33,7 @@ public final class GameMapView extends JPanel {
     private final DimensionGetter dimensionGetter;
     private  JLayeredPane mainPanel;
     private  JPanel mapPanel;
+    private static final Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
     /**
      * Constructor for the GameMapView. it requires an external controller, given by the MainView.
      *
@@ -152,8 +154,10 @@ public final class GameMapView extends JPanel {
 
         mainPanel.add(mapPanel);
         mainPanel.setLayer(mapPanel, JLayeredPane.DEFAULT_LAYER);
-        mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        // Calcola le nuove dimensioni proporzionali per i pannelli
+        mapPanel.setBackground(Color.BLACK);
+
+
+        // Resize each cell of the map
         for (int y = 0; y < MapConstants.MAP_Y_DIM; y++) {
             for (int x = 0; x < MapConstants.MAP_X_DIM; x++) {
                 final Position pos = new Position(x, y);

@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.io.Serial;
 import java.util.Map;
 import  gymlife.utility.FontLoader;
+import gymlife.view.DimensionGetter;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -30,8 +31,13 @@ public class SideStatsView extends JPanel {
     private static final long serialVersionUID = 4324743;
     private final transient Controller controller;
     private static final float FONT_SIZE = 50f;
-    private static final int BORDER_SIZE = 3;
+    private static final int BORDER_SIZE = 4;
     private static final LineBorder BORDER = new LineBorder(Color.BLACK, BORDER_SIZE);
+    private final DimensionGetter dimensionGetter;
+    private final JPanel statsPanel1 = new JPanel();
+    private final JPanel statsPanel2 = new JPanel();
+    private final JPanel statsPanel3 = new JPanel();
+    private final JPanel statsPanel4 = new JPanel();
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -40,16 +46,13 @@ public class SideStatsView extends JPanel {
      * 
      * @param controller the controller object
      */
-    public SideStatsView(final Controller controller) {
+    public SideStatsView(final Controller controller, DimensionGetter dimensionGetter) {
+        this.dimensionGetter = dimensionGetter;
         this.setPreferredSize(new Dimension(Constants.SIDE_WIDTH, Constants.HEIGHT));
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.BLACK);
         this.controller = controller;
-        final JPanel statsPanel1 = new JPanel();
-        final JPanel statsPanel2 = new JPanel();
-        final JPanel statsPanel3 = new JPanel();
-        final JPanel statsPanel4 = new JPanel();
+        this.setBorder(BORDER);
 
-        this.setBackground(Color.black);
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
         statsPanel1.setLayout(new GridLayout(1, 3));
@@ -57,9 +60,20 @@ public class SideStatsView extends JPanel {
         statsPanel1.add(getStaminaLabel());
         statsPanel1.add(getMassLabel());
 
+        statsPanel2.setLayout(new GridLayout(1, 3));
+        statsPanel2.add(getHappinessLabel());
+        statsPanel2.add(getStaminaLabel());
+        statsPanel2.add(getMassLabel());
+
         statsPanel3.setLayout(new GridLayout(2, 1));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
+        statsPanel1.setBorder(BORDER);
+
+        statsPanel4.setLayout(new GridLayout(2, 1));
+        statsPanel4.add(getMoneyLabel());
+        statsPanel4.add(getDaysLabel());
+        statsPanel4.setBorder(BORDER);
 
 
         statsPanel1.setBorder(BORDER);
@@ -67,14 +81,37 @@ public class SideStatsView extends JPanel {
         statsPanel3.setBorder(BORDER);
         statsPanel4.setBorder(BORDER);
 
-        this.setBackground(Color.BLACK);
+
         this.add(statsPanel1);
         this.add(statsPanel2);
         this.add(statsPanel3);
         this.add(statsPanel4);
 
     }
+    public void resizeStats() {
+        statsPanel1.removeAll();
+        statsPanel1.add(getHappinessLabel());
+        statsPanel1.add(getStaminaLabel());
+        statsPanel1.add(getMassLabel());
+        statsPanel1.revalidate();
+        statsPanel1.repaint();
 
+        statsPanel2.removeAll();
+        statsPanel2.add(getHappinessLabel());
+        statsPanel2.add(getStaminaLabel());
+        statsPanel2.add(getMassLabel());
+
+        statsPanel3.removeAll();
+        statsPanel3.add(getMoneyLabel());
+        statsPanel3.add(getDaysLabel());
+        statsPanel3.revalidate();
+        statsPanel3.repaint();
+
+        statsPanel4.removeAll();
+        statsPanel4.add(getMoneyLabel());
+        statsPanel4.add(getDaysLabel());
+        statsPanel4.setBorder(BORDER);
+    }
     private JLabel getHappinessLabel() {
         final Map<StatsType, Counter> statistics = controller.getStatistics();
         final JLabel labelText = new JLabel("H", SwingConstants.CENTER);
@@ -87,8 +124,8 @@ public class SideStatsView extends JPanel {
         happinessLabel.add(lablelNumber, BorderLayout.CENTER);
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(FONT_SIZE));
-        lablelNumber.setFont(FontLoader.getCustomFont(FONT_SIZE));
+        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
         labelText.setBorder(BORDER);
         lablelNumber.setBorder(BORDER);
@@ -109,8 +146,8 @@ public class SideStatsView extends JPanel {
         staminaLabel.add(lablelNumber, BorderLayout.CENTER);
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(FONT_SIZE));
-        lablelNumber.setFont(FontLoader.getCustomFont(FONT_SIZE));
+        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
         labelText.setHorizontalTextPosition(SwingConstants.CENTER);
         lablelNumber.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -135,8 +172,8 @@ public class SideStatsView extends JPanel {
         massLabel.add(lablelNumber, BorderLayout.CENTER);
         FontLoader.loadFont();
 
-        labelText.setFont(FontLoader.getCustomFont(FONT_SIZE));
-        lablelNumber.setFont(FontLoader.getCustomFont(FONT_SIZE));
+        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
         labelText.setHorizontalTextPosition(SwingConstants.CENTER);
         lablelNumber.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -147,7 +184,6 @@ public class SideStatsView extends JPanel {
 
         return massLabel;
     }
-
     private JLabel getMoneyLabel() {
         final Map<StatsType, Counter> statistics = controller.getStatistics();
 
@@ -158,8 +194,8 @@ public class SideStatsView extends JPanel {
 
         moneyLablel.setLayout(new GridLayout(1, 2));
 
-        labelText.setFont(FontLoader.getCustomFont(FONT_SIZE));
-        lablelNumber.setFont(FontLoader.getCustomFont(FONT_SIZE));
+        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
         moneyLablel.add(labelText);
         moneyLablel.add(lablelNumber);
@@ -179,8 +215,8 @@ public class SideStatsView extends JPanel {
 
         moneyLablel.setLayout(new GridLayout(1, 2));
 
-        labelText.setFont(FontLoader.getCustomFont(FONT_SIZE));
-        lablelNumber.setFont(FontLoader.getCustomFont(FONT_SIZE));
+        labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
         moneyLablel.add(labelText);
         moneyLablel.add(lablelNumber);
@@ -190,4 +226,5 @@ public class SideStatsView extends JPanel {
 
         return moneyLablel;
     }
+
 }
