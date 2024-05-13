@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 import gymlife.controller.api.Controller;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -37,11 +39,11 @@ public final class BankGameView extends JLayeredPane {
      * 
      * @param controller
      */
-    public BankGameView(Controller controller) {
+    public BankGameView(final Controller controller) {
         numberLabel = new MultiplierGameView();
         moneyLabel = new MoneyGameView();
-        final ImageLabelView planeLayer = new AirplaneGameView();
-        final ImageLabelView skyLayer = new SkyGameView();
+        final ImageLabelView planeLayer = new ImageLabelView("gymlife/airplane/airplane.png");
+        final ImageLabelView skyLayer = new ImageLabelView("gymlife/sky/sky.png");
         final JButton button = new JButton();
         final JButton restarButton = new JButton();
         boxMoney = new JTextField();
@@ -55,6 +57,7 @@ public final class BankGameView extends JLayeredPane {
         this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
 
         button.setText("Play");
+        button.setBackground(Color.GREEN);
         restarButton.setText("Restart");
         button.setEnabled(false);
         restarButton.setEnabled(false);
@@ -78,9 +81,7 @@ public final class BankGameView extends JLayeredPane {
             public final void actionPerformed(final ActionEvent e) {
                 String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
-                if (moneyLabel instanceof MoneyGameView mpggv) {
-                    mpggv.updateText(moneyStart);
-                }
+                ((MoneyGameView)moneyLabel).updateText(moneyStart);        
                 moneyLabel.setVisible(true);
                 button.setEnabled(true);
                 restarButton.setEnabled(true);
@@ -94,10 +95,6 @@ public final class BankGameView extends JLayeredPane {
                 if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
                     e.consume();
                     moneyLabel.setText("Wrong format, only numbers");
-                    try {
-                        moneyLabel.wait(1);
-                    } catch (InterruptedException e1) {
-                    }
                 }
             }
         });
@@ -138,7 +135,6 @@ public final class BankGameView extends JLayeredPane {
                 boxMoney.setEditable(true);
             }
         });
-
         this.setVisible(true);
     }
 
