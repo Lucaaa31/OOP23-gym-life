@@ -9,7 +9,11 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.model.api.StatsManager;
-import gymlife.utility.*;
+import gymlife.utility.ScenariosType;
+import gymlife.utility.GameDifficulty;
+import gymlife.utility.Position;
+import gymlife.utility.Directions;
+import gymlife.utility.StatsType;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 

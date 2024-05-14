@@ -3,6 +3,7 @@ package gymlife.view;
 import gymlife.controller.api.Controller;
 import gymlife.model.GameMapImpl;
 import gymlife.utility.MapConstants;
+import gymlife.utility.ScenariosType;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -99,6 +100,7 @@ public final class FastTravelView extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 final String loc = ((JButton) e.getSource()).getText();
                 controller.goToNewMap(GameMapImpl.fromString(loc));
+                controller.changeScenario(ScenariosType.INDOOR_MAP);
                 changeLocation();
             }
         };
@@ -110,7 +112,6 @@ public final class FastTravelView extends JFrame {
         gymButton.addActionListener(al);
         houseButton.addActionListener(al);
         shopButton.addActionListener(al);
-
 
         this.getContentPane().add(mainPanel);
         constraints.gridx = 0;

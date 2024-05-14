@@ -184,12 +184,24 @@ public enum CellImpl implements Cell {
     private final boolean collision;
     private final GameInteraction interaction;
 
+    /**
+     * Standard constructor with 3 parameters.
+     * @param id Integer representing the id of the cell.
+     * @param collision Boolean to indicate the presence or lack of collisions.
+     * @param interaction Lambda for the interaction.
+     */
     CellImpl(final int id, final boolean collision, final GameInteraction interaction) {
         this.id = id;
         this.collision = collision;
         this.interaction = interaction;
     }
-    CellImpl(final int id, final boolean collision){
+
+    /**
+     * Constructor with 2 parameters instead of 3, used for cells with no interactions, since it is initialised as null.
+     * @param id Integer representing the id of the cell.
+     * @param collision Boolean to indicate the presence or lack of collisions.
+     */
+    CellImpl(final int id, final boolean collision) {
         this(id, collision, null);
     }
 
