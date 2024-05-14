@@ -2,15 +2,12 @@ package gymlife.model.inventory;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import gymlife.model.statistics.StatsType;
 
 public enum FoodType {
-    HAMBURGER(6.99, 5, 10, -10), 
+    HAMBURGER(14.99, 5, 10, -10), 
     BROCCOLI(4.99, 10, -10, 5),
-    MEAT(9.99 ,99, 5, -5);
-
-
+    MEAT(9.99, 5, 5, -5);
 
     private double cost;
     private Map<StatsType, Integer> foodPerks;
@@ -21,7 +18,10 @@ public enum FoodType {
         foodPerks.put(StatsType.STAMINA, staminaValue);
         foodPerks.put(StatsType.HUMOR, happinessValue);
         foodPerks.put(StatsType.MASS, massValue);
+    }
 
+    public Map<StatsType, Integer> returnFoodPerks() {
+        return Map.copyOf(foodPerks);
     }
 
 }
