@@ -3,6 +3,7 @@ package gymlife.controller.api;
 import gymlife.model.api.GameMap;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
+import gymlife.utility.ScenariosType;
 
 /**
  * Interface that handles key inputs from the keyboard to move the character.
@@ -44,4 +45,8 @@ public interface Controller {
      * @return an int representing the level of mass from 1 to 4.
      */
     int getPlayerLevel();
+
+    ScenariosType getCurrentScenario();
+
+    void changeScenario(ScenariosType newScenario);
 }

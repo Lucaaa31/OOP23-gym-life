@@ -9,12 +9,9 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.model.api.StatsManager;
-import gymlife.utility.Directions;
-import gymlife.utility.GameDifficulty;
-import gymlife.utility.Position;
+import gymlife.utility.*;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
-import gymlife.utility.StatsType;
 
 /**
  * Class responsible for managing Character movements.
@@ -94,5 +91,15 @@ public class ControllerImpl implements Controller {
     public int getPlayerLevel() {
         final int div = 75;
         return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
+    }
+
+    @Override
+    public ScenariosType getCurrentScenario() {
+        return scenariosManager.getActualScenariosType();
+    }
+
+    @Override
+    public void changeScenario(final ScenariosType newScenario) {
+        scenariosManager.updateScenarios(newScenario);
     }
 }
