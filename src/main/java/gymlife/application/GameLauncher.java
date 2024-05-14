@@ -1,8 +1,6 @@
 package gymlife.application;
 
-import gymlife.controller.ControllerImpl;
-import gymlife.controller.api.Controller;
-import gymlife.view.FastTravelView;
+import gymlife.view.MainView;
 
 /**
  *
@@ -18,7 +16,7 @@ public final class GameLauncher {
      * @param args No arguments passed.
      */
     public static void main(final String[] args) {
-        final Controller con = new ControllerImpl();
-        new FastTravelView(con);
+        final MainView mainView = new MainView();
+        mainView.start();
     }
 }

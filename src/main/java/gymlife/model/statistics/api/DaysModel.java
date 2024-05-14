@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.statistics.api;
 
 /**
  * The DaysModel interface represents a model for tracking days.
@@ -11,7 +11,7 @@ public interface DaysModel {
      */
     boolean isDayOver();
     /**
-     * Moves to a new day.
+     * Decrement the days count by one.
      */
     void newDay();
     /**

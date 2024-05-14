@@ -1,8 +1,9 @@
-package gymlife.model.api;
+package gymlife.model.statistics.api;
 
 import java.util.Map;
 
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsType;
 
 /**
  * This interface represents the stats model for a gym life application.
@@ -35,7 +36,7 @@ public interface StatsModel {
      */
     Map<StatsType, Counter> getMap();
     /**
-     * Increases the specified stat by the given value.
+     * Increases or decrease the specified stat by the given value.
      * 
      * @param stats the type of stat to increase
      * @param value the value to increase the stat by
@@ -45,4 +46,11 @@ public interface StatsModel {
      * Reset all stats to 0.
      */
     void resetAll();
+    /**
+     * Set stats to value.
+     * @param stats the type of stat to set
+     * @param value the value to set the stat to
+     */
+    void setStats(StatsType stats, int value);
+
 }

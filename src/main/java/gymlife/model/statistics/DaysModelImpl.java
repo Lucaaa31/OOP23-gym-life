@@ -1,7 +1,6 @@
-package gymlife.model;
+package gymlife.model.statistics;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.DaysModel;
+import gymlife.model.statistics.api.DaysModel;
 
 /**
  * Implementation of the DaysModel interface.
@@ -16,7 +15,7 @@ public class DaysModelImpl extends Counter implements DaysModel {
         this.setCount(numDays);
     }
     /**
-     * Increases the number of days by 1.
+     * Decrement the days count by one.
      */
     @Override
     public void newDay() {

@@ -1,7 +1,6 @@
-package gymlife.model;
+package gymlife.model.statistics;
 
-import gymlife.model.api.Counter;
-import gymlife.model.api.MoneyModel;
+import gymlife.model.statistics.api.MoneyModel;
 
 /**
  * The MoneyModelImpl class represents a model for tracking money in a gym.
@@ -10,6 +9,20 @@ import gymlife.model.api.MoneyModel;
  * This class implements the MoneyModel interface, which defines methods for managing money in the gym.
  */
 public class MoneyModelImpl extends Counter implements MoneyModel {
+    /**
+     * Constructor of the class.
+     * @param count the initial amount of money
+     */
+    public MoneyModelImpl(final int count) {
+        this.setCount(count);
+    }
+    /**
+     * Constructor of the class.
+     * 
+     */
+    public MoneyModelImpl() {
+        this.setCount(0);
+    }
     /**
      * Returns the current amount of money.
      * 
@@ -50,5 +63,14 @@ public class MoneyModelImpl extends Counter implements MoneyModel {
     @Override
     public void multiIncrementMoney(final int amount) {
         this.multiIncrement(amount);
+    }
+    /**
+     * Return true if the amount of money over (equal zero), false otherwise.
+     * 
+     * @return true if the amount of money over, false otherwise.
+     */
+    @Override
+    public boolean isOver() {
+        return this.getCount() <= 0;
     }
 }

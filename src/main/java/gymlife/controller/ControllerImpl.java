@@ -4,18 +4,21 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
-import gymlife.model.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
-import gymlife.model.api.StatsManager;
+import gymlife.model.statistics.Counter;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.utility.Directions;
-import gymlife.utility.StatsType;
+import gymlife.model.statistics.StatsType;
+import gymlife.model.statistics.api.StatsManager;
+import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
+
+import java.util.Map;
 
 /**
  * Class responsible for managing Character movements.
@@ -24,11 +27,16 @@ public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
-    private final StatsManager statsManager = new StatsManagerImpl(GameDifficulty.EASY);
-    private final InteractionsManager interactionsManager = new InteractionsManager(
-            scenariosManager,
-            statsManager
-    );
+    private final StatsManager statsManager;
+    private final InteractionsManager interactionsManager;
+
+    public ControllerImpl(final GameDifficulty difficulty) {
+        statsManager = new StatsManagerImpl(difficulty);
+        interactionsManager = new InteractionsManager(
+                scenariosManager,
+                statsManager
+        );
+    }
 
     /**
      * Moves the character in the specified direction.
@@ -113,5 +121,10 @@ public class ControllerImpl implements Controller {
     @Override
     public void changeScenario(final ScenariosType newScenario) {
         scenariosManager.updateScenarios(newScenario);
+    }
+
+    @Override
+    public Map<StatsType, Counter> getStatistics() {
+        return Map.of();
     }
 }

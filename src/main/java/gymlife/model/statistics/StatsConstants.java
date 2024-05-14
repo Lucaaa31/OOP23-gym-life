@@ -1,4 +1,4 @@
-package gymlife.utility;
+package gymlife.model.statistics;
 
 /**
  * Constants class contains various constants used in the stats.

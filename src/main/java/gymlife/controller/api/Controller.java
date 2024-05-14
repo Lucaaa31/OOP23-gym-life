@@ -1,9 +1,13 @@
 package gymlife.controller.api;
 
 import gymlife.model.api.GameMap;
+import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
+
+import java.util.Map;
 
 /**
  * Interface that handles key inputs from the keyboard to move the character.
@@ -57,4 +61,10 @@ public interface Controller {
      * @param newScenario The ScenariosType to change the current one to.
      */
     void changeScenario(ScenariosType newScenario);
+    /**
+     * Returns a Map that represents the current values of the statistics in the game.
+     *
+     * @return a Map of the statistics
+     */
+    Map<StatsType, Counter> getStatistics();
 }
