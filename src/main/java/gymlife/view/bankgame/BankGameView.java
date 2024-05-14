@@ -125,7 +125,9 @@ public final class BankGameView extends JLayeredPane {
 
             private void startMulti(final Controller controller) {
                 new Thread(() -> {
+                    System.out.println("starmulti e' partito");
                     controller.startMultiplier(moneyStart);
+                    System.out.println("starmulti e' terminato");
                 }).start();
             }
         });
@@ -151,13 +153,13 @@ public final class BankGameView extends JLayeredPane {
      */
     public void showsMulti(final Controller controller) {
         new Thread(() -> {
-            float multiplier;
+            float multiplier = 0;
             System.out.println("ciao luca sono partito!!!");
-            while (controller.getMultiplier() != controller.getTreshold()) {
-                multiplier = controller.getMultiplier();
+            while (controller.getMultiplier() != controller.getTreshold() && started == true) {
                 if (multiplier == 0) {
                     multiplier = 1;
                 }
+                multiplier = controller.getMultiplier();
                 moneyMultiplied = controller.controllerGetMoney();
                 ((MultiplierGameView) numberLabel).updateText(multiplier, moneyMultiplied);
             }
