@@ -93,11 +93,19 @@ public class ControllerImpl implements Controller {
         return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
     }
 
+    /**
+     * Method to return the current ScenariosType.
+     * @return Returns the scenario.
+     */
     @Override
     public ScenariosType getCurrentScenario() {
         return scenariosManager.getActualScenariosType();
     }
 
+    /**
+     * Method to change the scenario.
+     * @param newScenario The ScenariosType to change the current one to.
+     */
     @Override
     public void changeScenario(final ScenariosType newScenario) {
         scenariosManager.updateScenarios(newScenario);

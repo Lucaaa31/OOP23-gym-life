@@ -46,7 +46,15 @@ public interface Controller {
      */
     int getPlayerLevel();
 
+    /**
+     * Method to get the current Scenario of the game.
+     * @return Returns the ScenariosType of the current scenario.
+     */
     ScenariosType getCurrentScenario();
 
+    /**
+     * Method to modify the current scenario.
+     * @param newScenario The ScenariosType to change the current one to.
+     */
     void changeScenario(ScenariosType newScenario);
 }
