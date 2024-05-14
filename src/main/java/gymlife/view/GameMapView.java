@@ -18,6 +18,7 @@ import java.io.ObjectInputStream;
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -82,10 +83,13 @@ public final class GameMapView extends JPanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                if (Directions.getDir(e.getKeyChar()).isPresent()) {
-                    controller.moveCharacter(Directions.getDir(e.getKeyChar()).get());
-                    characterLabel.changeImage(1, Directions.getDir(e.getKeyChar()).get());
+                final char key = e.getKeyChar();
+                if (Directions.getDir(key).isPresent()) {
+                    controller.moveCharacter(Directions.getDir(key).get());
+                    characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(key).get());
                     moveCharacter();
+                } else if (key == 'e') {
+                    controller.cellInteraction();
                 }
             }
             @Override
