@@ -28,6 +28,11 @@ public interface Controller {
      */
     void startMultiplier(float money);
 
+    /**
+     * Returns the value of the new threshold.
+     * 
+     * @return The new threshold.
+     */
     float randomizeNewThreshold();
 
     /**

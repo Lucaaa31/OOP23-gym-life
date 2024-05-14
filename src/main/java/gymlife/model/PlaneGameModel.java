@@ -44,7 +44,7 @@ public final class PlaneGameModel {
      * 
      * @param money The money value to be multiplied with the multiplier.
      */
-    public void runMultiplier(float money) {
+    public void runMultiplier(final float money) {
         while (flag) {
             multiplier += INCREMENT;
             moneyMultiplied = multiplier * money;
@@ -58,12 +58,18 @@ public final class PlaneGameModel {
         }
     }
 
+    /**
+     * Generates a new random threshold value within a specified range and resets the multiplier.
+     * 
+     * @return The newly generated threshold value.
+     */
     public float randomizeNewThreshold() {
         treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplier = 1;
         flag = true;
         return treshold;
     }
+
     /**
      * This method stops the runMultiplier method by setting the flag to false.
      */
@@ -91,6 +97,8 @@ public final class PlaneGameModel {
 
     /**
      * This method returns the value of moneyMultiplied.
+     * 
+     * @return moneyMultiplied value.
      */
     public float getMoneyMultiplied() {
         return moneyMultiplied;

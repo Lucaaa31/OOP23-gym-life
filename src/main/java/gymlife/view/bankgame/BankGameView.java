@@ -4,7 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 import gymlife.controller.api.Controller;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,7 +24,7 @@ public final class BankGameView extends JLayeredPane {
 
     private final TextLabelView numberLabel;
     private final TextLabelView moneyLabel;
-    private boolean STARTED = false;
+    private boolean started;
     private final JTextField boxMoney;
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
     private float moneyMultiplied;
@@ -78,10 +77,10 @@ public final class BankGameView extends JLayeredPane {
 
         boxMoney.addActionListener(new ActionListener() {
             @Override
-            public final void actionPerformed(final ActionEvent e) {
-                String temp = boxMoney.getText();
+            public void actionPerformed(final ActionEvent e) {
+                final String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
-                ((MoneyGameView)moneyLabel).updateText(moneyStart);        
+                ((MoneyGameView) moneyLabel).updateText(moneyStart);
                 moneyLabel.setVisible(true);
                 button.setEnabled(true);
                 restarButton.setEnabled(true);
@@ -90,8 +89,8 @@ public final class BankGameView extends JLayeredPane {
 
         boxMoney.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
+            public void keyTyped(final KeyEvent e) {
+                final char c = e.getKeyChar();
                 if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
                     e.consume();
                     moneyLabel.setText("Wrong format, only numbers");
@@ -102,32 +101,38 @@ public final class BankGameView extends JLayeredPane {
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton, moneyLabel);
+                setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton, moneyLabel, boxMoney);
             }
         });
 
         button.addActionListener(new ActionListener() {
             @Override
-            public final void actionPerformed(final ActionEvent e) {
-                if (!STARTED) {
-                    updateMulti(controller);
+            public void actionPerformed(final ActionEvent e) {
+                if (!started) {
+                    startMulti(controller);
                     showsMulti(controller);
-                    STARTED = true;
+                    started = true;
                     numberLabel.setVisible(true);
                     boxMoney.setEditable(false);
                     restarButton.setEnabled(false);
                 } else {
                     controller.controllerStopMultiplier();
                     restarButton.setEnabled(true);
-                    STARTED = false;
+                    started = false;
                     button.setEnabled(false);
                 }
+            }
+
+            private void startMulti(final Controller controller) {
+                new Thread(() -> {
+                    controller.startMultiplier(moneyStart);
+                }).start();
             }
         });
 
         restarButton.addActionListener(new ActionListener() {
             @Override
-            public final void actionPerformed(final ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 numberLabel.setVisible(false);
                 controller.randomizeNewThreshold();
                 restarButton.setEnabled(false);
@@ -138,15 +143,25 @@ public final class BankGameView extends JLayeredPane {
         this.setVisible(true);
     }
 
-    public void showsMulti(Controller controller) {
+    /**
+     * Displays the multiplier and the money multiplied on the screen.
+     *
+     * @param controller The controller object responsible for managing the
+     *                   multiplier.
+     */
+    public void showsMulti(final Controller controller) {
         new Thread(() -> {
             float multiplier;
-            while ((multiplier = controller.getMultiplier()) != controller.getTreshold()) {
-                moneyMultiplied = controller.controllerGetMoney();
-                if (numberLabel instanceof MultiplierGameView mpgv) {
-                    mpgv.updateText(multiplier, moneyMultiplied);
+            System.out.println("ciao luca sono partito!!!");
+            while (controller.getMultiplier() != controller.getTreshold()) {
+                multiplier = controller.getMultiplier();
+                if (multiplier == 0) {
+                    multiplier = 1;
                 }
+                moneyMultiplied = controller.controllerGetMoney();
+                ((MultiplierGameView) numberLabel).updateText(multiplier, moneyMultiplied);
             }
+            System.out.println("ciao luca mi sono terminato!!!");
         }).start();
     }
 
@@ -155,41 +170,43 @@ public final class BankGameView extends JLayeredPane {
      * startMultiplier method
      * with the current money to play value.
      * 
-     * @param controller The controller object responsible for managing the
-     *                   multiplier.
+     * @param skyLabel      The sky image label.
+     * @param planeLabel    The airplane image label.
+     * @param numberLabel   The label displaying the multiplier and money
+     *                      multiplied.
+     * @param button        The button used to start or stop the game.
+     * @param restartButton The button used to restart the game.
+     * @param moneyLabel    The label displaying the money.
+     * @param boxMoney      The text field for entering the money value.
      */
-    public void updateMulti(final Controller controller) {
-        new Thread(() -> {
-            controller.startMultiplier(moneyStart);
-        }).start();
-    }
-
     private void setLayersNewSize(final ImageLabelView skyLabel, final ImageLabelView planeLabel,
             final TextLabelView numberLabel, final JButton button, final JButton restartButton,
-            final TextLabelView moneyLabel) {
+            final TextLabelView moneyLabel, final JTextField boxMoney) {
+
         final Dimension newSize = this.getSize();
+        final int buttonWidth = newSize.width / 45;
+        final int buttonHeight = newSize.height / 11;
+        final int restartButtonWidth = newSize.width / 8;
+        final int restartButtonHeight = newSize.height / 11;
+        final int planeLabelWidth = newSize.width / 4;
+        final int planeLabelHeight = newSize.height / 2;
+        final int numberLabelWidth = newSize.width / 3;
+        final int numberLabelHeight = newSize.height;
+        final int boxMoneyWidth = newSize.width / 40;
+        final int boxMoneyHeight = newSize.height / 17;
+        final int moneyLabelWidth = newSize.width / 40;
+        final int moneyLabelHeight = newSize.height;
+
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
-        button.setBounds(newSize.width / 45,
-                newSize.height / 3, newSize.height / 9,
-                newSize.height / 11);
-        restartButton.setBounds(newSize.width / 8,
-                newSize.height / 3, newSize.height / 9,
-                newSize.height / 11);
-        planeLabel.setBounds(newSize.width / 4,
-                newSize.height / 4, newSize.height / 2,
-                newSize.height / 2);
+        button.setBounds(buttonWidth, newSize.height / 3, buttonHeight, buttonHeight);
+        restartButton.setBounds(restartButtonWidth, newSize.height / 3, restartButtonHeight, restartButtonHeight);
+        planeLabel.setBounds(planeLabelWidth, newSize.height / 4, planeLabelWidth, planeLabelHeight);
         planeLabel.reload();
-        numberLabel.setBounds(newSize.width / 3,
-                newSize.height / 3, newSize.height / 1,
-                newSize.height / 1);
+        numberLabel.setBounds(numberLabelWidth, newSize.height / 3, numberLabelHeight, numberLabelHeight);
         numberLabel.reload();
-        boxMoney.setBounds(newSize.width / 40,
-                newSize.height / 2, newSize.height / 11,
-                newSize.height / 17);
-        moneyLabel.setBounds(newSize.width / 40,
-                newSize.height / 3, newSize.height / 1,
-                newSize.height / 1);
+        boxMoney.setBounds(boxMoneyWidth, newSize.height / 2, boxMoneyHeight, boxMoneyHeight);
+        moneyLabel.setBounds(moneyLabelWidth, newSize.height / 3, moneyLabelHeight, moneyLabelHeight);
         moneyLabel.reload();
     }
 }

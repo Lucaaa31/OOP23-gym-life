@@ -80,7 +80,7 @@ public class ControllerImpl implements Controller {
      * @param money the money value with which to start the multiplier.
      */
     @Override
-    public void startMultiplier(float money) {
+    public void startMultiplier(final float money) {
         model.runMultiplier(money);
     }
 
@@ -122,6 +122,11 @@ public class ControllerImpl implements Controller {
         return model.getMoneyMultiplied();
     }
 
+    /**
+     * Returns the value of the new threshold.
+     * 
+     * @return The new threshold.
+     */
     @Override
     public float randomizeNewThreshold() {
         return model.randomizeNewThreshold();

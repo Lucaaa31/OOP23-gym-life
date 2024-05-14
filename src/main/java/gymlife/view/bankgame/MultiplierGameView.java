@@ -7,10 +7,13 @@ package gymlife.view.bankgame;
 public final class MultiplierGameView extends TextLabelView {
     private static final long serialVersionUID = -2109720273400189091L;
 
-    public void updateText(float multiplierValue, float money) {
-        if (multiplierValue == 0) {
-            multiplierValue = 1;
-        }
+    /**
+ * Updates the text of the label with the specified multiplier value and money amount.
+ *
+ * @param multiplierValue The multiplier value to be displayed.
+ * @param money The amount of money to be displayed.
+ */
+    public void updateText(final float multiplierValue, final float money) {
         super.setText(String.format("%.2fx   " + "%.2f", multiplierValue, money));
     }
 }
