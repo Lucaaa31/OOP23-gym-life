@@ -9,30 +9,6 @@ public final class Constants {
      */
     public static final int MOVEMENT = 1;
     /**
-     * The height of the panel.
-     */
-    public static final int HEIGHT = 900;
-    /**
-     * The width of the panel.
-     */
-    public static final int SCENARIO_WIDTH = 1200;
-    /**
-     * The height of the panel.
-     */
-    public static final int SIDE_WIDTH = 400;
-    /**
-     * The width of the frame.
-     */
-    public static final int FRAME_WIDTH = 1600;
-    /**
-     * The width of the character.
-     */
-    public static final int CHARACTER_WIDTH = 60;
-    /**
-     * The height of the character.
-     */
-    public static final int CHARACTER_HEIGHT = 70;
-    /**
      * The starting position of the character.
      */
     public static final Position CHARACTER_START_POS = new Position(6, 2);

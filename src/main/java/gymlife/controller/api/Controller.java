@@ -10,7 +10,11 @@ import gymlife.utility.ScenariosType;
 import java.util.Map;
 
 /**
- * Interface that handles key inputs from the keyboard to move the character.
+ * This interface defines the operations that a game controller should support.
+ * The game controller is responsible for handling key inputs from the keyboard to move the character,
+ * getting the current position of the character, getting the current game statistics,
+ * managing the game map, executing actions associated with the cell on which the character currently is,
+ * and getting the level of mass of the character.
  */
 public interface Controller {
     /**
@@ -28,7 +32,15 @@ public interface Controller {
     Position getCharacterPos();
 
     /**
-     * Method to go to a new map.
+     * Returns a Map that represents the current values of the statistics in the game.
+     *
+     * @return a Map of the statistics
+     */
+    Map<StatsType, Counter> getStatistics();
+
+    /**
+     * Changes the current game map to the specified new map.
+     *
      * @param newMap new map to go to.
      */
     void goToNewMap(GameMap newMap);
@@ -45,7 +57,8 @@ public interface Controller {
     void cellInteraction();
 
     /**
-     * Method to get the level of mass of the character.
+     * Returns the level of mass of the character.
+     *
      * @return an int representing the level of mass from 1 to 4.
      */
     int getPlayerLevel();
@@ -54,17 +67,11 @@ public interface Controller {
      * Method to get the current Scenario of the game.
      * @return Returns the ScenariosType of the current scenario.
      */
-    ScenariosType getCurrentScenario();
+    ScenariosType getActualScenario();
 
     /**
      * Method to modify the current scenario.
      * @param newScenario The ScenariosType to change the current one to.
      */
     void changeScenario(ScenariosType newScenario);
-    /**
-     * Returns a Map that represents the current values of the statistics in the game.
-     *
-     * @return a Map of the statistics
-     */
-    Map<StatsType, Counter> getStatistics();
 }

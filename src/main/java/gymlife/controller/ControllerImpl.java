@@ -4,35 +4,44 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
+import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 import gymlife.model.statistics.Counter;
-import gymlife.utility.ScenariosType;
-import gymlife.utility.GameDifficulty;
-import gymlife.utility.Position;
-import gymlife.utility.Directions;
+
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.utility.Directions;
+import gymlife.utility.GameDifficulty;
+import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
+import gymlife.utility.ScenariosType;
+
 
 import java.util.Map;
 
 /**
- * Class responsible for managing Character movements.
+ * This class implements the Controller interface and is responsible for managing Character movements.
+ * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
-    private final ScenariosManager scenariosManager = new ScenariosManager();
+    private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
 
+    /**
+     * Constructs a new ControllerImpl object with the specified game difficulty.
+     *
+     * @param difficulty the difficulty of the game.
+     */
     public ControllerImpl(final GameDifficulty difficulty) {
-        statsManager = new StatsManagerImpl(difficulty);
-        interactionsManager = new InteractionsManager(
+        this.statsManager = new StatsManagerImpl(difficulty);
+        this.scenariosManager = new ScenariosManager();
+        this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager
         );
@@ -65,9 +74,19 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to directly change the current map to parameter newMap.
+     * Retrieves the current game statistics.
      *
-     * @param newMap GameMap to switch the current map to.
+     * @return a Map of the current game statistics
+     */
+    @Override
+    public Map<StatsType, Counter> getStatistics() {
+        return statsManager.getAllStats();
+    }
+
+    /**
+     * Changes the current game map to the specified new map.
+     *
+     * @param newMap the new map to switch to
      */
     @Override
     public void goToNewMap(final GameMap newMap) {
@@ -75,9 +94,9 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to return the current map, taken from the MapManager.
+     * Retrieves the current game map.
      *
-     * @return Returns the current {@code GameMap}.
+     * @return the current game map
      */
     @Override
     public GameMap getCurrentMap() {
@@ -85,7 +104,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to execute the action relative to the cell on which the player is standing.
+     * Executes the action associated with the cell on which the character is currently standing.
      */
     @Override
     public void cellInteraction() {
@@ -96,8 +115,9 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to get the level of mass of the character.
-     * @return an int representing the level of mass from 1 to 4.
+     * Retrieves the level of mass of the character.
+     *
+     * @return an int representing the level of mass from 1 to 4
      */
     @Override
     public int getPlayerLevel() {
@@ -106,11 +126,11 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Method to return the current ScenariosType.
-     * @return Returns the scenario.
+     * Retrieves the current scenario type.
+     * @return the current scenario.
      */
     @Override
-    public ScenariosType getCurrentScenario() {
+    public ScenariosType getActualScenario() {
         return scenariosManager.getActualScenariosType();
     }
 
@@ -121,10 +141,5 @@ public class ControllerImpl implements Controller {
     @Override
     public void changeScenario(final ScenariosType newScenario) {
         scenariosManager.updateScenarios(newScenario);
-    }
-
-    @Override
-    public Map<StatsType, Counter> getStatistics() {
-        return Map.of();
     }
 }
