@@ -1,6 +1,8 @@
 package gymlife.model;
 
 import gymlife.model.api.MapManager;
+import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
@@ -31,7 +33,7 @@ class TestInteractions {
         final int expectedDays = 39;
         final Position pos = new Position(1, 2);
         interactOnCell(pos);
-        assertEquals(expectedDays, statsManager.getDays());
+        assertEquals(expectedDays, statsManager.getDays().getCount());
     }
 
     @Test
