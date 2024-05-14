@@ -10,12 +10,12 @@ import java.awt.Toolkit;
  */
 public class DimensionGetter {
     // Proportion to reduce the screen size to get the frame dimension
-    private static final double RIDIMENTION_PROPORTION = 1.2;
+    private static final double RIDIMENTION_PROPORTION = 1.1;
     // Increment value used to increase or decrease the screen dimension
     private static final int INCREMENT = 5;
     // The actual frame dimension calculated based on the screen size and RIDIMENTION_PROPORTION
     private final Dimension actualFrameDimension = new Dimension(
-            (int) (Toolkit.getDefaultToolkit().getScreenSize().width / RIDIMENTION_PROPORTION) ,
+            (int) (Toolkit.getDefaultToolkit().getScreenSize().width / RIDIMENTION_PROPORTION),
             (int) (Toolkit.getDefaultToolkit().getScreenSize().height / RIDIMENTION_PROPORTION));
     private static final double SCENARIO_PROPORTION = 0.75;
     private static final double SIDE_PROPORTION = 0.25;
@@ -24,15 +24,13 @@ public class DimensionGetter {
     private static final int FRAME_HEIGTH = 9;
     private static final int FRAME_WIDTH = 16;
     private static final int SQUARE_STATS = 10;
-    public DimensionGetter() {
-    }
 
     /**
      * Returns the actual frame dimension.
      * @return the actual frame dimension
      */
     public Dimension getFrameDimension() {
-        return actualFrameDimension;
+        return new Dimension(actualFrameDimension.width, actualFrameDimension.height);
     }
 
     /**
@@ -100,6 +98,4 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
                 actualFrameDimension.height - INCREMENT * FRAME_HEIGTH);
     }
-
-
 }

@@ -2,6 +2,7 @@ package gymlife.view;
 
 import java.awt.Image;
 import java.io.Serial;
+import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -16,7 +17,7 @@ public class CharacterView extends JLabel {
     @Serial
     private static final long serialVersionUID = -3544425405375144844L;
     // An instance of DimensionGetter to get the dimensions for the character image
-    private final DimensionGetter dimensionGetter;
+    private final transient DimensionGetter dimensionGetter;
     private int level = 1;
     private Directions dir = Directions.DOWN;
     /**
@@ -49,7 +50,7 @@ public class CharacterView extends JLabel {
                 getSystemResource("images/character/level"
                         + level
                         + "_"
-                        + dir.toString().toLowerCase()
+                        + dir.toString().toLowerCase(Locale.getDefault())
                         + ".png"))
                 .getImage()
                 .getScaledInstance(dimensionGetter.getCellDimension().width, dimensionGetter.getCellDimension().height,
@@ -65,7 +66,7 @@ public class CharacterView extends JLabel {
                 getSystemResource("images/character/level"
                         + this.level
                         + "_"
-                        + this.dir.toString().toLowerCase()
+                        + this.dir.toString().toLowerCase(Locale.getDefault())
                         + ".png"))
                 .getImage()
                 .getScaledInstance(dimensionGetter.getCellDimension().width, dimensionGetter.getCellDimension().height,

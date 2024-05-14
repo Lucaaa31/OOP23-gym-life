@@ -8,6 +8,8 @@ import gymlife.utility.Position;
 import gymlife.utility.Directions;
 import gymlife.utility.Constants;
 
+import java.util.Locale;
+
 /**
  * This class contains unit tests for the CharacterModel class.
  */
@@ -29,7 +31,7 @@ class TestCharacter {
         Position pos = Constants.CHARACTER_START_POS;
 
         character.move(Directions.UP);
-        assertEquals("up", Directions.UP.toString().toLowerCase());
+        assertEquals("up", Directions.UP.toString().toLowerCase(Locale.ROOT));
         pos = new Position(pos.X(), pos.Y() - Constants.MOVEMENT);
         assertEquals(pos, character.getCharacterPos());
 
