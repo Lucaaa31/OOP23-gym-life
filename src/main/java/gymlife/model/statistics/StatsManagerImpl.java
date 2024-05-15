@@ -75,6 +75,16 @@ public class StatsManagerImpl implements StatsManager {
         }
     }
     /**
+     * Multincrement a Map of stats.
+     *
+     * @param stats to be changed
+     */
+    public void changeStatsWithFood(final Map<StatsType, Integer> stats) {
+        for (final Map.Entry<StatsType, Integer> entry : stats.entrySet()) {
+            gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+        }
+    }
+    /**
      * Set a specified stats to the value.
      *
      * @param stats of the game

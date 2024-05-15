@@ -46,7 +46,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell used to interact with bed, no collision and interactable.
      */
-    HOUSE_BED_INTERACT(7, false, null),
+    HOUSE_BED_INTERACT(7, false, InteractionsManager::daysInteraction),
     /**
      * The kitchen is divided in 3 cells, all of them with collisions and not interactable.
      */
@@ -70,11 +70,23 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, (e) -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    HOUSE_EXIT(13, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell used to interact with the kitchen, no collisions and interactable.
      */
     HOUSE_KITCHEN_INTERACT(14, false, null),
+    /**
+     * The cell that contains a part of the house couch, with collisions and not interactable.
+     */
+    HOUSE_COUCH01(37, true, null),
+    /**
+     * The cell that contains a part of the house couch, with collisions and not interactable.
+     */
+    HOUSE_COUCH02(38, true, null),
+    /**
+     * The cell that contains the tv, with collisions and not interactable.
+     */
+    HOUSE_TV(39, true, null),
     /**
      * The base floor of the shop {@code GameMap}, no collisions and not interactable.
      */
@@ -82,7 +94,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    SHOP_EXIT(16, false, null),
+    SHOP_EXIT(16, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell with a non interactable fridge, with collisions and not interactable.
      */
@@ -126,7 +138,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    GYM_EXIT(27, false, null),
+    GYM_EXIT(27, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
     /**
      * The cell with a regular bench, with collisions and not interactable.
      */
@@ -146,7 +158,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train back, no collisions and interactable.
      */
-    GYM_LAT_INTERACT(32, false, null),
+    GYM_BACK_INTERACT(32, false, null),
     /**
      * The cell with the squat rack, with collisions not interactable.
      */
@@ -154,7 +166,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train legs, no collisions and interactable.
      */
-    GYM_SQUAT_INTERACT(34, false, null),
+    GYM_LEGS_INTERACT(34, false, null),
     /**
      * The cell with a couple of weights, with collisions and not interactable.
      */
@@ -203,9 +215,7 @@ public enum CellImpl implements Cell {
 
     @Override
     public String getName() {
-        return this.getClass()
-                .getName()
-                .toLowerCase(new Locale("en"));
+        return this.toString().toLowerCase(new Locale("en"));
     }
 
     /**

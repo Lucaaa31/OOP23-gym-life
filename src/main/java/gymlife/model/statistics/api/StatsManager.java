@@ -6,9 +6,12 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * The StatsManager interface provides methods to retrieve statistics related to gym life.
  */
+@Immutable
 public interface StatsManager {
     /**
      * Returns a map of statistics, where the key is the type of statistic and the value is the corresponding value.

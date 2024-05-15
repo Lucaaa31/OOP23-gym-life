@@ -7,35 +7,11 @@ public final class Constants {
     /**
      * The movement constant used for character movement.
      */
-    public static final int MOVEMENT = 10;
-    /**
-     * The height of the panel.
-     */
-    public static final int HEIGHT = 900;
-    /**
-     * The width of the panel.
-     */
-    public static final int SCENARIO_WIDTH = 1200;
-    /**
-     * The height of the panel.
-     */
-    public static final int SIDE_WIDTH = 400;
-    /**
-     * The width of the frame.
-     */
-    public static final int FRAME_WIDTH = 1600;
-    /**
-     * The width of the character.
-     */
-    public static final int CHARACTER_WIDTH = 60;
-    /**
-     * The height of the character.
-     */
-    public static final int CHARACTER_HEIGHT = 70;
+    public static final int MOVEMENT = 1;
     /**
      * The starting position of the character.
      */
-    public static final Position CHARACTER_START_POS = new Position(50, 50);
+    public static final Position CHARACTER_START_POS = new Position(6, 2);
     private Constants() {
     }
 }
