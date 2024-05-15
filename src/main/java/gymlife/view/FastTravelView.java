@@ -23,7 +23,7 @@ import java.util.Locale;
 /**
  * Interface for when the player has to move from his current location to a different map.
  */
-public final class FastTravelView extends JFrame {
+public final class FastTravelView extends JPanel {
 
     @Serial
     private static final long serialVersionUID = -5960084209507548196L;
@@ -51,10 +51,9 @@ public final class FastTravelView extends JFrame {
         this.controller = controller;
         final int size = 100;
         this.setSize(MapConstants.MAP_X_DIM * size, MapConstants.MAP_Y_DIM * size);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        final JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
+        this.setLayout(new GridBagLayout());
+        this.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
 
         final GridBagConstraints constraints = new GridBagConstraints();
 
@@ -113,13 +112,12 @@ public final class FastTravelView extends JFrame {
         houseButton.addActionListener(al);
         shopButton.addActionListener(al);
 
-        this.getContentPane().add(mainPanel);
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 3;
         constraints.weightx = 1;
         constraints.weighty = MAP_WEIGHT_Y;
-        mainPanel.add(mapPanel, constraints);
+        this.add(mapPanel, constraints);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridy = 1;
@@ -127,11 +125,11 @@ public final class FastTravelView extends JFrame {
         constraints.gridwidth = 1;
         constraints.weightx = BUTTONS_WEIGHT_X;
         constraints.weighty = BUTTONS_WEIGHT_Y;
-        mainPanel.add(shopButton, constraints);
+        this.add(shopButton, constraints);
         constraints.gridx = 1;
-        mainPanel.add(houseButton, constraints);
+        this.add(houseButton, constraints);
         constraints.gridx = 2;
-        mainPanel.add(gymButton, constraints);
+        this.add(gymButton, constraints);
         this.mapLabel = new JLabel();
         changeLocation();
         mapPanel.add(mapLabel);

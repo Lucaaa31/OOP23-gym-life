@@ -13,6 +13,8 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
@@ -34,6 +36,7 @@ public class MainView extends JFrame {
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
     private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
     private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
+    private final FastTravelView fastTravelView = new FastTravelView(controller);
 
     /**
      * Starts the main view of the application.
