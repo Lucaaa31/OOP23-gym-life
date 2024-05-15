@@ -8,46 +8,51 @@ public enum MinigameDifficulty {
      * Easy difficulty level.
      */
     EASY(
-            5,
             3,
-            20_000,
-            1),
+            1,
+            5000,
+            3,
+            3),
     /**
      * Medium difficulty level.
      */
     MEDIUM(
+            5,
             3,
-            1,
-            20_000,
-            5),
+            30_000,
+            5,
+            1),
     /**
      * Hard difficulty level.
      */
     HARD(
+            7,
             5,
-            0,
             20_000,
-            10);
+            10,
+            0);
 
-    private final int nRepsForSwitchState;
+    private final int touchForLift;
     private final int requiredReps;
-    private final int maxMistakes;
+    private final int experienceGained;
     private final int reactionTime;
+    private final int maxMistakes;
 
     /**
      * Constructs a MinigameDifficulty enum constant with the specified parameters.
      *
-     * @param requiredReps        the number of required repetitions
-     * @param maxMistakes         the maximum number of mistakes allowed
-     * @param reactionTime        the reaction time in milliseconds
-     * @param nRepsForSwitchState the number of repetitions required to switch state
+     * @param requiredReps     the number of required repetitions
+     * @param experienceGained the maximum number of mistakes allowed
+     * @param reactionTime     the time within the minigame must be completed
+     * @param touchForLift     the number of interactions required to lift the weight
      */
-    MinigameDifficulty(final int requiredReps, final int maxMistakes, final int reactionTime,
-            final int nRepsForSwitchState) {
-        this.nRepsForSwitchState = nRepsForSwitchState;
+    MinigameDifficulty(final int requiredReps, final int experienceGained, final int reactionTime,
+                       final int touchForLift, final int maxMistakes) {
+        this.touchForLift = touchForLift;
         this.requiredReps = requiredReps;
-        this.maxMistakes = maxMistakes;
+        this.experienceGained = experienceGained;
         this.reactionTime = reactionTime;
+        this.maxMistakes = maxMistakes;
     }
 
     /**
@@ -64,8 +69,8 @@ public enum MinigameDifficulty {
      *
      * @return the maximum number of mistakes allowed
      */
-    public int getMaxMistakes() {
-        return maxMistakes;
+    public int getExperienceGained() {
+        return experienceGained;
     }
 
     /**
@@ -83,7 +88,16 @@ public enum MinigameDifficulty {
      *
      * @return the number of repetitions required to switch state
      */
-    public int getnRepsForSwitchState() {
-        return nRepsForSwitchState;
+    public int getTouchForLift() {
+        return touchForLift;
+    }
+
+    /**
+     * Returns the maximum number of mistakes allowed for the minigame difficulty.
+     *
+     * @return the maximum number of mistakes allowed
+     */
+    public int getMaxMistakes() {
+        return maxMistakes;
     }
 }

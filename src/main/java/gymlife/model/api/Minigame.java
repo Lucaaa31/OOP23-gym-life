@@ -1,6 +1,5 @@
 package gymlife.model.api;
 
-import gymlife.model.minigame.TimerImpl;
 import gymlife.utility.minigame.MinigameDifficulty;
 
 /**
@@ -13,22 +12,11 @@ public interface Minigame {
 
     /**
      * Notifies the minigame that a button has been pressed.
+     *
      */
     void notifyUserAction();
 
-    /**
-     * Sets the timer for the minigame.
-     *
-     * @param timer the timer to be set
-     */
-    void setTimer(TimerImpl timer);
-
-    /**
-     * Gets the current state of the minigame.
-     *
-     * @return the current state of the minigame
-     */
-    int getState();
+    boolean isRepsCompleted();
 
     /**
      * Sets the difficulty level of the minigame.
@@ -37,11 +25,12 @@ public interface Minigame {
      */
     void setDifficulty(MinigameDifficulty selectedDifficulty);
 
-    /**
-     * Returns whether the timer of the minigame is running.
-     * 
-     * @return true if the timer is running, false otherwise
-     */
-    boolean isAlive();
+
+    int minigameResult();
+
+    boolean isMinigameEnded();
+
+    MinigameDifficulty getDifficulty();
+
 
 }
