@@ -9,6 +9,7 @@ import gymlife.model.InteractionsManager;
 import gymlife.model.MapManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.minigame.MinigameManager;
+import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.minigame.TimerImpl;
 import gymlife.model.api.CharacterModel;
 import gymlife.model.api.GameMap;
@@ -19,6 +20,7 @@ import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.Directions;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.utility.Position;
@@ -29,8 +31,10 @@ import gymlife.utility.Position;
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private final MinigameManager minigameManager = new MinigameManager();
+    private MinigameManager minigameManager;
     private final TimerImpl timer = new TimerImpl();
+
+    private final ScoringTableManager scoringTableManager = new ScoringTableManager();
 
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
@@ -75,25 +79,15 @@ public class ControllerImpl implements Controller {
     @Override
     public void setDifficulty(final MinigameDifficulty difficulty) {
         minigameManager.setDifficulty(difficulty);
-        minigameManager.setTimer(timer);
         minigameManager.startMinigame();
     }
 
-    /**
-     * Retrieves the visibility of the timer in the current minigame.
-     *
-     * @return true if the timer is running, false otherwise
-     */
-    @Override
-    public boolean isTimerRunning() {
-        return minigameManager.isTimerRunning();
-    }
 
     /**
      * Notifies the current minigame that a button has been pressed.
      */
     @Override
-    public void notifyButtonPressed() {
+    public void notifyUserAction() {
         minigameManager.notifyUserAction();
     }
 
@@ -167,6 +161,28 @@ public class ControllerImpl implements Controller {
                 .getCellAtCoord(characterModel.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
+    }
+
+    @Override
+    public void setMinigameManager(MinigameManager minigameManager) {
+        this.minigameManager = minigameManager;
+    }
+
+    public void setMinigameResult() {
+        scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
+                minigameManager.getDifficulty(),
+                minigameManager.getMinigameResult());
+        statsManager.setStat(minigameManager.getMinigameType().getStatsType(), minigameManager.getMinigameResult());
+        scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
+    }
+
+    @Override
+    public boolean isMinigameEnded() {
+        return minigameManager.isMinigameEnded();
+    }
+
+    public MinigameDifficulty getDifficulty() {
+        return minigameManager.getDifficulty();
     }
 
 

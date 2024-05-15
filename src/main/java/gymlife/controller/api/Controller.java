@@ -3,6 +3,7 @@ package gymlife.controller.api;
 import java.util.Map;
 
 import gymlife.model.api.GameMap;
+import gymlife.model.minigame.MinigameManager;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
@@ -41,7 +42,7 @@ public interface Controller {
     /**
      * Notifies the controller that a button has been pressed.
      */
-    void notifyButtonPressed();
+    void notifyUserAction();
 
     /**
      * Returns the current time in the game.
@@ -64,13 +65,6 @@ public interface Controller {
      */
     MinigameType getMinigameType();
 
-
-    /**
-     * Returns the visibility status of the timer.
-     *
-     * @return true if the timer is visible, false otherwise
-     */
-    boolean isTimerRunning();
 
     /**
      * Returns a Map that represents the current values of the statistics in the
@@ -100,4 +94,11 @@ public interface Controller {
      */
     void cellInteraction();
 
+    void setMinigameManager(MinigameManager minigameManager);
+
+    void setMinigameResult();
+
+    boolean isMinigameEnded();
+
+    MinigameDifficulty getDifficulty();
 }
