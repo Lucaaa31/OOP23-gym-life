@@ -1,7 +1,14 @@
 package gymlife.view.minigame;
 
 
+import gymlife.controller.api.Controller;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JLayeredPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.Serial;
 
 /**
@@ -14,5 +21,32 @@ public class SquatView extends JPanel {
     @Serial
     private static final long serialVersionUID = -5624416626690898281L;
 
+    /**
+     * Creates a new SquatView object.
+     */
+    public SquatView(final Controller controller) {
+        this.setLayout(null);
+        JLayeredPane layeredPane = new JLayeredPane();
+        this.add(layeredPane);
+
+        JLabel backgroundLabel = new JLabel();
+        layeredPane.add(backgroundLabel, 0);
+        JLabel characterLabel = new JLabel();
+        layeredPane.add(characterLabel, 1);
+
+        final ImageIcon backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
+
+        backgroundLabel.setIcon(backgroundImage);
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                controller.notifyUserAction();
+            }
+        });
+
+        this.setVisible(true);
+
+    }
 
 }

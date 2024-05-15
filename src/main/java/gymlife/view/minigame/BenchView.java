@@ -4,14 +4,18 @@ package gymlife.view.minigame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
 import javax.swing.JLayeredPane;
+import javax.swing.JProgressBar;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.IOException;
 import javax.swing.ImageIcon;
-import java.awt.Dimension;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.Constants;
+import gymlife.utility.minigame.MinigameType;
 
 /**
  * The BenchView class represents a panel that displays the bench press
@@ -22,13 +26,15 @@ import gymlife.utility.Constants;
 public class BenchView extends JPanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
-    private final JButton button = new JButton("Press me!");
-    private final JLabel label = new JLabel();
-    private final JLabel timerView = new JLabel();
+    private final JButton buttonMinigame = new JButton("Press me!");
+    private final JLabel characterLabel = new JLabel();
     private final transient Controller controller;
-
     private final JLayeredPane layeredPane = new JLayeredPane();
     private final JLabel backgroundLabel = new JLabel();
+    private final JProgressBar progressBar = new JProgressBar();
+
+    private final ImageIcon backgroundImage;
+    private ImageIcon characterImage;
 
     /**
      * Constructs a BenchView object with the specified controller.
@@ -38,87 +44,95 @@ public class BenchView extends JPanel {
      * @param controller the controller implementation
      */
     public BenchView(final Controller controller) {
-        this.controller = controller;
-        //this.setBackground(Color.CYAN);
 
-        //this.setLayout(null);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        updateImage(controller.getState());
-        label.setPreferredSize(new Dimension(Constants.SCENARIO_WIDTH, Constants.HEIGHT));
-        button.addActionListener(e -> {
-            controller.notifyButtonPressed();
-            updateImage(controller.getState());
+        this.controller = controller;
+        // Set up the layout
+        this.setLayout(null);
+
+        // Set up the progress bar
+//        progressBar.setOrientation(JProgressBar.VERTICAL);
+//        progressBar.setBounds(1000, 0, 50, Constants.HEIGHT);
+
+        // Add components to the panel
+        this.add(layeredPane);
+        //this.add(progressBar, BorderLayout.EAST);
+        layeredPane.setLayout(null);
+
+        layeredPane.setBounds(0, 0, 1300, 800);
+
+
+        buttonMinigame.setSize(100, 50);
+
+        backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
+        characterImage = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_0.png");
+
+        backgroundImage.setImage(backgroundImage.getImage().getScaledInstance(1000, 800, Image.SCALE_DEFAULT));
+
+        backgroundLabel.setIcon(backgroundImage);
+        backgroundLabel.setBounds(0, 0, 1000, 1000);
+
+        characterLabel.setBounds(0, 0, Constants.SCENARIO_WIDTH, Constants.HEIGHT);
+        characterLabel.setLayout(new BorderLayout());
+        characterLabel.setIcon(characterImage);
+
+        layeredPane.add(buttonMinigame, 0);
+        layeredPane.add(backgroundLabel, 1);
+        layeredPane.add(characterLabel, 0);
+
+        doAnimation();
+
+        this.setBackground(Color.BLACK);
+
+        buttonMinigame.addActionListener(e -> {
+            controller.notifyUserAction();
+            if (controller.isRepsDone()) {
+                doAnimation();
+            }
+            setRandomPositionButton();
+            //progressBar.setValue(progressBar.getValue() + 100);kk
+
         });
-        timerView();
+
 
         this.setFocusable(true);
         this.setVisible(true);
     }
 
-    /**
-     * Updates the image displayed on the panel based on the current state.
-     * Sets the image icon, layout, and position of the button.
-     * Adds the button, timer view, and image label to the panel.
-     * Repaints the panel to reflect the changes.
-     *
-     * @param state the current state of the mini-game
-     */
-    private void updateImage(final int state) {
-//        ImageIcon background = new ImageIcon(Objects
-//                .requireNonNull(getClass()
-//                        .getResource("/images/Minigame/bench_press/gymBackground.png")));
-
-
-        final ImageIcon image = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_"
-                + state + ".png");
-
-        //this.backgroundLabel.setIcon(background);
-        this.label.setIcon(image);
-
-        //image.setImage(image.getImage()
-        // .getScaledInstance(Constants.FRAME_WIDTH, Constants.HEIGHT, Image.SCALE_SMOOTH));
-        //background.setImage(background.getImage()
-        // .getScaledInstance(Constants.FRAME_WIDTH, Constants.HEIGHT, Image.SCALE_SMOOTH));
-
-        //this.backgroundLabel.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.HEIGHT);
-        //this.label.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.HEIGHT);
-
-        setRandomPositionButton();
-        this.add(button);
-
-        //timerView.setBounds(160, 50, 400, 100);
-        this.label.add(timerView);
-
-        layeredPane.add(label, 0);
-        layeredPane.add(backgroundLabel, 1);
-
-
-        //layeredPane.setBounds(0, 0, Constants.FRAME_WIDTH, Constants.HEIGHT);
-
-        label.setVisible(true);
-        //layeredPane.setVisible(true);
-
-
-        this.add(label);
-        this.setVisible(true);
-        this.repaint();
-    }
 
     /**
      * Sets a random position for the button within the panel.
      */
     private void setRandomPositionButton() {
-        final int x = (int) (Math.random() * Constants.FRAME_WIDTH - button.getWidth());
-        final int y = (int) (Math.random() * Constants.HEIGHT - button.getHeight());
-        this.button.setBounds(x, y, button.getWidth(), button.getHeight());
+        final int x = (int) (Math.random() * 100);
+        final int y = (int) (Math.random() * 200);
+        this.buttonMinigame.setBounds(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight());
     }
 
-    private void timerView() {
+    /**
+     * Performs the animation of the character.
+     */
+    private void doAnimation() {
         new Thread(() -> {
-            while (true) {
-                timerView.setText(String.format("%3d:%02d", controller.getTime() / 1000, controller.getTime() % 1000));
+            buttonMinigame.setEnabled(false);
+            for (int state = 3; state >= 0; state--) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
+                characterImage = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_" + state + ".png");
+                characterLabel.setIcon(characterImage);
             }
+            buttonMinigame.setEnabled(true);
         }).start();
     }
+
+//    private void timerView() {
+//        new Thread(() -> {
+//            while (controller.getState() != -1) {
+//                timerView.setText(String.format("%3d:%02d", controller.getTime() / 1000, controller.getTime() % 1000));
+//            }
+//        }).start();
+//    }
+
 
 }

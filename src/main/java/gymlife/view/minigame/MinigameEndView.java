@@ -1,2 +1,32 @@
-package gymlife.view.minigame;public class MinigameEndView {
+package gymlife.view.minigame;
+
+import gymlife.controller.api.Controller;
+
+import javax.swing.JPanel;
+
+/**
+ * The MinigameEndView class represents the view displayed at the end of a minigame.
+ * It extends the JPanel class and provides methods to display the end of a minigame.
+ */
+public class MinigameEndView extends JPanel {
+
+    /**
+     * Create a new MinigameEndView object.
+     *
+     * @param controller the controller to use
+     */
+    public MinigameEndView(final Controller controller) {
+//        this.setLayout(new FlowLayout());
+//        JLabel endLabel = new JLabel(controller.getState() == -1 ? "You lost!" : "You won!");
+//        JButton endButton = new JButton("return to the gym");
+//        endButton.addActionListener(e -> controller.setMinigameResult());
+//        endLabel.setFont(new Font("Arial", Font.BOLD, 30));
+//        endLabel.setHorizontalAlignment(SwingConstants.CENTER);
+//        endButton.setFont(new Font("Arial", Font.BOLD, 30));
+//
+//        endLabel.setBounds(0, 0, 100, 100);
+//        this.add(endLabel);
+//        this.add(endButton);
+//        this.setVisible(true);
+    }
 }
