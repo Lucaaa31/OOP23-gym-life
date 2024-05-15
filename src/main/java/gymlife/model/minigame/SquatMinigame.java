@@ -9,14 +9,11 @@ import gymlife.utility.minigame.MinigameDifficulty;
  * methods to start and manage the game.
  */
 public class SquatMinigame implements Minigame {
+    private MinigameDifficulty difficulty;
+    private int nTimesPressed;
+    private int state;
+    //private int numReps;
 
-
-    /**
-     * Starts the Squat Minigame.
-     */
-    public void start() {
-
-    }
 
     /**
      * Notifies the Squat Minigame that a button has been pressed.
@@ -24,27 +21,20 @@ public class SquatMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
+        nTimesPressed++;
     }
 
-    /**
-     * Sets the timer for the Squat Minigame.
-     * Creates a new thread for the timer and sets the running time according to the
-     * difficulty level.
-     */
-    @Override
-    public void setTimer(final TimerImpl timer) {
-
-    }
 
     /**
-     * Gets the current state of the Squat Minigame.
+     * The view check if the reps has been completed.
      *
-     * @return the current state of the Squat Minigame
+     * @return true if the reps has been completed, false otherwise
      */
     @Override
-    public int getState() {
-        return 0;
+    public boolean isRepsCompleted() {
+        return false;
     }
+
 
     /**
      * Sets the difficulty level of the Squat Minigame.
@@ -53,16 +43,39 @@ public class SquatMinigame implements Minigame {
      */
     @Override
     public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
+        this.difficulty = selectedDifficulty;
+    }
 
+
+    /**
+     * Returns the result of the Squat Minigame.
+     *
+     * @return the gain of the Squat Minigame if the game is won, 0 otherwise
+     */
+    @Override
+    public int minigameResult() {
+        return state == 5 ? 0 : difficulty.getExperienceGained();
     }
 
     /**
-     * Gets if the Timer is running.
+     * Return the state of the bench minigame.
      *
-     * @return true if the Timer is running, false otherwise
+     * @return return true if the minigame is ended, false otherwise
      */
     @Override
-    public boolean isAlive() {
+    public boolean isMinigameEnded() {
         return false;
     }
+
+    /**
+     * Returns the difficulty level of the bench minigame.
+     *
+     * @return the difficulty level of the bench minigame
+     */
+    @Override
+    public MinigameDifficulty getDifficulty() {
+        return difficulty;
+    }
+
+
 }

@@ -3,86 +3,85 @@ package gymlife.model.minigame;
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Represents a bench minigame that implements the Minigame interface and the
  * Runnable interface.
  */
-public class BenchMinigame implements Minigame, Runnable {
+public class BenchMinigame implements Minigame {
     private MinigameDifficulty difficulty;
-    private Thread timerThread;
-    private boolean isPressed;
     private int nTimesPressed;
-    private int state;
     private int numReps;
+    private boolean isMinigameEnded;
+    private long startTime;
+    private boolean resultMinigame = true;
+    private int nMistakes;
+    private boolean isRepsCompleted;
+
 
     /**
      * Constructs a new BenchMinigame object.
      * Initializes the instance variables.
      */
     public BenchMinigame() {
-        this.isPressed = false;
+        this.isMinigameEnded = false;
         this.nTimesPressed = 0;
-        this.state = 0;
         this.numReps = 0;
-        this.timerThread = null;
         this.difficulty = null;
+        this.nMistakes = 0;
+        this.isRepsCompleted = false;
     }
 
     /**
      * Notifies the bench minigame that a button has been pressed.
-     * Sets the isPressed variable to true.
+     * Starts the timer if it is the first time the button is pressed.
      */
     @Override
     public void notifyUserAction() {
-        this.isPressed = true;
+        if (nTimesPressed == 0) {
+            isRepsCompleted = false;
+            startTime = System.nanoTime();
+        }
+        nTimesPressed++;
+        checkIfCompletedReps();
     }
 
     /**
-     * Sets the timer for the bench minigame.
-     * Creates a new thread for the timer and sets the running time according to the
-     * difficulty level.
+     * The view check if the reps has been completed.
+     *
+     * @return true if the reps has been completed, false otherwise
      */
     @Override
-    public void setTimer(final TimerImpl timer) {
-        timerThread = new Thread(timer);
-        timer.setRunningTime(difficulty.getReactionTime());
+    public boolean isRepsCompleted() {
+        return isRepsCompleted;
     }
 
     /**
-     * Runs the bench minigame.
-     * 
+     * Checks if the user has completed the required number of reps.
+     * If the user has completed the required number of reps, the minigame is ended.
+     * If the user has made the maximum number of mistakes, the minigame is ended.
      */
-    @Override
-    public void run() {
-        timerThread.start();
-        while (timerThread.isAlive() && numReps < difficulty.getRequiredReps()) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
+    private void checkIfCompletedReps() {
+        long endTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+        if (endTime < difficulty.getReactionTime()) {
+            if (nTimesPressed == difficulty.getTouchForLift()) {
+                isRepsCompleted = true;
+                nTimesPressed = 0;
+                numReps++;
             }
-            if (isPressed) {
-                nTimesPressed++;
-                isPressed = false;
-                if (nTimesPressed == difficulty.getnRepsForSwitchState()) {
-                    state++;
-                    if (state == 4) {
-                        numReps++;
-                        state = 0;
-                    }
-                    nTimesPressed = 0;
-                }
+            if (numReps == difficulty.getRequiredReps()) {
+                isMinigameEnded = true;
+            }
+        } else {
+            nMistakes++;
+            if (nMistakes == difficulty.getMaxMistakes()) {
+                resultMinigame = false;
+                isMinigameEnded = true;
+            } else {
+                nTimesPressed = 0;
             }
         }
-    }
-
-    /**
-     * Gets the current state of the bench minigame.
-     *
-     * @return the current state of the bench minigame
-     */
-    @Override
-    public int getState() {
-        return state;
     }
 
     /**
@@ -95,17 +94,36 @@ public class BenchMinigame implements Minigame, Runnable {
         this.difficulty = selectedDifficulty;
     }
 
+
     /**
-     * Checks if the timer thread is alive.
+     * Returns the result of the bench minigame.
      *
-     * @return true if the timer thread is alive, false otherwise
+     * @return the result of the bench minigame
      */
     @Override
-    public boolean isAlive() {
-        if (timerThread == null) {
-            return false;
-        }
-        return timerThread.isAlive();
+    public int minigameResult() {
+        return resultMinigame ? 0 : difficulty.getExperienceGained();
     }
+
+    /**
+     * Return the state of the bench minigame.
+     *
+     * @return return true if the minigame is ended, false otherwise
+     */
+    @Override
+    public boolean isMinigameEnded() {
+        return isMinigameEnded;
+    }
+
+    /**
+     * Returns the difficulty level of the bench minigame.
+     *
+     * @return the difficulty level of the bench minigame
+     */
+    @Override
+    public MinigameDifficulty getDifficulty() {
+        return difficulty;
+    }
+
 
 }

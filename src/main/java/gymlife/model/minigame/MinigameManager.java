@@ -29,17 +29,9 @@ public class MinigameManager {
      * Starts the current minigame in a new thread.
      */
     public void startMinigame() {
-        new Thread((Runnable) currentMinigame).start();
+        new BenchMinigame();
     }
 
-    /**
-     * Sets the timer for the current minigame.
-     *
-     * @param timer taken by te Controller
-     */
-    public void setTimer(final TimerImpl timer) {
-        currentMinigame.setTimer(timer);
-    }
 
     /**
      * Sets the current minigame type.
@@ -75,21 +67,12 @@ public class MinigameManager {
     }
 
     /**
-     * Check if the timer in the current minigame is running.
+     * The view check if a reps is done.
      *
-     * @return true if the timer is running, false otherwise
+     * @return true if the reps is done, false otherwise
      */
-    public boolean isTimerRunning() {
-        return currentMinigame.isAlive();
-    }
-
-    /**
-     * Retrieves the current state of the minigame.
-     *
-     * @return the current state of the minigame
-     */
-    public int getState() {
-        return currentMinigame.getState();
+    public boolean isRepsDone() {
+        return currentMinigame.isRepsCompleted();
     }
 
     /**
@@ -100,4 +83,32 @@ public class MinigameManager {
     public MinigameType getMinigameType() {
         return currentMinigameType;
     }
+
+    /**
+     * Used to get the result of the minigame.
+     *
+     * @return the result of the minigame if is a win, 0 otherwise
+     */
+    public int getMinigameResult() {
+        return currentMinigame.minigameResult();
+    }
+
+    /**
+     * Used to check if the minigame is ended.
+     *
+     * @return true if the minigame is ended, false otherwise
+     */
+    public boolean isMinigameEnded() {
+        return currentMinigame.isMinigameEnded();
+    }
+
+    /**
+     * Used to get the difficulty of the minigame.
+     *
+     * @return the difficulty of the minigame
+     */
+    public MinigameDifficulty getDifficulty() {
+        return currentMinigame.getDifficulty();
+    }
+
 }
