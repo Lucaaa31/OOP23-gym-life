@@ -4,6 +4,7 @@ import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,5 +35,9 @@ public class ScoringTableManager {
     public void updateMinigameScore(final MinigameType minigameType, final MinigameDifficulty difficulty, final int score) {
         ScoringTable table = scoringTables.get(minigameType);
         table.updateScore(difficulty, score);
+    }
+
+    public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
+        return scoringTables.get(minigameType).getScores(difficulty);
     }
 }

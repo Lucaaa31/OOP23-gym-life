@@ -2,9 +2,11 @@ package gymlife.model.minigame;
 
 import gymlife.utility.minigame.MinigameDifficulty;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The ScoringTable class represents the scoring table of a minigame.
@@ -23,6 +25,7 @@ public class ScoringTable {
         for (MinigameDifficulty difficulty : MinigameDifficulty.values()) {
             scores.put(difficulty, null);
         }
+        scores.put(MinigameDifficulty.EASY, List.of(3, 1, 4));
     }
 
     /**
@@ -56,15 +59,13 @@ public class ScoringTable {
         return min;
     }
 
-    /**
-     * Returns the score of the player at the given index in the list of scores of the given difficulty.
-     *
-     * @param index the index of the player in the list of scores
-     * @return the score of the player at the given index
-     */
-    public String toString(final int index) {
-        //return String.format("%3d:%02d", scores.get(index) / 60, scores.get(index) % 60);
-        return null;
+    public List<Integer> getScores(final MinigameDifficulty difficulty) {
+        if (scores.get(difficulty) == null) {
+            return null;
+        }
+        return scores.get(difficulty).stream()
+                .sorted()
+                .toList();
     }
 
     /**
