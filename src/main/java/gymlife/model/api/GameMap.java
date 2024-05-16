@@ -51,4 +51,10 @@ public interface GameMap {
      * @return Returns map's symbolic name.
      */
     String getName();
+
+    /**
+     * Method to get the position at which the player must spawn when the map loads.
+     * @return default player position.
+     */
+    Position getDefaultPosition();
 }
