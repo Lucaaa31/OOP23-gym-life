@@ -35,4 +35,9 @@ public class CharacterModelImpl implements CharacterModel {
         pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
     }
 
+    @Override
+    public void setPosition(final Position pos) {
+        this.pos = pos;
+    }
+
 }
