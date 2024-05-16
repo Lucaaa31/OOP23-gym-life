@@ -11,21 +11,17 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.Serial;
-
-import gymlife.utility.Constants;
 import java.awt.event.ActionEvent;
 
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
+import gymlife.model.minigame.MinigameManager;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.minigame.MinigameType;
 import gymlife.view.minigame.MinigameViewImpl;
-import gymlife.view.stats.SideStatsView;
-//import gymlife.utility.ScenariosType;
+
 
 
 /**
@@ -36,16 +32,13 @@ public class MainView extends JFrame {
     @Serial
     private static final long serialVersionUID = -3544425205075144844L;
     private final transient  Controller controller = new ControllerImpl(GameDifficulty.EASY);
-    @Serial
-    private static final long serialVersionUID = 4328743;
-    private final transient Controller controller = new ControllerImpl(GameDifficulty.EASY);
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
     private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
     private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
-
+    private final JPanel minigameView = new MinigameViewImpl(controller, dimensionGetter);
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -67,12 +60,11 @@ public class MainView extends JFrame {
         sideContainer.setLayout(new CardLayout());
         sideContainer.setBackground(Color.BLUE);
 
-//        MinigameManager minigameManager = new MinigameManager();
-//        controller.setMinigameManager(minigameManager);
-//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
+        MinigameManager minigameManager = new MinigameManager();
+        controller.setMinigameManager(minigameManager);
+        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
 
-
-        mainPanel.add(new MinigameViewImpl(controller), BorderLayout.CENTER);
+        mainPanel.add(minigameView, BorderLayout.CENTER);
         mainPanel.add(sideContainer, BorderLayout.EAST);
 
         // Creazione dell'azione per il tasto '+'
@@ -97,16 +89,32 @@ public class MainView extends JFrame {
             }
         };
 
+        final Action switchMinigame = new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                if (controller.isMinigameEnded()){
+                    ((MinigameViewImpl) minigameView).endMinigame();
+                }else {
+                    ((MinigameViewImpl) minigameView).startMinigame();
+                }
+
+
+            }
+        };
+
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('+'), "increase size");
         mainPanel.getActionMap().put("increase size", increaseSizeAction);
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('-'), "decrease size");
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke('f'), "switch in minigame");
+        mainPanel.getActionMap().put("switch in minigame", switchMinigame);
 
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
-        scenariosContainer.add(gameMapView, SwingConstants.CENTER);
+        scenariosContainer.add(new MinigameViewImpl(controller, dimensionGetter), SwingConstants.CENTER);
 
         gameMapView.setVisible(true);
         gameMapView.setDoubleBuffered(true);
@@ -116,9 +124,6 @@ public class MainView extends JFrame {
         this.setUndecorated(true);
         this.add(mainPanel);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
-
-        this.pack();
-        this.setResizable(true);
         this.setResizable(false);
         this.setVisible(true);
         this.setFocusable(true);

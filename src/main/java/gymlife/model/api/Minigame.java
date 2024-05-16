@@ -32,5 +32,7 @@ public interface Minigame {
 
     MinigameDifficulty getDifficulty();
 
+    long getEndMinigame();
+
 
 }
