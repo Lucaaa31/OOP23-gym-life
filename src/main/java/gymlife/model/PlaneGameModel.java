@@ -2,12 +2,14 @@ package gymlife.model;
 
 import java.util.Random;
 
+import gymlife.model.statistics.api.SynchronizerModel;
+
 /**
  * This class create a multiplier.
  */
 public final class PlaneGameModel {
     private static final float MAX_BOUND = 9.00f;
-    private static final int THREAD_WAIT = 8;
+    private static final long THREAD_WAIT = 9;
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();
@@ -15,11 +17,14 @@ public final class PlaneGameModel {
     private float multiplier;
     private float multiplierShort;
     private float moneyMultiplied = 1;
+    private SynchronizerModel mySync, otherSync;
 
     /**
      * This is the constructor of the PlaneGameModel class.
      */
-    public PlaneGameModel() {
+    public PlaneGameModel(SynchronizerModel mySync, SynchronizerModel otherSync) {
+        this.mySync = mySync;
+        this.otherSync = otherSync;
         multiplier = 1.0f;
         treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplierShort = 0;
@@ -45,21 +50,25 @@ public final class PlaneGameModel {
      * @param money The money value to be multiplied with the multiplier.
      */
     public void runMultiplier(final float money) {
-        while (flag) {
-            multiplier += INCREMENT;
-            moneyMultiplied = multiplier * money;
-            if (boundControl()) {
-                flag = false;
+        try {
+            while (flag) {
+                mySync.signal();
+                multiplier += INCREMENT;
+                moneyMultiplied = multiplier * money;
+                if (boundControl()) {
+                    flag = false;
+                }
+                otherSync.waitForSignal();
             }
-            try {
-                Thread.sleep(THREAD_WAIT);
-            } catch (InterruptedException e) {
-            }
+        } catch (InterruptedException e) {
         }
     }
 
+    
+
     /**
-     * Generates a new random threshold value within a specified range and resets the multiplier.
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
      * 
      * @return The newly generated threshold value.
      */
