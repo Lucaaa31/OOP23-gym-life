@@ -4,12 +4,15 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.Directions;
 import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
+import gymlife.view.api.GamePanel;
 
 import java.awt.Point;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -31,7 +34,7 @@ import javax.swing.border.Border;
 /**
  * JPanel that shows the current map on which the character is. It shows all the cells of the map loaded.
  */
-public final class GameMapView extends JPanel {
+public final class GameMapView extends GamePanel {
     @Serial
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
@@ -89,7 +92,13 @@ public final class GameMapView extends JPanel {
                     characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(key).get());
                     moveCharacter();
                 } else if (key == 'e') {
-                    controller.cellInteraction();
+                    if (controller.getCurrentMap()
+                            .getCellAtCoord(controller.getCharacterPos())
+                            .getInteraction()
+                            .isPresent()){
+                        controller.cellInteraction();
+                        GameMapView.super.transferFocus();
+                    }
                 }
             }
             @Override
@@ -135,6 +144,7 @@ public final class GameMapView extends JPanel {
      * Method to resize the component of the map, it clears the cells and the mapPanel, and then
      * it resizes the cells and the characterLabel.
      */
+    @Override
     public void resizeComponents() {
         cells.clear();
         mapPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
@@ -169,7 +179,12 @@ public final class GameMapView extends JPanel {
         this.repaint();
     }
 
-    private void loadMap() {
+    @Override
+    public String getPanelName() {
+        return "gameMap";
+    }
+
+    public void loadMap() {
         for (int y = 0; y < MapConstants.MAP_Y_DIM; y++) {
             for (int x = 0; x < MapConstants.MAP_X_DIM; x++) {
                 final Position pos = new Position(x, y);
