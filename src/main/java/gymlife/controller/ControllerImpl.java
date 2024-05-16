@@ -142,4 +142,9 @@ public class ControllerImpl implements Controller {
     public void changeScenario(final ScenariosType newScenario) {
         scenariosManager.updateScenarios(newScenario);
     }
+
+    @Override
+    public void resetPlayerPosition() {
+        characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
+    }
 }

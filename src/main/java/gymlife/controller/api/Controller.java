@@ -74,4 +74,6 @@ public interface Controller {
      * @param newScenario The ScenariosType to change the current one to.
      */
     void changeScenario(ScenariosType newScenario);
+
+    void resetPlayerPosition();
 }
