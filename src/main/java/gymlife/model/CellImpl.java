@@ -132,6 +132,38 @@ public enum CellImpl implements Cell {
      */
     SHOP_ATM(25, true),
     /**
+     * A cell with products in a shelf, with collisions and not interactable.
+     */
+    SHOP_SHELF01(40, true),
+    /**
+     * A cell with products in a shelf, with collisions and not interactable.
+     */
+    SHOP_SHELF02(41, true),
+    /**
+     * A cell with products in a shelf, with collisions and not interactable.
+     */
+    SHOP_SHELF03(42, true),
+    /**
+     * A cell with a box of groceries, with collisions and not interactable.
+     */
+    SHOP_GROCERIES01(43, true),
+    /**
+     * A cell with a box of groceries, with collisions and not interactable.
+     */
+    SHOP_GROCERIES02(44, true),
+    /**
+     * A cell with a box of groceries, with collisions and not interactable.
+     */
+    SHOP_GROCERIES03(45, true),
+    /**
+     * A cell with a box of groceries, with collisions and not interactable.
+     */
+    SHOP_GROCERIES04(46, true),
+    /**
+     * The cell with the shop checkout, with collisions and not interactable.
+     */
+    SHOP_CHECKOUT(47, true),
+    /**
      * The base floor of the gym {@code GameMap}, no collisions and not interactable.
      */
     GYM_FLOOR(26, false),
