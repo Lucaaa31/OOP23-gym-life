@@ -3,6 +3,7 @@ package gymlife.view;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicBorders;
 
 import java.awt.*;
@@ -24,6 +25,7 @@ public class MainView extends JFrame {
     @Serial
     private static final long serialVersionUID = -3544425205075144844L;
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
+    private Controller controller;
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
@@ -35,10 +37,7 @@ public class MainView extends JFrame {
 
     public MainView() {
         this.setSize(dimensionGetter.getFrameDimension());
-
         this.newGame();
-
-
         this.setUndecorated(true);
         this.requestFocusInWindow();
         this.setLocationRelativeTo(null);
@@ -52,7 +51,7 @@ public class MainView extends JFrame {
      * Adds the character view panel to the main frame and makes it visible.
      */
     public void start() {
-        final Controller controller = new ControllerImpl(difficulty);
+        this.controller = new ControllerImpl(difficulty);
         this.statsView = new SideStatsView(controller, dimensionGetter);
         this.gameMapView = new GameMapView(controller, dimensionGetter);
 
@@ -94,16 +93,32 @@ public class MainView extends JFrame {
             }
         };
 
+        // Creazione dell'azione per il tasto 'e'
+        final Action checkScenario = new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                checkScenario();
+                System.out.println("Checking scenarioooo");
+            }
+        };
+
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('+'), "increase size");
         mainPanel.getActionMap().put("increase size", increaseSizeAction);
+
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('-'), "decrease size");
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
 
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke('e'), "check scenario");
+        mainPanel.getActionMap().put("check scenario", checkScenario);
+
+
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
         scenariosContainer.add(gameMapView, ScenariosType.INDOOR_MAP.toString());
+        scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
 
         scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
 
@@ -116,7 +131,7 @@ public class MainView extends JFrame {
         this.setVisible(true);
         this.setFocusable(true);
         this.requestFocusInWindow();
-
+        gameMapView.requestFocusInWindow();
     }
 
     // Metodo per ridimensionare i pannelli proporzionalmente
@@ -140,111 +155,69 @@ public class MainView extends JFrame {
     }
 
     private void newGame() {
-        newGame.setLayout(new GridLayout(2, 1));
+        newGame.setLayout(new GridLayout(3, 1));
         FontLoader.loadFont();
 
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 10);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 15);
 
         JLabel textLabel = new JLabel();
+        JLabel descriptiontext = new JLabel();
 
-        JButton buttonEasy = new JButton("EASY");
-        buttonEasy.setBackground(Color.GREEN);
-        buttonEasy.setForeground(Color.BLACK);
-        buttonEasy.setFocusPainted(false);
-        buttonEasy.setBorderPainted(false);
-        buttonEasy.setText("EASY");
+        JButton buttonEasy = this.buildButton("EASY", Color.GREEN, GameDifficulty.EASY);
 
-        buttonEasy.setPreferredSize(dimensionGetter.getButtonStartDimension());
-        buttonEasy.setAlignmentY(SwingConstants.CENTER);
-        buttonEasy.setOpaque(true);
-        buttonEasy.setContentAreaFilled(true);
-        buttonEasy.setFont(FontLoader.getCustomFont(60));
-        buttonEasy.addActionListener(e -> {
-            difficulty = GameDifficulty.EASY;
-            this.start();
-            newGame.setVisible(false);
-        });
+        JButton buttonMedium = this.buildButton("MEDIUM", Color.YELLOW, GameDifficulty.MEDIUM);
 
-        JButton buttonMedium = new JButton("MEDIUM");
-        buttonMedium.setBackground(Color.YELLOW);
-        buttonMedium.setForeground(Color.BLACK);
-        buttonMedium.setFocusPainted(false);
-        buttonMedium.setBorderPainted(false);
-        buttonMedium.setPreferredSize(dimensionGetter.getButtonStartDimension());
-        buttonMedium.setOpaque(true);
-        buttonMedium.setContentAreaFilled(true);
-        buttonMedium.setFont(FontLoader.getCustomFont(60));
-
-        buttonMedium.addActionListener(e -> {
-            difficulty = GameDifficulty.MEDIUM;
-            this.start();
-            newGame.setVisible(false);
-        });
-
-        JButton buttonHard = new JButton("HARD");
-        buttonHard.setBackground(Color.RED);
-        buttonHard.setForeground(Color.BLACK);
-        buttonHard.setFocusPainted(false);
-        buttonHard.setBorderPainted(false);
-        buttonHard.setPreferredSize(dimensionGetter.getButtonStartDimension());
-        buttonHard.setOpaque(true);
-        buttonHard.setContentAreaFilled(true);
-        buttonHard.setFont(FontLoader.getCustomFont(60));
-
-        buttonHard.addActionListener(e -> {
-            difficulty = GameDifficulty.HARD;
-            this.start();
-            newGame.setVisible(false);
-        });
+        JButton buttonHard = this.buildButton("HARD", Color.RED, GameDifficulty.HARD);
 
         JLabel buttonLabel = new JLabel();
         buttonLabel.setLayout(new GridLayout(1, 3));
         buttonLabel.setSize(new Dimension(dimensionGetter.getButtonLabelDimension().width * 3,
                 dimensionGetter.getButtonLabelDimension().height));
 
-
         JPanel labelEasy = new JPanel();
-        labelEasy.setLayout(new BorderLayout());
         labelEasy.setOpaque(true);
-        labelEasy.setBackground(Color.BLACK);
+        labelEasy.setBackground(Color.DARK_GRAY);
         labelEasy.setPreferredSize(dimensionGetter.getButtonLabelDimension());
         labelEasy.setSize(dimensionGetter.getButtonLabelDimension());
-        labelEasy.setLayout(new FlowLayout());
-        labelEasy.setAlignmentX(SwingConstants.CENTER);
-        labelEasy.setAlignmentY(SwingConstants.CENTER);
         labelEasy.add(buttonEasy);
         buttonLabel.add(labelEasy);
 
         JPanel labelMedium = new JPanel();
         labelMedium.setOpaque(true);
-        labelMedium.setBackground(Color.BLACK);
+        labelMedium.setBackground(Color.DARK_GRAY);
         labelMedium.setPreferredSize(dimensionGetter.getButtonLabelDimension());
         labelMedium.setSize(dimensionGetter.getButtonLabelDimension());
-        labelMedium.setLayout(new FlowLayout());
         labelMedium.add(buttonMedium);
         buttonLabel.add(labelMedium);
 
         JPanel labelHard = new JPanel();
         labelHard.setOpaque(true);
-        labelHard.setBackground(Color.BLACK);
+        labelHard.setBackground(Color.DARK_GRAY);
         labelHard.setPreferredSize(dimensionGetter.getButtonLabelDimension());
         labelHard.setSize(dimensionGetter.getButtonLabelDimension());
-        labelHard.setLayout(new FlowLayout());
         labelHard.add(buttonHard);
         buttonLabel.add(labelHard);
 
         newGame.add(textLabel);
+        newGame.add(descriptiontext);
         newGame.add(buttonLabel);
-        newGame.setPreferredSize(dimensionGetter.getFrameDimension());
+        newGame.setBorder(border);
 
-        textLabel.setBackground(Color.BLACK);
+        textLabel.setBackground(Color.DARK_GRAY);
         textLabel.setText("New Game");
         textLabel.setOpaque(true);
         textLabel.setHorizontalAlignment(SwingConstants.CENTER);
         textLabel.setVerticalAlignment(SwingConstants.CENTER);
         textLabel.setFont(FontLoader.getCustomFont(100));
         textLabel.setForeground(Color.WHITE);
-        textLabel.setBorder(border);
+
+        descriptiontext.setBackground(Color.DARK_GRAY);
+        descriptiontext.setText("Select the difficulty level of the game");
+        descriptiontext.setOpaque(true);
+        descriptiontext.setHorizontalAlignment(SwingConstants.CENTER);
+        descriptiontext.setVerticalAlignment(SwingConstants.CENTER);
+        descriptiontext.setFont(FontLoader.getCustomFont(55));
+        descriptiontext.setForeground(Color.WHITE);
 
         this.add(newGame);
     }
@@ -261,6 +234,31 @@ public class MainView extends JFrame {
                 .getScaledInstance(dimensionGetter.getButtonStartDimension().width,
                         dimensionGetter.getButtonStartDimension().height,
                         Image.SCALE_FAST));
+    }
+
+    private void checkScenario() {
+        System.out.println("Checking scenario");
+        ScenariosType actualScenario = controller.getActualScenario();
+        System.out.println(actualScenario);
+        System.out.println(ScenariosType.INDOOR_MAP.toString());
+    }
+    private JButton buildButton(final String name, final Color color, final GameDifficulty difficulty) {
+        JButton button = new JButton(name);
+        button.setBackground(color);
+        button.setBorder(new LineBorder(Color.WHITE, 5, true));
+        button.setForeground(Color.BLACK);
+        button.setFocusPainted(false);
+        button.setBorderPainted(true);
+        button.setPreferredSize(dimensionGetter.getButtonStartDimension());
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setFont(FontLoader.getCustomFont(60));
+        button.addActionListener(e -> {
+            this.difficulty = difficulty;
+            newGame.setVisible(false);
+            this.start();
+        });
+        return button;
     }
 }
 

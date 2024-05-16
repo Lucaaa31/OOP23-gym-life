@@ -9,7 +9,7 @@ public class ScenariosManager {
     /**
      * The actualScenariosType represents the current scenario type.
      */
-     private ScenariosType actualScenariosType = ScenariosType.MAIN_MAP;
+     private ScenariosType actualScenariosType = ScenariosType.INDOOR_MAP;
     /**
      * Updates the current scenario type.
      * 
