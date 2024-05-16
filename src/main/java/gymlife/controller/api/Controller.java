@@ -1,19 +1,17 @@
 package gymlife.controller.api;
 
-import java.util.Map;
-
-import gymlife.model.api.GameMap;
 import gymlife.model.minigame.MinigameManager;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.api.GameMap;
 import gymlife.utility.Directions;
-import gymlife.utility.minigame.MinigameDifficulty;
-import gymlife.utility.minigame.MinigameType;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameType;
 
-import javax.annotation.concurrent.Immutable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This interface defines the operations that a game controller should support.
@@ -22,7 +20,6 @@ import javax.annotation.concurrent.Immutable;
  * managing the game map, executing actions associated with the cell on which the character currently is,
  * and getting the level of mass of the character.
  */
-@Immutable
 public interface Controller {
     /**
      * Moves the character in the specified direction.
@@ -38,44 +35,8 @@ public interface Controller {
      */
     Position getCharacterPos();
 
-
     /**
-     * Sets the difficulty level of the minigame.
-     *
-     * @param difficulty the difficulty level to set
-     */
-    void setDifficulty(MinigameDifficulty difficulty);
-
-    /**
-     * Notifies the controller that a button has been pressed.
-     */
-    void notifyUserAction();
-
-    /**
-     * Returns the current time in the game.
-     *
-     * @return the current time
-     */
-    int getTime();
-
-    /**
-     * Returns the current state of the game.
-     *
-     * @return the current state
-     */
-    int getState();
-
-    /**
-     * Returns the type of the current minigame.
-     *
-     * @return the minigame type
-     */
-    MinigameType getMinigameType();
-
-
-    /**
-     * Returns a Map that represents the current values of the statistics in the
-     * game.
+     * Returns a Map that represents the current values of the statistics in the game.
      *
      * @return a Map of the statistics
      */
@@ -115,30 +76,48 @@ public interface Controller {
     ScenariosType getActualScenario();
 
     /**
-     * javadoc.
+     * Sets the difficulty level of the minigame.
      *
-     * @param newMap javadoc.
+     * @param difficulty the difficulty level to set
      */
-    void goToGym(GameMap newMap);
+    void setDifficulty(MinigameDifficulty difficulty);
+
+    /**
+     * Notifies the controller that a button has been pressed.
+     */
+    void notifyUserAction();
+
+
+    //void setMinigameManager(MinigameManager minigameManager);
 
     /**
      * javadoc.
-     *
-     * @return javadoc.
      */
-    GameMap getCurrentMap();
-
+    void setMinigameResult();
 
     /**
      * javadoc.
      */
-    void cellInteraction();
+    boolean isMinigameEnded();
+
+    /**
+     * javadoc.
+     */
+    MinigameDifficulty getDifficulty();
+
+    /**
+     * javadoc.
+     */
+    boolean isRepsDone();
+
+    /**
+     * Returns the type of the current minigame.
+     *
+     * @return the minigame type
+     */
+    MinigameType getMinigameType();
 
     void setMinigameManager(MinigameManager minigameManager);
 
-    void setMinigameResult();
-
-    boolean isMinigameEnded();
-
-    MinigameDifficulty getDifficulty();
+    List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
 }
