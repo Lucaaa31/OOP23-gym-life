@@ -111,4 +111,8 @@ public class MinigameManager {
         return currentMinigame.getDifficulty();
     }
 
+    public long getEndTime() {
+        return currentMinigame.getEndMinigame();
+    }
+
 }

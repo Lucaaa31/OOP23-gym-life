@@ -5,19 +5,16 @@ import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-import java.awt.Image;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.io.Serial;
 import java.util.Map;
+
 import gymlife.utility.FontLoader;
+import gymlife.view.minigame.ScoreBoardView;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -36,13 +33,14 @@ public class SideStatsView extends JPanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
+
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
      * Sets the size, layout, and visibility of the character view panel.
      * Adds the character view panel to the main frame and makes it visible.
-     * 
-     * @param controller the controller object
+     *
+     * @param controller      the controller object
      * @param dimensionGetter the controller object
      */
     public SideStatsView(final Controller controller, final DimensionGetter dimensionGetter) {
@@ -63,6 +61,9 @@ public class SideStatsView extends JPanel {
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
 
+        statsPanel4.setLayout(new BorderLayout());
+        statsPanel4.add(getScoreBoardLabel());
+
         statsPanel1.setBorder(BORDER);
         statsPanel2.setBorder(BORDER);
         statsPanel3.setBorder(BORDER);
@@ -74,6 +75,7 @@ public class SideStatsView extends JPanel {
         this.add(statsPanel4);
 
     }
+
     /**
      * Resizes the stats panel.
      */
@@ -92,8 +94,10 @@ public class SideStatsView extends JPanel {
         statsPanel3.repaint();
 
     }
+
     /**
      * Resizes the stats panel.
+     *
      * @return the JLabel with the happiness value
      */
     private JLabel getHappinessLabel() {
@@ -102,7 +106,7 @@ public class SideStatsView extends JPanel {
 
         this.setSize(dimensionGetter.getCellDimension());
         final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
-            SwingConstants.CENTER);
+                SwingConstants.CENTER);
 
         final JLabel happinessLabel = new JLabel();
 
@@ -125,8 +129,10 @@ public class SideStatsView extends JPanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the stamina stats label.
+     *
      * @return the JLabel with the stamina value
      */
     private JLabel getStaminaLabel() {
@@ -158,8 +164,10 @@ public class SideStatsView extends JPanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the mass stats label.
+     *
      * @return the JLabel with the mass value
      */
     private JLabel getMassLabel() {
@@ -189,8 +197,10 @@ public class SideStatsView extends JPanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the money stats label.
+     *
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
@@ -198,7 +208,7 @@ public class SideStatsView extends JPanel {
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
-            SwingConstants.CENTER);
+                SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
         moneyLablel.setLayout(new GridLayout(2, 1));
@@ -216,8 +226,10 @@ public class SideStatsView extends JPanel {
         lablelNumber.setBorder(new MatteBorder(0, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
         return moneyLablel;
     }
+
     /**
      * Return the days stats label.
+     *
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
@@ -225,8 +237,8 @@ public class SideStatsView extends JPanel {
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()), 
-            SwingConstants.CENTER);
+        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
+                SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
         moneyLablel.setLayout(new GridLayout(2, 1));
@@ -241,10 +253,25 @@ public class SideStatsView extends JPanel {
         this.setBorder(BORDER);
         return moneyLablel;
     }
+
+    /**
+     * Return the scoreboard stats label.
+     *
+     * @return the JPanel with the scoreboard value
+     */
+    private JPanel getScoreBoardLabel() {
+        final JPanel panel = new ScoreBoardView(controller);
+
+        panel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        panel.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
+        return panel;
+    }
+
     /**
      * Return the ImageIcona that is in the path.
-     * @return ImageIcon
+     *
      * @param path the path of the image
+     * @return ImageIcon
      */
     private ImageIcon getIcon(final String path) {
         return new ImageIcon(new ImageIcon(ClassLoader.

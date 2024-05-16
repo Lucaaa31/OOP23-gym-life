@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import gymlife.controller.api.Controller;
 import gymlife.utility.minigame.MinigameDifficulty;
 
+import java.awt.*;
 import java.io.Serial;
 
 /**
@@ -26,23 +27,22 @@ public class MinigameDifficultyView extends JPanel {
         final JButton normalButton = new JButton("Normal");
         final JButton hardButton = new JButton("Hard");
 
+        this.setBackground(Color.CYAN);
+
         this.add(easyButton);
         this.add(normalButton);
         this.add(hardButton);
 
         easyButton.addActionListener(e -> {
             controller.setDifficulty(MinigameDifficulty.EASY);
-            this.setVisible(false);
         });
 
         normalButton.addActionListener(e -> {
             controller.setDifficulty(MinigameDifficulty.MEDIUM);
-            this.setVisible(false);
         });
 
         hardButton.addActionListener(e -> {
             controller.setDifficulty(MinigameDifficulty.HARD);
-            this.setVisible(false);
         });
     }
 

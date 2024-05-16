@@ -77,5 +77,10 @@ public class SquatMinigame implements Minigame {
         return difficulty;
     }
 
+    @Override
+    public long getEndMinigame() {
+        return 0;
+    }
+
 
 }
