@@ -1,24 +1,18 @@
 package gymlife.view;
 
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.border.Border;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
-
+import gymlife.utility.ScenariosType;
 
 /**
  * The MainView class represents the main view of the application.
@@ -27,13 +21,27 @@ import gymlife.utility.GameDifficulty;
 public class MainView extends JFrame {
     @Serial
     private static final long serialVersionUID = -3544425205075144844L;
-    private final transient  Controller controller = new ControllerImpl(GameDifficulty.EASY);
+    private final transient DimensionGetter dimensionGetter = new DimensionGetter();
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
-    private final transient DimensionGetter dimensionGetter = new DimensionGetter();
-    private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
-    private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
+    private final JPanel newGame = new JPanel();
+    private JPanel fastTravelView;
+    private JPanel statsView;
+    private JPanel gameMapView;
+    private GameDifficulty difficulty;
+
+    public MainView() {
+        this.setSize(dimensionGetter.getFrameDimension());
+
+        this.newGame();
+
+
+        this.setUndecorated(true);
+        this.requestFocusInWindow();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
 
     /**
      * Starts the main view of the application.
@@ -42,18 +50,21 @@ public class MainView extends JFrame {
      * Adds the character view panel to the main frame and makes it visible.
      */
     public void start() {
-        this.setSize(dimensionGetter.getFrameDimension());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final Controller controller = new ControllerImpl(difficulty);
+        this.statsView = new SideStatsView(controller, dimensionGetter);
+        this.gameMapView = new GameMapView(controller, dimensionGetter);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
 
         scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
-        scenariosContainer.setLayout(new CardLayout());
+        CardLayout scenarioLayout = new CardLayout();
+        scenariosContainer.setLayout(scenarioLayout);
         scenariosContainer.setBackground(Color.RED);
 
         sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
-        sideContainer.setLayout(new CardLayout());
+        CardLayout sideLayout = new CardLayout();
+        sideContainer.setLayout(sideLayout);
         sideContainer.setBackground(Color.BLUE);
 
         mainPanel.add(scenariosContainer, BorderLayout.WEST);
@@ -90,14 +101,13 @@ public class MainView extends JFrame {
 
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
-        scenariosContainer.add(gameMapView, SwingConstants.CENTER);
+        scenariosContainer.add(gameMapView, ScenariosType.INDOOR_MAP.toString());
 
-        gameMapView.setVisible(true);
-        gameMapView.setDoubleBuffered(true);
+        scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
+
         scenariosContainer.setDoubleBuffered(true);
         sideContainer.setDoubleBuffered(true);
         sideContainer.setVisible(true);
-        this.setUndecorated(true);
         this.add(mainPanel);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);
@@ -105,7 +115,6 @@ public class MainView extends JFrame {
         this.setFocusable(true);
         this.requestFocusInWindow();
 
-        gameMapView.requestFocusInWindow();
     }
 
     // Metodo per ridimensionare i pannelli proporzionalmente
@@ -127,4 +136,80 @@ public class MainView extends JFrame {
         this.repaint();
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
     }
+
+    private void newGame() {
+        newGame.setLayout(new GridLayout(2, 1));
+        FontLoader.loadFont();
+
+        Border border = BorderFactory.createLineBorder(Color.WHITE, 10);
+
+        JLabel textLabel = new JLabel();
+        JButton buttonEasy = new JButton();
+        buttonEasy.setPreferredSize(dimensionGetter.getButtonStartDimension());
+        buttonEasy.setOpaque(true);
+        buttonEasy.setContentAreaFilled(true);
+        buttonEasy.setBackground(Color.GREEN);
+        buttonEasy.setFont(FontLoader.getCustomFont(30));
+        buttonEasy.addActionListener(e -> {
+            difficulty = GameDifficulty.EASY;
+            this.start();
+            newGame.setVisible(false);
+        });
+
+        JButton buttonMedium = new JButton("MEDIUM");
+        buttonMedium.setPreferredSize(dimensionGetter.getButtonStartDimension());
+        buttonMedium.setOpaque(true);
+        buttonMedium.setContentAreaFilled(true);
+        buttonMedium.setBackground(Color.YELLOW);
+        buttonMedium.setFont(FontLoader.getCustomFont(30));
+        buttonMedium.addActionListener(e -> {
+            difficulty = GameDifficulty.MEDIUM;
+            this.start();
+            newGame.setVisible(false);
+        });
+
+        JButton buttonHard = new JButton("HARD");
+        buttonHard.setPreferredSize(dimensionGetter.getButtonStartDimension());
+        buttonHard.setOpaque(true);
+        buttonHard.setContentAreaFilled(true);
+        buttonHard.setBackground(Color.RED);
+        buttonHard.setFont(FontLoader.getCustomFont(30));
+        buttonHard.addActionListener(e -> {
+            difficulty = GameDifficulty.HARD;
+            this.start();
+            newGame.setVisible(false);
+        });
+
+        JLabel buttonLabel = new JLabel();
+        buttonLabel.setLayout(new FlowLayout());
+        buttonEasy.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        ImageIcon button = new ImageIcon("images/icons/broccoli.png");
+        button = new ImageIcon(button.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        buttonEasy.setIcon(button);
+
+        buttonLabel.add(buttonEasy);
+
+        buttonLabel.add(buttonMedium);
+
+        buttonLabel.add(buttonHard);
+
+
+
+
+        newGame.add(textLabel);
+        newGame.add(buttonLabel);
+        newGame.setBackground(Color.GRAY);
+        newGame.setPreferredSize(dimensionGetter.getFrameDimension());
+
+        textLabel.setText("New Game");
+        textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        textLabel.setVerticalAlignment(SwingConstants.CENTER);
+        textLabel.setFont(FontLoader.getCustomFont(100));
+        textLabel.setForeground(Color.WHITE);
+        textLabel.setBorder(border);
+
+        this.add(newGame);
+    }
 }
+

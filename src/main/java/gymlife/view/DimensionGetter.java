@@ -67,6 +67,9 @@ public class DimensionGetter {
                 actualFrameDimension.height / SQUARE_STATS);
     }
 
+    public Dimension getButtonStartDimension() {
+        return new Dimension(actualFrameDimension.width / 5, actualFrameDimension.height / 5);
+    }
     /**
      * Returns the big font size which is the frame width divided by 32.
      * @return the big font size
