@@ -1,7 +1,9 @@
 package gymlife.view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicBorders;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -141,15 +143,22 @@ public class MainView extends JFrame {
         newGame.setLayout(new GridLayout(2, 1));
         FontLoader.loadFont();
 
-        Border border = BorderFactory.createLineBorder(Color.WHITE, 10);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 10);
 
         JLabel textLabel = new JLabel();
-        JButton buttonEasy = new JButton();
+
+        JButton buttonEasy = new JButton("EASY");
+        buttonEasy.setBackground(Color.GREEN);
+        buttonEasy.setForeground(Color.BLACK);
+        buttonEasy.setFocusPainted(false);
+        buttonEasy.setBorderPainted(false);
+        buttonEasy.setText("EASY");
+
         buttonEasy.setPreferredSize(dimensionGetter.getButtonStartDimension());
+        buttonEasy.setAlignmentY(SwingConstants.CENTER);
         buttonEasy.setOpaque(true);
         buttonEasy.setContentAreaFilled(true);
-        buttonEasy.setBackground(Color.GREEN);
-        buttonEasy.setFont(FontLoader.getCustomFont(30));
+        buttonEasy.setFont(FontLoader.getCustomFont(60));
         buttonEasy.addActionListener(e -> {
             difficulty = GameDifficulty.EASY;
             this.start();
@@ -157,11 +166,15 @@ public class MainView extends JFrame {
         });
 
         JButton buttonMedium = new JButton("MEDIUM");
+        buttonMedium.setBackground(Color.YELLOW);
+        buttonMedium.setForeground(Color.BLACK);
+        buttonMedium.setFocusPainted(false);
+        buttonMedium.setBorderPainted(false);
         buttonMedium.setPreferredSize(dimensionGetter.getButtonStartDimension());
         buttonMedium.setOpaque(true);
         buttonMedium.setContentAreaFilled(true);
-        buttonMedium.setBackground(Color.YELLOW);
-        buttonMedium.setFont(FontLoader.getCustomFont(30));
+        buttonMedium.setFont(FontLoader.getCustomFont(60));
+
         buttonMedium.addActionListener(e -> {
             difficulty = GameDifficulty.MEDIUM;
             this.start();
@@ -169,11 +182,15 @@ public class MainView extends JFrame {
         });
 
         JButton buttonHard = new JButton("HARD");
+        buttonHard.setBackground(Color.RED);
+        buttonHard.setForeground(Color.BLACK);
+        buttonHard.setFocusPainted(false);
+        buttonHard.setBorderPainted(false);
         buttonHard.setPreferredSize(dimensionGetter.getButtonStartDimension());
         buttonHard.setOpaque(true);
         buttonHard.setContentAreaFilled(true);
-        buttonHard.setBackground(Color.RED);
-        buttonHard.setFont(FontLoader.getCustomFont(30));
+        buttonHard.setFont(FontLoader.getCustomFont(60));
+
         buttonHard.addActionListener(e -> {
             difficulty = GameDifficulty.HARD;
             this.start();
@@ -181,28 +198,48 @@ public class MainView extends JFrame {
         });
 
         JLabel buttonLabel = new JLabel();
-        buttonLabel.setLayout(new FlowLayout());
-        buttonEasy.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        ImageIcon button = new ImageIcon("images/icons/broccoli.png");
-        button = new ImageIcon(button.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        buttonEasy.setIcon(button);
-
-        buttonLabel.add(buttonEasy);
-
-        buttonLabel.add(buttonMedium);
-
-        buttonLabel.add(buttonHard);
+        buttonLabel.setLayout(new GridLayout(1, 3));
+        buttonLabel.setSize(new Dimension(dimensionGetter.getButtonLabelDimension().width * 3,
+                dimensionGetter.getButtonLabelDimension().height));
 
 
+        JPanel labelEasy = new JPanel();
+        labelEasy.setLayout(new BorderLayout());
+        labelEasy.setOpaque(true);
+        labelEasy.setBackground(Color.BLACK);
+        labelEasy.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+        labelEasy.setSize(dimensionGetter.getButtonLabelDimension());
+        labelEasy.setLayout(new FlowLayout());
+        labelEasy.setAlignmentX(SwingConstants.CENTER);
+        labelEasy.setAlignmentY(SwingConstants.CENTER);
+        labelEasy.add(buttonEasy);
+        buttonLabel.add(labelEasy);
 
+        JPanel labelMedium = new JPanel();
+        labelMedium.setOpaque(true);
+        labelMedium.setBackground(Color.BLACK);
+        labelMedium.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+        labelMedium.setSize(dimensionGetter.getButtonLabelDimension());
+        labelMedium.setLayout(new FlowLayout());
+        labelMedium.add(buttonMedium);
+        buttonLabel.add(labelMedium);
+
+        JPanel labelHard = new JPanel();
+        labelHard.setOpaque(true);
+        labelHard.setBackground(Color.BLACK);
+        labelHard.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+        labelHard.setSize(dimensionGetter.getButtonLabelDimension());
+        labelHard.setLayout(new FlowLayout());
+        labelHard.add(buttonHard);
+        buttonLabel.add(labelHard);
 
         newGame.add(textLabel);
         newGame.add(buttonLabel);
-        newGame.setBackground(Color.GRAY);
         newGame.setPreferredSize(dimensionGetter.getFrameDimension());
 
+        textLabel.setBackground(Color.BLACK);
         textLabel.setText("New Game");
+        textLabel.setOpaque(true);
         textLabel.setHorizontalAlignment(SwingConstants.CENTER);
         textLabel.setVerticalAlignment(SwingConstants.CENTER);
         textLabel.setFont(FontLoader.getCustomFont(100));
@@ -210,6 +247,20 @@ public class MainView extends JFrame {
         textLabel.setBorder(border);
 
         this.add(newGame);
+    }
+
+    /**
+     * Return the ImageIcona that is in the path.
+     * @return ImageIcon
+     * @param path the path of the image
+     */
+    private ImageIcon getIcon(final String path) {
+        return new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource(path))
+                .getImage()
+                .getScaledInstance(dimensionGetter.getButtonStartDimension().width,
+                        dimensionGetter.getButtonStartDimension().height,
+                        Image.SCALE_FAST));
     }
 }
 
