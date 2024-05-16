@@ -22,6 +22,7 @@ public final class BankGameView extends JLayeredPane {
     @Serial
     private static final long serialVersionUID = -3972452455820596601L;
 
+    private static final long THREAD_W = 10;
     private final TextLabelView numberLabel;
     private final TextLabelView moneyLabel;
     private boolean started;
@@ -29,6 +30,7 @@ public final class BankGameView extends JLayeredPane {
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
     private float moneyMultiplied;
     private float moneyStart;
+
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -63,17 +65,14 @@ public final class BankGameView extends JLayeredPane {
 
         boxMoney.setFont(myFont);
 
-        /*
-         * boxMoney.addKeyListener(new KeyAdapter() {
-         * 
-         * @Override
-         * public void keyTyped(final KeyEvent e) {
-         * if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-         * e.consume();
-         * }
-         * }
-         * });
-         */
+        boxMoney.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(final KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    e.consume();
+                }
+            }
+        });
 
         boxMoney.addActionListener(new ActionListener() {
             @Override
@@ -125,9 +124,7 @@ public final class BankGameView extends JLayeredPane {
 
             private void startMulti(final Controller controller) {
                 new Thread(() -> {
-                    System.out.println("starmulti e' partito");
                     controller.startMultiplier(moneyStart);
-                    System.out.println("starmulti e' terminato");
                 }).start();
             }
         });
@@ -152,19 +149,25 @@ public final class BankGameView extends JLayeredPane {
      *                   multiplier.
      */
     public void showsMulti(final Controller controller) {
-        new Thread(() -> {
-            float multiplier = 0;
-            System.out.println("ciao luca sono partito!!!");
+        new Thread(() -> { 
+        float multiplier = 0;
             while (controller.getMultiplier() != controller.getTreshold() && started == true) {
                 if (multiplier == 0) {
                     multiplier = 1;
                 }
+                try {
+                    controller.getSync1().waitForSignal();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 multiplier = controller.getMultiplier();
                 moneyMultiplied = controller.controllerGetMoney();
+                System.out.println(multiplier);
                 ((MultiplierGameView) numberLabel).updateText(multiplier, moneyMultiplied);
+                controller.getSync2().signal();
             }
-            System.out.println("ciao luca mi sono terminato!!!");
         }).start();
+
     }
 
     /**
