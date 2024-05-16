@@ -1,5 +1,6 @@
 package gymlife.model.minigame;
 
+import com.sun.nio.sctp.SendFailedNotification;
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 
@@ -18,6 +19,9 @@ public class BenchMinigame implements Minigame {
     private boolean resultMinigame = true;
     private int nMistakes;
     private boolean isRepsCompleted;
+    private long startMinigame = 0;
+    private int endMinigame = 0;
+    private boolean isFirstTimePressed = true;
 
 
     /**
@@ -39,6 +43,10 @@ public class BenchMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
+        if (isFirstTimePressed) {
+            isFirstTimePressed = false;
+            startTime = System.nanoTime();
+        }
         if (nTimesPressed == 0) {
             isRepsCompleted = false;
             startTime = System.nanoTime();
@@ -64,6 +72,7 @@ public class BenchMinigame implements Minigame {
      */
     private void checkIfCompletedReps() {
         long endTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+        System.out.println("End time: " + endTime);
         if (endTime < difficulty.getReactionTime()) {
             if (nTimesPressed == difficulty.getTouchForLift()) {
                 isRepsCompleted = true;
@@ -71,6 +80,9 @@ public class BenchMinigame implements Minigame {
                 numReps++;
             }
             if (numReps == difficulty.getRequiredReps()) {
+                endMinigame = (int)TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
+                System.out.println("End minigame: " + endMinigame);
+                System.out.println("Exssa" + TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
                 isMinigameEnded = true;
             }
         } else {
@@ -123,6 +135,12 @@ public class BenchMinigame implements Minigame {
     @Override
     public MinigameDifficulty getDifficulty() {
         return difficulty;
+    }
+
+    public long getEndMinigame() {
+        int seconds = endMinigame / 1000;
+        int hundredths = (endMinigame % 1000) / 10;
+        return seconds + hundredths;
     }
 
 

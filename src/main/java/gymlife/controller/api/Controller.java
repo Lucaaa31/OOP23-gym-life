@@ -120,4 +120,7 @@ public interface Controller {
     void setMinigameManager(MinigameManager minigameManager);
 
     List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
+
+    int getMinigameResult();
+
 }

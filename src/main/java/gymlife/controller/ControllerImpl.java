@@ -142,8 +142,6 @@ public class ControllerImpl implements Controller {
         return scenariosManager.getActualScenariosType();
     }
 
-
-
     /**
      * Sets the difficulty level of the current minigame,
      * and starts it.
@@ -183,7 +181,7 @@ public class ControllerImpl implements Controller {
     public void setMinigameResult() {
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
-                minigameManager.getMinigameResult());
+                minigameManager.getEndTime());
         statsManager.setStat(minigameManager.getMinigameType().getStatsType(), minigameManager.getMinigameResult());
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
@@ -206,5 +204,10 @@ public class ControllerImpl implements Controller {
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
         return scoringTableManager.getScores(minigameType, difficulty);
     }
+
+    public int getMinigameResult(){
+        return minigameManager.getMinigameResult();
+    }
+
 
 }

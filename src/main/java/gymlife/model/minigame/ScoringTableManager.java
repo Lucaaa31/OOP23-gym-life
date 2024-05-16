@@ -32,9 +32,9 @@ public class ScoringTableManager {
      * @param difficulty   the difficulty of the minigame
      * @param score        the score to update
      */
-    public void updateMinigameScore(final MinigameType minigameType, final MinigameDifficulty difficulty, final int score) {
-        ScoringTable table = scoringTables.get(minigameType);
-        table.updateScore(difficulty, score);
+    public void updateMinigameScore(final MinigameType minigameType, final MinigameDifficulty difficulty, final long score) {
+        System.out.println("Updating score for " + minigameType + " with difficulty " + difficulty + " and score " + score);
+        scoringTables.get(minigameType).updateScore(difficulty, (int)score);
     }
 
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {

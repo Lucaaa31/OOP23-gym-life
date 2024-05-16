@@ -2,10 +2,7 @@ package gymlife.model.minigame;
 
 import gymlife.utility.minigame.MinigameDifficulty;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -14,7 +11,7 @@ import java.util.stream.Collectors;
  * It keeps track of the top 5 scores of the players in all the three difficulties.
  */
 public class ScoringTable {
-    private final Map<MinigameDifficulty, List<Integer>> scores;
+    private Map<MinigameDifficulty, List<Integer>> scores;
 
     /**
      * Constructs a new ScoringTable object.
@@ -25,7 +22,7 @@ public class ScoringTable {
         for (MinigameDifficulty difficulty : MinigameDifficulty.values()) {
             scores.put(difficulty, null);
         }
-        scores.put(MinigameDifficulty.EASY, List.of(3, 1, 4));
+        scores.put(MinigameDifficulty.EASY, List.of(20000, 10000, 40000));
     }
 
     /**
@@ -37,10 +34,13 @@ public class ScoringTable {
      * @param score      the score of the player
      */
     public void updateScore(final MinigameDifficulty difficulty, final int score) {
-        scores.get(difficulty).add(score);
-        if (scores.get(difficulty).size() > 5) {
+        List<Integer> tmpList = new LinkedList<>(scores.get(difficulty));
+        tmpList.add(score);
+        if (tmpList.size() > 5) {
             scores.get(difficulty).remove(findMinimun(difficulty));
         }
+        scores.remove(difficulty, scores.get(difficulty));
+        scores.put(difficulty, tmpList);
     }
 
     /**
