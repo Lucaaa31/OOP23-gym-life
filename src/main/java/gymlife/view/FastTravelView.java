@@ -4,6 +4,7 @@ import gymlife.controller.api.Controller;
 import gymlife.model.GameMapImpl;
 import gymlife.utility.MapConstants;
 import gymlife.utility.ScenariosType;
+import gymlife.view.api.GamePanel;
 
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -23,7 +24,7 @@ import java.util.Locale;
 /**
  * Interface for when the player has to move from his current location to a different map.
  */
-public final class FastTravelView extends JPanel {
+public final class FastTravelView extends GamePanel {
 
     @Serial
     private static final long serialVersionUID = -5960084209507548196L;
@@ -101,6 +102,7 @@ public final class FastTravelView extends JPanel {
                 controller.goToNewMap(GameMapImpl.fromString(loc));
                 controller.changeScenario(ScenariosType.INDOOR_MAP);
                 changeLocation();
+                disableFocus();
             }
         };
 
@@ -153,5 +155,19 @@ public final class FastTravelView extends JPanel {
 
     private String getMap() {
         return controller.getCurrentMap().getName();
+    }
+
+    @Override
+    public void resizeComponents() {
+
+    }
+
+    @Override
+    public String getPanelName() {
+        return "fastTravel";
+    }
+
+    private void disableFocus() {
+        this.transferFocus();
     }
 }
