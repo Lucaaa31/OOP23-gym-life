@@ -3,7 +3,6 @@ package gymlife.view;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,16 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.JComponent;
-import javax.swing.ImageIcon;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 
 import java.io.Serial;
@@ -39,12 +36,12 @@ public class MainView extends JFrame {
     @Serial
     private static final long serialVersionUID = -3544425205075144844L;
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
-    private Controller controller;
+    private transient Controller controller;
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final JPanel newGame = new JPanel();
-    private JPanel fastTravelView;
+    //private JPanel fastTravelView;
     private JPanel statsView;
     private JPanel gameMapView;
     private GameDifficulty difficulty;
@@ -57,7 +54,6 @@ public class MainView extends JFrame {
         this.setSize(dimensionGetter.getFrameDimension());
         this.newGame();
         this.setUndecorated(true);
-        this.requestFocusInWindow();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -69,6 +65,12 @@ public class MainView extends JFrame {
      * Adds the character view panel to the main frame and makes it visible.
      */
     public void start() {
+        final CardLayout scenarioLayout = new CardLayout();
+        final CardLayout sideLayout = new CardLayout();
+        scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
+        sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
+        mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
+        this.setPreferredSize(dimensionGetter.getFrameDimension());
         this.controller = new ControllerImpl(difficulty);
         this.statsView = new SideStatsView(controller, dimensionGetter);
         this.gameMapView = new GameMapView(controller, dimensionGetter);
@@ -77,12 +79,10 @@ public class MainView extends JFrame {
         mainPanel.setLayout(new BorderLayout());
 
         scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
-        CardLayout scenarioLayout = new CardLayout();
         scenariosContainer.setLayout(scenarioLayout);
         scenariosContainer.setBackground(Color.RED);
 
         sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
-        CardLayout sideLayout = new CardLayout();
         sideContainer.setLayout(sideLayout);
         sideContainer.setBackground(Color.BLUE);
 
@@ -111,14 +111,6 @@ public class MainView extends JFrame {
             }
         };
 
-        // Creazione dell'azione per il tasto 'e'
-        final Action checkScenario = new AbstractAction() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                checkScenario();
-                System.out.println("Checking scenarioooo");
-            }
-        };
 
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('+'), "increase size");
@@ -128,13 +120,7 @@ public class MainView extends JFrame {
                 .put(KeyStroke.getKeyStroke('-'), "decrease size");
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
 
-        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke('e'), "check scenario");
-        mainPanel.getActionMap().put("check scenario", checkScenario);
-
-
         sideContainer.add(statsView, BorderLayout.CENTER);
-        statsView.setVisible(true);
         scenariosContainer.add(gameMapView, ScenariosType.INDOOR_MAP.toString());
         scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
 
@@ -142,13 +128,15 @@ public class MainView extends JFrame {
 
         scenariosContainer.setDoubleBuffered(true);
         sideContainer.setDoubleBuffered(true);
+        statsView.setVisible(true);
         sideContainer.setVisible(true);
         this.add(mainPanel);
-        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);
-        this.setVisible(true);
         this.setFocusable(true);
         this.requestFocusInWindow();
+        this.pack();
+        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
+        this.setVisible(true);
         gameMapView.requestFocusInWindow();
     }
 
@@ -184,39 +172,31 @@ public class MainView extends JFrame {
      * Adds the new game panel to the frame.
      */
     private void newGame() {
-        newGame.setLayout(new GridLayout(3, 1));
         FontLoader.loadFont();
+        final Color backgroundColor = Color.DARK_GRAY;
         final int borderSize = 15;
         final int fontDescriptionSize = 55;
-        Border border = BorderFactory.createLineBorder(Color.BLACK, borderSize);
 
-        JLabel textLabel = new JLabel();
-        JLabel descriptiontext = new JLabel();
+        final JButton buttonEasy = this.buildButton(Color.GREEN, GameDifficulty.EASY);
+        final JButton buttonMedium = this.buildButton(Color.YELLOW, GameDifficulty.MEDIUM);
+        final JButton buttonHard = this.buildButton(Color.RED, GameDifficulty.HARD);
+        final JPanel labelEasy = buildPanel(buttonEasy);
+        final JPanel labelMedium = buildPanel(buttonMedium);
+        final JPanel labelHard = buildPanel(buttonHard);
 
-        JButton buttonEasy = this.buildButton(Color.GREEN, GameDifficulty.EASY);
-        JButton buttonMedium = this.buildButton(Color.YELLOW, GameDifficulty.MEDIUM);
-        JButton buttonHard = this.buildButton(Color.RED, GameDifficulty.HARD);
+        final JLabel textLabel = new JLabel();
+        final JLabel descriptionText = new JLabel();
+        final JLabel buttonLabel = new JLabel();
 
-        JLabel buttonLabel = new JLabel();
         buttonLabel.setLayout(new GridLayout(1, 3));
         buttonLabel.setSize(new Dimension(dimensionGetter.getButtonLabelDimension().width * 3,
                 dimensionGetter.getButtonLabelDimension().height));
 
-        JPanel labelEasy = buildPanel(buttonEasy);
         buttonLabel.add(labelEasy);
-
-        JPanel labelMedium = buildPanel(buttonMedium);
         buttonLabel.add(labelMedium);
-
-        JPanel labelHard = buildPanel(buttonHard);
         buttonLabel.add(labelHard);
 
-        newGame.add(textLabel);
-        newGame.add(descriptiontext);
-        newGame.add(buttonLabel);
-        newGame.setBorder(border);
-
-        textLabel.setBackground(Color.DARK_GRAY);
+        textLabel.setBackground(backgroundColor);
         textLabel.setText("New Game");
         textLabel.setOpaque(true);
         textLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,37 +204,20 @@ public class MainView extends JFrame {
         textLabel.setFont(FontLoader.getCustomFont(100));
         textLabel.setForeground(Color.WHITE);
 
-        descriptiontext.setBackground(Color.DARK_GRAY);
-        descriptiontext.setText("Select the difficulty level of the game");
-        descriptiontext.setOpaque(true);
-        descriptiontext.setHorizontalAlignment(SwingConstants.CENTER);
-        descriptiontext.setVerticalAlignment(SwingConstants.NORTH);
-        descriptiontext.setFont(FontLoader.getCustomFont(fontDescriptionSize));
-        descriptiontext.setForeground(Color.WHITE);
+        descriptionText.setBackground(backgroundColor);
+        descriptionText.setText("Select the difficulty level of the game");
+        descriptionText.setOpaque(true);
+        descriptionText.setHorizontalAlignment(SwingConstants.CENTER);
+        descriptionText.setVerticalAlignment(SwingConstants.NORTH);
+        descriptionText.setFont(FontLoader.getCustomFont(fontDescriptionSize));
+        descriptionText.setForeground(Color.WHITE);
 
+        newGame.setLayout(new GridLayout(3, 1));
+        newGame.add(textLabel);
+        newGame.add(descriptionText);
+        newGame.add(buttonLabel);
+        newGame.setBorder(new LineBorder(Color.WHITE, borderSize));
         this.add(newGame);
-    }
-    /**
-     * Return the ImageIcona that is in the path.
-     * @return ImageIcon
-     * @param path the path of the image
-     */
-    private ImageIcon getIcon(final String path) {
-        return new ImageIcon(new ImageIcon(ClassLoader.
-                getSystemResource(path))
-                .getImage()
-                .getScaledInstance(dimensionGetter.getButtonStartDimension().width,
-                        dimensionGetter.getButtonStartDimension().height,
-                        Image.SCALE_FAST));
-    }
-    /**
-     * Checks the scenario.
-     */
-    private void checkScenario() {
-        System.out.println("Checking scenario");
-        ScenariosType actualScenario = controller.getActualScenario();
-        System.out.println(actualScenario);
-        System.out.println(ScenariosType.INDOOR_MAP.toString());
     }
     /**
      * Builds a button with the specified color and difficulty.
@@ -265,15 +228,17 @@ public class MainView extends JFrame {
      * @param difficulty the difficulty of the game
      */
     private JButton buildButton(final Color color, final GameDifficulty difficulty) {
-        JButton button = new JButton(difficulty.toString());
+        final int borderSize = 5;
+        final int fontSize = 60;
+        final JButton button = new JButton(difficulty.toString());
         button.setBackground(color);
-        button.setBorder(new LineBorder(Color.WHITE, 5, true));
+        button.setBorder(new LineBorder(Color.WHITE, borderSize));
         button.setForeground(Color.BLACK);
         button.setBorderPainted(true);
         button.setPreferredSize(dimensionGetter.getButtonStartDimension());
         button.setOpaque(true);
         button.setContentAreaFilled(true);
-        button.setFont(FontLoader.getCustomFont(60));
+        button.setFont(FontLoader.getCustomFont(fontSize));
         button.setVerticalAlignment(SwingConstants.CENTER);
         button.addActionListener(e -> {
             this.difficulty = difficulty;
@@ -288,7 +253,7 @@ public class MainView extends JFrame {
      * @return JPanel
      * @param button the button to be added to the panel
      */
-    private JPanel buildPanel (final JButton button){
+    private JPanel buildPanel(final JButton button) {
         final JPanel panel = new JPanel();
         panel.setOpaque(true);
         panel.setBackground(Color.DARK_GRAY);

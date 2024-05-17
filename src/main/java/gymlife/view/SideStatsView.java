@@ -252,6 +252,6 @@ public class SideStatsView extends JPanel {
                 .getImage()
                 .getScaledInstance(dimensionGetter.getSquareStatsDimension().width,
                         dimensionGetter.getSquareStatsDimension().height,
-                        Image.SCALE_FAST));
+                        Image.SCALE_SMOOTH));
     }
 }

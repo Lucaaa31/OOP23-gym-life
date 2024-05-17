@@ -10,7 +10,7 @@ import java.awt.Toolkit;
  */
 public class DimensionGetter {
     // Proportion to reduce the screen size to get the frame dimension
-    private static final double RIDIMENTION_PROPORTION = 1.1;
+    private static final double RIDIMENTION_PROPORTION = 1.4;
     // Increment value used to increase or decrease the screen dimension
     private static final int INCREMENT = 5;
     // The actual frame dimension calculated based on the screen size and RIDIMENTION_PROPORTION
@@ -19,6 +19,7 @@ public class DimensionGetter {
             (int) (Toolkit.getDefaultToolkit().getScreenSize().height / RIDIMENTION_PROPORTION));
     private static final double SCENARIO_PROPORTION = 0.75;
     private static final double SIDE_PROPORTION = 0.25;
+    private static final double BUTTON_PROPORTION = 0.25;
     private static final int BIG_FONT_SIZE = 32;
     private static final int SMALL_FONT_SIZE = 35;
     private static final int FRAME_HEIGTH = 9;
@@ -40,7 +41,6 @@ public class DimensionGetter {
     public Dimension getScenarioDimension() {
         return new Dimension((int) (actualFrameDimension.width * SCENARIO_PROPORTION), actualFrameDimension.height);
     }
-
     /**
      * Returns the side dimension which is 25% of the frame width and equal to the frame height.
      * @return the side dimension
@@ -48,7 +48,6 @@ public class DimensionGetter {
     public Dimension getSideDimension() {
         return new Dimension((int) (actualFrameDimension.width * SIDE_PROPORTION), actualFrameDimension.height);
     }
-
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
      * @return the cell dimension
@@ -57,7 +56,6 @@ public class DimensionGetter {
         return new Dimension((int) (actualFrameDimension.width * SCENARIO_PROPORTION) / MapConstants.MAP_X_DIM,
                 actualFrameDimension.height / MapConstants.MAP_Y_DIM);
     }
-
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
      * @return the cell dimension
@@ -66,10 +64,18 @@ public class DimensionGetter {
         return new Dimension(actualFrameDimension.height / SQUARE_STATS,
                 actualFrameDimension.height / SQUARE_STATS);
     }
-
+    /**
+     * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     * @return the cell dimension
+     */
     public Dimension getButtonStartDimension() {
-        return new Dimension(actualFrameDimension.width / 5, actualFrameDimension.height / 5);
+        return new Dimension((int) (actualFrameDimension.width * BUTTON_PROPORTION),
+                (int) (actualFrameDimension.height * BUTTON_PROPORTION));
     }
+    /**
+     * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     * @return the cell dimension
+     */
     public Dimension getButtonLabelDimension() {
         return new Dimension(actualFrameDimension.width / 3, actualFrameDimension.height / 2);
     }
@@ -80,7 +86,6 @@ public class DimensionGetter {
     public float getBigFontSize() {
         return (float) actualFrameDimension.width / BIG_FONT_SIZE;
     }
-
     /**
      * Returns the small font size which is the frame width divided by 35.
      * @return the small font size
@@ -88,7 +93,6 @@ public class DimensionGetter {
     public float getSmallFontSize() {
         return (float) actualFrameDimension.width / SMALL_FONT_SIZE;
     }
-
     /**
      * Increases the screen dimension by a fixed increment.
      */
@@ -96,7 +100,6 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width + INCREMENT * FRAME_WIDTH,
                 actualFrameDimension.height + INCREMENT * FRAME_HEIGTH);
     }
-
     /**
      * Decreases the screen dimension by a fixed decrement.
      */
