@@ -11,10 +11,10 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.event.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ActionEvent;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.Serial;
 import java.util.Map;
 
@@ -39,7 +39,7 @@ public class MainView extends JFrame {
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
     private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
     private final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
-    private final GamePanel fastTravelView = new FastTravelView(controller);
+    private final GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
 
     /**
      * Starts the main view of the application.
@@ -76,7 +76,7 @@ public class MainView extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.incScreenDimension();
                 resizeComponents();
-                ((GameMapView) gameMapView).resizeComponents();
+                scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 ((SideStatsView) statsView).resizeStats();
             }
         };
@@ -87,7 +87,7 @@ public class MainView extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.decScreenDimension();
                 resizeComponents();
-                ((GameMapView) gameMapView).resizeComponents();
+                scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 ((SideStatsView) statsView).resizeStats();
             }
         };
