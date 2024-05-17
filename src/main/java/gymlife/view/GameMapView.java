@@ -11,8 +11,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Color;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -21,7 +19,6 @@ import java.io.ObjectInputStream;
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -83,6 +80,7 @@ public final class GameMapView extends GamePanel {
         // Set focusable and add key listener
         setFocusable(true);
         requestFocusInWindow();
+
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
@@ -91,14 +89,12 @@ public final class GameMapView extends GamePanel {
                     controller.moveCharacter(Directions.getDir(key).get());
                     characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(key).get());
                     moveCharacter();
-                } else if (key == 'e') {
-                    if (controller.getCurrentMap()
+                } else if (key == 'e' && controller.getCurrentMap()
                             .getCellAtCoord(controller.getCharacterPos())
                             .getInteraction()
-                            .isPresent()){
-                        controller.cellInteraction();
-                        GameMapView.super.transferFocus();
-                    }
+                            .isPresent()) {
+                    controller.cellInteraction();
+                    GameMapView.super.transferFocus();
                 }
             }
             @Override
@@ -184,6 +180,9 @@ public final class GameMapView extends GamePanel {
         return "gameMap";
     }
 
+    /**
+     * Method to load the game's current map and set its size accordingly.
+     */
     public void loadMap() {
         for (int y = 0; y < MapConstants.MAP_Y_DIM; y++) {
             for (int x = 0; x < MapConstants.MAP_X_DIM; x++) {

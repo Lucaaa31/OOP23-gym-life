@@ -87,6 +87,7 @@ public enum GameMapImpl implements GameMap {
         return valueOf(name.toUpperCase(new Locale("en")) + "_MAP");
     }
 
+    @Override
     public Position getDefaultPosition() {
         return this.defaultPosition;
     }

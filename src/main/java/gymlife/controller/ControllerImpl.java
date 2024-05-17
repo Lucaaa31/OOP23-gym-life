@@ -143,6 +143,9 @@ public class ControllerImpl implements Controller {
         scenariosManager.updateScenarios(newScenario);
     }
 
+    /**
+     * Method to return the character to the current map's default position.
+     */
     @Override
     public void resetPlayerPosition() {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());

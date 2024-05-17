@@ -6,7 +6,6 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -52,7 +51,7 @@ public class MainView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
-                ScenariosType.INDOOR_MAP , gameMapView,
+                ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
@@ -105,10 +104,10 @@ public class MainView extends JFrame {
         scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
         scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
 
-        FocusAdapter fa = new FocusAdapter() {
+        final FocusAdapter fa = new FocusAdapter() {
             @Override
-            public void focusLost(FocusEvent e) {
-                GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
+            public void focusLost(final FocusEvent e) {
+                final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
                 layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
                 panelToSwitchTo.requestFocusInWindow();
                 panelToSwitchTo.resizeComponents();

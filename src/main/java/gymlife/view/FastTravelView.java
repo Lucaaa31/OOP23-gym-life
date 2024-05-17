@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.GameMapImpl;
+import gymlife.utility.FontLoader;
 import gymlife.utility.MapConstants;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
@@ -11,14 +12,19 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.GridLayout;
-import java.awt.Dimension;
-import java.awt.event.*;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 
 import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Interface for when the player has to move from his current location to a different map.
@@ -31,16 +37,18 @@ public final class FastTravelView extends GamePanel {
     private final transient DimensionGetter dimensionGetter;
     private final JLabel mapLabel;
     private final JPanel buttonsPanel;
+    private final List<JButton> buttonsList;
 
     /**
      * Constructor for the Interface.
      *
      * @param controller takes the unique controller given by the MainView.
+     * @param dimensionGetter the manager of the GamePanel's dimensions.
      */
     public FastTravelView(final Controller controller, final DimensionGetter dimensionGetter) {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
-        this.setSize(dimensionGetter.getScenarioDimension());
+        this.setSize(dimensionGetter.getFastTravelDimension());
 
         this.setLayout(new BorderLayout());
         this.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
@@ -49,14 +57,16 @@ public final class FastTravelView extends GamePanel {
         final JPanel mapPanel = new JPanel(new BorderLayout());
         mapPanel.setBackground(MapConstants.FAST_TRAVEL_MAP_BG_COLOR);
 
-        buttonsPanel = new JPanel(new GridLayout(1,3));
-        buttonsPanel.setPreferredSize(new Dimension(
-                dimensionGetter.getScenarioDimension().width,
-                dimensionGetter.getScenarioDimension().height/8));
+        buttonsPanel = new JPanel(new GridLayout(1, 3));
+        buttonsPanel.setPreferredSize(dimensionGetter.getFastTravelButtonsDimension());
 
-        final JButton gymButton = new JButton("Gym");
-        final JButton houseButton = new JButton("House");
-        final JButton shopButton = new JButton("Shop");
+        buttonsList = new ArrayList<>(Set.of(
+                new JButton("Gym"),
+                new JButton("House"),
+                new JButton("Shop")));
+
+        FontLoader.loadFont();
+        buttonsList.forEach(button -> button.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize())));
 
         final MouseAdapter ml = new MouseAdapter() {
             @Override
@@ -66,6 +76,7 @@ public final class FastTravelView extends GamePanel {
                     showWay(loc);
                 }
             }
+
             @Override
             public void mouseExited(final MouseEvent e) {
                 changeLocation();
@@ -81,20 +92,17 @@ public final class FastTravelView extends GamePanel {
             disableFocus();
         };
 
-        gymButton.addMouseListener(ml);
-        houseButton.addMouseListener(ml);
-        shopButton.addMouseListener(ml);
-
-        gymButton.addActionListener(al);
-        houseButton.addActionListener(al);
-        shopButton.addActionListener(al);
-
+        buttonsList.forEach(button -> {
+            button.addMouseListener(ml);
+            button.addActionListener(al);
+            button.setOpaque(true);
+            button.setBackground(MapConstants.BUTTONS_COLOR);
+            button.setForeground(Color.WHITE);
+            buttonsPanel.add(button);
+        });
 
         this.add(mapPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.SOUTH);
-        buttonsPanel.add(shopButton);
-        buttonsPanel.add(houseButton);
-        buttonsPanel.add(gymButton);
         this.mapLabel = new JLabel();
         changeLocation();
         mapPanel.add(mapLabel);
@@ -122,17 +130,17 @@ public final class FastTravelView extends GamePanel {
     public void resizeComponents() {
         final String path = MapConstants.FAST_TRAVEL_FILES_PATH + "current_" + getMap() + ".png";
         mapLabel.setIcon(loadResizedImage(path));
-        buttonsPanel.setPreferredSize(new Dimension(
-                dimensionGetter.getScenarioDimension().width,
-                dimensionGetter.getScenarioDimension().height/8));
+        buttonsPanel.setPreferredSize(dimensionGetter.getFastTravelButtonsDimension());
+        buttonsList.forEach(button -> button.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize())));
+
 
     }
 
     private ImageIcon loadResizedImage(final String path) {
         final Image imgToResize = new ImageIcon(ClassLoader.getSystemResource(path)).getImage();
         return new ImageIcon(imgToResize.getScaledInstance(
-                dimensionGetter.getScenarioDimension().width,
-                dimensionGetter.getScenarioDimension().height * 7/8,
+                dimensionGetter.getFastTravelDimension().width,
+                dimensionGetter.getFastTravelDimension().height,
                 Image.SCALE_SMOOTH));
     }
 

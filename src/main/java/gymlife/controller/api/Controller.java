@@ -75,5 +75,8 @@ public interface Controller {
      */
     void changeScenario(ScenariosType newScenario);
 
+    /**
+     * Method to return the player to the default position of the map he's in.
+     */
     void resetPlayerPosition();
 }
