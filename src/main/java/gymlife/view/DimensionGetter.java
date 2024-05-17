@@ -123,7 +123,7 @@ public class DimensionGetter {
      */
     public void incScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width + INCREMENT * FRAME_WIDTH,
-                actualFrameDimension.height + INCREMENT * FRAME_HEIGTH);
+                actualFrameDimension.height + INCREMENT * FRAME_HEIGHT);
     }
 
     /**
@@ -131,6 +131,6 @@ public class DimensionGetter {
      */
     public void decScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
-                actualFrameDimension.height - INCREMENT * FRAME_HEIGTH);
+                actualFrameDimension.height - INCREMENT * FRAME_HEIGHT);
     }
 }
