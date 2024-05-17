@@ -72,16 +72,13 @@ public final class FastTravelView extends GamePanel {
             }
         };
 
-        final ActionListener al = new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final String loc = ((JButton) e.getSource()).getText();
-                controller.goToNewMap(GameMapImpl.fromString(loc));
-                controller.changeScenario(ScenariosType.INDOOR_MAP);
-                controller.resetPlayerPosition();
-                changeLocation();
-                disableFocus();
-            }
+        final ActionListener al = e -> {
+            final String loc = ((JButton) e.getSource()).getText();
+            controller.goToNewMap(GameMapImpl.fromString(loc));
+            controller.changeScenario(ScenariosType.INDOOR_MAP);
+            controller.resetPlayerPosition();
+            changeLocation();
+            disableFocus();
         };
 
         gymButton.addMouseListener(ml);
@@ -106,13 +103,13 @@ public final class FastTravelView extends GamePanel {
 
     private void showWay(final String whereToGo) {
         final String fileName = getMap() + "_to_" + whereToGo + ".png";
-        final ImageIcon img = loadResizedImage("images/fastTravelMap/" + fileName);
+        final ImageIcon img = loadResizedImage(MapConstants.FAST_TRAVEL_FILES_PATH + fileName);
         mapLabel.setIcon(img);
     }
 
     private void changeLocation() {
         final String fileName = "current_" + getMap() + ".png";
-        final ImageIcon img = loadResizedImage("images/fastTravelMap/" + fileName);
+        final ImageIcon img = loadResizedImage(MapConstants.FAST_TRAVEL_FILES_PATH + fileName);
         mapLabel.setIcon(img);
     }
 
@@ -123,7 +120,7 @@ public final class FastTravelView extends GamePanel {
 
     @Override
     public void resizeComponents() {
-        final String path = "images/fastTravelMap/current_" + getMap() + ".png";
+        final String path = MapConstants.FAST_TRAVEL_FILES_PATH + "current_" + getMap() + ".png";
         mapLabel.setIcon(loadResizedImage(path));
         buttonsPanel.setPreferredSize(new Dimension(
                 dimensionGetter.getScenarioDimension().width,
@@ -135,7 +132,7 @@ public final class FastTravelView extends GamePanel {
         final Image imgToResize = new ImageIcon(ClassLoader.getSystemResource(path)).getImage();
         return new ImageIcon(imgToResize.getScaledInstance(
                 dimensionGetter.getScenarioDimension().width,
-                dimensionGetter.getScenarioDimension().height,
+                dimensionGetter.getScenarioDimension().height * 7/8,
                 Image.SCALE_SMOOTH));
     }
 

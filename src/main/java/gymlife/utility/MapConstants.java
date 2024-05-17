@@ -27,6 +27,8 @@ public final class MapConstants {
      */
     public static final Color FAST_TRAVEL_MAP_BG_COLOR = new Color(4, 35, 0);
 
+    public static final String FAST_TRAVEL_FILES_PATH = "images/fastTravelMap/";
+
     private MapConstants() {
 
     }
