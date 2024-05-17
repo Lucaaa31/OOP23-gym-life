@@ -1,8 +1,8 @@
 package gymlife.controller.api;
 
+import gymlife.model.api.GameMap;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.api.GameMap;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
@@ -19,14 +19,14 @@ import java.util.Map;
 public interface Controller {
     /**
      * Moves the character in the specified direction.
-     *
+     * 
      * @param dir the direction in which to move the character
      */
     void moveCharacter(Directions dir);
 
     /**
      * Returns the current position of the character.
-     *
+     * 
      * @return the position of the character
      */
     Position getCharacterPos();
@@ -46,8 +46,7 @@ public interface Controller {
     void goToNewMap(GameMap newMap);
 
     /**
-     * Returns the current game map.
-     *
+     * Method to get the current map.
      * @return Returns the current map.
      */
     GameMap getCurrentMap();
@@ -65,9 +64,19 @@ public interface Controller {
     int getPlayerLevel();
 
     /**
-     * Returns the current scenario type.
-     *
-     * @return the current scenario type
+     * Method to get the current Scenario of the game.
+     * @return Returns the ScenariosType of the current scenario.
      */
     ScenariosType getActualScenario();
+
+    /**
+     * Method to modify the current scenario.
+     * @param newScenario The ScenariosType to change the current one to.
+     */
+    void changeScenario(ScenariosType newScenario);
+
+    /**
+     * Method to return the player to the default position of the map he's in.
+     */
+    void resetPlayerPosition();
 }

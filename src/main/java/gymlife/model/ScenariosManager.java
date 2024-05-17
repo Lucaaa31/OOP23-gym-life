@@ -16,19 +16,7 @@ public class ScenariosManager {
      * @param scenariosType the new scenario type to be set
      */
     public void updateScenarios(final ScenariosType scenariosType) {
-        switch (scenariosType) {
-            case MINGAME_BANK:
-                actualScenariosType = ScenariosType.MINGAME_BANK;
-                break;
-            case MINIGAME_GYM:
-                actualScenariosType = ScenariosType.MINIGAME_GYM;
-                break;
-            case MAIN_MAP:
-                actualScenariosType = ScenariosType.MAIN_MAP;
-                break;
-            default:
-                break;
-        }
+        this.actualScenariosType = scenariosType;
     }
     /**
      * Retrieves the current scenario type.

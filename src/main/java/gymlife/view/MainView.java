@@ -12,20 +12,28 @@ import javax.swing.SwingConstants;
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
 import java.io.Serial;
+import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.ScenariosType;
+import gymlife.view.api.GamePanel;
+
 import gymlife.utility.ScenariosType;
 
 /**
@@ -57,6 +65,10 @@ public class MainView extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
+    private final transient DimensionGetter dimensionGetter = new DimensionGetter();
+    private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
+    private final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
+    private final GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
 
     /**
      * Starts the main view of the application.
@@ -75,11 +87,17 @@ public class MainView extends JFrame {
         this.statsView = new SideStatsView(controller, dimensionGetter);
         this.gameMapView = new GameMapView(controller, dimensionGetter);
 
+        final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
+                ScenariosType.INDOOR_MAP, gameMapView,
+                ScenariosType.MAIN_MAP, fastTravelView);
+
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
 
         scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
         scenariosContainer.setLayout(scenarioLayout);
+        final CardLayout layout = new CardLayout();
+        scenariosContainer.setLayout(layout);
         scenariosContainer.setBackground(Color.RED);
 
         sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
@@ -95,7 +113,7 @@ public class MainView extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.incScreenDimension();
                 resizeComponents();
-                ((GameMapView) gameMapView).resizeComponents();
+                scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 ((SideStatsView) statsView).resizeStats();
             }
         };
@@ -106,7 +124,7 @@ public class MainView extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.decScreenDimension();
                 resizeComponents();
-                ((GameMapView) gameMapView).resizeComponents();
+                scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 ((SideStatsView) statsView).resizeStats();
             }
         };
@@ -123,6 +141,22 @@ public class MainView extends JFrame {
         sideContainer.add(statsView, BorderLayout.CENTER);
         scenariosContainer.add(gameMapView, ScenariosType.INDOOR_MAP.toString());
         scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
+        statsView.setVisible(true);
+
+        scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
+        scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
+
+        final FocusAdapter fa = new FocusAdapter() {
+            @Override
+            public void focusLost(final FocusEvent e) {
+                final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
+                layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
+                panelToSwitchTo.requestFocusInWindow();
+                panelToSwitchTo.resizeComponents();
+            }
+        };
+
+        scenariosPanels.values().forEach(panel -> panel.addFocusListener(fa));
 
         scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
 
@@ -130,13 +164,18 @@ public class MainView extends JFrame {
         sideContainer.setDoubleBuffered(true);
         statsView.setVisible(true);
         sideContainer.setVisible(true);
+        this.setUndecorated(true);
         this.add(mainPanel);
+        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);
+        this.setVisible(true);
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.pack();
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setVisible(true);
+
+
         gameMapView.requestFocusInWindow();
     }
 
@@ -263,4 +302,3 @@ public class MainView extends JFrame {
         return panel;
     }
 }
-

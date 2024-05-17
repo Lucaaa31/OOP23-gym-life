@@ -1,5 +1,7 @@
 package gymlife.utility;
 
+import java.awt.Color;
+
 /**
  * Class containing useful constants for the usage and loading of {@code GameMaps}.
  */
@@ -21,17 +23,17 @@ public final class MapConstants {
      */
     public static final String CELLS_FILES_PATH = "images/cells/";
     /**
-     * The position on which the player must spawn when going into the House map.
+     * The standard color for the background of the fast travel interface.
      */
-    public static final Position HOUSE_INITIAL_POSITION = new Position(6, 2);
+    public static final Color FAST_TRAVEL_MAP_BG_COLOR = new Color(4, 35, 0);
     /**
-     * The position on which the player must spawn when going into the Shop map.
+     * Standard path for the FastTravel images.
      */
-    public static final Position SHOP_INITIAL_POSITION = new Position(6, 4);
+    public static final String FAST_TRAVEL_FILES_PATH = "images/fastTravelMap/";
     /**
-     * The position on which the player must spawn when going into the Gym map.
+     * Standard color for Fast Travel buttons.
      */
-    public static final Position GYM_INITIAL_POSITION = new Position(1, 3);
+    public static final Color BUTTONS_COLOR = new Color(0, 85, 14);
 
     private MapConstants() {
 
