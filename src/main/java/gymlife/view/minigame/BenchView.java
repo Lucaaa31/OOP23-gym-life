@@ -1,18 +1,18 @@
 package gymlife.view.minigame;
 
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JProgressBar;
-import java.awt.*;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.view.DimensionGetter;
+import gymlife.view.api.MinigamePanel;
 
 /**
  * The BenchView class represents a panel that displays the bench press
@@ -20,21 +20,18 @@ import gymlife.view.DimensionGetter;
  * It extends the JPanel class and contains a button, an image label, and a
  * timer view.
  */
-public class BenchView extends JPanel {
+public class BenchView extends JPanel implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
     private final JButton buttonMinigame = new JButton("Press me");
     private final JLabel characterLabel = new JLabel();
-    private final transient Controller controller;
-    private final JLayeredPane layeredPane = new JLayeredPane();
-    private final JLabel backgroundLabel = new JLabel();
     private final JProgressBar progressBar = new JProgressBar();
-
-    private final ImageIcon backgroundImage;
     private ImageIcon characterImage;
     private final DimensionGetter dimensionGetter;
-
-    private JLabel timerView = new JLabel();
+    private final JLabel timerView = new JLabel();
+    private final JLabel backgroundLabel = new JLabel();
+    private ImageIcon backgroundImage;
+    private final JLayeredPane layeredPane = new JLayeredPane();
 
     /**
      * Constructs a BenchView object with the specified controller.
@@ -44,21 +41,21 @@ public class BenchView extends JPanel {
      * @param controller the controller implementation
      */
     public BenchView(final Controller controller, final DimensionGetter dimensionGetter) {
-        this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setLayout(new BorderLayout());
+        this.setSize(dimensionGetter.getScenarioDimension());
+
 
         backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
-        characterImage = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_0.png");
+        characterImage = getIcon("images/Minigame/bench_press/sprite_0.png");
 
-        this.setSize(dimensionGetter.getScenarioDimension());
 
         progressBar.setOrientation(JProgressBar.VERTICAL);
         progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
 
         this.add(progressBar, BorderLayout.EAST);
         this.add(layeredPane, BorderLayout.CENTER);
-        layeredPane.setLayout(null);
+        layeredPane.setLayout(new BorderLayout());
 
         layeredPane.setBounds(0, 0, dimensionGetter.getScenarioDimension().width - 100,
                 dimensionGetter.getScenarioDimension().height);
@@ -66,16 +63,13 @@ public class BenchView extends JPanel {
         FontLoader.loadFont();
 
         buttonMinigame.setSize(100, 100);
-        //buttonMinigame.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
         buttonMinigame.setBackground(Color.GREEN);
         setRandomPositionButton();
 
 
-        timerView.setBounds(0, 0, 130, 50);
+        timerView.setLocation(0, 0);
         timerView.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
         timerView.setForeground(Color.YELLOW);
-
-
 
 
         backgroundImage.setImage(backgroundImage.getImage()
@@ -85,8 +79,8 @@ public class BenchView extends JPanel {
                         Image.SCALE_SMOOTH));
 
 
-        progressBar.setBackground(Color.WHITE);
-        progressBar.setForeground(Color.BLUE);
+        progressBar.setBackground(new Color(29, 110, 12));
+        progressBar.setForeground(new Color(72, 253, 0));
 
 
         backgroundLabel.setIcon(backgroundImage);
@@ -94,35 +88,63 @@ public class BenchView extends JPanel {
                 dimensionGetter.getScenarioDimension().width - 100,
                 dimensionGetter.getScenarioDimension().height);
 
-        characterLabel.setBounds(300, 300, 320, 320);
-        characterLabel.setLayout(new BorderLayout());
+
+        characterLabel.setSize(dimensionGetter.getCharacterDimension());
+
+        characterLabel.setLocation(dimensionGetter.getCharacterMinigamePos().width,
+                dimensionGetter.getCharacterMinigamePos().height);
+
+
         characterLabel.setIcon(characterImage);
 
         layeredPane.add(buttonMinigame, 0);
         layeredPane.add(backgroundLabel, 1);
-        layeredPane.add(characterLabel, 0);
-        layeredPane.add(timerView, 2);
+        layeredPane.add(characterLabel, BorderLayout.CENTER, 0);
+        layeredPane.add(timerView, 0);
 
         timerView();
 
         doAnimation();
 
-        this.setBackground(Color.BLACK);
 
         buttonMinigame.addActionListener(e -> {
-            if (controller.getDifficulty() != null){
-                progressBar.setValue(progressBar.getValue() + 10);
-                controller.notifyUserAction();
-                if (controller.isRepsDone()) {
+            controller.notifyUserAction();
+            if(controller.checkValidity()){
+                progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
+                if (progressBar.getValue() >= 33 && progressBar.getValue() < 66) {
+                    progressBar.setBackground(new Color(165, 78, 32));
+                    progressBar.setForeground(new Color(255, 89, 0));
+                } else if (progressBar.getValue() >= 66) {
+                    progressBar.setBackground(new Color(142, 25, 25));
+                    progressBar.setForeground(new Color(255, 0, 0));
+                }
+
+                switch (controller.getMinigameState()) {
+                    case ENDED_WON, ENDED_LOST -> {
+                        this.removeAll();
+                        this.revalidate();
+                        this.add(new MinigameEndView(controller));
+                    }
+                    default -> {
+                    }
+                }
+                if (controller.isRepDone()) {
+                    progressBar.setValue(0);
+                    progressBar.setBackground(new Color(29, 110, 12));
+                    progressBar.setForeground(new Color(72, 253, 0));
                     doAnimation();
                 }
-                if (controller.isMinigameEnded()){
-                    this.removeAll();
-                    this.add(new MinigameEndView(controller));
-                }
                 setRandomPositionButton();
-
+            }else{
+                progressBar.setValue(0);
+                progressBar.setBackground(new Color(142, 25, 25));
+                progressBar.setForeground(new Color(255, 0, 0));
+                doAnimation();
+                progressBar.setBackground(new Color(29, 110, 12));
+                progressBar.setForeground(new Color(72, 253, 0));
             }
+
+
         });
 
 
@@ -135,15 +157,17 @@ public class BenchView extends JPanel {
      * Sets a random position for the button within the panel.
      */
     private void setRandomPositionButton() {
-        final int x = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().width - buttonMinigame.getWidth()));
-        final int y = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().height - buttonMinigame.getHeight()));
+        final int x = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().width
+                - progressBar.getWidth() - buttonMinigame.getWidth()));
+        final int y = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().height
+                - buttonMinigame.getHeight()));
         this.buttonMinigame.setBounds(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight());
     }
 
     /**
      * Performs the animation of the character.
      */
-    private void doAnimation() {
+    public void doAnimation() {
         new Thread(() -> {
             buttonMinigame.setEnabled(false);
             buttonMinigame.setBackground(Color.RED);
@@ -153,7 +177,7 @@ public class BenchView extends JPanel {
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
-                characterImage = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_" + state + ".png");
+                characterImage = getIcon("images/Minigame/bench_press/sprite_" + state + ".png");
                 characterLabel.setIcon(characterImage);
             }
             buttonMinigame.setText("Press me!");
@@ -162,7 +186,10 @@ public class BenchView extends JPanel {
         }).start();
     }
 
-    private void timerView() {
+    /**
+     * Updates the timer view.
+     */
+    public void timerView() {
         new Thread(() -> {
             int i = 0;
             while (true) {
@@ -177,6 +204,30 @@ public class BenchView extends JPanel {
     }
 
 
+    public ImageIcon getIcon(final String path) {
+        return new ImageIcon(new ImageIcon(ClassLoader
+                .getSystemResource(path))
+                .getImage()
+                .getScaledInstance(dimensionGetter.getCharacterDimension().width,
+                        dimensionGetter.getCharacterDimension().height,
+                        Image.SCALE_FAST));
+    }
 
+    public void resizeComponents() {
+        System.out.println("Resize components");
+        this.setSize(dimensionGetter.getScenarioDimension());
+        progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
+        characterLabel.setSize(dimensionGetter.getCharacterDimension());
+        characterLabel.setLocation(dimensionGetter.getCharacterMinigamePos().width,
+                dimensionGetter.getCharacterMinigamePos().height);
+        characterLabel.setIcon(characterImage);
+
+        backgroundLabel.setSize(dimensionGetter.getScenarioDimension());
+        backgroundImage.setImage(backgroundImage.getImage()
+                .getScaledInstance(dimensionGetter.getScenarioDimension().width,
+                        dimensionGetter.getScenarioDimension().height,
+                        Image.SCALE_SMOOTH));
+        backgroundLabel.setIcon(backgroundImage);
+    }
 
 }

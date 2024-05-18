@@ -37,7 +37,7 @@ public class ScoringTable {
         List<Integer> tmpList = new LinkedList<>(scores.get(difficulty));
         tmpList.add(score);
         if (tmpList.size() > 5) {
-            scores.get(difficulty).remove(findMinimun(difficulty));
+            scores.get(difficulty).remove(findMax(difficulty));
         }
         scores.remove(difficulty, scores.get(difficulty));
         scores.put(difficulty, tmpList);
@@ -49,16 +49,22 @@ public class ScoringTable {
      * @param difficulty the difficulty of the minigame
      * @return the minimum score in the list of scores
      */
-    public int findMinimun(final MinigameDifficulty difficulty) {
-        int min = scores.get(difficulty).get(0);
+    public int findMax(final MinigameDifficulty difficulty) {
+        int max = scores.get(difficulty).get(0);
         for (int numero : scores.get(difficulty)) {
-            if (numero < min) {
-                min = numero;
+            if (numero > max) {
+                max = numero;
             }
         }
-        return min;
+        return max;
     }
 
+    /**
+     * Returns the list of scores of the given difficulty.
+     *
+     * @param difficulty the difficulty of the minigame
+     * @return the list of scores
+     */
     public List<Integer> getScores(final MinigameDifficulty difficulty) {
         if (scores.get(difficulty) == null) {
             return null;

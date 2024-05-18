@@ -8,6 +8,7 @@ import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import java.util.List;
@@ -88,27 +89,25 @@ public interface Controller {
     void notifyUserAction();
 
 
-    //void setMinigameManager(MinigameManager minigameManager);
-
     /**
-     * javadoc.
+     * Set the minigame result, update the statistics and change the scenario.
      */
     void setMinigameResult();
 
     /**
-     * javadoc.
+     * Check the status of the minigame.
      */
-    boolean isMinigameEnded();
+    MinigameState getMinigameState();
 
     /**
-     * javadoc.
+     * Returns the difficulty level of the minigame.
      */
     MinigameDifficulty getDifficulty();
 
     /**
-     * javadoc.
+     * Check if the reps is done.
      */
-    boolean isRepsDone();
+    boolean isRepDone();
 
     /**
      * Returns the type of the current minigame.
@@ -119,8 +118,14 @@ public interface Controller {
 
     void setMinigameManager(MinigameManager minigameManager);
 
+    /**
+     * Get the score of the player in the scoring table.
+     *
+     * @param minigameType the type of the minigame that has been played
+     * @param difficulty   the difficulty of the minigame that has been played
+     */
     List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
 
-    int getMinigameResult();
 
+    boolean checkValidity();
 }

@@ -19,9 +19,9 @@ import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.model.minigame.MinigameManager;
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-import gymlife.view.minigame.MinigameViewImpl;
-
+import gymlife.view.minigame.MinigameView;
 
 
 /**
@@ -31,14 +31,15 @@ import gymlife.view.minigame.MinigameViewImpl;
 public class MainView extends JFrame {
     @Serial
     private static final long serialVersionUID = -3544425205075144844L;
-    private final transient  Controller controller = new ControllerImpl(GameDifficulty.EASY);
+    private final transient Controller controller = new ControllerImpl(GameDifficulty.EASY);
     private final JPanel mainPanel = new JPanel();
     private final JPanel scenariosContainer = new JPanel();
     private final JPanel sideContainer = new JPanel();
     private final transient DimensionGetter dimensionGetter = new DimensionGetter();
     private final JPanel statsView = new SideStatsView(controller, dimensionGetter);
     private final JPanel gameMapView = new GameMapView(controller, dimensionGetter);
-    private final JPanel minigameView = new MinigameViewImpl(controller, dimensionGetter);
+    private final JPanel minigameView = new MinigameView(controller, dimensionGetter);
+
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -64,7 +65,7 @@ public class MainView extends JFrame {
         controller.setMinigameManager(minigameManager);
         minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
 
-        mainPanel.add(minigameView, BorderLayout.CENTER);
+        mainPanel.add(scenariosContainer, BorderLayout.CENTER);
         mainPanel.add(sideContainer, BorderLayout.EAST);
 
         // Creazione dell'azione per il tasto '+'
@@ -75,6 +76,7 @@ public class MainView extends JFrame {
                 resizeComponents();
                 ((GameMapView) gameMapView).resizeComponents();
                 ((SideStatsView) statsView).resizeStats();
+                ((MinigameView) minigameView).resizeComponents();
             }
         };
 
@@ -86,21 +88,10 @@ public class MainView extends JFrame {
                 resizeComponents();
                 ((GameMapView) gameMapView).resizeComponents();
                 ((SideStatsView) statsView).resizeStats();
+                ((MinigameView) minigameView).resizeComponents();
             }
         };
 
-        final Action switchMinigame = new AbstractAction() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                if (controller.isMinigameEnded()){
-                    ((MinigameViewImpl) minigameView).endMinigame();
-                }else {
-                    ((MinigameViewImpl) minigameView).startMinigame();
-                }
-
-
-            }
-        };
 
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('+'), "increase size");
@@ -108,13 +99,10 @@ public class MainView extends JFrame {
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('-'), "decrease size");
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
-        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke('f'), "switch in minigame");
-        mainPanel.getActionMap().put("switch in minigame", switchMinigame);
 
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
-        scenariosContainer.add(new MinigameViewImpl(controller, dimensionGetter), SwingConstants.CENTER);
+        scenariosContainer.add(minigameView, SwingConstants.CENTER);
 
         gameMapView.setVisible(true);
         gameMapView.setDoubleBuffered(true);

@@ -2,6 +2,7 @@ package gymlife.model.minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 
 /**
  * Represents a Squat Minigame.
@@ -47,15 +48,6 @@ public class SquatMinigame implements Minigame {
     }
 
 
-    /**
-     * Returns the result of the Squat Minigame.
-     *
-     * @return the gain of the Squat Minigame if the game is won, 0 otherwise
-     */
-    @Override
-    public int minigameResult() {
-        return state == 5 ? 0 : difficulty.getExperienceGained();
-    }
 
     /**
      * Return the state of the bench minigame.
@@ -63,8 +55,8 @@ public class SquatMinigame implements Minigame {
      * @return return true if the minigame is ended, false otherwise
      */
     @Override
-    public boolean isMinigameEnded() {
-        return false;
+    public MinigameState getMinigameState() {
+        return null;
     }
 
     /**
@@ -77,10 +69,18 @@ public class SquatMinigame implements Minigame {
         return difficulty;
     }
 
+    /**
+     * Returns the time that took the player to complete the minigame.
+     *
+     * @return the timer of the minigame
+     */
     @Override
-    public long getEndMinigame() {
+    public int getEndMinigame() {
         return 0;
     }
 
-
+    @Override
+    public boolean getValidity() {
+        return false;
+    }
 }

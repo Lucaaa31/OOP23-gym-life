@@ -104,6 +104,7 @@ public final class GameMapView extends JPanel {
         this.setBorder(BORDER);
     }
 
+    // Method to serialize the object
     @Serial
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

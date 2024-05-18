@@ -2,6 +2,7 @@ package gymlife.model.minigame;
 
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -84,22 +85,14 @@ public class MinigameManager {
         return currentMinigameType;
     }
 
-    /**
-     * Used to get the result of the minigame.
-     *
-     * @return the result of the minigame if is a win, 0 otherwise
-     */
-    public int getMinigameResult() {
-        return currentMinigame.minigameResult();
-    }
 
     /**
      * Used to check if the minigame is ended.
      *
-     * @return true if the minigame is ended, false otherwise
+     * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
      */
-    public boolean isMinigameEnded() {
-        return currentMinigame.isMinigameEnded();
+    public MinigameState getMinigameState() {
+        return currentMinigame.getMinigameState();
     }
 
     /**
@@ -111,8 +104,16 @@ public class MinigameManager {
         return currentMinigame.getDifficulty();
     }
 
-    public long getEndTime() {
+    /**
+     * Used to get the end time of the minigame.
+     *
+     * @return the end time of the minigame
+     */
+    public int getEndTime() {
         return currentMinigame.getEndMinigame();
     }
 
+    public boolean getValidity() {
+        return currentMinigame.getValidity();
+    }
 }

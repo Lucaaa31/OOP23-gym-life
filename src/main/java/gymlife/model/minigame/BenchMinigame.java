@@ -1,8 +1,8 @@
 package gymlife.model.minigame;
 
-import com.sun.nio.sctp.SendFailedNotification;
 import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,13 +14,12 @@ public class BenchMinigame implements Minigame {
     private MinigameDifficulty difficulty;
     private int nTimesPressed;
     private int numReps;
-    private boolean isMinigameEnded;
+    private MinigameState minigameState;
     private long startTime;
-    private boolean resultMinigame = true;
     private int nMistakes;
     private boolean isRepsCompleted;
-    private long startMinigame = 0;
-    private int endMinigame = 0;
+    private long startMinigame;
+    private long endMinigame;
     private boolean isFirstTimePressed = true;
 
 
@@ -29,7 +28,7 @@ public class BenchMinigame implements Minigame {
      * Initializes the instance variables.
      */
     public BenchMinigame() {
-        this.isMinigameEnded = false;
+        this.minigameState = MinigameState.NOT_STARTED;
         this.nTimesPressed = 0;
         this.numReps = 0;
         this.difficulty = null;
@@ -45,14 +44,15 @@ public class BenchMinigame implements Minigame {
     public void notifyUserAction() {
         if (isFirstTimePressed) {
             isFirstTimePressed = false;
-            startTime = System.nanoTime();
+            startMinigame = System.nanoTime();
+            minigameState = MinigameState.RUNNING;
         }
         if (nTimesPressed == 0) {
             isRepsCompleted = false;
             startTime = System.nanoTime();
         }
         nTimesPressed++;
-        checkIfCompletedReps();
+
     }
 
     /**
@@ -70,7 +70,7 @@ public class BenchMinigame implements Minigame {
      * If the user has completed the required number of reps, the minigame is ended.
      * If the user has made the maximum number of mistakes, the minigame is ended.
      */
-    private void checkIfCompletedReps() {
+    public boolean getValidity() {
         long endTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
         System.out.println("End time: " + endTime);
         if (endTime < difficulty.getReactionTime()) {
@@ -80,19 +80,18 @@ public class BenchMinigame implements Minigame {
                 numReps++;
             }
             if (numReps == difficulty.getRequiredReps()) {
-                endMinigame = (int)TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
-                System.out.println("End minigame: " + endMinigame);
-                System.out.println("Exssa" + TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
-                isMinigameEnded = true;
+                endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
+                minigameState = MinigameState.ENDED_WON;
             }
+            return true;
         } else {
             nMistakes++;
             if (nMistakes == difficulty.getMaxMistakes()) {
-                resultMinigame = false;
-                isMinigameEnded = true;
-            } else {
-                nTimesPressed = 0;
+                minigameState = MinigameState.ENDED_LOST;
             }
+            nTimesPressed = 0;
+
+            return false;
         }
     }
 
@@ -108,23 +107,13 @@ public class BenchMinigame implements Minigame {
 
 
     /**
-     * Returns the result of the bench minigame.
-     *
-     * @return the result of the bench minigame
-     */
-    @Override
-    public int minigameResult() {
-        return resultMinigame ? 0 : difficulty.getExperienceGained();
-    }
-
-    /**
      * Return the state of the bench minigame.
      *
-     * @return return true if the minigame is ended, false otherwise
+     * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
      */
     @Override
-    public boolean isMinigameEnded() {
-        return isMinigameEnded;
+    public MinigameState getMinigameState() {
+        return minigameState;
     }
 
     /**
@@ -137,10 +126,13 @@ public class BenchMinigame implements Minigame {
         return difficulty;
     }
 
-    public long getEndMinigame() {
-        int seconds = endMinigame / 1000;
-        int hundredths = (endMinigame % 1000) / 10;
-        return seconds + hundredths;
+    /**
+     * Returns the time that took the player to complete the minigame.
+     *
+     * @return the number of times the button has been pressed
+     */
+    public int getEndMinigame() {
+            return Math.toIntExact(endMinigame);
     }
 
 

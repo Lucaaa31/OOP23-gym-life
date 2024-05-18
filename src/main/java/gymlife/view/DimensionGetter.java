@@ -98,4 +98,18 @@ public class DimensionGetter {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
                 actualFrameDimension.height - INCREMENT * FRAME_HEIGTH);
     }
+
+    public Dimension getCharacterDimension() {
+        return new Dimension(
+                this.getScenarioDimension().width / 3,
+                this.getScenarioDimension().width / 3
+        );
+    }
+
+    public Dimension getCharacterMinigamePos() {
+        return new Dimension(
+                (int) (this.getScenarioDimension().width / 3.3),
+                this.getScenarioDimension().height / 3
+        );
+    }
 }

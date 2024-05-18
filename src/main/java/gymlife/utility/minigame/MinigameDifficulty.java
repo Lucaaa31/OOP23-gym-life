@@ -12,31 +12,35 @@ public enum MinigameDifficulty {
             1,
             5000,
             3,
-            3),
+            3,
+            34),
     /**
      * Medium difficulty level.
      */
     MEDIUM(
             5,
             3,
-            30_000,
+            3000,
             5,
-            1),
+            1,
+            20),
     /**
      * Hard difficulty level.
      */
     HARD(
             7,
             5,
-            20_000,
+            2000,
             10,
-            0);
+            0,
+            10);
 
     private final int touchForLift;
     private final int requiredReps;
     private final int experienceGained;
     private final int reactionTime;
     private final int maxMistakes;
+    private final int progress;
 
     /**
      * Constructs a MinigameDifficulty enum constant with the specified parameters.
@@ -47,12 +51,13 @@ public enum MinigameDifficulty {
      * @param touchForLift     the number of interactions required to lift the weight
      */
     MinigameDifficulty(final int requiredReps, final int experienceGained, final int reactionTime,
-                       final int touchForLift, final int maxMistakes) {
+                       final int touchForLift, final int maxMistakes, final int progress) {
         this.touchForLift = touchForLift;
         this.requiredReps = requiredReps;
         this.experienceGained = experienceGained;
         this.reactionTime = reactionTime;
         this.maxMistakes = maxMistakes;
+        this.progress = progress;
     }
 
     /**
@@ -99,5 +104,14 @@ public enum MinigameDifficulty {
      */
     public int getMaxMistakes() {
         return maxMistakes;
+    }
+
+    /**
+     * Returns the progress for the minigame difficulty.
+     *
+     * @return the progress
+     */
+    public int getProgress() {
+        return progress;
     }
 }

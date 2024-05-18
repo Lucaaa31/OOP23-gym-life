@@ -21,6 +21,7 @@ import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 
@@ -174,39 +175,68 @@ public class ControllerImpl implements Controller {
         return minigameManager.getMinigameType();
     }
 
-    public void setMinigameManager(final MinigameManager minigameManager) {
+    @Override
+    public void setMinigameManager(MinigameManager minigameManager) {
         this.minigameManager = minigameManager;
     }
 
+    /**
+     * Set the current minigame score.
+     * Updates the game statistics.
+     * Updates the scenarios.
+     */
     public void setMinigameResult() {
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
                 minigameManager.getEndTime());
-        statsManager.setStat(minigameManager.getMinigameType().getStatsType(), minigameManager.getMinigameResult());
+        statsManager.setStat(minigameManager.getMinigameType().getStatsType(), 0);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 
+    /**
+     * Return the minigame status.
+     *
+     * @return true if the minigame is ended, false otherwise
+     */
     @Override
-    public boolean isMinigameEnded() {
-        return minigameManager.isMinigameEnded();
+    public MinigameState getMinigameState() {
+        return minigameManager.getMinigameState();
     }
 
+    /**
+     * Retrieves the current minigame difficulty.
+     *
+     * @return the current minigame difficulty
+     */
     public MinigameDifficulty getDifficulty() {
         return minigameManager.getDifficulty();
     }
 
+    /**
+     * Checks if a rep has been completed.
+     *
+     * @return true if the rep is done, false otherwise
+     */
     @Override
-    public boolean isRepsDone() {
+    public boolean isRepDone() {
         return minigameManager.isRepsDone();
     }
 
+    /**
+     * Retrieves the current minigame score.
+     *
+     * @param minigameType the type of the minigame
+     * @param difficulty   the difficulty of the minigame
+     * @return the current minigame score
+     */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
         return scoringTableManager.getScores(minigameType, difficulty);
     }
 
-    public int getMinigameResult(){
-        return minigameManager.getMinigameResult();
+    @Override
+    public boolean checkValidity() {
+        return minigameManager.getValidity();
     }
 
 

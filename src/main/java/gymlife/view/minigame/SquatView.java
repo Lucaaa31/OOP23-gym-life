@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JLayeredPane;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.Serial;
@@ -49,4 +50,15 @@ public class SquatView extends JPanel {
 
     }
 
+
+    public void resizeComponents(){
+        System.out.println("Resize components");
+//        this.setSize(dimensionGetter.getScenarioDimension());
+//        progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
+//        setRandomPositionButton();
+//        characterLabel.setSize(dimensionGetter.getCharacterDimension());
+//        characterLabel.setLocation(dimensionGetter.getCharacterMinigamePos().width,
+//                dimensionGetter.getCharacterMinigamePos().height);
+//        characterLabel.setIcon(characterImage);
+    }
 }
