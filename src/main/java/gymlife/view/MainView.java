@@ -31,7 +31,6 @@ import gymlife.utility.GameDifficulty;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 
-import gymlife.utility.ScenariosType;
 
 /**
  * The MainView class represents the main view of the application.
@@ -47,8 +46,6 @@ public class MainView extends JFrame {
     private final JPanel newGame = new JPanel();
     private transient Controller controller;
     private GamePanel statsView;
-    private GamePanel gameMapView;
-    private GamePanel fastTravelView;
     private GameDifficulty difficulty;
 
     /**
@@ -71,7 +68,6 @@ public class MainView extends JFrame {
      * Adds the character view panel to the main frame and makes it visible.
      */
     public void start() {
-        final CardLayout scenarioLayout = new CardLayout();
         final CardLayout sideLayout = new CardLayout();
         scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
         sideContainer.setPreferredSize(dimensionGetter.getSideDimension());
@@ -79,10 +75,8 @@ public class MainView extends JFrame {
         this.setPreferredSize(dimensionGetter.getFrameDimension());
         this.controller = new ControllerImpl(difficulty);
         this.statsView = new SideStatsView(controller, dimensionGetter);
-        this.gameMapView = new GameMapView(controller, dimensionGetter);
-        this.fastTravelView = new FastTravelView(controller, dimensionGetter);
-
-
+        final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
+        final  GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView);
@@ -91,7 +85,6 @@ public class MainView extends JFrame {
         mainPanel.setLayout(new BorderLayout());
 
         scenariosContainer.setPreferredSize(dimensionGetter.getScenarioDimension());
-        scenariosContainer.setLayout(scenarioLayout);
         final CardLayout layout = new CardLayout();
         scenariosContainer.setLayout(layout);
         scenariosContainer.setBackground(Color.RED);
@@ -135,11 +128,11 @@ public class MainView extends JFrame {
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
 
         sideContainer.add(statsView, BorderLayout.CENTER);
-        scenariosContainer.add(gameMapView);
-        scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
+        scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
+        scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
+
+
         statsView.setVisible(true);
-
-
 
         final FocusAdapter fa = new FocusAdapter() {
             @Override
@@ -152,22 +145,16 @@ public class MainView extends JFrame {
         };
 
         scenariosPanels.values().forEach(panel -> panel.addFocusListener(fa));
-        scenarioLayout.show(scenariosContainer, ScenariosType.INDOOR_MAP.toString());
 
         scenariosContainer.setDoubleBuffered(true);
         sideContainer.setDoubleBuffered(true);
         statsView.setVisible(true);
         sideContainer.setVisible(true);
-        this.setUndecorated(true);
         this.add(mainPanel);
         this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
         this.setResizable(false);
         this.setVisible(true);
         this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.pack();
-        this.setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
-        this.setVisible(true);
 
         gameMapView.requestFocusInWindow();
     }
@@ -274,8 +261,8 @@ public class MainView extends JFrame {
         button.setVerticalAlignment(SwingConstants.CENTER);
         button.addActionListener(e -> {
             this.difficulty = difficulty;
-            newGame.setVisible(false);
-            this.start();
+            this.remove(newGame);
+            start();
         });
         return button;
     }

@@ -78,6 +78,7 @@ public class SideStatsView extends GamePanel {
     /**
      * Resizes the stats panel.
      */
+    @Override
     public void resizeComponents() {
         statsPanel1.removeAll();
         statsPanel1.add(getHappinessLabel());
