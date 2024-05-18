@@ -10,7 +10,7 @@ import java.awt.Toolkit;
  */
 public class DimensionGetter {
     // Proportion to reduce the screen size to get the frame dimension
-    private static final double RIDIMENTION_PROPORTION = 1.4;
+    private static final double RIDIMENTION_PROPORTION = 1.1;
     // Increment value used to increase or decrease the screen dimension
     private static final int INCREMENT = 5;
     // The actual frame dimension calculated based on the screen size and RIDIMENTION_PROPORTION

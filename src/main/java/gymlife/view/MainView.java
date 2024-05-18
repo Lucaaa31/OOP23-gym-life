@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
+import java.awt.event.KeyEvent;
 import java.io.Serial;
 import java.util.Map;
 
@@ -53,6 +54,17 @@ public class MainView extends JFrame {
      * Sets the size of the frame, requests focus, sets the location relative to null and makes it visible.
      */
     public MainView() {
+        // Creazione dell'azione per il tasto 'esc'
+        final Action closeGameAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                closeGame();
+            }
+        };
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke((char) KeyEvent.VK_ESCAPE), "close game");
+        mainPanel.getActionMap().put("close game", closeGameAction);
+
         this.setSize(dimensionGetter.getFrameDimension());
         this.newGame();
         this.setUndecorated(true);
@@ -77,7 +89,7 @@ public class MainView extends JFrame {
         this.statsView = new SideStatsView(controller, dimensionGetter);
         final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
         final  GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
-        final GamePanel sleepView = new SleepView(controller , dimensionGetter);
+        final GamePanel sleepView = new SleepView(controller, dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
@@ -120,6 +132,9 @@ public class MainView extends JFrame {
             }
         };
 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
 
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('+'), "increase size");
@@ -128,6 +143,8 @@ public class MainView extends JFrame {
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke('-'), "decrease size");
         mainPanel.getActionMap().put("decrease size", decreaseSizeAction);
+
+
 
         sideContainer.add(statsView, BorderLayout.CENTER);
         statsView.setVisible(true);
@@ -160,7 +177,6 @@ public class MainView extends JFrame {
         this.setResizable(false);
         this.setVisible(true);
         this.setFocusable(true);
-
         gameMapView.requestFocusInWindow();
     }
 
@@ -285,5 +301,11 @@ public class MainView extends JFrame {
         panel.setSize(dimensionGetter.getButtonLabelDimension());
         panel.add(button);
         return panel;
+    }
+
+    private void closeGame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
     }
 }
