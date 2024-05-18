@@ -2,6 +2,10 @@ package gymlife.model;
 
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
+import gymlife.model.encounter.Encounter;
+import gymlife.model.encounter.EncountersFactoryImpl;
+
+import java.util.Optional;
 
 /**
  * Implementation of Interface MapManager, it has a private attribute {@code GameMap} that represents the current map.
@@ -19,8 +23,9 @@ public final class MapManagerImpl implements MapManager {
     }
 
     @Override
-    public void changeMap(final GameMap newMap) {
+    public Optional<Encounter> changeMap(final GameMap newMap) {
         this.currentMap = newMap;
+        return EncountersFactoryImpl.getRandomEncounter();
     }
 
     @Override
