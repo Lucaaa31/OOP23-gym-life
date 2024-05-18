@@ -18,13 +18,14 @@ import java.awt.GridLayout;
 import java.io.Serial;
 import java.util.Map;
 import gymlife.utility.FontLoader;
+import gymlife.view.api.GamePanel;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
  * the gym.
  * It is a part of the GUI of the Java application.
  */
-public class SideStatsView extends JPanel {
+public class SideStatsView extends GamePanel {
     @Serial
     private static final long serialVersionUID = 4324743;
     private final transient Controller controller;
@@ -77,7 +78,8 @@ public class SideStatsView extends JPanel {
     /**
      * Resizes the stats panel.
      */
-    public void resizeStats() {
+    @Override
+    public void resizeComponents() {
         statsPanel1.removeAll();
         statsPanel1.add(getHappinessLabel());
         statsPanel1.add(getStaminaLabel());
@@ -252,6 +254,16 @@ public class SideStatsView extends JPanel {
                 .getImage()
                 .getScaledInstance(dimensionGetter.getSquareStatsDimension().width,
                         dimensionGetter.getSquareStatsDimension().height,
-                        Image.SCALE_FAST));
+                        Image.SCALE_SMOOTH));
+    }
+
+    /**
+     * Method to return a representative name for the classes that extend this.
+     *
+     * @return a string representing said name.
+     */
+    @Override
+    public String getPanelName() {
+        return this.getClass().getSimpleName();
     }
 }
