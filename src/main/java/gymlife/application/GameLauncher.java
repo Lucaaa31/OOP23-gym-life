@@ -1,10 +1,10 @@
 package gymlife.application;
 
-
 import gymlife.view.MainView;
 
 /**
- * The GameLauncher class launches the GymLife application.
+ *
+ * Main Class of the Java application.
  */
 public final class GameLauncher {
 
@@ -20,7 +20,6 @@ public final class GameLauncher {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        new MainView().start();
+        new MainView();
     }
-
 }

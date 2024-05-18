@@ -56,7 +56,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Moves the character in the specified direction if the destination cell is within the map borders and is not collidable.
+     * Moves the character in the specified direction.
      *
      * @param dir the direction in which to move the character
      */
@@ -135,12 +135,28 @@ public class ControllerImpl implements Controller {
 
     /**
      * Retrieves the current scenario type.
-     *
-     * @return the current scenario type
+     * @return the current scenario.
      */
     @Override
     public ScenariosType getActualScenario() {
         return scenariosManager.getActualScenariosType();
+    }
+
+    /**
+     * Method to change the scenario.
+     * @param newScenario The ScenariosType to change the current one to.
+     */
+    @Override
+    public void changeScenario(final ScenariosType newScenario) {
+        scenariosManager.updateScenarios(newScenario);
+    }
+
+    /**
+     * Method to return the character to the current map's default position.
+     */
+    @Override
+    public void resetPlayerPosition() {
+        characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
     /**

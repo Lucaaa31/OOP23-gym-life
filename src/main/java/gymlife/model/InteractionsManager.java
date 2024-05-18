@@ -34,6 +34,7 @@ public final class InteractionsManager {
      * Method to advance the days, decreasing the Days counter.
      */
     public void daysInteraction() {
+        this.scenariosManager.updateScenarios(ScenariosType.SLEEPING);
         this.statsManager.newDay();
     }
 }

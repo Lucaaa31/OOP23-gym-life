@@ -19,9 +19,11 @@ public class DimensionGetter {
             (int) (Toolkit.getDefaultToolkit().getScreenSize().height / RIDIMENTION_PROPORTION));
     private static final double SCENARIO_PROPORTION = 0.75;
     private static final double SIDE_PROPORTION = 0.25;
+    private static final double BUTTON_PROPORTION = 0.25;
+    private static final double FAST_TRAVEL_PROPORTION = 0.875;
     private static final int BIG_FONT_SIZE = 32;
     private static final int SMALL_FONT_SIZE = 35;
-    private static final int FRAME_HEIGTH = 9;
+    private static final int FRAME_HEIGHT = 9;
     private static final int FRAME_WIDTH = 16;
     private static final int SQUARE_STATS = 10;
 
@@ -66,6 +68,39 @@ public class DimensionGetter {
         return new Dimension(actualFrameDimension.height / SQUARE_STATS,
                 actualFrameDimension.height / SQUARE_STATS);
     }
+    /**
+     * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     * @return the cell dimension
+     */
+    public Dimension getButtonStartDimension() {
+        return new Dimension((int) (actualFrameDimension.width * BUTTON_PROPORTION),
+                (int) (actualFrameDimension.height * BUTTON_PROPORTION));
+    }
+    /**
+     * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     * @return the cell dimension
+     */
+    public Dimension getButtonLabelDimension() {
+        return new Dimension(actualFrameDimension.width / 3, actualFrameDimension.height / 2);
+    }
+
+    /**
+     * Returns the Fast Travel image dimension which is calculated based on width and height of the scenario.
+     * @return the fast travel image dimension.
+     */
+    public Dimension getFastTravelDimension() {
+        return new Dimension(getScenarioDimension().width,
+                (int) (getScenarioDimension().height * FAST_TRAVEL_PROPORTION));
+    }
+
+    /**
+     * Returns the Fast Travel buttons dimension which are calculated based on width and height of the scenario.
+     * @return the fast travel buttons dimension.
+     */
+    public Dimension getFastTravelButtonsDimension() {
+        return new Dimension(getScenarioDimension().width,
+                (int) (getScenarioDimension().height * (1 - FAST_TRAVEL_PROPORTION)));
+    }
 
     /**
      * Returns the big font size which is the frame width divided by 32.
@@ -88,7 +123,7 @@ public class DimensionGetter {
      */
     public void incScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width + INCREMENT * FRAME_WIDTH,
-                actualFrameDimension.height + INCREMENT * FRAME_HEIGTH);
+                actualFrameDimension.height + INCREMENT * FRAME_HEIGHT);
     }
 
     /**
@@ -96,7 +131,7 @@ public class DimensionGetter {
      */
     public void decScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
-                actualFrameDimension.height - INCREMENT * FRAME_HEIGTH);
+                actualFrameDimension.height - INCREMENT * FRAME_HEIGHT);
     }
 
     public Dimension getCharacterDimension() {
