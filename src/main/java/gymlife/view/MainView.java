@@ -53,6 +53,7 @@ public class MainView extends JFrame {
     private GamePanel statsView;
     private GameDifficulty difficulty;
 
+
     /**
      * Constructor for the MainView class.
      * Sets the size of the frame, requests focus, sets the location relative to null and makes it visible.
@@ -94,10 +95,13 @@ public class MainView extends JFrame {
         final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
         final  GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
         final GamePanel sleepView = new SleepView(controller, dimensionGetter);
+        final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
-                ScenariosType.SLEEPING, sleepView);
+                ScenariosType.SLEEPING, sleepView,
+                ScenariosType.MINIGAME_GYM, minigameView);
+
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -111,9 +115,9 @@ public class MainView extends JFrame {
         sideContainer.setLayout(sideLayout);
         sideContainer.setBackground(Color.BLUE);
 
-        MinigameManager minigameManager = new MinigameManager();
-        controller.setMinigameManager(minigameManager);
-        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
+//        MinigameManager minigameManager = new MinigameManager();
+//        controller.setMinigameManager(minigameManager);
+//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
 
         mainPanel.add(scenariosContainer, BorderLayout.CENTER);
         mainPanel.add(sideContainer, BorderLayout.EAST);
@@ -162,6 +166,7 @@ public class MainView extends JFrame {
         scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
         scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
+        scenariosContainer.add(minigameView.getPanelName(), minigameView);
 
 
         statsView.setVisible(true);

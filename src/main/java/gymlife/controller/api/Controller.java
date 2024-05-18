@@ -125,7 +125,7 @@ public interface Controller {
      */
     MinigameType getMinigameType();
 
-    void setMinigameManager(MinigameManager minigameManager);
+
 
     /**
      * Get the score of the player in the scoring table.
@@ -137,4 +137,6 @@ public interface Controller {
 
 
     boolean checkValidity();
+
+
 }

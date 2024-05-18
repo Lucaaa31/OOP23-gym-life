@@ -46,6 +46,7 @@ public class BenchMinigame implements Minigame {
             isFirstTimePressed = false;
             startMinigame = System.nanoTime();
             minigameState = MinigameState.RUNNING;
+            System.out.println("Minigame started");
         }
         if (nTimesPressed == 0) {
             isRepsCompleted = false;
@@ -72,7 +73,6 @@ public class BenchMinigame implements Minigame {
      */
     public boolean getValidity() {
         long endTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
-        System.out.println("End time: " + endTime);
         if (endTime < difficulty.getReactionTime()) {
             if (nTimesPressed == difficulty.getTouchForLift()) {
                 isRepsCompleted = true;
@@ -82,15 +82,16 @@ public class BenchMinigame implements Minigame {
             if (numReps == difficulty.getRequiredReps()) {
                 endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
                 minigameState = MinigameState.ENDED_WON;
+                System.out.println("Minigame ended with a win!");
             }
             return true;
         } else {
             nMistakes++;
             if (nMistakes == difficulty.getMaxMistakes()) {
+                System.out.println("Minigame ended with a lost!");
                 minigameState = MinigameState.ENDED_LOST;
             }
             nTimesPressed = 0;
-
             return false;
         }
     }

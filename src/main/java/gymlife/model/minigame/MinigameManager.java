@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 public class MinigameManager {
     private Minigame currentMinigame;
     private MinigameType currentMinigameType;
+    private MinigameState minigameResult;
 
     /**
      * Constructs a new MinigameManager object.
@@ -24,13 +25,6 @@ public class MinigameManager {
     public MinigameManager() {
         this.currentMinigame = null;
         this.currentMinigameType = null;
-    }
-
-    /**
-     * Starts the current minigame in a new thread.
-     */
-    public void startMinigame() {
-        new BenchMinigame();
     }
 
 
@@ -92,6 +86,9 @@ public class MinigameManager {
      * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
      */
     public MinigameState getMinigameState() {
+        if (currentMinigame == null){
+            return MinigameState.NOT_STARTED;
+        }
         return currentMinigame.getMinigameState();
     }
 
@@ -116,4 +113,6 @@ public class MinigameManager {
     public boolean getValidity() {
         return currentMinigame.getValidity();
     }
+
+
 }

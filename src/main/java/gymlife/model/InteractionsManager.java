@@ -1,7 +1,9 @@
 package gymlife.model;
 
+import gymlife.model.minigame.MinigameManager;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.MinigameType;
 
 /**
  * A class that contains the methods used for cell interactions.
@@ -10,6 +12,7 @@ public final class InteractionsManager {
 
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
+    private final MinigameManager minigameManager;
 
     /**
      * Constructor of the interactionsManager. All the managers of the game are given to it in order to act as a filter
@@ -17,9 +20,11 @@ public final class InteractionsManager {
      * @param scenariosManager the scenarioManager on which the interactions will occur.
      * @param statsManager The StatsManager on which the interactions will occur.
      */
-    public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager) {
+    public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager,
+                               final MinigameManager minigameManager) {
         this.scenariosManager = scenariosManager;
         this.statsManager = statsManager;
+        this.minigameManager = minigameManager;
     }
 
     /**
@@ -37,4 +42,11 @@ public final class InteractionsManager {
         this.scenariosManager.updateScenarios(ScenariosType.SLEEPING);
         this.statsManager.newDay();
     }
+
+    public void minigameInteraction(final MinigameType minigameType) {
+        this.scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
+        minigameManager.setCurrentMinigame(minigameType);
+    }
+
+
 }

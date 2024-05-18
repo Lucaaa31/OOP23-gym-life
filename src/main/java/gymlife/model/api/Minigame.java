@@ -56,4 +56,5 @@ public interface Minigame {
     boolean getValidity();
 
 
+
 }

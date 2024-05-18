@@ -6,7 +6,11 @@ import gymlife.utility.FontLoader;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 
 /**
@@ -15,16 +19,20 @@ import java.awt.*;
  */
 public class MinigameEndView extends JPanel {
 
+    JLabel endLabel = new JLabel();
+    JButton endButton = new JButton("return to the gym");
+    private final Controller controller;
+
     /**
      * Create a new MinigameEndView object.
      *
      * @param controller the controller to use
      */
     public MinigameEndView(final Controller controller) {
-        this.setLayout(new BorderLayout());
+        this.controller = controller;
+        this.setLayout(new GridLayout(2, 1));
         FontLoader.loadFont();
-        JLabel endLabel = new JLabel(controller.getMinigameState().getText());
-        JButton endButton = new JButton("return to the gym");
+
 
         endLabel.setFont(new Font("Arial", Font.BOLD, 30));
         endButton.setFont(new Font("Arial", Font.BOLD, 30));
@@ -33,13 +41,23 @@ public class MinigameEndView extends JPanel {
         endButton.setBounds(0, 100, 100, 100);
 
         endButton.addActionListener(e -> {
-                    controller.setMinigameResult();
-                    endButton.setEnabled(false);
-                });
+            controller.setMinigameResult();
+            this.setVisible(false);
+        });
 
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                endLabel.setText(controller.getMinigameState().getText());
+            }
+        });
+
+        this.setVisible(true);
 
         this.add(endLabel);
         this.add(endButton);
-        this.setVisible(true);
     }
+
+
+
 }

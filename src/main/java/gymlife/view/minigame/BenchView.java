@@ -119,11 +119,10 @@ public class BenchView extends JPanel implements MinigamePanel {
                     progressBar.setForeground(new Color(255, 0, 0));
                 }
 
+                System.out.println(controller.getMinigameState());
                 switch (controller.getMinigameState()) {
                     case ENDED_WON, ENDED_LOST -> {
-                        this.removeAll();
-                        this.revalidate();
-                        this.add(new MinigameEndView(controller));
+                        this.setVisible(false);
                     }
                     default -> {
                     }

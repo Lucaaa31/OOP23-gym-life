@@ -8,10 +8,8 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameDifficulty;
 
-import java.awt.GridLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.Serial;
 
 /**
@@ -22,17 +20,18 @@ public class MinigameDifficultyView extends JPanel {
     @Serial
     private static final long serialVersionUID = -6009318744152514288L;
 
+    final JButton easyButton = new JButton("Easy");
+    final JButton normalButton = new JButton("Normal");
+    final JButton hardButton = new JButton("Hard");
     /**
      * Constructs a MinigameDifficultyView object with the specified controller.
      *
      * @param controller the controller object used to handle user interactions
      */
-    public MinigameDifficultyView(final Controller controller) {
+    public MinigameDifficultyView(final Controller controller, final ActionListener deca) {
         JPanel difficultyButtons = new JPanel();
         JLabel difficultyLabel = new JLabel();
-        final JButton easyButton = new JButton("Easy");
-        final JButton normalButton = new JButton("Normal");
-        final JButton hardButton = new JButton("Hard");
+
 
         FontLoader.loadFont();
 
@@ -40,7 +39,7 @@ public class MinigameDifficultyView extends JPanel {
                 "once you have choosen press f to start the minigame.");
         difficultyLabel.setFont(FontLoader.getCustomFont(25));
 
-        this.setLayout(new GridLayout(2, 1));
+        this.setLayout(new GridLayout(2, 0));
 
         this.setBackground(Color.BLACK);
         this.setForeground(Color.WHITE);
@@ -58,21 +57,12 @@ public class MinigameDifficultyView extends JPanel {
         difficultyButtons.add(normalButton);
         difficultyButtons.add(hardButton);
 
-        easyButton.addActionListener(e -> {
-            controller.setDifficulty(MinigameDifficulty.EASY);
-            this.setVisible(false);
-        });
-
-        normalButton.addActionListener(e -> {
-            controller.setDifficulty(MinigameDifficulty.MEDIUM);
-            this.setVisible(false);
-        });
-
-        hardButton.addActionListener(e -> {
-            controller.setDifficulty(MinigameDifficulty.HARD);
-            this.setVisible(false);
-        });
+        easyButton.addActionListener(deca);
+        normalButton.addActionListener(deca);
+        hardButton.addActionListener(deca);
     }
+
+
 
     public void resizeComponents() {
     }

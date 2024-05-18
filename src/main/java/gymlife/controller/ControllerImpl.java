@@ -38,7 +38,7 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
-    private MinigameManager minigameManager;
+    private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
 
     /**
@@ -49,9 +49,11 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
         this.scenariosManager = new ScenariosManager();
+        this.minigameManager = new MinigameManager();
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
-                statsManager
+                statsManager,
+                minigameManager
         );
     }
 
@@ -168,7 +170,6 @@ public class ControllerImpl implements Controller {
     @Override
     public void setDifficulty(final MinigameDifficulty difficulty) {
         minigameManager.setDifficulty(difficulty);
-        minigameManager.startMinigame();
     }
 
 
@@ -189,11 +190,6 @@ public class ControllerImpl implements Controller {
     @Override
     public MinigameType getMinigameType() {
         return minigameManager.getMinigameType();
-    }
-
-    @Override
-    public void setMinigameManager(MinigameManager minigameManager) {
-        this.minigameManager = minigameManager;
     }
 
     /**
@@ -254,6 +250,8 @@ public class ControllerImpl implements Controller {
     public boolean checkValidity() {
         return minigameManager.getValidity();
     }
+
+
 
 
 }

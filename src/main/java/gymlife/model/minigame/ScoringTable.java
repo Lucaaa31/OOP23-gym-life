@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * It keeps track of the top 5 scores of the players in all the three difficulties.
  */
 public class ScoringTable {
-    private Map<MinigameDifficulty, List<Integer>> scores;
+    private final Map<MinigameDifficulty, List<Integer>> scores;
 
     /**
      * Constructs a new ScoringTable object.
@@ -22,7 +22,7 @@ public class ScoringTable {
         for (MinigameDifficulty difficulty : MinigameDifficulty.values()) {
             scores.put(difficulty, null);
         }
-        scores.put(MinigameDifficulty.EASY, List.of(20000, 10000, 40000));
+        scores.put(MinigameDifficulty.EASY, new LinkedList<>(List.of(20000, 10000, 5000, 3000)));
     }
 
     /**
@@ -34,29 +34,15 @@ public class ScoringTable {
      * @param score      the score of the player
      */
     public void updateScore(final MinigameDifficulty difficulty, final int score) {
-        List<Integer> tmpList = new LinkedList<>(scores.get(difficulty));
-        tmpList.add(score);
-        if (tmpList.size() > 5) {
-            scores.get(difficulty).remove(findMax(difficulty));
-        }
-        scores.remove(difficulty, scores.get(difficulty));
-        scores.put(difficulty, tmpList);
-    }
+        List<Integer> tmpScores = scores.get(difficulty);
+        tmpScores.add(score);
 
-    /**
-     * Finds the minimum score in the list of scores of the given difficulty.
-     *
-     * @param difficulty the difficulty of the minigame
-     * @return the minimum score in the list of scores
-     */
-    public int findMax(final MinigameDifficulty difficulty) {
-        int max = scores.get(difficulty).get(0);
-        for (int numero : scores.get(difficulty)) {
-            if (numero > max) {
-                max = numero;
-            }
-        }
-        return max;
+        List<Integer> updatedScores = tmpScores.stream()
+                .sorted()
+                .limit(5)
+                .collect(Collectors.toList());
+        scores.remove(difficulty);
+        scores.put(difficulty, updatedScores);
     }
 
     /**
