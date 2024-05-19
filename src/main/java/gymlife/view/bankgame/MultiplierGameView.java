@@ -14,6 +14,6 @@ public final class MultiplierGameView extends TextLabelView {
  * @param money The amount of money to be displayed.
  */
     public void updateText(final float multiplierValue, final float money) {
-        super.setText(String.format("%.2fx   " + "%.2f", multiplierValue, money));
+        super.setText(String.format("%.3fx   " + "%.2f", multiplierValue, money));
     }
 }

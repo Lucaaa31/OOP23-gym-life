@@ -52,19 +52,17 @@ public final class PlaneGameModel {
     public void runMultiplier(final float money) {
         try {
             while (flag) {
-                mySync.signal();
+                mySync.waitForSignal();
                 multiplier += INCREMENT;
                 moneyMultiplied = multiplier * money;
                 if (boundControl()) {
                     flag = false;
                 }
-                otherSync.waitForSignal();
+                otherSync.signal();
             }
         } catch (InterruptedException e) {
         }
     }
-
-    
 
     /**
      * Generates a new random threshold value within a specified range and resets

@@ -110,7 +110,6 @@ public final class BankGameView extends JLayeredPane {
                 if (!started) {
                     startMulti(controller);
                     showsMulti(controller);
-                    started = true;
                     numberLabel.setVisible(true);
                     boxMoney.setEditable(false);
                     restarButton.setEnabled(false);
@@ -149,6 +148,8 @@ public final class BankGameView extends JLayeredPane {
      *                   multiplier.
      */
     public void showsMulti(final Controller controller) {
+        started = true;
+        controller.getSync2().signal();
         new Thread(() -> { 
         float multiplier = 0;
             while (controller.getMultiplier() != controller.getTreshold() && started == true) {
@@ -156,15 +157,14 @@ public final class BankGameView extends JLayeredPane {
                     multiplier = 1;
                 }
                 try {
-                    controller.getSync1().waitForSignal();
+                    controller.getSync2().waitForSignal();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 multiplier = controller.getMultiplier();
                 moneyMultiplied = controller.controllerGetMoney();
-                System.out.println(multiplier);
                 ((MultiplierGameView) numberLabel).updateText(multiplier, moneyMultiplied);
-                controller.getSync2().signal();
+                controller.getSync1().signal();
             }
         }).start();
 

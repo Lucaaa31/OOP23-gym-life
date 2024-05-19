@@ -1,5 +1,6 @@
 package gymlife.controller.api;
 
+import gymlife.model.statistics.api.SynchronizerModel;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 
@@ -61,4 +62,7 @@ public interface Controller {
      */
     float controllerGetMoney();
 
+    SynchronizerModel getSync1();
+
+    SynchronizerModel getSync2();
 }

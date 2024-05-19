@@ -8,6 +8,7 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
+import gymlife.model.statistics.api.SynchronizerModel;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
@@ -17,11 +18,25 @@ import gymlife.model.api.CharacterModel;
  * Class responsible for managing Character movements.
  */
 public class ControllerImpl implements Controller {
+    Object lock = new Object();
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
-    private final PlaneGameModel model = new PlaneGameModel();
+
+    SynchronizerModel sync1 = new SynchronizerModel();
+    SynchronizerModel sync2 = new SynchronizerModel();
+
+    private final PlaneGameModel model = new PlaneGameModel(sync1, sync2);
+
+    public SynchronizerModel getSync1() {
+        return sync1;
+    }
+
+    public SynchronizerModel getSync2() {
+        return sync2;
+    }
+
 
     /**
      * Moves the character in the specified direction.
