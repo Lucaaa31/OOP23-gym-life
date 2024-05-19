@@ -95,6 +95,29 @@ public class SideStatsView extends GamePanel {
 
     }
     /**
+     * Method to return a representative name for the classes that extend this.
+     *
+     * @return a string representing said name.
+     */
+    @Override
+    public String getPanelName() {
+        return this.getClass().getSimpleName();
+    }
+    public void updateStats() {
+        statsPanel1.removeAll();
+        statsPanel1.add(getHappinessLabel());
+        statsPanel1.add(getStaminaLabel());
+        statsPanel1.add(getMassLabel());
+        statsPanel1.revalidate();
+        statsPanel1.repaint();
+
+        statsPanel3.removeAll();
+        statsPanel3.add(getMoneyLabel());
+        statsPanel3.add(getDaysLabel());
+        statsPanel3.revalidate();
+        statsPanel3.repaint();
+    }
+    /**
      * Resizes the stats panel.
      * @return the JLabel with the happiness value
      */
@@ -148,6 +171,7 @@ public class SideStatsView extends GamePanel {
         FontLoader.loadFont();
 
         labelImage.setIcon(getIcon("images/icons/stamina.png"));
+
 
         this.setSize(dimensionGetter.getCellDimension());
         labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
@@ -227,7 +251,7 @@ public class SideStatsView extends GamePanel {
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()), 
+        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
@@ -257,13 +281,4 @@ public class SideStatsView extends GamePanel {
                         Image.SCALE_SMOOTH));
     }
 
-    /**
-     * Method to return a representative name for the classes that extend this.
-     *
-     * @return a string representing said name.
-     */
-    @Override
-    public String getPanelName() {
-        return this.getClass().getSimpleName();
-    }
 }
