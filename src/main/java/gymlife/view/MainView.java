@@ -161,7 +161,7 @@ public class MainView extends JFrame {
             public void focusLost(final FocusEvent e) {
                 final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
                 layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
-                ((SideStatsView)statsView).updateStats();
+                ((SideStatsView) statsView).updateStats();
                 panelToSwitchTo.requestFocusInWindow();
                 panelToSwitchTo.resizeComponents();
             }
