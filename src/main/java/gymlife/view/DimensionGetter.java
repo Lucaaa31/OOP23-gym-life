@@ -20,6 +20,7 @@ public class DimensionGetter {
     private static final double SCENARIO_PROPORTION = 0.75;
     private static final double SIDE_PROPORTION = 0.25;
     private static final double FAST_TRAVEL_PROPORTION = 0.875;
+    private static final double ENCOUNTER_IMAGE_PROPORTION = 0.625;
     private static final int BIG_FONT_SIZE = 32;
     private static final int SMALL_FONT_SIZE = 35;
     private static final int FRAME_HEIGHT = 9;
@@ -84,6 +85,17 @@ public class DimensionGetter {
     public Dimension getFastTravelButtonsDimension() {
         return new Dimension(getScenarioDimension().width,
                 (int) (getScenarioDimension().height * (1 - FAST_TRAVEL_PROPORTION)));
+    }
+
+    public Dimension getEncounterImageDimension() {
+        return new Dimension((int) (getScenarioDimension().width * ENCOUNTER_IMAGE_PROPORTION),
+                getScenarioDimension().height);
+    }
+
+
+    public Dimension getEncounterButtonDimension() {
+        return new Dimension((int)(getScenarioDimension().width * (1 - ENCOUNTER_IMAGE_PROPORTION)),
+                getScenarioDimension().height);
     }
 
     /**
