@@ -4,7 +4,6 @@ import gymlife.controller.api.Controller;
 import gymlife.model.GameMapImpl;
 import gymlife.utility.FontLoader;
 import gymlife.utility.MapConstants;
-import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 
 import javax.swing.JPanel;
@@ -86,7 +85,6 @@ public final class FastTravelView extends GamePanel {
         final ActionListener al = e -> {
             final String loc = ((JButton) e.getSource()).getText();
             controller.goToNewMap(GameMapImpl.fromString(loc));
-            controller.changeScenario(ScenariosType.INDOOR_MAP);
             controller.resetPlayerPosition();
             changeLocation();
             disableFocus();
