@@ -40,6 +40,7 @@ public class MainView extends JFrame {
     private final GamePanel gameMapView = new GameMapView(controller, dimensionGetter);
     private final GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
     private final GamePanel sleepView = new SleepView(controller, dimensionGetter);
+    private final GamePanel encounterView = new EncounterView(controller, dimensionGetter);
 
     /**
      * Starts the main view of the application.
@@ -54,7 +55,8 @@ public class MainView extends JFrame {
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
-                ScenariosType.SLEEPING, sleepView);
+                ScenariosType.SLEEPING, sleepView,
+                ScenariosType.ENCOUNTER, encounterView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -106,6 +108,7 @@ public class MainView extends JFrame {
         scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
         scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
+        scenariosContainer.add(encounterView.getPanelName(), encounterView);
 
         final FocusAdapter fa = new FocusAdapter() {
             @Override
