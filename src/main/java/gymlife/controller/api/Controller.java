@@ -79,4 +79,16 @@ public interface Controller {
      * Method to return the player to the default position of the map he's in.
      */
     void resetPlayerPosition();
+
+    /**
+     * Method to check if the player has won the game.
+     * @return Returns true if the player has won, false otherwise.
+     */
+    boolean isWin();
+
+    /**
+     * Method to check if the game is over.
+     * @return true if the game is over, false otherwise
+     */
+    boolean isGameOver();
 }

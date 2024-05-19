@@ -150,4 +150,25 @@ public class ControllerImpl implements Controller {
     public void resetPlayerPosition() {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
+
+    /**
+     * Method to check if the player has won the game.
+     *
+     * @return Returns true if the player has won, false otherwise.
+     */
+    @Override
+    public boolean isWin() {
+        return statsManager.checkWin();
+    }
+
+    /**
+     * Method to check if the game is over.
+     *
+     * @return true if the game is over, false otherwise
+     */
+    @Override
+    public boolean isGameOver() {
+        return statsManager.isGameOver();
+    }
+
 }
