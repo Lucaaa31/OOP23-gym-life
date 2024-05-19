@@ -4,6 +4,7 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
+import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
@@ -21,6 +22,7 @@ import gymlife.utility.ScenariosType;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This class implements the Controller interface and is responsible for managing Character movements.
@@ -32,6 +34,7 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
+    private Encounter currentEncounter;
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -41,6 +44,7 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
         this.scenariosManager = new ScenariosManager();
+        this.currentEncounter = null;
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager
@@ -90,7 +94,13 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void goToNewMap(final GameMap newMap) {
-        mapManager.changeMap(newMap);
+        Optional<Encounter> encounter = mapManager.changeMap(newMap);
+        if (encounter.isPresent()) {
+            currentEncounter = encounter.get();
+            changeScenario(ScenariosType.ENCOUNTER);
+        } else {
+            changeScenario(ScenariosType.INDOOR_MAP);
+        }
     }
 
     /**
@@ -149,5 +159,18 @@ public class ControllerImpl implements Controller {
     @Override
     public void resetPlayerPosition() {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
+    }
+
+    public Encounter getCurrentEncounter() {
+        return currentEncounter;
+    }
+
+    public void resolveEncounter(boolean choice) {
+        if(choice) {
+            statsManager.acceptEncounter(currentEncounter);
+        } else {
+            statsManager.denyEncounter(currentEncounter);
+        }
+        changeScenario(ScenariosType.INDOOR_MAP);
     }
 }
