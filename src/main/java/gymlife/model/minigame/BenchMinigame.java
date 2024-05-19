@@ -15,12 +15,13 @@ public class BenchMinigame implements Minigame {
     private int nTimesPressed;
     private int numReps;
     private MinigameState minigameState;
-    private long startTime;
+    private long startReactionTime;
     private int nMistakes;
     private boolean isRepsCompleted;
     private long startMinigame;
     private long endMinigame;
     private boolean isFirstTimePressed = true;
+    private boolean isReactionTimeSet = false;
 
 
     /**
@@ -42,17 +43,21 @@ public class BenchMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
+        minigameState = MinigameState.RUNNING;
         if (isFirstTimePressed) {
             isFirstTimePressed = false;
             startMinigame = System.nanoTime();
-            minigameState = MinigameState.RUNNING;
-            System.out.println("Minigame started");
         }
-        if (nTimesPressed == 0) {
-            isRepsCompleted = false;
-            startTime = System.nanoTime();
-        }
+
         nTimesPressed++;
+
+        if (!isReactionTimeSet) {
+            startReactionTime = System.nanoTime();
+            System.out.println("Start reaction time: " + startReactionTime);
+            isReactionTimeSet = true;
+        } else {
+            getValidity();
+        }
 
     }
 
@@ -71,30 +76,39 @@ public class BenchMinigame implements Minigame {
      * If the user has completed the required number of reps, the minigame is ended.
      * If the user has made the maximum number of mistakes, the minigame is ended.
      */
-    public boolean getValidity() {
-        long endTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
-        if (endTime < difficulty.getReactionTime()) {
+    @Override
+    public void getValidity() {
+        long endReactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
+        //System.out.println("End reaction time: " + endReactionTime);
+
+        // Reset startReactionTime for the next press
+        startReactionTime = System.nanoTime();
+
+        if (endReactionTime < difficulty.getReactionTime()) {
             if (nTimesPressed == difficulty.getTouchForLift()) {
-                isRepsCompleted = true;
                 nTimesPressed = 0;
                 numReps++;
+                System.out.println("Reps: " + numReps);
+                minigameState = MinigameState.REP_REACHED;
+                isReactionTimeSet = false;
+                if (numReps == difficulty.getRequiredReps()) {
+                    endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
+                    minigameState = MinigameState.ENDED_WON;
+                    isRepsCompleted = true;
+                }
             }
-            if (numReps == difficulty.getRequiredReps()) {
-                endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
-                minigameState = MinigameState.ENDED_WON;
-                System.out.println("Minigame ended with a win!");
-            }
-            return true;
         } else {
             nMistakes++;
-            if (nMistakes == difficulty.getMaxMistakes()) {
-                System.out.println("Minigame ended with a lost!");
+            minigameState = MinigameState.MISTAKE_MADE;
+            isReactionTimeSet = false;
+            if (nMistakes > difficulty.getMaxMistakes()) {
                 minigameState = MinigameState.ENDED_LOST;
             }
             nTimesPressed = 0;
-            return false;
         }
     }
+
+
 
     /**
      * Sets the difficulty level for the bench minigame.
@@ -135,6 +149,5 @@ public class BenchMinigame implements Minigame {
     public int getEndMinigame() {
             return Math.toIntExact(endMinigame);
     }
-
 
 }

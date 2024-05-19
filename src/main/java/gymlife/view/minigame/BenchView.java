@@ -2,10 +2,7 @@ package gymlife.view.minigame;
 
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.*;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
@@ -30,8 +27,10 @@ public class BenchView extends JPanel implements MinigamePanel {
     private final DimensionGetter dimensionGetter;
     private final JLabel timerView = new JLabel();
     private final JLabel backgroundLabel = new JLabel();
-    private ImageIcon backgroundImage;
+    private final ImageIcon backgroundImage;
     private final JLayeredPane layeredPane = new JLayeredPane();
+    private final transient Controller controller;
+
 
     /**
      * Constructs a BenchView object with the specified controller.
@@ -41,6 +40,7 @@ public class BenchView extends JPanel implements MinigamePanel {
      * @param controller the controller implementation
      */
     public BenchView(final Controller controller, final DimensionGetter dimensionGetter) {
+        this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());
@@ -109,57 +109,85 @@ public class BenchView extends JPanel implements MinigamePanel {
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction();
-            if(controller.checkValidity()){
-                progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
-                if (progressBar.getValue() >= 33 && progressBar.getValue() < 66) {
-                    progressBar.setBackground(new Color(165, 78, 32));
-                    progressBar.setForeground(new Color(255, 89, 0));
-                } else if (progressBar.getValue() >= 66) {
-                    progressBar.setBackground(new Color(142, 25, 25));
-                    progressBar.setForeground(new Color(255, 0, 0));
+//            if(controller.checkValidity()){
+//                progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
+//                if (progressBar.getValue() >= 33 && progressBar.getValue() < 66) {
+//                    progressBar.setBackground(new Color(165, 78, 32));
+//                    progressBar.setForeground(new Color(255, 89, 0));
+//                } else if (progressBar.getValue() >= 66) {
+//                    progressBar.setBackground(new Color(142, 25, 25));
+//                    progressBar.setForeground(new Color(255, 0, 0));
+//                }
+//
+//                if (controller.isRepDone()) {
+//                    progressBar.setValue(0);
+//                    progressBar.setBackground(new Color(29, 110, 12));
+//                    progressBar.setForeground(new Color(72, 253, 0));
+//                    doAnimation();
+//                }
+//                setRandomPositionButton();
+//
+//            }
+            switch (controller.getMinigameState()) {
+                case RUNNING -> {
+                    progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
                 }
-
-                System.out.println(controller.getMinigameState());
-                switch (controller.getMinigameState()) {
-                    case ENDED_WON, ENDED_LOST -> {
-                        this.setVisible(false);
-                    }
-                    default -> {
-                    }
-                }
-                if (controller.isRepDone()) {
+                case REP_REACHED -> {
                     progressBar.setValue(0);
                     progressBar.setBackground(new Color(29, 110, 12));
                     progressBar.setForeground(new Color(72, 253, 0));
                     doAnimation();
                 }
-                setRandomPositionButton();
-            }else{
-                progressBar.setValue(0);
-                progressBar.setBackground(new Color(142, 25, 25));
-                progressBar.setForeground(new Color(255, 0, 0));
-                doAnimation();
-                progressBar.setBackground(new Color(29, 110, 12));
-                progressBar.setForeground(new Color(72, 253, 0));
+                case MISTAKE_MADE -> {
+                    progressBar.setValue(0);
+                    progressBar.setBackground(new Color(142, 25, 25));
+                    progressBar.setForeground(new Color(255, 0, 0));
+                    doAnimation();
+                    progressBar.setBackground(new Color(29, 110, 12));
+                    progressBar.setForeground(new Color(72, 253, 0));
+                }
+                case ENDED_WON, ENDED_LOST -> {
+                    this.setVisible(false);
+                }
             }
-
-
+            progressbarHandler();
+            setRandomPositionButton();
         });
-
 
         this.setFocusable(true);
         this.setVisible(true);
     }
 
+    private void progressbarHandler() {
+
+        if(progressBar.getValue() < 33){
+            progressBar.setBackground(new Color(165, 78, 32));
+            progressBar.setForeground(new Color(255, 89, 0));
+        }
+        else if(progressBar.getValue() >= 33 && progressBar.getValue() < 66){
+            progressBar.setBackground(new Color(142, 25, 25));
+            progressBar.setForeground(new Color(255, 0, 0));
+        }
+        else if (progressBar.getValue() >= 66){
+            progressBar.setValue(0);
+            progressBar.setBackground(new Color(29, 110, 12));
+            progressBar.setForeground(new Color(72, 253, 0));
+        }
+
+
+    }
 
     /**
      * Sets a random position for the button within the panel.
      */
     private void setRandomPositionButton() {
-        final int x = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().width
-                - progressBar.getWidth() - buttonMinigame.getWidth()));
-        final int y = (int) (Math.random() * Math.abs(dimensionGetter.getScenarioDimension().height
-                - buttonMinigame.getHeight()));
+        int x, y;
+        do {
+            x = (int) (Math.random() * (dimensionGetter.getScenarioDimension().width -
+                    buttonMinigame.getWidth() - progressBar.getWidth()));
+            y = (int) (Math.random() * (dimensionGetter.getScenarioDimension().height));
+        } while (characterLabel.getBounds()
+                .intersects(new Rectangle(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight())));
         this.buttonMinigame.setBounds(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight());
     }
 
