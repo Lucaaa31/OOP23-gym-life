@@ -98,6 +98,7 @@ public class ControllerImpl implements Controller {
         if (encounter.isPresent()) {
             currentEncounter = encounter.get();
             changeScenario(ScenariosType.ENCOUNTER);
+            System.out.println(currentEncounter.description());
         } else {
             changeScenario(ScenariosType.INDOOR_MAP);
         }
@@ -161,10 +162,12 @@ public class ControllerImpl implements Controller {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
+    @Override
     public Encounter getCurrentEncounter() {
         return currentEncounter;
     }
 
+    @Override
     public void resolveEncounter(boolean choice) {
         if(choice) {
             statsManager.acceptEncounter(currentEncounter);

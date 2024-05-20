@@ -1,6 +1,7 @@
 package gymlife.controller.api;
 
 import gymlife.model.api.GameMap;
+import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
@@ -79,4 +80,8 @@ public interface Controller {
      * Method to return the player to the default position of the map he's in.
      */
     void resetPlayerPosition();
+
+    Encounter getCurrentEncounter();
+
+    void resolveEncounter(boolean choice);
 }
