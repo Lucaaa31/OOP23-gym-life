@@ -1,12 +1,17 @@
 package gymlife.view.bankgame;
 
+
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
+import javax.swing.Timer;
+
 import gymlife.controller.api.Controller;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -30,6 +35,9 @@ public final class BankGameView extends JLayeredPane {
     private final Font myFont = new Font("PLAIN", Font.PLAIN, 20);
     private float moneyMultiplied;
     private float moneyStart;
+    private boolean flagAnimation;
+    PlaneAnimationView planeAnimation;
+
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -47,14 +55,16 @@ public final class BankGameView extends JLayeredPane {
         final JButton button = new JButton();
         final JButton restarButton = new JButton();
         boxMoney = new JTextField();
+        planeAnimation = new PlaneAnimationView();
 
         this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
-        this.add(planeLayer, JLayeredPane.PALETTE_LAYER);
         this.add(numberLabel, JLayeredPane.MODAL_LAYER);
         this.add(button, JLayeredPane.MODAL_LAYER);
         this.add(restarButton, JLayeredPane.MODAL_LAYER);
         this.add(boxMoney, JLayeredPane.MODAL_LAYER);
         this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
+        this.add(planeLayer, JLayeredPane.MODAL_LAYER);
+        planeLayer.setVisible(false);
 
         button.setText("Play");
         button.setBackground(Color.GREEN);
@@ -76,12 +86,18 @@ public final class BankGameView extends JLayeredPane {
         boxMoney.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+
                 final String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
                 ((MoneyGameView) moneyLabel).updateText(moneyStart);
                 moneyLabel.setVisible(true);
                 button.setEnabled(true);
                 restarButton.setEnabled(true);
+                if (!flagAnimation) {
+                    planeLayer.setVisible(true);
+                    planeAnimation.startPlaneAnimation(BankGameView.this, planeLayer);
+                }
+                
             }
         });
 
@@ -112,11 +128,14 @@ public final class BankGameView extends JLayeredPane {
                     numberLabel.setVisible(true);
                     boxMoney.setEditable(false);
                     restarButton.setEnabled(false);
+                    planeAnimation.planeUpDownAnimation(planeLayer);
                 } else {
                     controller.controllerStopMultiplier();
                     restarButton.setEnabled(true);
                     started = false;
                     button.setEnabled(false);
+                   planeAnimation.stopUpDownAnimation();
+                    planeAnimation.planeExitAnimation(BankGameView.this, planeLayer);
                 }
             }
 
@@ -135,10 +154,13 @@ public final class BankGameView extends JLayeredPane {
                 restarButton.setEnabled(false);
                 moneyLabel.setVisible(false);
                 boxMoney.setEditable(true);
+                planeLayer.setVisible(false);
+                flagAnimation = false;
             }
         });
         this.setVisible(true);
     }
+
 
     /**
      * Displays the multiplier and the money multiplied on the screen.
@@ -154,6 +176,7 @@ public final class BankGameView extends JLayeredPane {
             while (controller.getMultiplier() != controller.getTreshold() && started) {
                 try {
                     controller.getSync2().waitForSignal();
+                    Thread.sleep(THREAD_W);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -166,6 +189,8 @@ public final class BankGameView extends JLayeredPane {
 
     }
 
+
+   
     /**
      * Starts a new thread to update the multiplier value by calling the
      * startMultiplier method
