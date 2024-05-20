@@ -62,7 +62,19 @@ public interface Controller {
      */
     float controllerGetMoney();
 
+    /**
+     * Returns the first synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the first {@link SynchronizerModel} instance.
+     */
     SynchronizerModel getSync1();
 
+    /**
+     * Returns the second synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the second {@link SynchronizerModel} instance.
+     */
     SynchronizerModel getSync2();
 }

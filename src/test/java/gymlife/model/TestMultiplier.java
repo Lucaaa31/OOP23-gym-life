@@ -22,23 +22,15 @@ class TestMultiplier {
         final PlaneGameModel number = new PlaneGameModel(controller.getSync1(), controller.getSync2());
         final BankGameView view = new BankGameView(controller);
         final float money = 20;
-        
-            Thread modelThread = new Thread(() -> {
+
+        Thread modelThread = new Thread(() -> {
             number.runMultiplier(money);
-            });
+        });
 
-            modelThread.start();
-
-
-            controller.getSync2().signal();
-            view.showsMulti(controller);
-
-            modelThread.join();
-            //Thread.sleep(300);
-
-            System.out.println(number.getMultiplierShort());
-            System.out.println(number.getTreshold());
-
+        modelThread.start();
+        controller.getSync2().signal();
+        view.showsMulti(controller);
+        modelThread.join();
         assertEquals(number.getTreshold(), number.getMultiplierShort());
     }
 }

@@ -31,7 +31,6 @@ public final class BankGameView extends JLayeredPane {
     private float moneyMultiplied;
     private float moneyStart;
 
-
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
      * button,
@@ -150,12 +149,9 @@ public final class BankGameView extends JLayeredPane {
     public void showsMulti(final Controller controller) {
         started = true;
         controller.getSync2().signal();
-        new Thread(() -> { 
-        float multiplier = 0;
-            while (controller.getMultiplier() != controller.getTreshold() && started == true) {
-                if (multiplier == 0) {
-                    multiplier = 1;
-                }
+        new Thread(() -> {
+            float multiplier = 1;
+            while (controller.getMultiplier() != controller.getTreshold() && started) {
                 try {
                     controller.getSync2().waitForSignal();
                 } catch (InterruptedException e) {

@@ -17,12 +17,15 @@ public final class PlaneGameModel {
     private float multiplier;
     private float multiplierShort;
     private float moneyMultiplied = 1;
-    private SynchronizerModel mySync, otherSync;
+    private final SynchronizerModel mySync, otherSync;
 
     /**
      * This is the constructor of the PlaneGameModel class.
+     * 
+     * @param mySync the synchronization object used to wait for signals.
+     * @param otherSync the synchronization object used to send signals.
      */
-    public PlaneGameModel(SynchronizerModel mySync, SynchronizerModel otherSync) {
+    public PlaneGameModel(final SynchronizerModel mySync, final SynchronizerModel otherSync) {
         this.mySync = mySync;
         this.otherSync = otherSync;
         multiplier = 1.0f;

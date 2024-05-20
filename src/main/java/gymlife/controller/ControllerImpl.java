@@ -18,25 +18,34 @@ import gymlife.model.api.CharacterModel;
  * Class responsible for managing Character movements.
  */
 public class ControllerImpl implements Controller {
-    Object lock = new Object();
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager = new ScenariosManager();
     private final InteractionsManager interactionsManager = new InteractionsManager(scenariosManager);
-
-    SynchronizerModel sync1 = new SynchronizerModel();
-    SynchronizerModel sync2 = new SynchronizerModel();
-
+    private final SynchronizerModel sync1 = new SynchronizerModel();
+    private final SynchronizerModel sync2 = new SynchronizerModel();
     private final PlaneGameModel model = new PlaneGameModel(sync1, sync2);
 
+    /**
+     * Gets the first synchronization object used to coordinate threads.
+     *
+     * @return the first SynchronizerModel instance used for thread synchronization.
+     */
+    @Override
     public SynchronizerModel getSync1() {
         return sync1;
     }
 
+    /**
+     * Gets the second synchronization object used to coordinate threads.
+     *
+     * @return the second SynchronizerModel instance used for thread
+     *         synchronization.
+     */
+    @Override
     public SynchronizerModel getSync2() {
         return sync2;
     }
-
 
     /**
      * Moves the character in the specified direction.
