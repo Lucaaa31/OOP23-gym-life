@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.Serial;
 
 
 /**
@@ -18,10 +18,9 @@ import java.awt.event.ComponentEvent;
  * It extends the JPanel class and provides methods to display the end of a minigame.
  */
 public class MinigameEndView extends JPanel {
-
-    JLabel endLabel = new JLabel();
-    JButton endButton = new JButton("return to the gym");
-    private final Controller controller;
+    @Serial
+    private static final long serialVersionUID = 3580983973396473130L;
+    private final JLabel endLabel = new JLabel();
 
     /**
      * Create a new MinigameEndView object.
@@ -29,13 +28,14 @@ public class MinigameEndView extends JPanel {
      * @param controller the controller to use
      */
     public MinigameEndView(final Controller controller) {
-        this.controller = controller;
+        final int fontSize = 30;
         this.setLayout(new GridLayout(2, 1));
         FontLoader.loadFont();
 
 
-        endLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        endButton.setFont(new Font("Arial", Font.BOLD, 30));
+        endLabel.setFont(new Font("Arial", Font.BOLD, fontSize));
+        final JButton endButton = new JButton("return to the gym");
+        endButton.setFont(new Font("Arial", Font.BOLD, fontSize));
 
         endLabel.setBounds(0, 0, 100, 100);
         endButton.setBounds(0, 100, 100, 100);
@@ -47,7 +47,7 @@ public class MinigameEndView extends JPanel {
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentShown(ComponentEvent e) {
+            public void componentShown(final ComponentEvent e) {
                 endLabel.setText(controller.getMinigameState().getText());
             }
         });
@@ -57,7 +57,5 @@ public class MinigameEndView extends JPanel {
         this.add(endLabel);
         this.add(endButton);
     }
-
-
 
 }

@@ -1,6 +1,6 @@
 package gymlife.model;
 
-import gymlife.model.minigame.MinigameManager;
+import gymlife.model.api.MinigameManager;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;
@@ -17,8 +17,10 @@ public final class InteractionsManager {
     /**
      * Constructor of the interactionsManager. All the managers of the game are given to it in order to act as a filter
      * for the interactions.
+     *
      * @param scenariosManager the scenarioManager on which the interactions will occur.
-     * @param statsManager The StatsManager on which the interactions will occur.
+     * @param statsManager     the StatsManager on which the interactions will occur.
+     * @param minigameManager  the MinigameManager on which the interactions will occur.
      */
     public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager,
                                final MinigameManager minigameManager) {
@@ -29,6 +31,7 @@ public final class InteractionsManager {
 
     /**
      * method to call if the interaction of a cell concerns changing the current scenario.
+     *
      * @param newScenario the new scenario to change to.
      */
     public void scenarioInteraction(final ScenariosType newScenario) {
@@ -43,6 +46,11 @@ public final class InteractionsManager {
         this.statsManager.newDay();
     }
 
+    /**
+     * Method to call if the interaction of a cell concerns changing the current minigame.
+     *
+     * @param minigameType the new minigame to change to.
+     */
     public void minigameInteraction(final MinigameType minigameType) {
         this.scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
         minigameManager.setCurrentMinigame(minigameType);

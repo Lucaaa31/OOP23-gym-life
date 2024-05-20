@@ -1,6 +1,7 @@
 package gymlife.model.minigame;
 
 import gymlife.model.api.Minigame;
+import gymlife.model.api.MinigameManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -14,15 +15,14 @@ import java.lang.reflect.InvocationTargetException;
  * the difficulty level, set the timer,
  * and retrieve the current minigame type and instance.
  */
-public class MinigameManager {
+public class MinigameManagerImpl implements MinigameManager {
     private Minigame currentMinigame;
     private MinigameType currentMinigameType;
-    private MinigameState minigameResult;
 
     /**
      * Constructs a new MinigameManager object.
      */
-    public MinigameManager() {
+    public MinigameManagerImpl() {
         this.currentMinigame = null;
         this.currentMinigameType = null;
     }
@@ -33,6 +33,7 @@ public class MinigameManager {
      *
      * @param minigameType the minigame type to set
      */
+    @Override
     public void setCurrentMinigame(final MinigameType minigameType) {
         this.currentMinigameType = minigameType;
         try {
@@ -50,31 +51,26 @@ public class MinigameManager {
      *
      * @param selectedDifficulty the difficulty level to set
      */
-    public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
+    @Override
+    public void setMinigameDifficulty(final MinigameDifficulty selectedDifficulty) {
         this.currentMinigame.setDifficulty(selectedDifficulty);
     }
 
     /**
      * Notifies the current minigame that the player has done something.
      */
+    @Override
     public void notifyUserAction() {
         currentMinigame.notifyUserAction();
     }
 
-    /**
-     * The view check if a reps is done.
-     *
-     * @return true if the reps is done, false otherwise
-     */
-    public boolean isRepsDone() {
-        return currentMinigame.isRepsCompleted();
-    }
 
     /**
      * Retrieves the current minigame type.
      *
      * @return the current minigame type
      */
+    @Override
     public MinigameType getMinigameType() {
         return currentMinigameType;
     }
@@ -85,8 +81,9 @@ public class MinigameManager {
      *
      * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
      */
+    @Override
     public MinigameState getMinigameState() {
-        if (currentMinigame == null){
+        if (currentMinigame == null) {
             return MinigameState.NOT_STARTED;
         }
         return currentMinigame.getMinigameState();
@@ -97,6 +94,7 @@ public class MinigameManager {
      *
      * @return the difficulty of the minigame
      */
+    @Override
     public MinigameDifficulty getDifficulty() {
         return currentMinigame.getDifficulty();
     }
@@ -106,12 +104,9 @@ public class MinigameManager {
      *
      * @return the end time of the minigame
      */
+    @Override
     public int getEndTime() {
-        return currentMinigame.getEndMinigame();
-    }
-
-    public boolean getValidity() {
-        return currentMinigame.getValidity();
+        return currentMinigame.getTimeMinigame();
     }
 
 

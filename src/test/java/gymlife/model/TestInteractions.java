@@ -1,7 +1,7 @@
 package gymlife.model;
 
 import gymlife.model.api.MapManager;
-import gymlife.model.minigame.MinigameManager;
+import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.GameDifficulty;
@@ -19,14 +19,14 @@ class TestInteractions {
     private StatsManager statsManager;
     private InteractionsManager interactionsManager;
     private MapManager mapManager;
-    private MinigameManager minigameManager;
+    private final MinigameManagerImpl minigameManagerImpl = new MinigameManagerImpl();
 
     @BeforeEach
     void init() {
         scenariosManager = new ScenariosManager();
         scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
         statsManager = new StatsManagerImpl(GameDifficulty.EASY);
-        interactionsManager = new InteractionsManager(scenariosManager, statsManager, minigameManager);
+        interactionsManager = new InteractionsManager(scenariosManager, statsManager, minigameManagerImpl);
         mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     }
 

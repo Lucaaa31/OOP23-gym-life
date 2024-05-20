@@ -27,11 +27,8 @@ import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
-import gymlife.model.minigame.MinigameManager;
 import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.minigame.MinigameState;
-import gymlife.utility.minigame.MinigameType;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
@@ -115,10 +112,6 @@ public class MainView extends JFrame {
         sideContainer.setLayout(sideLayout);
         sideContainer.setBackground(Color.BLUE);
 
-//        MinigameManager minigameManager = new MinigameManager();
-//        controller.setMinigameManager(minigameManager);
-//        minigameManager.setCurrentMinigame(MinigameType.BENCH_PRESS);
-
         mainPanel.add(scenariosContainer, BorderLayout.CENTER);
         mainPanel.add(sideContainer, BorderLayout.EAST);
 
@@ -130,7 +123,6 @@ public class MainView extends JFrame {
                 resizeComponents();
                 scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 statsView.resizeComponents();
-                //((MinigameView) minigameView).resizeComponents();
             }
         };
 
@@ -142,7 +134,6 @@ public class MainView extends JFrame {
                 resizeComponents();
                 scenariosPanels.values().forEach(GamePanel::resizeComponents);
                 statsView.resizeComponents();
-                //((MinigameView) minigameView).resizeComponents();
             }
         };
 
@@ -167,7 +158,6 @@ public class MainView extends JFrame {
         scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
         scenariosContainer.add(minigameView.getPanelName(), minigameView);
-
 
         statsView.setVisible(true);
 
@@ -232,6 +222,8 @@ public class MainView extends JFrame {
         final int borderSize = 15;
         final int fontDescriptionSize = 55;
 
+        final ButtonBuilder buttonBuilder = new ButtonBuilder(dimensionGetter);
+
         final JButton buttonEasy = this.buildButton(Color.GREEN, GameDifficulty.EASY);
         final JButton buttonMedium = this.buildButton(Color.YELLOW, GameDifficulty.MEDIUM);
         final JButton buttonHard = this.buildButton(Color.RED, GameDifficulty.HARD);
@@ -274,6 +266,7 @@ public class MainView extends JFrame {
         newGame.setBorder(new LineBorder(Color.WHITE, borderSize));
         this.add(newGame);
     }
+
     /**
      * Builds a button with the specified color and difficulty.
      * Sets the background color, border, foreground color, opacity, content area filled, font,
@@ -318,6 +311,10 @@ public class MainView extends JFrame {
         return panel;
     }
 
+    /**
+     * Closes the game.
+     * Sets the default close operation of the frame to exit on close and disposes the frame.
+     */
     private void closeGame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

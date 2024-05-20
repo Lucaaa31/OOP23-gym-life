@@ -10,18 +10,10 @@ import gymlife.utility.minigame.MinigameState;
  * and setting the difficulty level of the minigame.
  */
 public interface Minigame {
-
     /**
      * Notifies the minigame that a button has been pressed.
      */
     void notifyUserAction();
-
-    /**
-     * Checks if the reps have been completed.
-     *
-     * @return true if the reps have been completed, false otherwise
-     */
-    boolean isRepsCompleted();
 
     /**
      * Sets the difficulty level of the minigame.
@@ -29,7 +21,6 @@ public interface Minigame {
      * @param selectedDifficulty the selected difficulty level
      */
     void setDifficulty(MinigameDifficulty selectedDifficulty);
-
 
     /**
      * Returns the state of the minigame.
@@ -50,11 +41,12 @@ public interface Minigame {
      *
      * @return the time to complete the minigame
      */
-    int getEndMinigame();
+    int getTimeMinigame();
 
 
-    boolean getValidity();
-
-
+    /**
+     * Checks the validity of the press.
+     */
+    void validatePress();
 
 }

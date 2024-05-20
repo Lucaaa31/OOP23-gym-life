@@ -4,7 +4,8 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
-import gymlife.model.minigame.MinigameManager;
+import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
@@ -49,7 +50,7 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
         this.scenariosManager = new ScenariosManager();
-        this.minigameManager = new MinigameManager();
+        this.minigameManager = new MinigameManagerImpl();
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager,
@@ -137,6 +138,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Retrieves the current scenario type.
+     *
      * @return the current scenario.
      */
     @Override
@@ -146,6 +148,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to change the scenario.
+     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     @Override
@@ -168,8 +171,8 @@ public class ControllerImpl implements Controller {
      * @param difficulty the difficulty level to set
      */
     @Override
-    public void setDifficulty(final MinigameDifficulty difficulty) {
-        minigameManager.setDifficulty(difficulty);
+    public void setMinigameDifficulty(final MinigameDifficulty difficulty) {
+        minigameManager.setMinigameDifficulty(difficulty);
     }
 
 
@@ -197,18 +200,20 @@ public class ControllerImpl implements Controller {
      * Updates the game statistics.
      * Updates the scenarios.
      */
+    @Override
     public void setMinigameResult() {
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
                 minigameManager.getEndTime());
-        statsManager.setStat(minigameManager.getMinigameType().getStatsType(), 0);
+        statsManager.setStat(minigameManager.getMinigameType().getStatsType(),
+                minigameManager.getDifficulty().getExperienceGained());
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 
     /**
      * Return the minigame status.
      *
-     * @return true if the minigame is ended, false otherwise
+     * @return an enum representing the minigame status
      */
     @Override
     public MinigameState getMinigameState() {
@@ -220,19 +225,11 @@ public class ControllerImpl implements Controller {
      *
      * @return the current minigame difficulty
      */
+    @Override
     public MinigameDifficulty getDifficulty() {
         return minigameManager.getDifficulty();
     }
 
-    /**
-     * Checks if a rep has been completed.
-     *
-     * @return true if the rep is done, false otherwise
-     */
-    @Override
-    public boolean isRepDone() {
-        return minigameManager.isRepsDone();
-    }
 
     /**
      * Retrieves the current minigame score.
@@ -245,13 +242,5 @@ public class ControllerImpl implements Controller {
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
         return scoringTableManager.getScores(minigameType, difficulty);
     }
-
-    @Override
-    public boolean checkValidity() {
-        return minigameManager.getValidity();
-    }
-
-
-
 
 }

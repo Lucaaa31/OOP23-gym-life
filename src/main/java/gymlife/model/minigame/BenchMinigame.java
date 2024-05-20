@@ -7,8 +7,7 @@ import gymlife.utility.minigame.MinigameState;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Represents a bench minigame that implements the Minigame interface and the
- * Runnable interface.
+ * Represents a bench minigame that implements the Minigame interface.
  */
 public class BenchMinigame implements Minigame {
     private MinigameDifficulty difficulty;
@@ -17,16 +16,13 @@ public class BenchMinigame implements Minigame {
     private MinigameState minigameState;
     private long startReactionTime;
     private int nMistakes;
-    private boolean isRepsCompleted;
     private long startMinigame;
     private long endMinigame;
     private boolean isFirstTimePressed = true;
-    private boolean isReactionTimeSet = false;
-
+    private boolean isReactionTimeSet;
 
     /**
-     * Constructs a new BenchMinigame object.
-     * Initializes the instance variables.
+     * Constructs a new BenchMinigame object and initializes the instance variables.
      */
     public BenchMinigame() {
         this.minigameState = MinigameState.NOT_STARTED;
@@ -34,7 +30,6 @@ public class BenchMinigame implements Minigame {
         this.numReps = 0;
         this.difficulty = null;
         this.nMistakes = 0;
-        this.isRepsCompleted = false;
     }
 
     /**
@@ -43,72 +38,98 @@ public class BenchMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
-        minigameState = MinigameState.RUNNING;
+
         if (isFirstTimePressed) {
             isFirstTimePressed = false;
             startMinigame = System.nanoTime();
+        } else {
+            minigameState = MinigameState.RUNNING;
         }
-
         nTimesPressed++;
-
         if (!isReactionTimeSet) {
-            startReactionTime = System.nanoTime();
-            System.out.println("Start reaction time: " + startReactionTime);
+            resetStartReactionTime();
             isReactionTimeSet = true;
         } else {
-            getValidity();
+            validatePress();
         }
-
     }
 
-    /**
-     * The view check if the reps has been completed.
-     *
-     * @return true if the reps has been completed, false otherwise
-     */
-    @Override
-    public boolean isRepsCompleted() {
-        return isRepsCompleted;
-    }
 
     /**
-     * Checks if the user has completed the required number of reps.
-     * If the user has completed the required number of reps, the minigame is ended.
-     * If the user has made the maximum number of mistakes, the minigame is ended.
+     * Validates the user's press timing and updates the game state accordingly.
      */
     @Override
-    public void getValidity() {
-        long endReactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
-        //System.out.println("End reaction time: " + endReactionTime);
-
-        // Reset startReactionTime for the next press
-        startReactionTime = System.nanoTime();
-
-        if (endReactionTime < difficulty.getReactionTime()) {
-            if (nTimesPressed == difficulty.getTouchForLift()) {
-                nTimesPressed = 0;
-                numReps++;
-                System.out.println("Reps: " + numReps);
-                minigameState = MinigameState.REP_REACHED;
-                isReactionTimeSet = false;
-                if (numReps == difficulty.getRequiredReps()) {
-                    endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
-                    minigameState = MinigameState.ENDED_WON;
-                    isRepsCompleted = true;
-                }
-            }
+    public void validatePress() {
+        final long reactionTime = calculateReactionTime();
+        resetStartReactionTime();
+        if (isReactionTimeValid(reactionTime)) {
+            handleValidPress();
         } else {
-            nMistakes++;
-            minigameState = MinigameState.MISTAKE_MADE;
-            isReactionTimeSet = false;
-            if (nMistakes > difficulty.getMaxMistakes()) {
-                minigameState = MinigameState.ENDED_LOST;
-            }
-            nTimesPressed = 0;
+            handleInvalidPress();
         }
     }
 
+    /**
+     * Calculates the reaction time of the player.
+     *
+     * @return the reaction time of the player in milliseconds
+     */
+    private long calculateReactionTime() {
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
+    }
 
+    /**
+     * Resets the start reaction time to the current time.
+     */
+    private void resetStartReactionTime() {
+        startReactionTime = System.nanoTime();
+    }
+
+    /**
+     * Checks if the reaction time of the player is valid.
+     *
+     * @param reactionTime the reaction time of the player
+     * @return true if the reaction time is valid, false otherwise
+     */
+    private boolean isReactionTimeValid(final long reactionTime) {
+        return reactionTime < difficulty.getReactionTime();
+    }
+
+    /**
+     * Handles the case when the player's press is valid.
+     */
+    private void handleValidPress() {
+        if (nTimesPressed == difficulty.getTouchForLift()) {
+            nTimesPressed = 0;
+            numReps++;
+            minigameState = MinigameState.REP_REACHED;
+            isReactionTimeSet = false;
+            checkIfRepsCompleted();
+        }
+    }
+
+    /**
+     * Handles the case when the player's press is invalid.
+     */
+    private void handleInvalidPress() {
+        nMistakes++;
+        minigameState = MinigameState.MISTAKE_MADE;
+        isReactionTimeSet = false;
+        if (nMistakes > difficulty.getMaxMistakes()) {
+            minigameState = MinigameState.ENDED_LOST;
+        }
+        nTimesPressed = 0;
+    }
+
+    /**
+     * Checks if the required number of reps has been completed.
+     */
+    private void checkIfRepsCompleted() {
+        if (numReps == difficulty.getRequiredReps()) {
+            endMinigame = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame);
+            minigameState = MinigameState.ENDED_WON;
+        }
+    }
 
     /**
      * Sets the difficulty level for the bench minigame.
@@ -120,11 +141,10 @@ public class BenchMinigame implements Minigame {
         this.difficulty = selectedDifficulty;
     }
 
-
     /**
-     * Return the state of the bench minigame.
+     * Returns the current state of the bench minigame.
      *
-     * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
+     * @return the current state of the bench minigame
      */
     @Override
     public MinigameState getMinigameState() {
@@ -142,12 +162,13 @@ public class BenchMinigame implements Minigame {
     }
 
     /**
-     * Returns the time that took the player to complete the minigame.
+     * Returns the time taken by the player to complete the minigame.
      *
-     * @return the number of times the button has been pressed
+     * @return the time taken to complete the minigame in milliseconds
      */
-    public int getEndMinigame() {
-            return Math.toIntExact(endMinigame);
+    @Override
+    public int getTimeMinigame() {
+        return Math.toIntExact(endMinigame);
     }
 
 }

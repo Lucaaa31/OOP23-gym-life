@@ -11,10 +11,14 @@ import gymlife.utility.minigame.MinigameState;
  */
 public class SquatMinigame implements Minigame {
     private MinigameDifficulty difficulty;
-    private int nTimesPressed;
-    private int state;
-    //private int numReps;
 
+
+    /**
+     * Constructor for the Squat Minigame.
+     */
+    public SquatMinigame() {
+        this.difficulty = MinigameDifficulty.EASY;
+    }
 
     /**
      * Notifies the Squat Minigame that a button has been pressed.
@@ -22,18 +26,7 @@ public class SquatMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
-        nTimesPressed++;
-    }
 
-
-    /**
-     * The view check if the reps has been completed.
-     *
-     * @return true if the reps has been completed, false otherwise
-     */
-    @Override
-    public boolean isRepsCompleted() {
-        return false;
     }
 
 
@@ -48,11 +41,8 @@ public class SquatMinigame implements Minigame {
     }
 
 
-
     /**
-     * Return the state of the bench minigame.
-     *
-     * @return return true if the minigame is ended, false otherwise
+     * Return the state of the squat minigame.
      */
     @Override
     public MinigameState getMinigameState() {
@@ -75,12 +65,14 @@ public class SquatMinigame implements Minigame {
      * @return the timer of the minigame
      */
     @Override
-    public int getEndMinigame() {
+    public int getTimeMinigame() {
         return 0;
     }
 
+    /**
+     * Validates the press of the player.
+     */
     @Override
-    public boolean getValidity() {
-        return false;
+    public void validatePress() {
     }
 }

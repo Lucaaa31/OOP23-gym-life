@@ -18,6 +18,7 @@ import java.awt.Image;
 import java.awt.BorderLayout;
 import java.io.Serial;
 import java.util.Map;
+
 import gymlife.utility.FontLoader;
 import gymlife.view.minigame.ScoreBoardView;
 import gymlife.view.api.GamePanel;
@@ -39,6 +40,7 @@ public class SideStatsView extends GamePanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
+
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -80,6 +82,7 @@ public class SideStatsView extends GamePanel {
         this.add(statsPanel4);
 
     }
+
     /**
      * Resizes the stats panel.
      */
@@ -99,8 +102,10 @@ public class SideStatsView extends GamePanel {
         statsPanel3.repaint();
 
     }
+
     /**
      * Resizes the stats panel.
+     *
      * @return the JLabel with the happiness value
      */
     private JLabel getHappinessLabel() {
@@ -132,8 +137,10 @@ public class SideStatsView extends GamePanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the stamina stats label.
+     *
      * @return the JLabel with the stamina value
      */
     private JLabel getStaminaLabel() {
@@ -165,8 +172,10 @@ public class SideStatsView extends GamePanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the mass stats label.
+     *
      * @return the JLabel with the mass value
      */
     private JLabel getMassLabel() {
@@ -196,8 +205,10 @@ public class SideStatsView extends GamePanel {
         lablelNumber.setBorder(BORDER);
         return happinessLabel;
     }
+
     /**
      * Return the money stats label.
+     *
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
@@ -223,8 +234,10 @@ public class SideStatsView extends GamePanel {
         lablelNumber.setBorder(new MatteBorder(0, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
         return moneyLablel;
     }
+
     /**
      * Return the days stats label.
+     *
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
@@ -264,7 +277,7 @@ public class SideStatsView extends GamePanel {
 
     /**
      * Return the ImageIcona that is in the path.
-     * @return ImageIcon
+     *
      * @param path the path of the image
      * @return ImageIcon
      */

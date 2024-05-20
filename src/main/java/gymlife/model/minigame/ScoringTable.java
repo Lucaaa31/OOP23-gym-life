@@ -2,7 +2,10 @@ package gymlife.model.minigame;
 
 import gymlife.utility.minigame.MinigameDifficulty;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -19,10 +22,9 @@ public class ScoringTable {
      */
     public ScoringTable() {
         scores = new HashMap<>();
-        for (MinigameDifficulty difficulty : MinigameDifficulty.values()) {
+        for (final MinigameDifficulty difficulty : MinigameDifficulty.values()) {
             scores.put(difficulty, null);
         }
-        scores.put(MinigameDifficulty.EASY, new LinkedList<>(List.of(20000, 10000, 5000, 3000)));
     }
 
     /**
@@ -34,12 +36,16 @@ public class ScoringTable {
      * @param score      the score of the player
      */
     public void updateScore(final MinigameDifficulty difficulty, final int score) {
+        final int maxScores = 5;
         List<Integer> tmpScores = scores.get(difficulty);
+        if (tmpScores == null) {
+            tmpScores = new LinkedList<>();
+        }
         tmpScores.add(score);
 
-        List<Integer> updatedScores = tmpScores.stream()
+        final List<Integer> updatedScores = tmpScores.stream()
                 .sorted()
-                .limit(5)
+                .limit(maxScores)
                 .collect(Collectors.toList());
         scores.remove(difficulty);
         scores.put(difficulty, updatedScores);
@@ -53,20 +59,11 @@ public class ScoringTable {
      */
     public List<Integer> getScores(final MinigameDifficulty difficulty) {
         if (scores.get(difficulty) == null) {
-            return null;
+            return List.of();
         }
         return scores.get(difficulty).stream()
                 .sorted()
                 .toList();
     }
 
-    /**
-     * Returns the size of the list of scores of the given difficulty.
-     *
-     * @param difficulty the difficulty of the minigame
-     * @return the size of the list of scores
-     */
-    public int getSize(final MinigameDifficulty difficulty) {
-        return scores.get(difficulty).size();
-    }
 }

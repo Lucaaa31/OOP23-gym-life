@@ -18,7 +18,7 @@ public enum MinigameDifficulty {
      * Medium difficulty level.
      */
     MEDIUM(
-            5,
+            3,
             3,
             3000,
             5,
@@ -30,7 +30,7 @@ public enum MinigameDifficulty {
     HARD(
             7,
             5,
-            2000,
+            1500,
             10,
             0,
             10);
@@ -46,9 +46,11 @@ public enum MinigameDifficulty {
      * Constructs a MinigameDifficulty enum constant with the specified parameters.
      *
      * @param requiredReps     the number of required repetitions
-     * @param experienceGained the maximum number of mistakes allowed
-     * @param reactionTime     the time within the minigame must be completed
+     * @param experienceGained the statistics gained from the minigame
+     * @param reactionTime     the time within the has to react
      * @param touchForLift     the number of interactions required to lift the weight
+     * @param maxMistakes      the maximum number of mistakes allowed
+     * @param progress         the progress of the progressBar
      */
     MinigameDifficulty(final int requiredReps, final int experienceGained, final int reactionTime,
                        final int touchForLift, final int maxMistakes, final int progress) {

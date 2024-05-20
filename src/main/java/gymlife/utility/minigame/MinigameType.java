@@ -49,6 +49,7 @@ public enum MinigameType {
      *                         associated with this minigame type
      * @param minigameViewType the fully qualified name of the minigame view class
      *                         associated with this minigame type
+     * @param statsType        the stats type associated with this minigame type
      */
     MinigameType(final String minigameType, final String minigameViewType, final StatsType statsType) {
         this.minigameType = minigameType;
@@ -74,6 +75,11 @@ public enum MinigameType {
         return this.minigameViewType;
     }
 
+    /**
+     * Returns the stats type associated with the minigame type.
+     *
+     * @return the stats type associated with the minigame type
+     */
     public StatsType getStatsType() {
         return this.statsType;
     }

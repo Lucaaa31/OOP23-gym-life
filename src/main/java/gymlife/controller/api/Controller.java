@@ -1,6 +1,5 @@
 package gymlife.controller.api;
 
-import gymlife.model.minigame.MinigameManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
@@ -11,6 +10,7 @@ import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +21,7 @@ import java.util.Map;
  * managing the game map, executing actions associated with the cell on which the character currently is,
  * and getting the level of mass of the character.
  */
+@Immutable
 public interface Controller {
     /**
      * Moves the character in the specified direction.
@@ -52,6 +53,7 @@ public interface Controller {
 
     /**
      * Method to get the current map.
+     *
      * @return Returns the current map.
      */
     GameMap getCurrentMap();
@@ -70,12 +72,14 @@ public interface Controller {
 
     /**
      * Method to get the current Scenario of the game.
+     *
      * @return Returns the ScenariosType of the current scenario.
      */
     ScenariosType getActualScenario();
 
     /**
      * Method to modify the current scenario.
+     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     void changeScenario(ScenariosType newScenario);
@@ -90,7 +94,7 @@ public interface Controller {
      *
      * @param difficulty the difficulty level to set
      */
-    void setDifficulty(MinigameDifficulty difficulty);
+    void setMinigameDifficulty(MinigameDifficulty difficulty);
 
     /**
      * Notifies the controller that a button has been pressed.
@@ -105,18 +109,18 @@ public interface Controller {
 
     /**
      * Check the status of the minigame.
+     *
+     * @return an enum representing the state of the minigame
      */
     MinigameState getMinigameState();
 
     /**
      * Returns the difficulty level of the minigame.
+     *
+     * @return the enum of difficulty level of the minigame
      */
     MinigameDifficulty getDifficulty();
 
-    /**
-     * Check if the reps is done.
-     */
-    boolean isRepDone();
 
     /**
      * Returns the type of the current minigame.
@@ -126,17 +130,14 @@ public interface Controller {
     MinigameType getMinigameType();
 
 
-
     /**
      * Get the score of the player in the scoring table.
      *
      * @param minigameType the type of the minigame that has been played
      * @param difficulty   the difficulty of the minigame that has been played
+     * @return the list of scores
      */
     List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
-
-
-    boolean checkValidity();
 
 
 }
