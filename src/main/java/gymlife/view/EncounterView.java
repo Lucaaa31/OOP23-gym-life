@@ -1,9 +1,11 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Locale;
 
@@ -23,12 +25,15 @@ public class EncounterView extends GamePanel {
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
         this.setBackground(Color.BLACK);
+        this.setBorder(new LineBorder(Color.BLACK, 10));
+
+        FontLoader.loadFont();
 
         final BorderLayout layout = new BorderLayout();
-        layout.setHgap(20);
+        layout.setHgap(10);
         this.setLayout(layout);
         final GridLayout gl = new GridLayout(2, 1);
-        gl.setVgap(20);
+        gl.setVgap(10);
 
         this.infoPanel = new JPanel(gl);
         infoPanel.setPreferredSize(dimensionGetter.getEncounterImageDimension());
@@ -36,8 +41,10 @@ public class EncounterView extends GamePanel {
 
         this.imageLabel = new JLabel();
         this.descLabel = new JLabel("description.", SwingConstants.CENTER);
+        descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         descLabel.setOpaque(true);
         descLabel.setBackground(new Color(168, 228, 207));
+        descLabel.setBorder(new LineBorder(Color.WHITE, 10));
 
         infoPanel.add(imageLabel);
         infoPanel.add(descLabel);
@@ -48,6 +55,14 @@ public class EncounterView extends GamePanel {
 
         this.acceptButton = new JButton("accept");
         this.declineButton = new JButton("decline");
+        acceptButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        acceptButton.setOpaque(true);
+        acceptButton.setBackground(new Color(100, 204, 46));
+        acceptButton.setForeground(Color.WHITE);
+        declineButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        declineButton.setOpaque(true);
+        declineButton.setBackground(new Color(204, 51, 46));
+        declineButton.setForeground(Color.WHITE);
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
 
@@ -73,9 +88,11 @@ public class EncounterView extends GamePanel {
         buttonsPanel.setPreferredSize(dimensionGetter.getEncounterButtonDimension());
         if(controller.getCurrentEncounter() != null) {
             imageLabel.setIcon(loadResizedImage());
-            descLabel.setText(controller.getCurrentEncounter().description());
-            acceptButton.setText("Accept\n" + controller.getCurrentEncounter().acceptCase());
-            declineButton.setText("Decline\n" + controller.getCurrentEncounter().denyCase());
+            descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+            descLabel.setText(
+                    "<html><h1>RANDOM ENCOUNTER</h1><br>" + controller.getCurrentEncounter().description() + "</html>");
+            acceptButton.setText("<html>ACCEPT<br>" + controller.getCurrentEncounter().acceptCase() + "</html>");
+            declineButton.setText("<html>DECLINE<br>" + controller.getCurrentEncounter().denyCase() + "</html>");
         }
     }
 
