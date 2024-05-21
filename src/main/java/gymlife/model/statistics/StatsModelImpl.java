@@ -10,7 +10,7 @@ import gymlife.model.statistics.api.StatsModel;
  */
 public final class StatsModelImpl implements StatsModel {
     private final Map<StatsType, Counter> gameStats = new HashMap<>();
-    private static Counter humor = new Counter(StatsConstants.STARTING_STATS_LEVEL);
+    private static Counter happiness = new Counter(StatsConstants.STARTING_STATS_LEVEL);
     private static Counter stamina = new Counter(StatsConstants.STARTING_STATS_LEVEL);
     private static Counter legMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
     private static Counter backMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
@@ -61,7 +61,8 @@ public final class StatsModelImpl implements StatsModel {
         gameStats.put(StatsType.LEG_MASS, legMass);
         gameStats.put(StatsType.MASS, mass);
         gameStats.put(StatsType.STAMINA, stamina);
-        gameStats.put(StatsType.HAPPINESS, humor);
+        gameStats.put(StatsType.HAPPINESS, happiness);
+
     }
     /**
      * Increases the specified stat by 1.

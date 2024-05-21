@@ -28,7 +28,7 @@ public final class StatsConstants {
     /**
      * Two thirds of the total amount of a stats .
      */
-    public static final int LEVEL_2 = MAX_MASS_LEVEL / 3 * 2;
+    public static final int LEVEL_2 = MAX_STATS_LEVEL / 3 * 2;
 
     private StatsConstants() {
     }

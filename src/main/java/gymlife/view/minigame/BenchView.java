@@ -63,7 +63,7 @@ public class BenchView extends JPanel implements MinigamePanel {
         this.setSize(dimensionGetter.getScenarioDimension());
 
         backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
-        characterImage = new ImageIcon("images/Minigame/bench_press/sprite_0.png");
+        characterImage = new ImageIcon("src/main/resources/images/Minigame/bench_press/sprite_0.png");
 
         progressBar.setOrientation(JProgressBar.VERTICAL);
         progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
@@ -108,6 +108,7 @@ public class BenchView extends JPanel implements MinigamePanel {
                 dimensionGetter.getCharacterMinigamePos().height);
 
         characterLabel.setIcon(characterImage);
+        characterLabel.setVisible(true);
 
         layeredPane.add(buttonMinigame, Integer.valueOf(1));
         layeredPane.add(backgroundLabel, Integer.valueOf(0));
@@ -115,6 +116,8 @@ public class BenchView extends JPanel implements MinigamePanel {
         layeredPane.add(timerView, Integer.valueOf(1));
 
         setRandomPositionButton();
+
+        this.revalidate();
 
 
         buttonMinigame.addActionListener(e -> {

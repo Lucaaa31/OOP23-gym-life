@@ -8,8 +8,8 @@ public enum MinigameDifficulty {
      * Easy difficulty level.
      */
     EASY(
-            3,
             1,
+            193,
             5000,
             3,
             3,
