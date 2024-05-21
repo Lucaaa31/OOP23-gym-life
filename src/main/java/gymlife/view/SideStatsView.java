@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
 
@@ -12,15 +13,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import java.awt.Image;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.BorderLayout;
 import java.io.Serial;
 import java.util.Map;
-
 import gymlife.utility.FontLoader;
-import gymlife.view.minigame.ScoreBoardView;
 import gymlife.view.api.GamePanel;
 
 /**
@@ -40,14 +38,13 @@ public class SideStatsView extends GamePanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
-
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
      * Sets the size, layout, and visibility of the character view panel.
      * Adds the character view panel to the main frame and makes it visible.
-     *
-     * @param controller      the controller object
+     * 
+     * @param controller the controller object
      * @param dimensionGetter the controller object
      */
     public SideStatsView(final Controller controller, final DimensionGetter dimensionGetter) {
@@ -60,16 +57,22 @@ public class SideStatsView extends GamePanel {
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
         statsPanel1.setLayout(new GridLayout(1, 3));
-        statsPanel1.add(getHappinessLabel());
-        statsPanel1.add(getStaminaLabel());
-        statsPanel1.add(getMassLabel());
+        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final String happyPath;
+        if (level < StatsConstants.LEVEL_1) {
+            happyPath = "images/icons/sad.png";
+        } else if (level < StatsConstants.LEVEL_2) {
+            happyPath = "images/icons/mid.png";
+        } else {
+            happyPath = "images/icons/happy.png";
+        }
+        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
+        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
 
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
-
-        statsPanel4.setLayout(new BorderLayout());
-        statsPanel4.add(getScoreBoardLabel());
 
         statsPanel1.setBorder(BORDER);
         statsPanel2.setBorder(BORDER);
@@ -82,16 +85,15 @@ public class SideStatsView extends GamePanel {
         this.add(statsPanel4);
 
     }
-
     /**
      * Resizes the stats panel.
      */
     @Override
     public void resizeComponents() {
         statsPanel1.removeAll();
-        statsPanel1.add(getHappinessLabel());
-        statsPanel1.add(getStaminaLabel());
-        statsPanel1.add(getMassLabel());
+        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, "images/icons/happy.png"));
+        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
         statsPanel1.revalidate();
         statsPanel1.repaint();
 
@@ -102,113 +104,23 @@ public class SideStatsView extends GamePanel {
         statsPanel3.repaint();
 
     }
-
     /**
-     * Resizes the stats panel.
+     * Method to return a representative name for the classes that extend this.
      *
-     * @return the JLabel with the happiness value
+     * @return a string representing said name.
      */
-    private JLabel getHappinessLabel() {
-        final int happinessValue = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
-        final JLabel labelImage = new JLabel();
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
-                SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/happy.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-
-        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
+    @Override
+    public String getPanelName() {
+        return this.getClass().getSimpleName();
     }
-
     /**
-     * Return the stamina stats label.
-     *
-     * @return the JLabel with the stamina value
+     * Updates the stats panel.
      */
-    private JLabel getStaminaLabel() {
-        final int staminaValue = controller.getStatistics().get(StatsType.STAMINA).getCount();
-        final JLabel labelImage = new JLabel();
-
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(staminaValue),
-                SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/stamina.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-        labelImage.setBorder(new MatteBorder(3, 0, 0, 0, Color.BLACK));
-
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
+    public void updateStats() {
+        this.resizeComponents();
     }
-
-    /**
-     * Return the mass stats label.
-     *
-     * @return the JLabel with the mass value
-     */
-    private JLabel getMassLabel() {
-        final int happinessValue = controller.getStatistics().get(StatsType.MASS).getCount();
-        final JLabel labelImage = new JLabel();
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
-                SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/mass.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-        labelImage.setBorder(new MatteBorder(3, 0, 0, BOX_BORDER_5, Color.BLACK));
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
-    }
-
     /**
      * Return the money stats label.
-     *
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
@@ -216,7 +128,7 @@ public class SideStatsView extends GamePanel {
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
-                SwingConstants.CENTER);
+            SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
         moneyLablel.setLayout(new GridLayout(2, 1));
@@ -234,10 +146,8 @@ public class SideStatsView extends GamePanel {
         lablelNumber.setBorder(new MatteBorder(0, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
         return moneyLablel;
     }
-
     /**
      * Return the days stats label.
-     *
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
@@ -246,7 +156,7 @@ public class SideStatsView extends GamePanel {
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
         final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
-                SwingConstants.CENTER);
+            SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
         moneyLablel.setLayout(new GridLayout(2, 1));
@@ -261,25 +171,10 @@ public class SideStatsView extends GamePanel {
         this.setBorder(BORDER);
         return moneyLablel;
     }
-
-    /**
-     * Return the scoreboard stats label.
-     *
-     * @return the JPanel with the scoreboard value
-     */
-    private JPanel getScoreBoardLabel() {
-        final JPanel panel = new ScoreBoardView(controller);
-
-        panel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
-        panel.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
-        return panel;
-    }
-
     /**
      * Return the ImageIcona that is in the path.
-     *
-     * @param path the path of the image
      * @return ImageIcon
+     * @param path the path of the image
      */
     private ImageIcon getIcon(final String path) {
         return new ImageIcon(new ImageIcon(ClassLoader.
@@ -289,14 +184,30 @@ public class SideStatsView extends GamePanel {
                         dimensionGetter.getSquareStatsDimension().height,
                         Image.SCALE_SMOOTH));
     }
+    private JLabel buildLabel1(final StatsType statsType, final String path) {
+        final int value = controller.getStatistics().get(statsType).getCount();
+        final JLabel labelImage = new JLabel();
+        this.setSize(dimensionGetter.getCellDimension());
+        final JLabel lablelNumber = new JLabel(String.valueOf(value),
+                SwingConstants.CENTER);
+        final JLabel label = new JLabel();
+        label.setLayout(new GridLayout(2, 1));
+        label.add(labelImage);
+        label.add(lablelNumber);
+        FontLoader.loadFont();
 
-    /**
-     * Method to return a representative name for the classes that extend this.
-     *
-     * @return a string representing said name.
-     */
-    @Override
-    public String getPanelName() {
-        return this.getClass().getSimpleName();
+        labelImage.setIcon(getIcon(path));
+
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+
+        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
+        lablelNumber.setBorder(BORDER);
+        return label;
     }
+
 }
