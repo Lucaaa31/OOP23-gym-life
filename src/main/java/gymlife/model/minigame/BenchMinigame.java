@@ -38,19 +38,19 @@ public class BenchMinigame implements Minigame {
      */
     @Override
     public void notifyUserAction() {
-
         if (isFirstTimePressed) {
             isFirstTimePressed = false;
             startMinigame = System.nanoTime();
+
         } else {
             minigameState = MinigameState.RUNNING;
-        }
-        nTimesPressed++;
-        if (!isReactionTimeSet) {
-            resetStartReactionTime();
-            isReactionTimeSet = true;
-        } else {
-            validatePress();
+            nTimesPressed++;
+            if (!isReactionTimeSet) {
+                resetStartReactionTime();
+                isReactionTimeSet = true;
+            } else {
+                validatePress();
+            }
         }
     }
 

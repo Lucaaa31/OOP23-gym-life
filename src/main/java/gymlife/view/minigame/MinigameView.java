@@ -8,11 +8,15 @@ import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;
 import gymlife.view.api.MinigamePanel;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.CardLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 
@@ -28,9 +32,9 @@ public class MinigameView extends GamePanel {
     private static final long serialVersionUID = 7421500249399144105L;
     private final transient Controller controller;
     private final transient DimensionGetter dimensionGetter;
-    private final MinigameDifficultyView difficultyView;
     private final CardLayout cardLayout = new CardLayout();
     private MinigamePanel minigamePanel;
+    private final DifficultyMenu difficultyMenu;
 
 
     /**
@@ -42,18 +46,28 @@ public class MinigameView extends GamePanel {
     public MinigameView(final Controller controller, final DimensionGetter dimensionGetter) {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
-        this.difficultyView = new MinigameDifficultyView(dimensionGetter);
         final JPanel minigameEndView = new MinigameEndView(controller);
         this.setLayout(cardLayout);
 
-        for (final MinigameDifficulty difficulty : MinigameDifficulty.values()) {
-            difficultyView.initializeActionListener(e -> {
-                controller.setMinigameDifficulty(difficulty);
-                startMinigame();
-            }, difficulty);
-        }
 
-        this.add("difficultyView", difficultyView);
+        difficultyMenu = new DifficultyMenu(dimensionGetter, e -> {
+            controller.setMinigameDifficulty(MinigameDifficulty.EASY);
+            startMinigame();
+        }, e -> {
+            controller.setMinigameDifficulty(MinigameDifficulty.MEDIUM);
+            startMinigame();
+        }, e -> {
+            controller.setMinigameDifficulty(MinigameDifficulty.HARD);
+            startMinigame();
+        }, new MouseAdapter() {
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+                difficultyMenu.updateDescription((JButton) e.getSource());
+            }
+        });
+
+
+        this.add("difficultyMenu", difficultyMenu);
         this.add("minigameEndView", minigameEndView);
 
         minigameEndView.addComponentListener(new ComponentAdapter() {
@@ -84,6 +98,7 @@ public class MinigameView extends GamePanel {
                 }
             });
             this.revalidate();
+            minigamePanel.resizeComponents();
             this.add("minigamePanel", (JPanel) minigamePanel);
             cardLayout.show(this, "minigamePanel");
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
@@ -96,7 +111,7 @@ public class MinigameView extends GamePanel {
      */
     @Override
     public void resizeComponents() {
-        difficultyView.resizeComponents();
+        difficultyMenu.resizeComponents();
         if (minigamePanel != null) {
             minigamePanel.resizeComponents();
         }

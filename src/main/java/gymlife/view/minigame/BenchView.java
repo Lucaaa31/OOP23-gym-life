@@ -28,7 +28,7 @@ import gymlife.view.api.MinigamePanel;
 public class BenchView extends JPanel implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
-    private final JButton buttonMinigame = new JButton("Press me");
+    private final JButton buttonMinigame = new JButton("START");
     private final JLabel characterLabel = new JLabel();
     private final JProgressBar progressBar = new JProgressBar();
     private ImageIcon characterImage;
@@ -115,7 +115,6 @@ public class BenchView extends JPanel implements MinigamePanel {
         layeredPane.add(timerView, Integer.valueOf(1));
 
         setRandomPositionButton();
-
 
 
         buttonMinigame.addActionListener(e -> {

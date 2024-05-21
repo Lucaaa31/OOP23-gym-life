@@ -20,6 +20,7 @@ public final class GameLauncher {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        new MainView();
+        final MainView mainView = new MainView();
+        mainView.newGame();
     }
 }
