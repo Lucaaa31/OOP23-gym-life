@@ -90,8 +90,17 @@ public class SideStatsView extends GamePanel {
      */
     @Override
     public void resizeComponents() {
+        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final String happyPath;
+        if (level < StatsConstants.LEVEL_1) {
+            happyPath = "images/icons/sad.png";
+        } else if (level < StatsConstants.LEVEL_2) {
+            happyPath = "images/icons/mid.png";
+        } else {
+            happyPath = "images/icons/happy.png";
+        }
         statsPanel1.removeAll();
-        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, "images/icons/happy.png"));
+        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
         statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
         statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
         statsPanel1.revalidate();
