@@ -4,6 +4,9 @@ import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
+import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.MinigameManagerImpl;
+import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
@@ -18,8 +21,12 @@ import gymlife.utility.Position;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
+import gymlife.utility.minigame.MinigameType;
 
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +39,8 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
+    private final MinigameManager minigameManager;
+    private final ScoringTableManager scoringTableManager = new ScoringTableManager();
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -41,9 +50,11 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
         this.scenariosManager = new ScenariosManager();
+        this.minigameManager = new MinigameManagerImpl();
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
-                statsManager
+                statsManager,
+                minigameManager
         );
     }
 
@@ -127,6 +138,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Retrieves the current scenario type.
+     *
      * @return the current scenario.
      */
     @Override
@@ -136,6 +148,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to change the scenario.
+     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     @Override
@@ -150,6 +163,86 @@ public class ControllerImpl implements Controller {
     public void resetPlayerPosition() {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
+
+    /**
+     * Sets the difficulty level of the current minigame,
+     * and starts it.
+     *
+     * @param difficulty the difficulty level to set
+     */
+    @Override
+    public void setMinigameDifficulty(final MinigameDifficulty difficulty) {
+        minigameManager.setMinigameDifficulty(difficulty);
+    }
+
+
+    /**
+     * Notifies the current minigame that a button has been pressed.
+     */
+    @Override
+    public void notifyUserAction() {
+        minigameManager.notifyUserAction();
+    }
+
+    /**
+     * Retrieves the type of the current minigame.
+     * Retrieves the current game statistics.
+     *
+     * @return the type of the current minigame
+     */
+    @Override
+    public MinigameType getMinigameType() {
+        return minigameManager.getMinigameType();
+    }
+
+    /**
+     * Set the current minigame score.
+     * Updates the game statistics.
+     * Updates the scenarios.
+     */
+    @Override
+    public void setMinigameResult() {
+        scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
+                minigameManager.getDifficulty(),
+                minigameManager.getEndTime());
+        statsManager.setStat(minigameManager.getMinigameType().getStatsType(),
+                minigameManager.getDifficulty().getExperienceGained());
+        scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
+    }
+
+    /**
+     * Return the minigame status.
+     *
+     * @return an enum representing the minigame status
+     */
+    @Override
+    public MinigameState getMinigameState() {
+        return minigameManager.getMinigameState();
+    }
+
+    /**
+     * Retrieves the current minigame difficulty.
+     *
+     * @return the current minigame difficulty
+     */
+    @Override
+    public MinigameDifficulty getDifficulty() {
+        return minigameManager.getDifficulty();
+    }
+
+
+    /**
+     * Retrieves the current minigame score.
+     *
+     * @param minigameType the type of the minigame
+     * @param difficulty   the difficulty of the minigame
+     * @return the current minigame score
+     */
+    @Override
+    public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
+        return scoringTableManager.getScores(minigameType, difficulty);
+    }
+
 
     /**
      * Method to check if the player has won the game.
