@@ -9,7 +9,6 @@ import gymlife.model.statistics.api.SynchronizerModel;
  */
 public final class PlaneGameModel {
     private static final float MAX_BOUND = 9.00f;
-    private static final long THREAD_WAIT = 9;
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();
@@ -88,11 +87,11 @@ public final class PlaneGameModel {
     }
 
     /**
-     * This method returns the treshold value.
+     * This method returns the threshold value.
      * 
-     * @return treshold value.
+     * @return threshold value.
      */
-    public float getTreshold() {
+    public float getThreshold() {
         return treshold;
     }
 

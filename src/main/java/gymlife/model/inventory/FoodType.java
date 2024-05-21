@@ -54,4 +54,12 @@ public enum FoodType {
         return Map.copyOf(foodPerks);
     }
 
+    /**
+     * This method returns the cost of the food.
+     *
+     * @return cost.
+     */
+    public double getCost() {
+        return cost;
+    }
 }

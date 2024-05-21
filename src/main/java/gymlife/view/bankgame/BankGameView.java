@@ -1,17 +1,12 @@
 package gymlife.view.bankgame;
 
-
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
-import javax.swing.Timer;
-
 import gymlife.controller.api.Controller;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -36,8 +31,7 @@ public final class BankGameView extends JLayeredPane {
     private float moneyMultiplied;
     private float moneyStart;
     private boolean flagAnimation;
-    PlaneAnimationView planeAnimation;
-
+    private final transient PlaneAnimationView planeAnimation;
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -97,7 +91,7 @@ public final class BankGameView extends JLayeredPane {
                     planeLayer.setVisible(true);
                     planeAnimation.startPlaneAnimation(BankGameView.this, planeLayer);
                 }
-                
+
             }
         });
 
@@ -134,7 +128,7 @@ public final class BankGameView extends JLayeredPane {
                     restarButton.setEnabled(true);
                     started = false;
                     button.setEnabled(false);
-                   planeAnimation.stopUpDownAnimation();
+                    planeAnimation.stopUpDownAnimation();
                     planeAnimation.planeExitAnimation(BankGameView.this, planeLayer);
                 }
             }
@@ -161,7 +155,6 @@ public final class BankGameView extends JLayeredPane {
         this.setVisible(true);
     }
 
-
     /**
      * Displays the multiplier and the money multiplied on the screen.
      *
@@ -172,13 +165,12 @@ public final class BankGameView extends JLayeredPane {
         started = true;
         controller.getSync2().signal();
         new Thread(() -> {
-            float multiplier = 1;
-            while (controller.getMultiplier() != controller.getTreshold() && started) {
+            float multiplier;
+            while (controller.getMultiplier() != controller.getThreshold() && started) {
                 try {
                     controller.getSync2().waitForSignal();
                     Thread.sleep(THREAD_W);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (InterruptedException ignored) {
                 }
                 multiplier = controller.getMultiplier();
                 moneyMultiplied = controller.controllerGetMoney();
@@ -189,8 +181,6 @@ public final class BankGameView extends JLayeredPane {
 
     }
 
-
-   
     /**
      * Starts a new thread to update the multiplier value by calling the
      * startMultiplier method

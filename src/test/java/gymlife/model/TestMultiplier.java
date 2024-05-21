@@ -1,18 +1,12 @@
-package gymlife.test;
+package gymlife.model;
 
 import gymlife.controller.ControllerImpl;
-import gymlife.model.PlaneGameModel;
-import gymlife.model.statistics.api.SynchronizerModel;
 import gymlife.view.bankgame.BankGameView;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.lang.ModuleLayer.Controller;
-
 /**
- * This test check if the value of treshold and multiplierShort.
+ * This test check if the value of threshold and multiplierShort.
  */
 class TestMultiplier {
 
@@ -23,7 +17,7 @@ class TestMultiplier {
         final BankGameView view = new BankGameView(controller);
         final float money = 20;
 
-        Thread modelThread = new Thread(() -> {
+        final Thread modelThread = new Thread(() -> {
             number.runMultiplier(money);
         });
 
@@ -31,6 +25,6 @@ class TestMultiplier {
         controller.getSync2().signal();
         view.showsMulti(controller);
         modelThread.join();
-        assertEquals(number.getTreshold(), number.getMultiplierShort());
+        assertEquals(number.getThreshold(), number.getMultiplierShort());
     }
 }

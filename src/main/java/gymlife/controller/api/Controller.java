@@ -41,7 +41,7 @@ public interface Controller {
      * 
      * @return The value of the multiplier's threshold.
      */
-    float getTreshold();
+    float getThreshold();
 
     /**
      * Return the current value of the multiplier.

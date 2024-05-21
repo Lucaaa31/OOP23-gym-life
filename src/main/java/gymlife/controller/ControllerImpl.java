@@ -124,8 +124,8 @@ public class ControllerImpl implements Controller {
      * @return The value of the multiplier's threshold.
      */
     @Override
-    public float getTreshold() {
-        return model.getTreshold();
+    public float getThreshold() {
+        return model.getThreshold();
     }
 
     /**
