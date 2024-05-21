@@ -61,6 +61,7 @@ public class MainView extends JFrame {
                 .put(KeyStroke.getKeyStroke((char) KeyEvent.VK_ESCAPE), "close game");
         mainPanel.getActionMap().put("close game", closeGameAction);
 
+        this.difficulty = null;
         this.setSize(dimensionGetter.getFrameDimension());
         this.setUndecorated(true);
         this.setLocationRelativeTo(null);
@@ -211,23 +212,22 @@ public class MainView extends JFrame {
                 dimensionGetter,
                 e -> {
                     this.difficulty = GameDifficulty.EASY;
-                    super.remove(newGame);
+                    this.remove(newGame);
                     this.start();
                 },
                 e -> {
                     this.difficulty = GameDifficulty.MEDIUM;
-                    super.remove(newGame);
+                    this.remove(newGame);
                     this.start();
                 },
                 e -> {
                     this.difficulty = GameDifficulty.HARD;
-                    super.remove(newGame);
+                    this.remove(newGame);
                     this.start();
                 }
         );
         this.add(newGame);
-
-
+        this.revalidate();
     }
 
 
