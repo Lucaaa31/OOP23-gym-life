@@ -10,7 +10,7 @@ import gymlife.model.statistics.StatsType;
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
-    private static final double ENCOUNTER_CHANCE = 0.5;
+    private static final double ENCOUNTER_CHANCE = 0.2;
     private static final double ICE_CREAM_CHANCE = 1;
     private static final double GYM_BRO_CHANCE = 0.8;
     private static final double PUSHER_CHANCE = 0.6;
@@ -20,7 +20,8 @@ public final class EncountersConstants {
     private static final String ICE_CREAM_DESCRIPTION = "An ice cream truck is parked outside the gym. Do you buy one?";
     private static final String MONEY_BAG_DESCRIPTION = "You find a bag of money on the ground. Do you take it?";
     private static final String ROBBER_DESCRIPTION = "A robber tries to steal your wallet. Do you fight back?";
-    private static final String GYM_BRO_DESCRIPTION = "You see your gym bro walking by. Do you stop to say hi?";
+    private static final String GYM_BRO_DESCRIPTION = "You see your gym bro walking by. You owe him some money." +
+            " Do you stop to say hi?";
 
     /**
      * Returns a map representing the acceptance criteria for the pusher encounter.
@@ -30,6 +31,8 @@ public final class EncountersConstants {
     public static Map<StatsType, Integer> pusherAccept() {
         returnMap = new HashMap<>();
         returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, -10);
+        returnMap.put(StatsType.MONEY, -20);
         return Map.copyOf(returnMap);
     }
     /**
@@ -39,7 +42,7 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> pusherDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, 5);
         return Map.copyOf(returnMap);
     } 
     /**
@@ -49,7 +52,9 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> iceCreamAccept() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.MASS, -5);
+        returnMap.put(StatsType.HAPPINESS, 20);
+        returnMap.put(StatsType.MONEY, -2);
         return Map.copyOf(returnMap);
     }
     /**
@@ -59,7 +64,8 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> iceCreamDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, -5);
+        returnMap.put(StatsType.STAMINA, 10);
         return Map.copyOf(returnMap);
     }
     /**
@@ -69,7 +75,9 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> moneyBagAccept() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.MONEY, 30);
+        returnMap.put(StatsType.HAPPINESS, 5);
+        returnMap.put(StatsType.STAMINA, -5);
         return Map.copyOf(returnMap);
     }
     /**
@@ -79,7 +87,7 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> moneyBagDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, -10);
         return Map.copyOf(returnMap);
     }
     /**
@@ -89,7 +97,8 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> robberAccept() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.MASS, 5);
+        returnMap.put(StatsType.STAMINA, -20);
         return Map.copyOf(returnMap);
     }
     /**
@@ -99,7 +108,8 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> robberDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.MONEY, -20);
+        returnMap.put(StatsType.HAPPINESS, -10);
         return Map.copyOf(returnMap);
     } 
     /**
@@ -109,7 +119,9 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> gymBroAccept() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, 5);
+        returnMap.put(StatsType.STAMINA, 10);
+        returnMap.put(StatsType.MONEY, -5);
         return Map.copyOf(returnMap);
     }
     /**
@@ -119,7 +131,7 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> gymBroDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, 10);
+        returnMap.put(StatsType.HAPPINESS, -10);
         return Map.copyOf(returnMap);
     }
     /**

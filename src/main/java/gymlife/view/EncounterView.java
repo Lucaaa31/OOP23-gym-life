@@ -24,8 +24,11 @@ public class EncounterView extends GamePanel {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
-        this.setBackground(Color.BLACK);
-        this.setBorder(new LineBorder(Color.BLACK, 10));
+
+        final Color lightBlue = new Color(168, 228, 207);
+
+        this.setBackground(lightBlue);
+        this.setBorder(new LineBorder(lightBlue, 10));
 
         FontLoader.loadFont();
 
@@ -37,13 +40,13 @@ public class EncounterView extends GamePanel {
 
         this.infoPanel = new JPanel(gl);
         infoPanel.setPreferredSize(dimensionGetter.getEncounterImageDimension());
-        infoPanel.setBackground(Color.BLACK);
+        infoPanel.setBackground(lightBlue);
 
         this.imageLabel = new JLabel();
         this.descLabel = new JLabel("description.", SwingConstants.CENTER);
         descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         descLabel.setOpaque(true);
-        descLabel.setBackground(new Color(168, 228, 207));
+        descLabel.setBackground(lightBlue);
         descLabel.setBorder(new LineBorder(Color.WHITE, 10));
 
         infoPanel.add(imageLabel);
@@ -51,7 +54,7 @@ public class EncounterView extends GamePanel {
 
         this.buttonsPanel = new JPanel(gl);
         buttonsPanel.setPreferredSize(dimensionGetter.getEncounterButtonDimension());
-        buttonsPanel.setBackground(Color.BLACK);
+        buttonsPanel.setBackground(lightBlue);
 
         this.acceptButton = new JButton("accept");
         this.declineButton = new JButton("decline");

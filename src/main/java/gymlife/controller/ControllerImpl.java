@@ -98,7 +98,6 @@ public class ControllerImpl implements Controller {
         if (encounter.isPresent()) {
             currentEncounter = encounter.get();
             changeScenario(ScenariosType.ENCOUNTER);
-            System.out.println(currentEncounter.description());
         } else {
             changeScenario(ScenariosType.INDOOR_MAP);
         }
