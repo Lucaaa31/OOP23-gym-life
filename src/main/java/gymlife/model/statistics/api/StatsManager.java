@@ -6,9 +6,12 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 
+import javax.annotation.concurrent.Immutable;
+
 /**
  * The StatsManager interface provides methods to retrieve statistics related to gym life.
  */
+@Immutable
 public interface StatsManager {
     /**
      * Returns a map of statistics, where the key is the type of statistic and the value is the corresponding value.
@@ -21,7 +24,7 @@ public interface StatsManager {
      *
      * @return the number of days
      */
-    int getDays();
+    Counter getDays();
     /**
      * Decrement the number of day of one.
      *
@@ -54,4 +57,31 @@ public interface StatsManager {
      * @param encounter the encounter to deny
     */
     void denyEncounter(Encounter encounter);
+    /**
+     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
+     * including the money and days.
+     *
+     * @return a map of StatsType and their corresponding values
+     */
+    Map<StatsType, Counter> getAllStats();
+    /**
+     * Retrieves the money of the game.
+     *
+     * @return the money of the game
+     */
+    Counter getMoney();
+    /**
+     * Multincrement a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    void multiIncrementStat(StatsType stats, int value);
+    /**
+     * Set a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    void setStat(StatsType stats, int value);
 }

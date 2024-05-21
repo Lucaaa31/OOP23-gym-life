@@ -19,4 +19,9 @@ public interface CharacterModel {
     */
     void move(Directions dir);
 
+    /**
+     * Moves the character to a specific location.
+     * @param pos new position to move the player to.
+     */
+    void setPosition(Position pos);
 }

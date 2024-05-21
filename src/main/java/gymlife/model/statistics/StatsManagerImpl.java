@@ -1,5 +1,6 @@
 package gymlife.model.statistics;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
@@ -37,13 +38,74 @@ public class StatsManagerImpl implements StatsManager {
         return gameStats.getMap();
     }
     /**
+     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
+     * including the money and days.
+     *
+     * @return a map of StatsType and their corresponding values
+     */
+    @Override
+    public Map<StatsType, Counter> getAllStats() {
+        final Map<StatsType, Counter> statsMap = new HashMap<>(this.getStats());
+        statsMap.put(StatsType.MONEY, this.getMoney());
+        statsMap.put(StatsType.DAYS, this.getDays());
+        return Map.copyOf(statsMap);
+    }
+
+    /**
+     * Retrieves the money of the game.
+     *
+     * @return the money of the game
+     */
+    @Override
+    public Counter getMoney() {
+        return new Counter(gameMoney.getMoney());
+    }
+    /**
+     * Multincrement a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    @Override
+    public void multiIncrementStat(final StatsType stats, final int value) {
+        if ("MONEY".equals(stats.toString())) {
+            gameMoney.setMoney(value);
+        } else {
+            gameStats.multiIncrementStats(stats, value);
+        }
+    }
+    /**
+     * Multincrement a Map of stats.
+     *
+     * @param stats to be changed
+     */
+    public void changeStatsWithFood(final Map<StatsType, Integer> stats) {
+        for (final Map.Entry<StatsType, Integer> entry : stats.entrySet()) {
+            gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+        }
+    }
+    /**
+     * Set a specified stats to the value.
+     *
+     * @param stats of the game
+     * @param value to set the stat
+     */
+    @Override
+    public void setStat(final StatsType stats, final int value) {
+        if ("MONEY".equals(stats.toString())) {
+            gameMoney.setMoney(value);
+        } else {
+            gameStats.setStats(stats, value);
+        }
+    }
+    /**
      * Retrieves the number of days left in the game.
      * 
      * @return the number of days left
      */
     @Override
-    public int getDays() {
-        return gameDays.dayLeft();
+    public Counter getDays() {
+        return new Counter(gameDays.dayLeft());
     }
     /**
      * Increments the number of days by one.
@@ -55,13 +117,13 @@ public class StatsManagerImpl implements StatsManager {
     }
     /**
      * Checks if the game is over.
-     * The game is considered over if either one of the stats is zero or all the days are over.
+     * The game is considered over if either one of the stats is zero or the days are over.
      * 
      * @return true if the game is over, false otherwise
      */
     @Override
     public boolean isGameOver() {
-        if (gameDays.isDayOver() || gameMoney.isOver()) {
+        if (gameDays.isDayOver()) {
             return true;
         }
         final Map<StatsType, Counter> statsMap = gameStats.getMap();

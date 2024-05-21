@@ -1,6 +1,7 @@
 package gymlife.model;
 
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.GameDifficulty;
 import gymlife.view.bankgame.BankGameView;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +13,7 @@ class TestMultiplier {
 
     @Test
     void equal() throws InterruptedException {
-        final ControllerImpl controller = new ControllerImpl();
+        final ControllerImpl controller = new ControllerImpl(GameDifficulty.EASY);
         final PlaneGameModel number = new PlaneGameModel(controller.getSync1(), controller.getSync2());
         final BankGameView view = new BankGameView(controller);
         final float money = 20;

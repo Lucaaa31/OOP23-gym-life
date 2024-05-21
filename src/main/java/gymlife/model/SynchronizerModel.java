@@ -1,4 +1,4 @@
-package gymlife.model.statistics.api;
+package gymlife.model;
 
 /**
  * This class provides a synchronization mechanism for coordinating

@@ -1,6 +1,7 @@
 package gymlife.model;
 
 
+import java.util.Locale;
 import java.util.Map;
 
 import gymlife.model.api.Cell;
@@ -16,28 +17,30 @@ public enum GameMapImpl implements GameMap {
     /**
      * Map of the house.
      */
-    HOUSE_MAP(0, "house", MapLoader.load("housemap.txt")),
+    HOUSE_MAP(0, "house", MapLoader.load("housemap.txt"), new Position(6, 2)),
     /**
      * Map of the gym.
      */
-    GYM_MAP(1, "gym", MapLoader.load("gymmap.txt")),
+    GYM_MAP(1, "gym", MapLoader.load("gymmap.txt"), new Position(1, 3)),
     /**
      * Map of the shop.
      */
-    SHOP_MAP(2, "shop", MapLoader.load("shopmap.txt"));
+    SHOP_MAP(2, "shop", MapLoader.load("shopmap.txt"), new Position(6, 4));
 
     private final int id;
     private final String name;
     private final int dimY;
     private final int dimX;
     private final transient Map<Position, Cell> map;
+    private final Position defaultPosition;
 
-    GameMapImpl(final int id, final String name, final Map<Position, Cell> map) {
+    GameMapImpl(final int id, final String name, final Map<Position, Cell> map, final Position position) {
         this.id = id;
         this.name = name;
         this.dimX = MapConstants.MAP_X_DIM;
         this.dimY = MapConstants.MAP_Y_DIM;
         this.map = map;
+        this.defaultPosition = position;
     }
 
     @Override
@@ -73,6 +76,20 @@ public enum GameMapImpl implements GameMap {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Static method to get an instance of GameMapImpl given a string.
+     * @param name This string should be the simple name of the GameMap.
+     * @return Returns the correspondent GameMap.
+     */
+    public static GameMapImpl fromString(final String name) {
+        return valueOf(name.toUpperCase(new Locale("en")) + "_MAP");
+    }
+
+    @Override
+    public Position getDefaultPosition() {
+        return this.defaultPosition;
     }
 
 }

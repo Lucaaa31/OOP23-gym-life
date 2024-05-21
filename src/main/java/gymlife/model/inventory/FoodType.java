@@ -41,7 +41,7 @@ public enum FoodType {
         this.cost = cost;
         this.foodPerks = new HashMap<>();
         foodPerks.put(StatsType.STAMINA, staminaValue);
-        foodPerks.put(StatsType.HUMOR, happinessValue);
+        foodPerks.put(StatsType.HAPPINESS, happinessValue);
         foodPerks.put(StatsType.MASS, massValue);
     }
 

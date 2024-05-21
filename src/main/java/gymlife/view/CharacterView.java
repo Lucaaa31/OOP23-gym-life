@@ -1,65 +1,77 @@
 package gymlife.view;
 
-import java.awt.Color;
+import java.awt.Image;
+import java.io.Serial;
+import java.util.Locale;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
-import gymlife.controller.api.Controller;
-import gymlife.utility.Constants;
+import javax.swing.ImageIcon;
 import gymlife.utility.Directions;
-
 
 /**
  * The CharacterView class represents a panel that displays a character.
- * It extends the JPanel class and implements the KeyListener interface to handle keyboard events.
+ * It extends the JLabel class. It uses an instance of DimensionGetter to get the dimensions for the character image.
  */
-public class CharacterView extends JPanel {
-    public static final long serialVersionUID = 4328742;
-    private static final JLabel LABEL = new JLabel();
+public class CharacterView extends JLabel {
+
+    @Serial
+    private static final long serialVersionUID = -3544425405375144844L;
+    // An instance of DimensionGetter to get the dimensions for the character image
+    private final transient DimensionGetter dimensionGetter;
+    private int level = 1;
+    private Directions dir = Directions.DOWN;
     /**
-     * Constructs a CharacterView object with the specified controller.
-     * 
-     * @param controller the controller object used to control the character movement
+     * Constructs a CharacterView object with the specified DimensionGetter.
+     * It sets the initial image for the character and sets the size of the JLabel to the cell dimension.
+     * @param dimensionGetter the DimensionGetter to be used to get the dimensions for the character image
      */
-    public CharacterView(final Controller controller) {
-        // Define serialization id to avoid serialization related bugs
-        final Controller controllerGame;
-        controllerGame = controller;
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(final KeyEvent e) {
-                switch (Character.toUpperCase(e.getKeyChar())) {
-                    case KeyEvent.VK_W:
-                        controllerGame.moveCharacter(Directions.UP);
-                        break;
-                    case KeyEvent.VK_A:
-                        controllerGame.moveCharacter(Directions.LEFT);
-                        break;
-                    case KeyEvent.VK_S:
-                        controllerGame.moveCharacter(Directions.DOWN);
-                        break;
-                    case KeyEvent.VK_D:
-                        controllerGame.moveCharacter(Directions.RIGHT);
-                        break;
-                    default:
-                        break;
-                }
-                LABEL.setBounds(controller.getCharacterPos().X(), controller.getCharacterPos().Y(), 
-                    Constants.CHARACTER_WIDTH, Constants.CHARACTER_HEIGHT);
-            }
-            @Override
-            public void keyPressed(final KeyEvent e) {
-            }
-            @Override
-            public void keyReleased(final KeyEvent e) {
-            }
-        });
-        LABEL.setBounds(Constants.CHARACTER_START_POS.X(), Constants.CHARACTER_START_POS.Y(), 
-            Constants.CHARACTER_WIDTH, Constants.CHARACTER_HEIGHT);
-        LABEL.setBackground(Color.RED);
-        LABEL.setOpaque(true);
-        this.add(LABEL);
+    public CharacterView(final DimensionGetter dimensionGetter) {
+        this.dimensionGetter = dimensionGetter;
+        final String p = "images/character/level1_down.png";
+        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource(p)).
+                getImage().
+                getScaledInstance(dimensionGetter.getCellDimension().width,
+                        dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
+        this.setIcon(img);
+        this.setSize(dimensionGetter.getCellDimension());
+    }
+
+    /**
+     * Changes the image of the character based on the level and direction.
+     * @param level the level of the character
+     * @param dir the direction of the character
+     */
+    public void changeImage(final int level, final Directions dir) {
+        this.level = level;
+        this.dir = dir;
+        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource("images/character/level"
+                        + level
+                        + "_"
+                        + dir.toString().toLowerCase(Locale.getDefault())
+                        + ".png"))
+                .getImage()
+                .getScaledInstance(dimensionGetter.getCellDimension().width, dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
+        this.setIcon(img);
+    }
+
+    /**
+     * Resizes the image of the character to the cell dimension.
+     */
+    public void resizeImage() {
+        final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
+                getSystemResource("images/character/level"
+                        + this.level
+                        + "_"
+                        + this.dir.toString().toLowerCase(Locale.getDefault())
+                        + ".png"))
+                .getImage()
+                .getScaledInstance(dimensionGetter.getCellDimension().width, dimensionGetter.getCellDimension().height,
+                        Image.SCALE_SMOOTH));
+        this.setIcon(img);
+        this.setSize(dimensionGetter.getCellDimension());
     }
 }

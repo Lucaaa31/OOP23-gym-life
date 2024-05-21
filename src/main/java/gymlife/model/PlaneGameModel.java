@@ -2,8 +2,6 @@ package gymlife.model;
 
 import java.util.Random;
 
-import gymlife.model.statistics.api.SynchronizerModel;
-
 /**
  * This class create a multiplier.
  */

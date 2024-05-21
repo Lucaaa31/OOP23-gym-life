@@ -20,7 +20,7 @@ class TestStatsmanager {
     void testInitiation() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
         stats.resetAll();
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.STAMINA).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.LEG_MASS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.BACK_MASS).getCount());
@@ -32,9 +32,9 @@ class TestStatsmanager {
     void testGameOver() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
         stats.resetAll();
-        stats.getStats().get(StatsType.HUMOR).multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
+        stats.getStats().get(StatsType.HAPPINESS).multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
         assertTrue(stats.isGameOver());
-        stats.getStats().get(StatsType.HUMOR).multiIncrement(1);
+        stats.getStats().get(StatsType.HAPPINESS).multiIncrement(1);
         assertFalse(stats.isGameOver());
     }
 
@@ -65,8 +65,40 @@ class TestStatsmanager {
         /*
          * add for each type of mass the exact amount 
          */
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HUMOR).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.acceptEncounter(encounter);
+        stats.resetAll();
+    }
+
+    @Test
+    void testGetAllStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+
+        /*
+         * add for each type of mass the exact amount
+         */
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getAllStats().get(StatsType.HAPPINESS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL * 3, stats.getStats().get(StatsType.MASS).getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney().getCount());
+        assertEquals(GameDifficulty.EASY.getDays(), stats.getDays().getCount());
+        stats.resetAll();
+    }
+
+    @Test
+    void testMultiIncrementStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.multiIncrementStat(StatsType.HAPPINESS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5); 
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + 1, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        stats.resetAll();
+    }
+
+    @Test
+    void testSetStats() {
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.setStat(StatsType.HAPPINESS, 10);
+        assertEquals(10, stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.resetAll();
     }
 
