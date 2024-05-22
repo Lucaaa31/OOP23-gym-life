@@ -16,6 +16,7 @@ import java.io.Serial;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
+import gymlife.utility.minigame.MinigameState;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
@@ -37,6 +38,7 @@ public class BenchView extends JPanel implements MinigamePanel {
     private final JLabel backgroundLabel = new JLabel();
     private final ImageIcon backgroundImage;
     private final JLayeredPane layeredPane = new JLayeredPane();
+    private final transient Controller controller;
 
     private final Color backgroundColorGreen = new Color(29, 110, 12);
     private final Color foregroundColorGreen = new Color(72, 253, 0);
@@ -55,7 +57,7 @@ public class BenchView extends JPanel implements MinigamePanel {
      */
     public BenchView(final Controller controller, final DimensionGetter dimensionGetter) {
         final int borderSize = 5;
-
+        this.controller = controller;
 
         FontLoader.loadFont();
         this.dimensionGetter = dimensionGetter;
@@ -218,7 +220,8 @@ public class BenchView extends JPanel implements MinigamePanel {
     public void timerView() {
         new Thread(() -> {
             int i = 0;
-            while (true) {
+            while (controller.getMinigameState() != MinigameState.ENDED_WON
+                    && controller.getMinigameState() != MinigameState.ENDED_LOST){
                 i++;
                 try {
                     Thread.sleep(1);
