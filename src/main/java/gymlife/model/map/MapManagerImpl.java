@@ -1,7 +1,7 @@
-package gymlife.model;
+package gymlife.model.map;
 
-import gymlife.model.api.GameMap;
-import gymlife.model.api.MapManager;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.map.api.MapManager;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.encounter.EncountersFactoryImpl;
 

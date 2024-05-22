@@ -2,13 +2,13 @@ package gymlife.controller;
 
 import gymlife.model.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
-import gymlife.model.GameMapImpl;
-import gymlife.model.MapManagerImpl;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
-import gymlife.model.api.GameMap;
-import gymlife.model.api.MapManager;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.Counter;
 
 import gymlife.model.statistics.StatsType;

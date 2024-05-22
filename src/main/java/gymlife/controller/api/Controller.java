@@ -1,6 +1,6 @@
 package gymlife.controller.api;
 
-import gymlife.model.api.GameMap;
+import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
