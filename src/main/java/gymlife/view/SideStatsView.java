@@ -16,6 +16,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.Serial;
 import java.util.Map;
 import gymlife.utility.FontLoader;
@@ -57,24 +59,35 @@ public class SideStatsView extends GamePanel {
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
         statsPanel1.setLayout(new GridLayout(1, 3));
-        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
-        final String happyPath;
-        if (level < StatsConstants.LEVEL_1) {
-            happyPath = "images/icons/sad.png";
-        } else if (level < StatsConstants.LEVEL_2) {
-            happyPath = "images/icons/mid.png";
-        } else {
-            happyPath = "images/icons/happy.png";
-        }
-        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
-        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
-        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
 
+        statsPanel1.addMouseListener(new MouseListener() {
+           @Override
+           public void mouseClicked(MouseEvent e) {
+           }
+
+           @Override
+           public void mousePressed(MouseEvent e) {
+           }
+
+           @Override
+           public void mouseReleased(MouseEvent e) {
+           }
+
+           @Override
+           public void mouseEntered(MouseEvent e) {
+               buildDetailedPanel();
+           }
+
+           @Override
+           public void mouseExited(MouseEvent e) {
+               buildPanelStandard();
+           }
+        });
+        buildPanelStandard();
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
 
-        statsPanel1.setBorder(BORDER);
         statsPanel2.setBorder(BORDER);
         statsPanel3.setBorder(BORDER);
         statsPanel4.setBorder(BORDER);
@@ -86,10 +99,23 @@ public class SideStatsView extends GamePanel {
 
     }
     /**
-     * Resizes the stats panel.
+     * Builds the detailed panel.
      */
-    @Override
-    public void resizeComponents() {
+    private void buildDetailedPanel() {
+        statsPanel1.removeAll();
+
+        statsPanel1.add(buildLabel(StatsType.LEG_MASS, "images/icons/legs.png"));
+        statsPanel1.add(buildLabel(StatsType.CHEST_MASS, "images/icons/push.png"));
+        statsPanel1.add(buildLabel(StatsType.BACK_MASS, "images/icons/pull.png"));
+        statsPanel1.setBorder(BORDER);
+
+        statsPanel1.revalidate();
+        statsPanel1.repaint();
+    }
+    /**
+     * Builds the standard panel.
+     */
+    private void buildPanelStandard() {
         final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
         final String happyPath;
         if (level < StatsConstants.LEVEL_1) {
@@ -100,11 +126,20 @@ public class SideStatsView extends GamePanel {
             happyPath = "images/icons/happy.png";
         }
         statsPanel1.removeAll();
-        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
-        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
-        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
+        statsPanel1.add(buildLabel(StatsType.HAPPINESS, happyPath));
+        statsPanel1.add(buildLabel(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel(StatsType.MASS, "images/icons/mass.png"));
+        statsPanel1.setBorder(BORDER);
+
         statsPanel1.revalidate();
         statsPanel1.repaint();
+    }
+    /**
+     * Resizes the stats panel.
+     */
+    @Override
+    public void resizeComponents() {
+        buildPanelStandard();
 
         statsPanel3.removeAll();
         statsPanel3.add(getMoneyLabel());
@@ -193,7 +228,7 @@ public class SideStatsView extends GamePanel {
                         dimensionGetter.getSquareStatsDimension().height,
                         Image.SCALE_SMOOTH));
     }
-    private JLabel buildLabel1(final StatsType statsType, final String path) {
+    private JLabel buildLabel(final StatsType statsType, final String path) {
         final int value = controller.getStatistics().get(statsType).getCount();
         final JLabel labelImage = new JLabel();
         this.setSize(dimensionGetter.getCellDimension());

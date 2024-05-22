@@ -10,12 +10,12 @@ import gymlife.model.statistics.api.StatsModel;
  */
 public final class StatsModelImpl implements StatsModel {
     private final Map<StatsType, Counter> gameStats = new HashMap<>();
-    private static Counter happiness = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static Counter stamina = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static Counter legMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static Counter backMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static Counter chestMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static Counter mass = new Counter(StatsConstants.STARTING_STATS_LEVEL) {
+    private static final Counter happiness = new Counter(StatsConstants.MAX_STATS_LEVEL);
+    private static final Counter stamina = new Counter(StatsConstants.MAX_STATS_LEVEL);
+    private static final Counter legMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
+    private static final Counter backMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
+    private static final Counter chestMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
+    private static final Counter mass = new Counter(StatsConstants.STARTING_MASS_LEVEL) {
         @Override
         public void resetCount() {
             backMass.resetCount();
@@ -128,8 +128,9 @@ public final class StatsModelImpl implements StatsModel {
     /**
      * Reset all stats to 0.
      *
-     * @param stats
-     * @param value
+     * @param stats the stat to reset
+     *
+     * @param value the value to reset the stat to
      */
     @Override
     public void setStats(final StatsType stats, final int value) {

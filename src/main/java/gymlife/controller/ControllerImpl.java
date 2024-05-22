@@ -208,7 +208,7 @@ public class ControllerImpl implements Controller {
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
-                        ? minigameManager.getDifficulty().getExperienceGained() : 0);
+                        ? minigameManager.getDifficulty().getExperienceGained() : -10);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 
