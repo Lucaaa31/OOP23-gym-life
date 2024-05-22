@@ -31,7 +31,7 @@ public class CharacterModelImpl implements CharacterModel {
      */
     @Override
     public void move(final Directions dir) {
-        final BiFunction<Integer, Integer, Position> newPosition = (x, y) -> new Position(x, y);
+        final BiFunction<Integer, Integer, Position> newPosition = Position::new;
         pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
     }
 

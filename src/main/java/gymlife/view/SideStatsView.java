@@ -96,24 +96,23 @@ public class SideStatsView extends GamePanel {
         this.add(statsPanel2);
         this.add(statsPanel3);
         this.add(statsPanel4);
-
     }
     /**
-     * Builds the detailed panel.
+     * Builds the detailed panel for StatsPanel1.
+     * It contains leg mass, chest mass and back mass.
      */
     private void buildDetailedPanel() {
         statsPanel1.removeAll();
-
         statsPanel1.add(buildLabel(StatsType.LEG_MASS, "images/icons/legs.png"));
         statsPanel1.add(buildLabel(StatsType.CHEST_MASS, "images/icons/push.png"));
         statsPanel1.add(buildLabel(StatsType.BACK_MASS, "images/icons/pull.png"));
         statsPanel1.setBorder(BORDER);
-
         statsPanel1.revalidate();
         statsPanel1.repaint();
     }
     /**
-     * Builds the standard panel.
+     * Builds the standard panel for StatsPanel1.
+     * It contains happiness, stamina and mass.
      */
     private void buildPanelStandard() {
         final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();

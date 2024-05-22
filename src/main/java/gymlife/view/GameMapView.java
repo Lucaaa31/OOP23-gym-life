@@ -36,7 +36,7 @@ public final class GameMapView extends GamePanel {
     private static final long serialVersionUID = -3544425405075144844L;
     private final transient Controller controller;
     private transient Map<Position, JLabel> cells = new HashMap<>();
-    private final CharacterView characterLabel;
+    private CharacterView characterLabel;
     private final transient DimensionGetter dimensionGetter;
     private  JLayeredPane mainPanel;
     private  JPanel mapPanel;
@@ -71,7 +71,8 @@ public final class GameMapView extends GamePanel {
         this.loadMap();
 
         // Initialize characterLabel and set its location
-        characterLabel = new CharacterView(dimensionGetter);
+        characterLabel = new CharacterView(dimensionGetter, controller.getPlayerLevel());
+        System.out.println("character level" +  controller.getPlayerLevel());
         characterLabel.setLocation(controller.getCharacterPos().X() * dimensionGetter.getCellDimension().width,
                 controller.getCharacterPos().Y() * dimensionGetter.getCellDimension().height);
         mainPanel.add(characterLabel);
@@ -144,6 +145,7 @@ public final class GameMapView extends GamePanel {
     @Override
     public void resizeComponents() {
         cells.clear();
+        characterLabel = new CharacterView(dimensionGetter, controller.getPlayerLevel());
         mapPanel = new JPanel(new GridLayout(MapConstants.MAP_Y_DIM, MapConstants.MAP_X_DIM));
         mapPanel.setSize(dimensionGetter.getScenarioDimension());
         mapPanel.setPreferredSize(dimensionGetter.getScenarioDimension());

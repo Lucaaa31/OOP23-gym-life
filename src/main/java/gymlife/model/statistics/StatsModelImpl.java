@@ -60,6 +60,7 @@ public final class StatsModelImpl implements StatsModel {
         gameStats.put(StatsType.CHEST_MASS, chestMass);
         gameStats.put(StatsType.LEG_MASS, legMass);
         gameStats.put(StatsType.MASS, mass);
+        mass.multiIncrement(50);
         gameStats.put(StatsType.STAMINA, stamina);
         gameStats.put(StatsType.HAPPINESS, happiness);
 
