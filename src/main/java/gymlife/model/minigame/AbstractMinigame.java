@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.minigame;
 
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
@@ -9,17 +9,16 @@ import gymlife.utility.minigame.MinigameState;
  * the current state,
  * and setting the difficulty level of the minigame.
  */
-public abstract class Minigame {
+public abstract class AbstractMinigame {
     private MinigameDifficulty difficulty;
     private MinigameState minigameState;
     private long endMinigame;
 
 
-
     /**
      * Constructs a new Minigame object and initializes the instance variables.
      */
-    public Minigame() {
+    public AbstractMinigame() {
         this.difficulty = MinigameDifficulty.EASY;
         this.minigameState = MinigameState.NOT_STARTED;
     }
@@ -75,7 +74,8 @@ public abstract class Minigame {
      */
     public abstract void validatePress();
 
-    public void setEndMinigame(long endMinigame) {
+
+    public void setEndMinigame(final long endMinigame) {
         this.endMinigame = endMinigame;
     }
 }

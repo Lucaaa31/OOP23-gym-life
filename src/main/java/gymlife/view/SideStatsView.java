@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.util.Map;
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
+import gymlife.view.minigame.ScoreBoardView;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -38,6 +39,7 @@ public class SideStatsView extends GamePanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
+    private JPanel scoreBoardPanel;
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -53,6 +55,7 @@ public class SideStatsView extends GamePanel {
         this.setBackground(Color.BLACK);
         this.controller = controller;
         this.setBorder(BORDER);
+        this.scoreBoardPanel = new ScoreBoardView(controller);
 
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
@@ -73,6 +76,8 @@ public class SideStatsView extends GamePanel {
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
+
+        statsPanel4.add(scoreBoardPanel);
 
         statsPanel1.setBorder(BORDER);
         statsPanel2.setBorder(BORDER);

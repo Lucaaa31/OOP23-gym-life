@@ -1,8 +1,6 @@
 package gymlife.model.minigame;
 
-import gymlife.model.api.Minigame;
-
-public class SquatMinigame extends Minigame {
+public final class SquatMinigame extends AbstractMinigame {
     @Override
     public void notifyUserAction() {
 

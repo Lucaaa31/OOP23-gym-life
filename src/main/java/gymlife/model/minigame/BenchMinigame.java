@@ -1,6 +1,5 @@
 package gymlife.model.minigame;
 
-import gymlife.model.api.Minigame;
 import gymlife.utility.minigame.MinigameState;
 
 import java.util.concurrent.TimeUnit;
@@ -8,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Represents a bench minigame that implements the Minigame interface.
  */
-public class BenchMinigame extends Minigame {
+public final class BenchMinigame extends AbstractMinigame {
     private int nTimesPressed = 0;
     private int numReps = 0;
     private long startReactionTime = 0;

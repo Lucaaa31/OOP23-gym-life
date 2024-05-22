@@ -1,6 +1,5 @@
 package gymlife.model.minigame;
 
-import gymlife.model.api.Minigame;
 import gymlife.model.api.MinigameManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
@@ -16,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
  * and retrieve the current minigame type and instance.
  */
 public class MinigameManagerImpl implements MinigameManager {
-    private Minigame currentMinigame;
+    private AbstractMinigame currentMinigame;
     private MinigameType currentMinigameType;
 
     /**
@@ -37,7 +36,7 @@ public class MinigameManagerImpl implements MinigameManager {
     public void setCurrentMinigame(final MinigameType minigameType) {
         this.currentMinigameType = minigameType;
         try {
-            this.currentMinigame = (Minigame) Class
+            this.currentMinigame = (AbstractMinigame) Class
                     .forName(minigameType.getName())
                     .getDeclaredConstructor()
                     .newInstance();
