@@ -94,7 +94,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void goToNewMap(final GameMap newMap) {
-        Optional<Encounter> encounter = mapManager.changeMap(newMap);
+        final Optional<Encounter> encounter = mapManager.changeMap(newMap);
         if (encounter.isPresent()) {
             currentEncounter = encounter.get();
             changeScenario(ScenariosType.ENCOUNTER);
@@ -161,14 +161,22 @@ public class ControllerImpl implements Controller {
         characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
+    /**
+     * Method that returns the current Encounter.
+     * @return the encounter object.
+     */
     @Override
     public Encounter getCurrentEncounter() {
         return currentEncounter;
     }
 
+    /**
+     * Method to either accept or decline the encounter. Changes to INDOOR scenario after.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
     @Override
-    public void resolveEncounter(boolean choice) {
-        if(choice) {
+    public void resolveEncounter(final boolean choice) {
+        if (choice) {
             statsManager.acceptEncounter(currentEncounter);
         } else {
             statsManager.denyEncounter(currentEncounter);

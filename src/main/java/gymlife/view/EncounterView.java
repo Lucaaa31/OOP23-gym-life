@@ -4,13 +4,27 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.io.Serial;
 import java.util.Locale;
 
+/**
+ * Class with graphical interface for when a random encounter occurs.
+ */
 public class EncounterView extends GamePanel {
 
+    @Serial
+    private static final long serialVersionUID = 4800875570629897789L;
     private final transient Controller controller;
     private final transient DimensionGetter dimensionGetter;
     private final JPanel infoPanel;
@@ -20,12 +34,20 @@ public class EncounterView extends GamePanel {
     private final JButton acceptButton;
     private final JButton declineButton;
 
+    /**
+     * Standard constructor for class EncounterView.
+     *
+     * @param controller      Controller inherited by the class that instantiates this.
+     * @param dimensionGetter dimensionGetter inherited by the class that instantiates this.
+     */
     public EncounterView(final Controller controller, final DimensionGetter dimensionGetter) {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
 
         final Color lightBlue = new Color(168, 228, 207);
+        final Color myRed = new Color(204, 51, 46);
+        final Color myGreen = new Color(100, 204, 46);
 
         this.setBackground(lightBlue);
         this.setBorder(new LineBorder(lightBlue, 10));
@@ -60,22 +82,22 @@ public class EncounterView extends GamePanel {
         this.declineButton = new JButton("decline");
         acceptButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         acceptButton.setOpaque(true);
-        acceptButton.setBackground(new Color(100, 204, 46));
+        acceptButton.setBackground(myGreen);
         acceptButton.setForeground(Color.WHITE);
         declineButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         declineButton.setOpaque(true);
-        declineButton.setBackground(new Color(204, 51, 46));
+        declineButton.setBackground(myRed);
         declineButton.setForeground(Color.WHITE);
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
 
         acceptButton.addActionListener((event) -> {
             controller.resolveEncounter(true);
-            EncounterView.super.transferFocus();
+            super.transferFocus();
         });
         declineButton.addActionListener((event) -> {
             controller.resolveEncounter(false);
-            EncounterView.super.transferFocus();
+            super.transferFocus();
         });
 
 
@@ -85,11 +107,14 @@ public class EncounterView extends GamePanel {
 
     }
 
+    /**
+     * Resizes components based on the size of the ScenarioPanel.
+     */
     @Override
     public void resizeComponents() {
         infoPanel.setPreferredSize(dimensionGetter.getEncounterImageDimension());
         buttonsPanel.setPreferredSize(dimensionGetter.getEncounterButtonDimension());
-        if(controller.getCurrentEncounter() != null) {
+        if (controller.getCurrentEncounter() != null) {
             imageLabel.setIcon(loadResizedImage());
             descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
             descLabel.setText(
@@ -100,9 +125,9 @@ public class EncounterView extends GamePanel {
     }
 
     private ImageIcon loadResizedImage() {
-        final String path = "images/randomEncounters/" +
-                controller.getCurrentEncounter().name().toLowerCase(Locale.ROOT) +
-                ".png";
+        final String path = "images/randomEncounters/"
+                + controller.getCurrentEncounter().name().toLowerCase(Locale.ROOT)
+                + ".png";
         final Image imgToResize = new ImageIcon(ClassLoader.getSystemResource(path)).getImage();
         return new ImageIcon(imgToResize.getScaledInstance(
                 dimensionGetter.getEncounterImageDimension().width,
@@ -110,6 +135,10 @@ public class EncounterView extends GamePanel {
                 Image.SCALE_SMOOTH));
     }
 
+    /**
+     * Returns canonical name of this GamePanel.
+     * @return string representing said name.
+     */
     @Override
     public String getPanelName() {
         return "encounter";

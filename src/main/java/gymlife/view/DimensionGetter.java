@@ -87,14 +87,21 @@ public class DimensionGetter {
                 (int) (getScenarioDimension().height * (1 - FAST_TRAVEL_PROPORTION)));
     }
 
+    /**
+     * Returns the encounter image dimensions.
+     * @return the encounter image dimensions.
+     */
     public Dimension getEncounterImageDimension() {
         return new Dimension((int) (getScenarioDimension().width * ENCOUNTER_IMAGE_PROPORTION),
                 getScenarioDimension().height);
     }
 
-
+    /**
+     * Returns the encounter button dimensions.
+     * @return the encounter button dimensions.
+     */
     public Dimension getEncounterButtonDimension() {
-        return new Dimension((int)(getScenarioDimension().width * (1 - ENCOUNTER_IMAGE_PROPORTION)),
+        return new Dimension((int) (getScenarioDimension().width * (1 - ENCOUNTER_IMAGE_PROPORTION)),
                 getScenarioDimension().height);
     }
 

@@ -81,7 +81,15 @@ public interface Controller {
      */
     void resetPlayerPosition();
 
+    /**
+     * Method to return the current randomEncounter.
+     * @return Encounter object.
+     */
     Encounter getCurrentEncounter();
 
+    /**
+     * Method to resolve the encounter either by accepting or declining the encounter.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
     void resolveEncounter(boolean choice);
 }
