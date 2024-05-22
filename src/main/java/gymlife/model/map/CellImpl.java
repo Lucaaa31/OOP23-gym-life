@@ -8,6 +8,7 @@ import gymlife.model.InteractionsManager;
 import gymlife.model.map.api.Cell;
 import gymlife.model.api.GameInteraction;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.MinigameType;
 
 /**
  * CellImpl is an enum that contains all the possible cells present in the game. A cell is identified by a unique id,
@@ -183,7 +184,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train chest, no collisions and interactable.
      */
-    GYM_CHEST_INTERACT(30, false),
+    GYM_CHEST_INTERACT(30, false, e -> e.minigameInteraction(MinigameType.BENCH_PRESS)),
     /**
      * The cell with the lat machine, with collisions not interactable.
      */

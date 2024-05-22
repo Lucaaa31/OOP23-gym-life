@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
 
@@ -18,13 +19,14 @@ import java.awt.GridLayout;
 import java.io.Serial;
 import java.util.Map;
 import gymlife.utility.FontLoader;
+import gymlife.view.api.GamePanel;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
  * the gym.
  * It is a part of the GUI of the Java application.
  */
-public class SideStatsView extends JPanel {
+public class SideStatsView extends GamePanel {
     @Serial
     private static final long serialVersionUID = 4324743;
     private final transient Controller controller;
@@ -55,9 +57,18 @@ public class SideStatsView extends JPanel {
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
         statsPanel1.setLayout(new GridLayout(1, 3));
-        statsPanel1.add(getHappinessLabel());
-        statsPanel1.add(getStaminaLabel());
-        statsPanel1.add(getMassLabel());
+        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final String happyPath;
+        if (level < StatsConstants.LEVEL_1) {
+            happyPath = "images/icons/sad.png";
+        } else if (level < StatsConstants.LEVEL_2) {
+            happyPath = "images/icons/mid.png";
+        } else {
+            happyPath = "images/icons/happy.png";
+        }
+        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
+        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
 
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
@@ -77,11 +88,21 @@ public class SideStatsView extends JPanel {
     /**
      * Resizes the stats panel.
      */
-    public void resizeStats() {
+    @Override
+    public void resizeComponents() {
+        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
+        final String happyPath;
+        if (level < StatsConstants.LEVEL_1) {
+            happyPath = "images/icons/sad.png";
+        } else if (level < StatsConstants.LEVEL_2) {
+            happyPath = "images/icons/mid.png";
+        } else {
+            happyPath = "images/icons/happy.png";
+        }
         statsPanel1.removeAll();
-        statsPanel1.add(getHappinessLabel());
-        statsPanel1.add(getStaminaLabel());
-        statsPanel1.add(getMassLabel());
+        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
+        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
         statsPanel1.revalidate();
         statsPanel1.repaint();
 
@@ -93,101 +114,19 @@ public class SideStatsView extends JPanel {
 
     }
     /**
-     * Resizes the stats panel.
-     * @return the JLabel with the happiness value
+     * Method to return a representative name for the classes that extend this.
+     *
+     * @return a string representing said name.
      */
-    private JLabel getHappinessLabel() {
-        final int happinessValue = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
-        final JLabel labelImage = new JLabel();
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
-            SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/happy.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-
-        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
+    @Override
+    public String getPanelName() {
+        return this.getClass().getSimpleName();
     }
     /**
-     * Return the stamina stats label.
-     * @return the JLabel with the stamina value
+     * Updates the stats panel.
      */
-    private JLabel getStaminaLabel() {
-        final int staminaValue = controller.getStatistics().get(StatsType.STAMINA).getCount();
-        final JLabel labelImage = new JLabel();
-
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(staminaValue),
-                SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/stamina.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-        labelImage.setBorder(new MatteBorder(3, 0, 0, 0, Color.BLACK));
-
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
-    }
-    /**
-     * Return the mass stats label.
-     * @return the JLabel with the mass value
-     */
-    private JLabel getMassLabel() {
-        final int happinessValue = controller.getStatistics().get(StatsType.MASS).getCount();
-        final JLabel labelImage = new JLabel();
-
-        this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(happinessValue),
-                SwingConstants.CENTER);
-
-        final JLabel happinessLabel = new JLabel();
-
-        happinessLabel.setLayout(new GridLayout(2, 1));
-        happinessLabel.add(labelImage);
-        happinessLabel.add(lablelNumber);
-        FontLoader.loadFont();
-
-        labelImage.setIcon(getIcon("images/icons/mass.png"));
-
-        this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
-        labelImage.setBorder(new MatteBorder(3, 0, 0, BOX_BORDER_5, Color.BLACK));
-        lablelNumber.setBorder(BORDER);
-        return happinessLabel;
+    public void updateStats() {
+        this.resizeComponents();
     }
     /**
      * Return the money stats label.
@@ -225,7 +164,7 @@ public class SideStatsView extends JPanel {
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()), 
+        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
@@ -252,6 +191,32 @@ public class SideStatsView extends JPanel {
                 .getImage()
                 .getScaledInstance(dimensionGetter.getSquareStatsDimension().width,
                         dimensionGetter.getSquareStatsDimension().height,
-                        Image.SCALE_FAST));
+                        Image.SCALE_SMOOTH));
     }
+    private JLabel buildLabel1(final StatsType statsType, final String path) {
+        final int value = controller.getStatistics().get(statsType).getCount();
+        final JLabel labelImage = new JLabel();
+        this.setSize(dimensionGetter.getCellDimension());
+        final JLabel lablelNumber = new JLabel(String.valueOf(value),
+                SwingConstants.CENTER);
+        final JLabel label = new JLabel();
+        label.setLayout(new GridLayout(2, 1));
+        label.add(labelImage);
+        label.add(lablelNumber);
+        FontLoader.loadFont();
+
+        labelImage.setIcon(getIcon(path));
+
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+
+        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
+        lablelNumber.setBorder(BORDER);
+        return label;
+    }
+
 }

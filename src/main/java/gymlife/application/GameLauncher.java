@@ -8,15 +8,18 @@ import gymlife.view.MainView;
  */
 public final class GameLauncher {
 
+    /**
+     * Constructs a GameLauncher object.
+     */
     private GameLauncher() {
     }
 
     /**
-     * 
-     * @param args No arguments passed.
+     * The main method launches the GymLife application.
+     *
+     * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        final MainView mainView = new MainView();
-        mainView.start();
+        new MainView().newGame();
     }
 }

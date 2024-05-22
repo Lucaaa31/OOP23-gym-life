@@ -95,6 +95,7 @@ public final class FastTravelView extends GamePanel {
             button.addActionListener(al);
             button.setOpaque(true);
             button.setBackground(MapConstants.BUTTONS_COLOR);
+            button.setBorderPainted(false);
             button.setForeground(Color.WHITE);
             buttonsPanel.add(button);
         });
