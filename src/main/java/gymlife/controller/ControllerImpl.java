@@ -36,7 +36,7 @@ public class ControllerImpl implements Controller {
     private final InteractionsManager interactionsManager;
     private final SynchronizerModel sync1 = new SynchronizerModel();
     private final SynchronizerModel sync2 = new SynchronizerModel();
-    private final PlaneGameModel model = new PlaneGameModel(sync1, sync2);
+    private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -82,7 +82,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void startMultiplier(final float money) {
-        model.runMultiplier(money);
+        planeGameModel.runMultiplier(money);
     }
     /**
      * Returns the current value of the multiplier.
@@ -91,7 +91,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public float getMultiplier() {
-        return model.getMultiplierShort();
+        return planeGameModel.getMultiplierShort();
     }
 
     /**
@@ -101,7 +101,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public float getThreshold() {
-        return model.getThreshold();
+        return planeGameModel.getThreshold();
     }
 
     /**
@@ -109,7 +109,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void controllerStopMultiplier() {
-        model.stopMultiplier();
+        planeGameModel.stopMultiplier();
     }
 
     /**
@@ -119,7 +119,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public float controllerGetMoney() {
-        return model.getMoneyMultiplied();
+        return planeGameModel.getMoneyMultiplied();
     }
 
     /**
@@ -129,7 +129,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public float randomizeNewThreshold() {
-        return model.randomizeNewThreshold();
+        return planeGameModel.randomizeNewThreshold();
     }
 
     /**

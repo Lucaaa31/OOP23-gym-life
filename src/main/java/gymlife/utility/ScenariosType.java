@@ -15,7 +15,7 @@ public enum ScenariosType {
     /**
     * Represents the bank scenario.
     */
-    MINGAME_BANK,
+    MINIGAME_BANK,
     /**
      * Represents the indoor maps' scenario.
      */

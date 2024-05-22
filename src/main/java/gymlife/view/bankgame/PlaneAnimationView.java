@@ -29,8 +29,7 @@ public class PlaneAnimationView {
     }
 
     /**
-     * Starts the animation of the plane moving from outside the screen to the
-     * center.
+     * Starts the animation of the plane moving from outside the screen to the center.
      *
      * @param layeredPane The parent layered pane.
      * @param planeLayer  The plane image label.
@@ -44,6 +43,10 @@ public class PlaneAnimationView {
         planeTargetY = startY;
 
         planeLayer.setLocation(startX, startY);
+
+        for (ActionListener listener : animationTimerStart.getActionListeners()) {
+            animationTimerStart.removeActionListener(listener);
+        }
 
         animationTimerStart.addActionListener(new ActionListener() {
             private int x = startX;
@@ -72,14 +75,18 @@ public class PlaneAnimationView {
         final int frequency = 2;
         final double stepTime = 0.06;
 
+        for (ActionListener listener : animationTimerUpDown.getActionListeners()) {
+            animationTimerUpDown.removeActionListener(listener);
+        }
+
         animationTimerUpDown.addActionListener(new ActionListener() {
-           private int time;
+            private int time;
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-               final int y = (int) (initialY + amplitude * Math.sin(frequency * time * stepTime));
+                final int y = (int) (initialY + amplitude * Math.sin(frequency * time * stepTime));
                 if (!flagUpDownAnimation) {
-                    ((Timer) e.getSource()).stop();
+                    animationTimerUpDown.stop();
                 }
                 planeLayer.setLocation(planeLayer.getX(), y);
                 time++;
@@ -87,7 +94,6 @@ public class PlaneAnimationView {
         });
         animationTimerUpDown.start();
     }
-
 
     /**
      * Stops the up and down animation of the plane.
@@ -106,6 +112,10 @@ public class PlaneAnimationView {
         final int planeTargetX = layeredPane.getWidth();
         final int planeTargetY = planeLayer.getY();
 
+        for (ActionListener listener : animationTimerExit.getActionListeners()) {
+            animationTimerExit.removeActionListener(listener);
+        }
+
         animationTimerExit.addActionListener(new ActionListener() {
             private int x = planeLayer.getX();
 
@@ -115,10 +125,11 @@ public class PlaneAnimationView {
                     x += PLANE_SPEED;
                     planeLayer.setLocation(x, planeTargetY);
                 } else {
-                    ((Timer) e.getSource()).stop();
+                    animationTimerExit.stop();
                 }
             }
         });
         animationTimerExit.start();
     }
 }
+

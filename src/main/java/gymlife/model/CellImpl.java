@@ -126,7 +126,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to get money, no collisions and interactable.
      */
-    SHOP_MONEY(24, false),
+    SHOP_MONEY(24, false, InteractionsManager::bankInteraction),
     /**
      * The cell with an ATM, with collisions and not interactable.
      */

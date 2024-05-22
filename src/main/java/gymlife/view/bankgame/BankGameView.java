@@ -3,22 +3,22 @@ package gymlife.view.bankgame;
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
+
 import gymlife.controller.api.Controller;
-import java.awt.Color;
+import gymlife.view.DimensionGetter;
+import gymlife.view.api.GamePanel;
+
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.event.*;
 import java.io.Serial;
 
 /**
  * This class groups all the panels and shows them on screen.
  */
-public final class BankGameView extends JLayeredPane {
+public final class BankGameView extends GamePanel {
     @Serial
     private static final long serialVersionUID = -3972452455820596601L;
 
@@ -32,6 +32,11 @@ public final class BankGameView extends JLayeredPane {
     private float moneyStart;
     private boolean flagAnimation;
     private final transient PlaneAnimationView planeAnimation;
+    private final JLayeredPane mainPanel;
+    private final ImageLabelView planeLayer;
+    private final ImageLabelView skyLayer;
+    private final JButton button;
+    private final JButton restarButton;
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -41,23 +46,26 @@ public final class BankGameView extends JLayeredPane {
      * 
      * @param controller
      */
-    public BankGameView(final Controller controller) {
+    public BankGameView(final Controller controller, final DimensionGetter dimensionGetter) {
+        this.setPreferredSize(dimensionGetter.getScenarioDimension());
+        this.setLayout(new BorderLayout());
         numberLabel = new MultiplierGameView();
         moneyLabel = new MoneyGameView();
-        final ImageLabelView planeLayer = new ImageLabelView("gymlife/airplane/airplane.png");
-        final ImageLabelView skyLayer = new ImageLabelView("gymlife/sky/sky.png");
-        final JButton button = new JButton();
-        final JButton restarButton = new JButton();
+        mainPanel = new JLayeredPane();
+        planeLayer = new ImageLabelView("gymlife/airplane/airplane.png");
+        skyLayer = new ImageLabelView("gymlife/sky/sky.png");
+        button = new JButton();
+        restarButton = new JButton();
         boxMoney = new JTextField();
         planeAnimation = new PlaneAnimationView();
 
-        this.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
-        this.add(numberLabel, JLayeredPane.MODAL_LAYER);
-        this.add(button, JLayeredPane.MODAL_LAYER);
-        this.add(restarButton, JLayeredPane.MODAL_LAYER);
-        this.add(boxMoney, JLayeredPane.MODAL_LAYER);
-        this.add(moneyLabel, JLayeredPane.MODAL_LAYER);
-        this.add(planeLayer, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
+        mainPanel.add(planeLayer, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(numberLabel, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(button, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(restarButton, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(boxMoney, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(moneyLabel, JLayeredPane.MODAL_LAYER);
         planeLayer.setVisible(false);
 
         button.setText("Play");
@@ -80,7 +88,6 @@ public final class BankGameView extends JLayeredPane {
         boxMoney.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-
                 final String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
                 ((MoneyGameView) moneyLabel).updateText(moneyStart);
@@ -89,9 +96,17 @@ public final class BankGameView extends JLayeredPane {
                 restarButton.setEnabled(true);
                 if (!flagAnimation) {
                     planeLayer.setVisible(true);
-                    planeAnimation.startPlaneAnimation(BankGameView.this, planeLayer);
+                    planeAnimation.startPlaneAnimation(mainPanel, planeLayer);
+                    flagAnimation = true;
                 }
 
+            }
+        });
+
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                System.out.println("omg focus lost");
             }
         });
 
@@ -106,12 +121,7 @@ public final class BankGameView extends JLayeredPane {
             }
         });
 
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(final ComponentEvent e) {
-                setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton, moneyLabel, boxMoney);
-            }
-        });
+
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -129,7 +139,7 @@ public final class BankGameView extends JLayeredPane {
                     started = false;
                     button.setEnabled(false);
                     planeAnimation.stopUpDownAnimation();
-                    planeAnimation.planeExitAnimation(BankGameView.this, planeLayer);
+                    planeAnimation.planeExitAnimation(mainPanel, planeLayer);
                 }
             }
 
@@ -152,7 +162,7 @@ public final class BankGameView extends JLayeredPane {
                 flagAnimation = false;
             }
         });
-        this.setVisible(true);
+        this.add(mainPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -224,5 +234,15 @@ public final class BankGameView extends JLayeredPane {
         boxMoney.setBounds(boxMoneyWidth, newSize.height / 2, boxMoneyHeight, boxMoneyHeight);
         moneyLabel.setBounds(moneyLabelWidth, newSize.height / 3, moneyLabelHeight, moneyLabelHeight);
         moneyLabel.reload();
+    }
+
+    @Override
+    public void resizeComponents() {
+        setLayersNewSize(skyLayer, planeLayer, numberLabel, button, restarButton, moneyLabel, boxMoney);
+    }
+
+    @Override
+    public String getPanelName() {
+        return "planeGame";
     }
 }

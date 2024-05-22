@@ -37,4 +37,8 @@ public final class InteractionsManager {
         this.scenariosManager.updateScenarios(ScenariosType.SLEEPING);
         this.statsManager.newDay();
     }
+
+    public void bankInteraction() {
+        scenariosManager.updateScenarios(ScenariosType.MINIGAME_BANK);
+    }
 }

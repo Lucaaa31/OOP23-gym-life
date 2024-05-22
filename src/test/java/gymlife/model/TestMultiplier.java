@@ -15,7 +15,7 @@ class TestMultiplier {
     void equal() throws InterruptedException {
         final ControllerImpl controller = new ControllerImpl(GameDifficulty.EASY);
         final PlaneGameModel number = new PlaneGameModel(controller.getSync1(), controller.getSync2());
-        final BankGameView view = new BankGameView(controller);
+        final BankGameView view = new BankGameView(controller, null);
         final float money = 20;
 
         final Thread modelThread = new Thread(() -> {
