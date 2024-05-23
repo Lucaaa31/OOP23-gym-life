@@ -148,4 +148,6 @@ public interface Controller {
      * @return the second {@link SynchronizerModel} instance.
      */
     SynchronizerModel getSync2();
+
+    void changeMoney(int value);
 }

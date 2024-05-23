@@ -45,6 +45,7 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
+        statsManager.multiIncrementStat(StatsType.MONEY, 50);
         this.scenariosManager = new ScenariosManager();
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
@@ -254,6 +255,10 @@ public class ControllerImpl implements Controller {
     @Override
     public boolean isGameOver() {
         return statsManager.isGameOver();
+    }
+
+    public void changeMoney(final int value) {
+        statsManager.multiIncrementStat(StatsType.MONEY, value);
     }
 
 }

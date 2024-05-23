@@ -6,11 +6,11 @@ import java.util.Random;
  * This class create a multiplier.
  */
 public final class PlaneGameModel {
-    private static final float MAX_BOUND = 9.00f;
+    private static final float MAX_BOUND = 4.00f;
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();
-    private float treshold;
+    private float threshold;
     private float multiplier;
     private float multiplierShort;
     private float moneyMultiplied = 1;
@@ -25,8 +25,8 @@ public final class PlaneGameModel {
     public PlaneGameModel(final SynchronizerModel mySync, final SynchronizerModel otherSync) {
         this.mySync = mySync;
         this.otherSync = otherSync;
-        multiplier = 1.0f;
-        treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = 0.5f;
+        threshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplierShort = 0;
     }
 
@@ -37,7 +37,7 @@ public final class PlaneGameModel {
      */
     public boolean boundControl() {
         multiplierShort = (float) (Math.round(multiplier * 1000.0) / 1000.0);
-        return Float.compare(treshold, multiplierShort) == 0;
+        return Float.compare(threshold, multiplierShort) == 0;
     }
 
     /**
@@ -71,10 +71,10 @@ public final class PlaneGameModel {
      * @return The newly generated threshold value.
      */
     public float randomizeNewThreshold() {
-        treshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
-        multiplier = 1;
+        threshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = 0.5f;
         flag = true;
-        return treshold;
+        return threshold;
     }
 
     /**
@@ -90,7 +90,7 @@ public final class PlaneGameModel {
      * @return threshold value.
      */
     public float getThreshold() {
-        return treshold;
+        return threshold;
     }
 
     /**

@@ -5,6 +5,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 
 import gymlife.controller.api.Controller;
+import gymlife.model.statistics.StatsType;
+import gymlife.utility.ScenariosType;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
@@ -22,7 +24,7 @@ public final class BankGameView extends GamePanel {
     @Serial
     private static final long serialVersionUID = -3972452455820596601L;
 
-    private static final long THREAD_W = 10;
+    private static final long THREAD_W = 8;
     private final TextLabelView numberLabel;
     private final TextLabelView moneyLabel;
     private boolean started;
@@ -37,6 +39,8 @@ public final class BankGameView extends GamePanel {
     private final ImageLabelView skyLayer;
     private final JButton button;
     private final JButton restarButton;
+    private final JButton quitButton;
+
 
     /**
      * This method sets the dimensions of the plane image and the sky image, add a
@@ -58,6 +62,7 @@ public final class BankGameView extends GamePanel {
         restarButton = new JButton();
         boxMoney = new JTextField();
         planeAnimation = new PlaneAnimationView();
+        quitButton = new JButton();
 
         mainPanel.add(skyLayer, JLayeredPane.DEFAULT_LAYER);
         mainPanel.add(planeLayer, JLayeredPane.MODAL_LAYER);
@@ -66,15 +71,18 @@ public final class BankGameView extends GamePanel {
         mainPanel.add(restarButton, JLayeredPane.MODAL_LAYER);
         mainPanel.add(boxMoney, JLayeredPane.MODAL_LAYER);
         mainPanel.add(moneyLabel, JLayeredPane.MODAL_LAYER);
-        planeLayer.setVisible(false);
+        mainPanel.add(quitButton, JLayeredPane.MODAL_LAYER);
 
+        planeLayer.setVisible(false);
         button.setText("Play");
-        button.setBackground(Color.GREEN);
         restarButton.setText("Restart");
+        button.setBackground(new Color(50, 100, 0));
         button.setEnabled(false);
         restarButton.setEnabled(false);
-
         boxMoney.setFont(myFont);
+
+
+
 
         boxMoney.addKeyListener(new KeyAdapter() {
             @Override
@@ -88,25 +96,23 @@ public final class BankGameView extends GamePanel {
         boxMoney.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
+                numberLabel.setForeground(Color.black);
+                moneyLabel.setForeground(Color.black);
                 final String temp = boxMoney.getText();
                 moneyStart = Float.parseFloat(temp);
-                ((MoneyGameView) moneyLabel).updateText(moneyStart);
-                moneyLabel.setVisible(true);
-                button.setEnabled(true);
-                restarButton.setEnabled(true);
-                if (!flagAnimation) {
-                    planeLayer.setVisible(true);
-                    planeAnimation.startPlaneAnimation(mainPanel, planeLayer);
-                    flagAnimation = true;
+                if (moneyStart <= controller.getStatistics().get(StatsType.MONEY).getCount()) {
+                    ((MoneyGameView) moneyLabel).updateText(moneyStart);
+                    moneyLabel.setVisible(true);
+                    button.setEnabled(true);
+                    restarButton.setEnabled(true);
+                    if (!flagAnimation) {
+                        planeLayer.setVisible(true);
+                        planeAnimation.startPlaneAnimation(mainPanel, planeLayer);
+                        flagAnimation = true;
+                    }
+                } else {
+                    moneyLabel.setText("You broke, man.");
                 }
-
-            }
-        });
-
-        this.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                System.out.println("omg focus lost");
             }
         });
 
@@ -114,7 +120,10 @@ public final class BankGameView extends GamePanel {
             @Override
             public void keyTyped(final KeyEvent e) {
                 final char c = e.getKeyChar();
-                if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
+                if (c == 'q') {
+                    goAway(controller);
+                }
+                else if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
                     e.consume();
                     moneyLabel.setText("Wrong format, only numbers");
                 }
@@ -133,6 +142,7 @@ public final class BankGameView extends GamePanel {
                     boxMoney.setEditable(false);
                     restarButton.setEnabled(false);
                     planeAnimation.planeUpDownAnimation(planeLayer);
+                    controller.changeMoney(controller.getStatistics().get(StatsType.MONEY).getCount() - (int) moneyStart);
                 } else {
                     controller.controllerStopMultiplier();
                     restarButton.setEnabled(true);
@@ -140,12 +150,18 @@ public final class BankGameView extends GamePanel {
                     button.setEnabled(false);
                     planeAnimation.stopUpDownAnimation();
                     planeAnimation.planeExitAnimation(mainPanel, planeLayer);
+                    controller.changeMoney(controller.getStatistics().get(StatsType.MONEY).getCount() + (int) moneyMultiplied);
                 }
             }
 
             private void startMulti(final Controller controller) {
                 new Thread(() -> {
                     controller.startMultiplier(moneyStart);
+                    if (started) {
+                        numberLabel.setForeground(Color.red);
+                        planeAnimation.planeExitAnimation(mainPanel, planeLayer);
+                    }
+                    numberLabel.setForeground(new Color(20, 100, 0));
                 }).start();
             }
         });
@@ -172,6 +188,7 @@ public final class BankGameView extends GamePanel {
      *                   multiplier.
      */
     public void showsMulti(final Controller controller) {
+
         started = true;
         controller.getSync2().signal();
         new Thread(() -> {
@@ -234,6 +251,7 @@ public final class BankGameView extends GamePanel {
         boxMoney.setBounds(boxMoneyWidth, newSize.height / 2, boxMoneyHeight, boxMoneyHeight);
         moneyLabel.setBounds(moneyLabelWidth, newSize.height / 3, moneyLabelHeight, moneyLabelHeight);
         moneyLabel.reload();
+        quitButton.setBounds(100, 80 / 3, 20, 20);
     }
 
     @Override
@@ -245,4 +263,12 @@ public final class BankGameView extends GamePanel {
     public String getPanelName() {
         return "planeGame";
     }
+
+    private void goAway(final Controller controller) {
+        BankGameView.super.grabFocus();
+        controller.changeScenario(ScenariosType.INDOOR_MAP);
+        this.transferFocus();
+    }
+
+
 }
