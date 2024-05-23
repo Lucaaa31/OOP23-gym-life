@@ -1,12 +1,12 @@
-package gymlife.model;
+package gymlife.model.character;
 
 
 import java.util.function.BiFunction;
 
+import gymlife.model.character.api.CharacterModel;
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
 import gymlife.utility.Directions;
-import gymlife.model.api.CharacterModel;
 
 /**
  * Implementation of the CharacterModel interface.

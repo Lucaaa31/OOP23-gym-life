@@ -72,7 +72,6 @@ public final class GameMapView extends GamePanel {
 
         // Initialize characterLabel and set its location
         characterLabel = new CharacterView(dimensionGetter, controller.getPlayerLevel());
-        System.out.println("character level" +  controller.getPlayerLevel());
         characterLabel.setLocation(controller.getCharacterPos().X() * dimensionGetter.getCellDimension().width,
                 controller.getCharacterPos().Y() * dimensionGetter.getCellDimension().height);
         mainPanel.add(characterLabel);

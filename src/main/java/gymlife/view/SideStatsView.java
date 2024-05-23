@@ -1,8 +1,6 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-import gymlife.model.statistics.Counter;
-import gymlife.model.statistics.LimitedCounter;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
@@ -20,8 +18,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
-import java.util.List;
-import java.util.Map;
+
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
 
@@ -64,24 +61,24 @@ public class SideStatsView extends GamePanel {
 
         statsPanel1.addMouseListener(new MouseListener() {
            @Override
-           public void mouseClicked(MouseEvent e) {
+           public void mouseClicked(final MouseEvent e) {
            }
 
            @Override
-           public void mousePressed(MouseEvent e) {
+           public void mousePressed(final MouseEvent e) {
            }
 
            @Override
-           public void mouseReleased(MouseEvent e) {
+           public void mouseReleased(final MouseEvent e) {
            }
 
            @Override
-           public void mouseEntered(MouseEvent e) {
+           public void mouseEntered(final MouseEvent e) {
                buildDetailedPanel();
            }
 
            @Override
-           public void mouseExited(MouseEvent e) {
+           public void mouseExited(final MouseEvent e) {
                buildPanelStandard();
            }
         });
@@ -237,7 +234,7 @@ public class SideStatsView extends GamePanel {
         if (controller.getStatistics().get(statsType).isMax()) {
             labelImage.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.RED));
             lablelNumber = new JLabel("MAX", SwingConstants.CENTER);
-        }else {
+        } else {
             lablelNumber = new JLabel(String.valueOf(value), SwingConstants.CENTER);
         }
         final JLabel label = new JLabel();

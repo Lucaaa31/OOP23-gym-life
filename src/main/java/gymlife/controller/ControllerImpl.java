@@ -1,21 +1,28 @@
 package gymlife.controller;
 
-import gymlife.model.CharacterModelImpl;
+import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.GameMapImpl;
 import gymlife.model.MapManagerImpl;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
-import gymlife.model.statistics.*;
+import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.StatsConstants;
+import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.StatsType;
+import gymlife.model.statistics.CounterImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
 
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.*;
+import gymlife.utility.ScenariosType;
+import gymlife.utility.GameDifficulty;
+import gymlife.utility.Position;
+import gymlife.utility.Directions;
 import gymlife.controller.api.Controller;
-import gymlife.model.api.CharacterModel;
+import gymlife.model.character.api.CharacterModel;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -85,7 +92,7 @@ public class ControllerImpl implements Controller {
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, LimitedCounter> getStatistics() {
+    public Map<StatsType, LimitedCounterImpl> getStatistics() {
         return statsManager.getStats();
     }
 
@@ -95,7 +102,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public Counter getDays() {
+    public CounterImpl getDays() {
         return statsManager.getDays();
     }
 
@@ -105,7 +112,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public Counter getMoney() {
+    public CounterImpl getMoney() {
         return statsManager.getMoney();
     }
 
@@ -148,7 +155,7 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return  statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+        return statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
                 ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
@@ -218,13 +225,14 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void setMinigameResult() {
+        final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
                 minigameManager.getEndTime());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
-                        ? minigameManager.getDifficulty().getExperienceGained() : -10);
+                        ? minigameManager.getDifficulty().getExperienceGained() : -winExperience);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 

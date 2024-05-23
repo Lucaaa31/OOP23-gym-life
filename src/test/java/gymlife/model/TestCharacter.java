@@ -1,9 +1,10 @@
 package gymlife.model;
 
+import gymlife.model.character.CharacterModelImpl;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import gymlife.model.api.CharacterModel;
+import gymlife.model.character.api.CharacterModel;
 import gymlife.utility.Position;
 import gymlife.utility.Directions;
 import gymlife.utility.Constants;

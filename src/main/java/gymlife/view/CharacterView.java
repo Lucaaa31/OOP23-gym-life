@@ -24,13 +24,14 @@ public class CharacterView extends JLabel {
      * Constructs a CharacterView object with the specified DimensionGetter.
      * It sets the initial image for the character and sets the size of the JLabel to the cell dimension.
      * @param dimensionGetter the DimensionGetter to be used to get the dimensions for the character image
+     * @param level the level of the character
      */
     public CharacterView(final DimensionGetter dimensionGetter, final int level) {
         this.level = level;
         this.dimensionGetter = dimensionGetter;
-        final String p = "images/character/level" +
-                level +
-                "_down.png";
+        final String p = "images/character/level"
+                + level
+                + "_down.png";
         final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
                 getSystemResource(p)).
                 getImage().

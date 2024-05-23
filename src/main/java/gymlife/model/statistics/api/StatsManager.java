@@ -3,8 +3,8 @@ package gymlife.model.statistics.api;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.Counter;
-import gymlife.model.statistics.LimitedCounter;
+import gymlife.model.statistics.CounterImpl;
+import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
 
 import javax.annotation.concurrent.Immutable;
@@ -19,13 +19,13 @@ public interface StatsManager {
      *
      * @return a map of statistics
      */
-    Map<StatsType, LimitedCounter> getStats();
+    Map<StatsType, LimitedCounterImpl> getStats();
     /**
      * Returns the number of days in the gym life.
      *
      * @return the number of days
      */
-    Counter getDays();
+    CounterImpl getDays();
     /**
      * Decrement the number of day of one.
      *
@@ -63,7 +63,7 @@ public interface StatsManager {
      *
      * @return the money of the game
      */
-    Counter getMoney();
+    CounterImpl getMoney();
     /**
      * Multincrement a specified stats to the value.
      *

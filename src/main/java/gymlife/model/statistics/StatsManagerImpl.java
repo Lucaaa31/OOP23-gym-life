@@ -1,6 +1,5 @@
 package gymlife.model.statistics;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
@@ -34,7 +33,7 @@ public class StatsManagerImpl implements StatsManager {
      * @return a map of StatsType and their corresponding values
      */
     @Override
-    public Map<StatsType, LimitedCounter> getStats() {
+    public Map<StatsType, LimitedCounterImpl> getStats() {
         return gameStats.getMap();
     }
     /**
@@ -43,8 +42,8 @@ public class StatsManagerImpl implements StatsManager {
      * @return the money of the game
      */
     @Override
-    public Counter getMoney() {
-        return new Counter(gameMoney.getMoney());
+    public CounterImpl getMoney() {
+        return new CounterImpl(gameMoney.getMoney());
     }
     /**
      * Multincrement a specified stats to the value.
@@ -90,8 +89,8 @@ public class StatsManagerImpl implements StatsManager {
      * @return the number of days left
      */
     @Override
-    public Counter getDays() {
-        return new Counter(gameDays.dayLeft());
+    public CounterImpl getDays() {
+        return new CounterImpl(gameDays.dayLeft());
     }
     /**
      * Increments the number of days by one.
@@ -112,8 +111,8 @@ public class StatsManagerImpl implements StatsManager {
         if (gameDays.isDayOver()) {
             return true;
         }
-        final Map<StatsType, LimitedCounter> statsMap = gameStats.getMap();
-        for (final Map.Entry<StatsType, LimitedCounter> entry : statsMap.entrySet()) {
+        final Map<StatsType, LimitedCounterImpl> statsMap = gameStats.getMap();
+        for (final Map.Entry<StatsType, LimitedCounterImpl> entry : statsMap.entrySet()) {
             if (entry.getValue().getCount() == 0) {
                 return true;
             }

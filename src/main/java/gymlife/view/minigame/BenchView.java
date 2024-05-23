@@ -118,8 +118,6 @@ public class BenchView extends JPanel implements MinigamePanel {
         layeredPane.add(timerView, Integer.valueOf(1));
 
         setRandomPositionButton();
-        
-
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction();
