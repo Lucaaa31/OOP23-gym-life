@@ -1,7 +1,10 @@
 package gymlife.model;
 
-import gymlife.model.api.GameMap;
-import gymlife.model.api.MapManager;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.map.api.MapManager;
+import gymlife.model.map.CellImpl;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
 import gymlife.utility.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

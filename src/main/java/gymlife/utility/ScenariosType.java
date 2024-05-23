@@ -23,5 +23,9 @@ public enum ScenariosType {
     /**
      * Represents the sleeping scenario.
      */
-    SLEEPING;
+    SLEEPING,
+    /**
+     * Represents the random encounter scenario.
+     */
+    ENCOUNTER;
 }

@@ -1,13 +1,20 @@
 package gymlife.controller.api;
 
+import gymlife.model.map.api.GameMap;
+import gymlife.model.encounter.Encounter;
+import gymlife.model.statistics.CounterImpl;
+import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.SynchronizerModel;
-import gymlife.model.api.GameMap;
-import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameState;
+import gymlife.utility.minigame.MinigameType;
 
+import javax.annotation.concurrent.Immutable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,17 +24,18 @@ import java.util.Map;
  * managing the game map, executing actions associated with the cell on which the character currently is,
  * and getting the level of mass of the character.
  */
+@Immutable
 public interface Controller {
     /**
      * Moves the character in the specified direction.
-     * 
+     *
      * @param dir the direction in which to move the character
      */
     void moveCharacter(Directions dir);
 
     /**
      * Returns the current position of the character.
-     * 
+     *
      * @return the position of the character
      */
     Position getCharacterPos();
@@ -37,7 +45,21 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, Counter> getStatistics();
+    Map<StatsType, LimitedCounterImpl> getStatistics();
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    CounterImpl getDays();
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    CounterImpl getMoney();
 
     /**
      * Changes the current game map to the specified new map.
@@ -48,6 +70,7 @@ public interface Controller {
 
     /**
      * Method to get the current map.
+     *
      * @return Returns the current map.
      */
     GameMap getCurrentMap();
@@ -66,12 +89,14 @@ public interface Controller {
 
     /**
      * Method to get the current Scenario of the game.
+     *
      * @return Returns the ScenariosType of the current scenario.
      */
     ScenariosType getActualScenario();
 
     /**
      * Method to modify the current scenario.
+     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     void changeScenario(ScenariosType newScenario);
@@ -80,6 +105,70 @@ public interface Controller {
      * Method to return the player to the default position of the map he's in.
      */
     void resetPlayerPosition();
+
+    /**
+     * Method to return the current randomEncounter.
+     * @return Encounter object.
+     */
+    Encounter getCurrentEncounter();
+
+    /**
+     * Method to resolve the encounter either by accepting or declining the encounter.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
+    void resolveEncounter(boolean choice);
+
+    /**
+     * Sets the difficulty level of the minigame.
+     *
+     * @param difficulty the difficulty level to set
+     */
+    void setMinigameDifficulty(MinigameDifficulty difficulty);
+
+    /**
+     * Notifies the controller that a button has been pressed.
+     */
+    void notifyUserAction();
+
+
+    /**
+     * Set the minigame result, update the statistics and change the scenario.
+     */
+    void setMinigameResult();
+
+    /**
+     * Check the status of the minigame.
+     *
+     * @return an enum representing the state of the minigame
+     */
+    MinigameState getMinigameState();
+
+    /**
+     * Returns the difficulty level of the minigame.
+     *
+     * @return the enum of difficulty level of the minigame
+     */
+    MinigameDifficulty getDifficulty();
+
+
+    /**
+     * Returns the type of the current minigame.
+     *
+     * @return the minigame type
+     */
+    MinigameType getMinigameType();
+
+
+    /**
+     * Get the score of the player in the scoring table.
+     *
+     * @param minigameType the type of the minigame that has been played
+     * @param difficulty   the difficulty of the minigame that has been played
+     * @return the list of scores
+     */
+    List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
+
+
 
     /**
      * Method to check if the player has won the game.

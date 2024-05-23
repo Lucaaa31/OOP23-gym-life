@@ -4,6 +4,7 @@ import gymlife.utility.MapConstants;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
 /**
  * This class is used to get the dimensions for different components of the application.
  * It calculates the dimensions based on the screen size and some predefined constants.
@@ -21,6 +22,7 @@ public class DimensionGetter {
     private static final double SIDE_PROPORTION = 0.25;
     private static final double BUTTON_PROPORTION = 0.25;
     private static final double FAST_TRAVEL_PROPORTION = 0.875;
+    private static final double ENCOUNTER_IMAGE_PROPORTION = 0.625;
     private static final int BIG_FONT_SIZE = 32;
     private static final int SMALL_FONT_SIZE = 35;
     private static final int FRAME_HEIGHT = 9;
@@ -29,6 +31,7 @@ public class DimensionGetter {
 
     /**
      * Returns the actual frame dimension.
+     *
      * @return the actual frame dimension
      */
     public Dimension getFrameDimension() {
@@ -37,6 +40,7 @@ public class DimensionGetter {
 
     /**
      * Returns the scenario dimension which is 75% of the frame width and equal to the frame height.
+     *
      * @return the scenario dimension
      */
     public Dimension getScenarioDimension() {
@@ -45,6 +49,7 @@ public class DimensionGetter {
 
     /**
      * Returns the side dimension which is 25% of the frame width and equal to the frame height.
+     *
      * @return the side dimension
      */
     public Dimension getSideDimension() {
@@ -53,6 +58,7 @@ public class DimensionGetter {
 
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     *
      * @return the cell dimension
      */
     public Dimension getCellDimension() {
@@ -62,22 +68,27 @@ public class DimensionGetter {
 
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     *
      * @return the cell dimension
      */
     public Dimension getSquareStatsDimension() {
         return new Dimension(actualFrameDimension.height / SQUARE_STATS,
                 actualFrameDimension.height / SQUARE_STATS);
     }
+
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     *
      * @return the cell dimension
      */
     public Dimension getButtonStartDimension() {
         return new Dimension((int) (actualFrameDimension.width * BUTTON_PROPORTION),
                 (int) (actualFrameDimension.height * BUTTON_PROPORTION));
     }
+
     /**
      * Returns the cell dimension which is calculated based on the scenario width and the map dimensions.
+     *
      * @return the cell dimension
      */
     public Dimension getButtonLabelDimension() {
@@ -86,6 +97,7 @@ public class DimensionGetter {
 
     /**
      * Returns the Fast Travel image dimension which is calculated based on width and height of the scenario.
+     *
      * @return the fast travel image dimension.
      */
     public Dimension getFastTravelDimension() {
@@ -95,6 +107,7 @@ public class DimensionGetter {
 
     /**
      * Returns the Fast Travel buttons dimension which are calculated based on width and height of the scenario.
+     *
      * @return the fast travel buttons dimension.
      */
     public Dimension getFastTravelButtonsDimension() {
@@ -103,7 +116,26 @@ public class DimensionGetter {
     }
 
     /**
+     * Returns the encounter image dimensions.
+     * @return the encounter image dimensions.
+     */
+    public Dimension getEncounterImageDimension() {
+        return new Dimension((int) (getScenarioDimension().width * ENCOUNTER_IMAGE_PROPORTION),
+                getScenarioDimension().height);
+    }
+
+    /**
+     * Returns the encounter button dimensions.
+     * @return the encounter button dimensions.
+     */
+    public Dimension getEncounterButtonDimension() {
+        return new Dimension((int) (getScenarioDimension().width * (1 - ENCOUNTER_IMAGE_PROPORTION)),
+                getScenarioDimension().height);
+    }
+
+    /**
      * Returns the big font size which is the frame width divided by 32.
+     *
      * @return the big font size
      */
     public float getBigFontSize() {
@@ -112,6 +144,7 @@ public class DimensionGetter {
 
     /**
      * Returns the small font size which is the frame width divided by 35.
+     *
      * @return the small font size
      */
     public float getSmallFontSize() {
@@ -132,5 +165,55 @@ public class DimensionGetter {
     public void decScreenDimension() {
         actualFrameDimension.setSize(actualFrameDimension.width - INCREMENT * FRAME_WIDTH,
                 actualFrameDimension.height - INCREMENT * FRAME_HEIGHT);
+    }
+
+    /**
+     * Returns the character dimension inside the minigame.
+     *
+     * @return the character dimension
+     */
+    public Dimension getCharacterMinigameDimension() {
+        return new Dimension(
+                this.getScenarioDimension().width / 3,
+                this.getScenarioDimension().width / 3
+        );
+    }
+
+    /**
+     * Returns the character position inside the minigame.
+     *
+     * @return the character position
+     */
+    public Dimension getCharacterMinigamePos() {
+        final float x = this.getScenarioDimension().width / 3.3f;
+        return new Dimension(
+                (int) x,
+                this.getScenarioDimension().height / 3
+        );
+    }
+
+    /**
+     * Returns the button dimension inside the minigame.
+     *
+     * @return the button dimension
+     */
+    public Dimension getButtonMinigameDimension() {
+        return new Dimension(
+                this.getScenarioDimension().width / 8,
+                this.getScenarioDimension().width / 8
+        );
+    }
+
+    /**
+     * Returns timer dimension inside the minigame.
+     *
+     * @return timer position
+     */
+    public Dimension getTimerMinigameDimension() {
+        final int height = this.getScenarioDimension().height / 11;
+        return new Dimension(
+                this.getScenarioDimension().width / 10,
+                height
+        );
     }
 }

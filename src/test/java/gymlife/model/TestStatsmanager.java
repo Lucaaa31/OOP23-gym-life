@@ -65,7 +65,7 @@ class TestStatsmanager {
         /*
          * add for each type of mass the exact amount 
          */
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        assertEquals(StatsConstants.MAX_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.acceptEncounter(encounter);
         stats.resetAll();
     }
@@ -73,14 +73,14 @@ class TestStatsmanager {
     @Test
     void testGetAllStats() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.resetAll();
 
         /*
          * add for each type of mass the exact amount
          */
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getAllStats().get(StatsType.HAPPINESS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL * 3, stats.getStats().get(StatsType.MASS).getCount());
+        assertEquals(StatsConstants.STARTING_MASS_LEVEL, stats.getStats().get(StatsType.MASS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney().getCount());
         assertEquals(GameDifficulty.EASY.getDays(), stats.getDays().getCount());
         stats.resetAll();
@@ -89,8 +89,10 @@ class TestStatsmanager {
     @Test
     void testMultiIncrementStats() {
         final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.resetAll();
         stats.multiIncrementStat(StatsType.HAPPINESS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5); 
-        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + 1, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + StatsConstants.STARTING_STATS_LEVEL,
+                stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.resetAll();
     }
 
