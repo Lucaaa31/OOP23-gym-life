@@ -1,6 +1,8 @@
 package gymlife.model;
 
-import gymlife.model.api.MapManager;
+import gymlife.model.map.api.MapManager;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.api.StatsManager;

@@ -1,6 +1,7 @@
 package gymlife.controller.api;
 
-import gymlife.model.api.GameMap;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.CounterImpl;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
@@ -103,6 +104,18 @@ public interface Controller {
      * Method to return the player to the default position of the map he's in.
      */
     void resetPlayerPosition();
+
+    /**
+     * Method to return the current randomEncounter.
+     * @return Encounter object.
+     */
+    Encounter getCurrentEncounter();
+
+    /**
+     * Method to resolve the encounter either by accepting or declining the encounter.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
+    void resolveEncounter(boolean choice);
 
     /**
      * Sets the difficulty level of the minigame.

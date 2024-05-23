@@ -2,20 +2,23 @@ package gymlife.controller;
 
 import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
-import gymlife.model.GameMapImpl;
-import gymlife.model.MapManagerImpl;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
+import gymlife.model.encounter.Encounter;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
+import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.CounterImpl;
 import gymlife.model.ScenariosManager;
-import gymlife.model.api.GameMap;
-import gymlife.model.api.MapManager;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.map.api.MapManager;
 
+import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.GameDifficulty;
@@ -30,6 +33,7 @@ import gymlife.utility.minigame.MinigameType;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This class implements the Controller interface and is responsible for managing Character movements.
@@ -43,6 +47,7 @@ public class ControllerImpl implements Controller {
     private final InteractionsManager interactionsManager;
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
+    private Encounter currentEncounter;
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -51,8 +56,11 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
+        statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
+        statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
         this.scenariosManager = new ScenariosManager();
         this.minigameManager = new MinigameManagerImpl();
+        this.currentEncounter = null;
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager,
@@ -87,7 +95,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Retrieves the current game statistic excluded day left and money.
+     * Retrieves the current game statistics.
      *
      * @return a Map of the current game statistics
      */
@@ -123,7 +131,13 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void goToNewMap(final GameMap newMap) {
-        mapManager.changeMap(newMap);
+        final Optional<Encounter> encounter = mapManager.changeMap(newMap);
+        if (encounter.isPresent()) {
+            currentEncounter = encounter.get();
+            changeScenario(ScenariosType.ENCOUNTER);
+        } else {
+            changeScenario(ScenariosType.INDOOR_MAP);
+        }
     }
 
     /**
@@ -188,6 +202,29 @@ public class ControllerImpl implements Controller {
     }
 
     /**
+     * Method that returns the current Encounter.
+     * @return the encounter object.
+     */
+    @Override
+    public Encounter getCurrentEncounter() {
+        return currentEncounter;
+    }
+
+    /**
+     * Method to either accept or decline the encounter. Changes to INDOOR scenario after.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
+    @Override
+    public void resolveEncounter(final boolean choice) {
+        if (choice) {
+            statsManager.acceptEncounter(currentEncounter);
+        } else {
+            statsManager.denyEncounter(currentEncounter);
+        }
+        changeScenario(ScenariosType.INDOOR_MAP);
+    }
+
+    /**
      * Sets the difficulty level of the current minigame,
      * and starts it.
      *
@@ -233,6 +270,7 @@ public class ControllerImpl implements Controller {
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
                         ? minigameManager.getDifficulty().getExperienceGained() : -winExperience);
+        statsManager.multiIncrementStat(StatsType.STAMINA, StatsConstants.GYM_STAMINA_CONSUMPTION);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 
