@@ -34,23 +34,9 @@ public class StatsManagerImpl implements StatsManager {
      * @return a map of StatsType and their corresponding values
      */
     @Override
-    public Map<StatsType, Counter> getStats() {
+    public Map<StatsType, LimitedCounter> getStats() {
         return gameStats.getMap();
     }
-    /**
-     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
-     * including the money and days.
-     *
-     * @return a map of StatsType and their corresponding values
-     */
-    @Override
-    public Map<StatsType, Counter> getAllStats() {
-        final Map<StatsType, Counter> statsMap = new HashMap<>(this.getStats());
-        statsMap.put(StatsType.MONEY, this.getMoney());
-        statsMap.put(StatsType.DAYS, this.getDays());
-        return Map.copyOf(statsMap);
-    }
-
     /**
      * Retrieves the money of the game.
      *
@@ -126,8 +112,8 @@ public class StatsManagerImpl implements StatsManager {
         if (gameDays.isDayOver()) {
             return true;
         }
-        final Map<StatsType, Counter> statsMap = gameStats.getMap();
-        for (final Map.Entry<StatsType, Counter> entry : statsMap.entrySet()) {
+        final Map<StatsType, LimitedCounter> statsMap = gameStats.getMap();
+        for (final Map.Entry<StatsType, LimitedCounter> entry : statsMap.entrySet()) {
             if (entry.getValue().getCount() == 0) {
                 return true;
             }

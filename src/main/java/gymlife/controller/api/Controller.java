@@ -2,6 +2,7 @@ package gymlife.controller.api;
 
 import gymlife.model.api.GameMap;
 import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.LimitedCounter;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -42,7 +43,21 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, Counter> getStatistics();
+    Map<StatsType, LimitedCounter> getStatistics();
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    Counter getDays();
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    Counter getMoney();
 
     /**
      * Changes the current game map to the specified new map.
@@ -152,4 +167,6 @@ public interface Controller {
      * @return true if the game is over, false otherwise
      */
     boolean isGameOver();
+
+
 }

@@ -7,20 +7,15 @@ import gymlife.model.MapManagerImpl;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
-import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.*;
 import gymlife.model.ScenariosManager;
 import gymlife.model.api.GameMap;
 import gymlife.model.api.MapManager;
-import gymlife.model.statistics.Counter;
 
-import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.Directions;
-import gymlife.utility.GameDifficulty;
-import gymlife.utility.Position;
+import gymlife.utility.*;
 import gymlife.controller.api.Controller;
 import gymlife.model.api.CharacterModel;
-import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -85,13 +80,33 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Retrieves the current game statistics.
+     * Retrieves the current game statistic excluded day left and money.
      *
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, Counter> getStatistics() {
-        return statsManager.getAllStats();
+    public Map<StatsType, LimitedCounter> getStatistics() {
+        return statsManager.getStats();
+    }
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    @Override
+    public Counter getDays() {
+        return statsManager.getDays();
+    }
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    @Override
+    public Counter getMoney() {
+        return statsManager.getMoney();
     }
 
     /**
@@ -133,7 +148,8 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
+        return  statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+                ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
     /**

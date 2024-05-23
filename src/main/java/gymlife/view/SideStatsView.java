@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.LimitedCounter;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
@@ -19,6 +20,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
+import java.util.List;
 import java.util.Map;
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
@@ -167,7 +169,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
-        final int moneyValue = controller.getStatistics().get(StatsType.MONEY).getCount();
+        final int moneyValue = controller.getMoney().getCount();
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
@@ -194,11 +196,11 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
+        final int value = controller.getDays().getCount();
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
+        final JLabel lablelNumber = new JLabel(String.valueOf(value),
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
@@ -231,8 +233,13 @@ public class SideStatsView extends GamePanel {
         final int value = controller.getStatistics().get(statsType).getCount();
         final JLabel labelImage = new JLabel();
         this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(value),
-                SwingConstants.CENTER);
+        JLabel lablelNumber;
+        if (controller.getStatistics().get(statsType).isMax()) {
+            labelImage.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.RED));
+            lablelNumber = new JLabel("MAX", SwingConstants.CENTER);
+        }else {
+            lablelNumber = new JLabel(String.valueOf(value), SwingConstants.CENTER);
+        }
         final JLabel label = new JLabel();
         label.setLayout(new GridLayout(2, 1));
         label.add(labelImage);

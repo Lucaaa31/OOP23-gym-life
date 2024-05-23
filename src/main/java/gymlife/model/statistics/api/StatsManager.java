@@ -4,6 +4,7 @@ import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.LimitedCounter;
 import gymlife.model.statistics.StatsType;
 
 import javax.annotation.concurrent.Immutable;
@@ -18,7 +19,7 @@ public interface StatsManager {
      *
      * @return a map of statistics
      */
-    Map<StatsType, Counter> getStats();
+    Map<StatsType, LimitedCounter> getStats();
     /**
      * Returns the number of days in the gym life.
      *
@@ -57,13 +58,6 @@ public interface StatsManager {
      * @param encounter the encounter to deny
     */
     void denyEncounter(Encounter encounter);
-    /**
-     * Retrieves the all game statistics as a map of StatsType and their corresponding values,
-     * including the money and days.
-     *
-     * @return a map of StatsType and their corresponding values
-     */
-    Map<StatsType, Counter> getAllStats();
     /**
      * Retrieves the money of the game.
      *

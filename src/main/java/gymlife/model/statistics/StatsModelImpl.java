@@ -9,13 +9,37 @@ import gymlife.model.statistics.api.StatsModel;
  * Implementation of the StatsModel interface that represents the statistics of a gym member.
  */
 public final class StatsModelImpl implements StatsModel {
-    private final Map<StatsType, Counter> gameStats = new HashMap<>();
-    private static final Counter happiness = new Counter(StatsConstants.MAX_STATS_LEVEL);
-    private static final Counter stamina = new Counter(StatsConstants.MAX_STATS_LEVEL);
-    private static final Counter legMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static final Counter backMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static final Counter chestMass = new Counter(StatsConstants.STARTING_STATS_LEVEL);
-    private static final Counter mass = new Counter(StatsConstants.STARTING_MASS_LEVEL) {
+    private final Map<StatsType, LimitedCounter> gameStats = new HashMap<>();
+    private static final LimitedCounter happiness = new LimitedCounter(StatsConstants.MAX_STATS_LEVEL,
+            StatsConstants.MAX_STATS_LEVEL);
+    private static final LimitedCounter stamina = new LimitedCounter(StatsConstants.MAX_STATS_LEVEL,
+            StatsConstants.MAX_STATS_LEVEL);
+    private static final LimitedCounter legMass = new LimitedCounter(StatsConstants.STARTING_STATS_LEVEL,
+            StatsConstants.MAX_STATS_LEVEL);
+    private static final LimitedCounter backMass = new LimitedCounter(StatsConstants.STARTING_STATS_LEVEL,
+            StatsConstants.MAX_STATS_LEVEL);
+    private static final LimitedCounter chestMass = new LimitedCounter(StatsConstants.STARTING_STATS_LEVEL,
+            StatsConstants.MAX_STATS_LEVEL);
+    private static final LimitedCounter mass = new LimitedCounter(StatsConstants.STARTING_MASS_LEVEL,
+            StatsConstants.MAX_MASS_LEVEL) {
+        @Override
+        public void increment() {
+            backMass.increment();
+            chestMass.increment();
+            legMass.increment();
+        };
+        @Override
+        public void decrement() {
+            backMass.decrement();
+            chestMass.decrement();
+            legMass.decrement();
+        };
+        @Override
+        public void multiIncrement(final int value) {
+            backMass.multiIncrement(value);
+            chestMass.multiIncrement(value);
+            legMass.multiIncrement(value);
+        }
         @Override
         public void resetCount() {
             backMass.resetCount();
@@ -23,28 +47,10 @@ public final class StatsModelImpl implements StatsModel {
             legMass.resetCount();
         }
         @Override
-        public void setCount(final int value) {
-            backMass.setCount(value);
-            chestMass.setCount(value);
-            legMass.setCount(value);
-        }
-        @Override
-        public void increment() {
-            backMass.increment();
-            chestMass.increment();
-            legMass.increment();
-        }
-        @Override
-        public void decrement() {
-            backMass.decrement();
-            chestMass.decrement();
-            legMass.decrement();
-        }
-        @Override
-        public void multiIncrement(final int value) {
-            backMass.multiIncrement(value);
-            chestMass.multiIncrement(value);
-            legMass.multiIncrement(value);
+        public void setCount(final int count) {
+            backMass.setCount(count);
+            chestMass.setCount(count);
+            legMass.setCount(count);
         }
         @Override
         public int getCount() {
@@ -60,7 +66,6 @@ public final class StatsModelImpl implements StatsModel {
         gameStats.put(StatsType.CHEST_MASS, chestMass);
         gameStats.put(StatsType.LEG_MASS, legMass);
         gameStats.put(StatsType.MASS, mass);
-        mass.multiIncrement(50);
         gameStats.put(StatsType.STAMINA, stamina);
         gameStats.put(StatsType.HAPPINESS, happiness);
 
@@ -78,7 +83,7 @@ public final class StatsModelImpl implements StatsModel {
     /**
      * Decreases the specified stat by 1.
      * If the stat is MASS, it decreases all the individual mass stats (back, chest, leg) by 1.
-     * 
+     *
      * @param stats the stat to decrease
      */
     @Override
@@ -102,7 +107,7 @@ public final class StatsModelImpl implements StatsModel {
      * @return the map of all the game stats
      */
     @Override
-    public Map<StatsType, Counter> getMap() {
+    public Map<StatsType, LimitedCounter> getMap() {
         return Map.copyOf(gameStats);
     }
     /**
@@ -121,11 +126,10 @@ public final class StatsModelImpl implements StatsModel {
      */
     @Override
     public void resetAll() {
-        for (final Map.Entry<StatsType, Counter> entry : gameStats.entrySet()) {
+        for (final Map.Entry<StatsType, LimitedCounter> entry : gameStats.entrySet()) {
             entry.getValue().setCount(StatsConstants.STARTING_STATS_LEVEL);
         }
     }
-
     /**
      * Reset all stats to 0.
      *
