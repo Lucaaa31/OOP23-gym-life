@@ -30,6 +30,11 @@ public final class StatsConstants {
      */
     public static final int LEVEL_2 = MAX_STATS_LEVEL / 3 * 2;
 
+    /**
+     * the standard consumption of stamina after a minigame.
+     */
+    public static final int GYM_STAMINA_CONSUMPTION = -55;
+
     private StatsConstants() {
     }
 }

@@ -8,6 +8,7 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
+import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
@@ -52,6 +53,8 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameDifficulty difficulty) {
         this.statsManager = new StatsManagerImpl(difficulty);
+        statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
+        statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
         this.scenariosManager = new ScenariosManager();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
@@ -242,6 +245,7 @@ public class ControllerImpl implements Controller {
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
                         ? minigameManager.getDifficulty().getExperienceGained() : 0);
+        statsManager.multiIncrementStat(StatsType.STAMINA, StatsConstants.GYM_STAMINA_CONSUMPTION);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
 
