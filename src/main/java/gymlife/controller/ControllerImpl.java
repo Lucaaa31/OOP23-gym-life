@@ -10,7 +10,6 @@ import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
-import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.CounterImpl;
@@ -18,7 +17,6 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 
-import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.GameDifficulty;

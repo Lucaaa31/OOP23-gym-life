@@ -41,6 +41,7 @@ public class EncounterView extends GamePanel {
      * @param dimensionGetter dimensionGetter inherited by the class that instantiates this.
      */
     public EncounterView(final Controller controller, final DimensionGetter dimensionGetter) {
+        final int borderThickness = 5;
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
@@ -84,8 +85,10 @@ public class EncounterView extends GamePanel {
         acceptButton.setOpaque(true);
         acceptButton.setBackground(myGreen);
         acceptButton.setForeground(Color.WHITE);
+        acceptButton.setBorder(new LineBorder(Color.WHITE, borderThickness));
         declineButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         declineButton.setOpaque(true);
+        declineButton.setBorder(new LineBorder(Color.WHITE, borderThickness));
         declineButton.setBackground(myRed);
         declineButton.setForeground(Color.WHITE);
         buttonsPanel.add(acceptButton);
@@ -100,11 +103,8 @@ public class EncounterView extends GamePanel {
             super.transferFocus();
         });
 
-
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.EAST);
-
-
     }
 
     /**
