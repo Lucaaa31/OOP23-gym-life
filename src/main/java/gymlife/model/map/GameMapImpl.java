@@ -1,11 +1,11 @@
-package gymlife.model;
+package gymlife.model.map;
 
 
 import java.util.Locale;
 import java.util.Map;
 
-import gymlife.model.api.Cell;
-import gymlife.model.api.GameMap;
+import gymlife.model.map.api.Cell;
+import gymlife.model.map.api.GameMap;
 import gymlife.utility.MapConstants;
 import gymlife.utility.MapLoader;
 import gymlife.utility.Position;

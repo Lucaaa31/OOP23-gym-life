@@ -1,10 +1,11 @@
-package gymlife.model;
+package gymlife.model.map;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 
-import gymlife.model.api.Cell;
+import gymlife.model.InteractionsManager;
+import gymlife.model.map.api.Cell;
 import gymlife.model.api.GameInteraction;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;

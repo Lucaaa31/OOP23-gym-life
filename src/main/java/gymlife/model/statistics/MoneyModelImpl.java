@@ -5,10 +5,9 @@ import gymlife.model.statistics.api.MoneyModel;
 /**
  * The MoneyModelImpl class represents a model for tracking money in a gym.
  * It extends the Counter class, which provides common functionality for counters.
- * 
  * This class implements the MoneyModel interface, which defines methods for managing money in the gym.
  */
-public class MoneyModelImpl extends Counter implements MoneyModel {
+public class MoneyModelImpl extends CounterImpl implements MoneyModel {
     /**
      * Constructor of the class.
      * @param count the initial amount of money

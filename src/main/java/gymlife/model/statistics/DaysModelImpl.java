@@ -5,7 +5,7 @@ import gymlife.model.statistics.api.DaysModel;
 /**
  * Implementation of the DaysModel interface.
  */
-public class DaysModelImpl extends Counter implements DaysModel {
+public class DaysModelImpl extends CounterImpl implements DaysModel {
     /**
      * Constructs a new DaysModelImpl object with the specified number of days.
      *

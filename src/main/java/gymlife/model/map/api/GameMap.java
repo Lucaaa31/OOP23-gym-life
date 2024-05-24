@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.map.api;
 
 import gymlife.utility.Position;
 

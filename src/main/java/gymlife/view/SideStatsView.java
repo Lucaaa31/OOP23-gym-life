@@ -1,7 +1,6 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-import gymlife.model.statistics.Counter;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
@@ -16,11 +15,12 @@ import javax.swing.border.MatteBorder;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.Serial;
-import java.util.Map;
+
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
-import gymlife.view.minigame.ScoreBoardView;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -39,7 +39,6 @@ public class SideStatsView extends GamePanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
-
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -55,31 +54,39 @@ public class SideStatsView extends GamePanel {
         this.setBackground(Color.BLACK);
         this.controller = controller;
         this.setBorder(BORDER);
-        final JPanel scoreBoardPanel = new ScoreBoardView(controller);
 
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
         statsPanel1.setLayout(new GridLayout(1, 3));
-        final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
-        final String happyPath;
-        if (level < StatsConstants.LEVEL_1) {
-            happyPath = "images/icons/sad.png";
-        } else if (level < StatsConstants.LEVEL_2) {
-            happyPath = "images/icons/mid.png";
-        } else {
-            happyPath = "images/icons/happy.png";
-        }
-        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
-        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
-        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
 
+        statsPanel1.addMouseListener(new MouseListener() {
+           @Override
+           public void mouseClicked(final MouseEvent e) {
+           }
+
+           @Override
+           public void mousePressed(final MouseEvent e) {
+           }
+
+           @Override
+           public void mouseReleased(final MouseEvent e) {
+           }
+
+           @Override
+           public void mouseEntered(final MouseEvent e) {
+               buildDetailedPanel();
+           }
+
+           @Override
+           public void mouseExited(final MouseEvent e) {
+               buildPanelStandard();
+           }
+        });
+        buildPanelStandard();
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
 
-        statsPanel4.add(scoreBoardPanel);
-
-        statsPanel1.setBorder(BORDER);
         statsPanel2.setBorder(BORDER);
         statsPanel3.setBorder(BORDER);
         statsPanel4.setBorder(BORDER);
@@ -88,13 +95,25 @@ public class SideStatsView extends GamePanel {
         this.add(statsPanel2);
         this.add(statsPanel3);
         this.add(statsPanel4);
-
     }
     /**
-     * Resizes the stats panel.
+     * Builds the detailed panel for StatsPanel1.
+     * It contains leg mass, chest mass and back mass.
      */
-    @Override
-    public void resizeComponents() {
+    private void buildDetailedPanel() {
+        statsPanel1.removeAll();
+        statsPanel1.add(buildLabel(StatsType.LEG_MASS, "images/icons/legs.png"));
+        statsPanel1.add(buildLabel(StatsType.CHEST_MASS, "images/icons/push.png"));
+        statsPanel1.add(buildLabel(StatsType.BACK_MASS, "images/icons/pull.png"));
+        statsPanel1.setBorder(BORDER);
+        statsPanel1.revalidate();
+        statsPanel1.repaint();
+    }
+    /**
+     * Builds the standard panel for StatsPanel1.
+     * It contains happiness, stamina and mass.
+     */
+    private void buildPanelStandard() {
         final int level = controller.getStatistics().get(StatsType.HAPPINESS).getCount();
         final String happyPath;
         if (level < StatsConstants.LEVEL_1) {
@@ -105,11 +124,20 @@ public class SideStatsView extends GamePanel {
             happyPath = "images/icons/happy.png";
         }
         statsPanel1.removeAll();
-        statsPanel1.add(buildLabel1(StatsType.HAPPINESS, happyPath));
-        statsPanel1.add(buildLabel1(StatsType.STAMINA, "images/icons/stamina.png"));
-        statsPanel1.add(buildLabel1(StatsType.MASS, "images/icons/mass.png"));
+        statsPanel1.add(buildLabel(StatsType.HAPPINESS, happyPath));
+        statsPanel1.add(buildLabel(StatsType.STAMINA, "images/icons/stamina.png"));
+        statsPanel1.add(buildLabel(StatsType.MASS, "images/icons/mass.png"));
+        statsPanel1.setBorder(BORDER);
+
         statsPanel1.revalidate();
         statsPanel1.repaint();
+    }
+    /**
+     * Resizes the stats panel.
+     */
+    @Override
+    public void resizeComponents() {
+        buildPanelStandard();
 
         statsPanel3.removeAll();
         statsPanel3.add(getMoneyLabel());
@@ -138,7 +166,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
-        final int moneyValue = controller.getStatistics().get(StatsType.MONEY).getCount();
+        final int moneyValue = controller.getMoney().getCount();
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
@@ -165,11 +193,11 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
-        final Map<StatsType, Counter> statistics = controller.getStatistics();
+        final int value = controller.getDays().getCount();
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(statistics.get(StatsType.DAYS).getCount()),
+        final JLabel lablelNumber = new JLabel(String.valueOf(value),
             SwingConstants.CENTER);
         final JLabel moneyLablel = new JLabel();
 
@@ -198,12 +226,17 @@ public class SideStatsView extends GamePanel {
                         dimensionGetter.getSquareStatsDimension().height,
                         Image.SCALE_SMOOTH));
     }
-    private JLabel buildLabel1(final StatsType statsType, final String path) {
+    private JLabel buildLabel(final StatsType statsType, final String path) {
         final int value = controller.getStatistics().get(statsType).getCount();
         final JLabel labelImage = new JLabel();
         this.setSize(dimensionGetter.getCellDimension());
-        final JLabel lablelNumber = new JLabel(String.valueOf(value),
-                SwingConstants.CENTER);
+        JLabel lablelNumber;
+        if (controller.getStatistics().get(statsType).isMax()) {
+            labelImage.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.RED));
+            lablelNumber = new JLabel("MAX", SwingConstants.CENTER);
+        } else {
+            lablelNumber = new JLabel(String.valueOf(value), SwingConstants.CENTER);
+        }
         final JLabel label = new JLabel();
         label.setLayout(new GridLayout(2, 1));
         label.add(labelImage);

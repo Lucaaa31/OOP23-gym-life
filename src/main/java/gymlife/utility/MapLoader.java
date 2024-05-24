@@ -8,8 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-import gymlife.model.CellImpl;
-import gymlife.model.api.Cell;
+import gymlife.model.map.CellImpl;
+import gymlife.model.map.api.Cell;
 
 /**
  * MapLoader is a static class used to load a map of pairs and Cells from file.

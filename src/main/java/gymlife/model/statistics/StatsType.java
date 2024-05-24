@@ -36,5 +36,5 @@ public enum StatsType {
     /**
      * Represents the money of the character.
      */
-    MONEY;
+    MONEY
 }

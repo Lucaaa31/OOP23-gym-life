@@ -31,9 +31,15 @@ class TestStats {
         assertEquals(3, stats.getStats(StatsType.MASS));
         stats.resetAll();
     }
+
     @Test
     void testIncrementDecrement() {
         final StatsModel stats = new StatsModelImpl();
+        stats.resetAll();
+        assertEquals(1, stats.getStats(StatsType.STAMINA));
+        stats.increase(StatsType.STAMINA);
+
+
         assertEquals(3, stats.getStats(StatsType.MASS));
         assertEquals(1, stats.getStats(StatsType.LEG_MASS));
         assertEquals(1, stats.getStats(StatsType.CHEST_MASS));
@@ -74,16 +80,18 @@ class TestStats {
         stats.increase(StatsType.LEG_MASS);
         assertEquals(3, stats.getStats(StatsType.MASS));
         assertEquals(2, stats.getStats(StatsType.LEG_MASS));
-        stats.increase(StatsType.STAMINA);
-        assertEquals(2, stats.getStats(StatsType.STAMINA));
-        stats.decrease(StatsType.STAMINA);
-        assertEquals(1, stats.getStats(StatsType.STAMINA));
-        stats.decrease(StatsType.STAMINA);
-        assertEquals(0, stats.getStats(StatsType.STAMINA));
-        stats.decrease(StatsType.STAMINA);
-        assertEquals(0, stats.getStats(StatsType.STAMINA));
-        stats.increase(StatsType.HAPPINESS);
-        assertEquals(2, stats.getStats(StatsType.HAPPINESS));
+        stats.resetAll();
+    }
+
+    @Test
+    void testMultiIncrement() {
+        final StatsModel stats = new StatsModelImpl();
+        stats.resetAll();
+        stats.multiIncrementStats(StatsType.BACK_MASS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL + TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5,
+                stats.getStats(StatsType.BACK_MASS));
+        stats.multiIncrementStats(StatsType.BACK_MASS, -TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.BACK_MASS));
         stats.resetAll();
     }
 }

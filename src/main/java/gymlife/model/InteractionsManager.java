@@ -1,6 +1,7 @@
 package gymlife.model;
 
 import gymlife.model.api.MinigameManager;
+import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;
@@ -43,6 +44,7 @@ public final class InteractionsManager {
      */
     public void daysInteraction() {
         this.scenariosManager.updateScenarios(ScenariosType.SLEEPING);
+        statsManager.setStat(StatsType.STAMINA, 100);
         this.statsManager.newDay();
     }
 

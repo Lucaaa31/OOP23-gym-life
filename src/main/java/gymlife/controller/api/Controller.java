@@ -1,7 +1,9 @@
 package gymlife.controller.api;
 
-import gymlife.model.api.GameMap;
-import gymlife.model.statistics.Counter;
+import gymlife.model.map.api.GameMap;
+import gymlife.model.encounter.Encounter;
+import gymlife.model.statistics.CounterImpl;
+import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -42,7 +44,21 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, Counter> getStatistics();
+    Map<StatsType, LimitedCounterImpl> getStatistics();
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    CounterImpl getDays();
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    CounterImpl getMoney();
 
     /**
      * Changes the current game map to the specified new map.
@@ -88,6 +104,18 @@ public interface Controller {
      * Method to return the player to the default position of the map he's in.
      */
     void resetPlayerPosition();
+
+    /**
+     * Method to return the current randomEncounter.
+     * @return Encounter object.
+     */
+    Encounter getCurrentEncounter();
+
+    /**
+     * Method to resolve the encounter either by accepting or declining the encounter.
+     * @param choice boolean indicating whether to accept or decline the encounter.
+     */
+    void resolveEncounter(boolean choice);
 
     /**
      * Sets the difficulty level of the minigame.
@@ -161,4 +189,6 @@ public interface Controller {
      * @return true if the game is over, false otherwise
      */
     boolean isGameOver();
+
+
 }
