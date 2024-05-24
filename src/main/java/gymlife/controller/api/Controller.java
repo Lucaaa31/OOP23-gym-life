@@ -47,6 +47,8 @@ public interface Controller {
      */
     Map<StatsType, LimitedCounterImpl> getStatistics();
 
+    int returnMoney();
+
     /**
      * Returns the number of days that have passed in the game.
      *
@@ -238,5 +240,10 @@ public interface Controller {
      */
     SynchronizerModel getSync2();
 
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
     void changeMoney(int value);
 }

@@ -17,7 +17,6 @@ import gymlife.model.SynchronizerModel;
 
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.CounterImpl;
-import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 
@@ -188,6 +187,11 @@ public class ControllerImpl implements Controller {
     @Override
     public Map<StatsType, LimitedCounterImpl> getStatistics() {
         return statsManager.getStats();
+    }
+
+    @Override
+    public int returnMoney() {
+        return statsManager.getMoney().getCount();
     }
 
     /**
@@ -413,6 +417,12 @@ public class ControllerImpl implements Controller {
         return statsManager.isGameOver();
     }
 
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
+    @Override
     public void changeMoney(final int value) {
         statsManager.multiIncrementStat(StatsType.MONEY, value);
     }

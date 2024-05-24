@@ -16,7 +16,7 @@ public class PlaneAnimationView {
     private int planeTargetX;
     private int planeTargetY;
     private boolean flagUpDownAnimation;
-    private static final int PLANE_SPEED = 50;
+    private final int PLANE_SPEED = 50;
 
     /**
      * Constructor to initialize the timers for the plane animations.
@@ -44,7 +44,7 @@ public class PlaneAnimationView {
 
         planeLayer.setLocation(startX, startY);
 
-        for (ActionListener listener : animationTimerStart.getActionListeners()) {
+        for (final ActionListener listener : animationTimerStart.getActionListeners()) {
             animationTimerStart.removeActionListener(listener);
         }
 
@@ -75,7 +75,7 @@ public class PlaneAnimationView {
         final int frequency = 2;
         final double stepTime = 0.06;
 
-        for (ActionListener listener : animationTimerUpDown.getActionListeners()) {
+        for (final ActionListener listener : animationTimerUpDown.getActionListeners()) {
             animationTimerUpDown.removeActionListener(listener);
         }
 
@@ -112,7 +112,7 @@ public class PlaneAnimationView {
         final int planeTargetX = layeredPane.getWidth();
         final int planeTargetY = planeLayer.getY();
 
-        for (ActionListener listener : animationTimerExit.getActionListeners()) {
+        for (final ActionListener listener : animationTimerExit.getActionListeners()) {
             animationTimerExit.removeActionListener(listener);
         }
 

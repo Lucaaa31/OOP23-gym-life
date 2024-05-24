@@ -25,8 +25,8 @@ public final class PlaneGameModel {
     public PlaneGameModel(final SynchronizerModel mySync, final SynchronizerModel otherSync) {
         this.mySync = mySync;
         this.otherSync = otherSync;
-        multiplier = 0.5f;
-        threshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = 0.7f;
+        threshold = (float) (Math.round((0.70 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplierShort = 0;
     }
 
@@ -71,8 +71,8 @@ public final class PlaneGameModel {
      * @return The newly generated threshold value.
      */
     public float randomizeNewThreshold() {
-        threshold = (float) (Math.round((1.00 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
-        multiplier = 0.5f;
+        threshold = (float) (Math.round((0.70 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = 0.7f;
         flag = true;
         return threshold;
     }
