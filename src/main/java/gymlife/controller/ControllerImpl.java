@@ -175,13 +175,24 @@ public class ControllerImpl implements Controller {
         minigameManager.setMinigameDifficulty(difficulty);
     }
 
-
     /**
-     * Notifies the current minigame that a button has been pressed.
+     * Notifies the current minigame that the player has done something.
+     *
+     * @param button the button pressed by the player
      */
     @Override
-    public void notifyUserAction() {
-        minigameManager.notifyUserAction();
+    public void notifyUserAction(final int button) {
+        minigameManager.notifyUserAction(button);
+    }
+
+    /**
+     * Retrieves the sequence of the current minigame.
+     *
+     * @return the sequence of the current minigame
+     */
+    @Override
+    public List<Integer> getSequence() {
+        return minigameManager.getSequence();
     }
 
     /**

@@ -3,6 +3,9 @@ package gymlife.model.minigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * The Minigame interface represents a game that can be played within the gym.
  * It provides methods for notifying button presses, setting a timer, getting
@@ -13,6 +16,9 @@ public abstract class AbstractMinigame {
     private MinigameDifficulty difficulty;
     private MinigameState minigameState;
     private long endMinigame;
+    private int nTimesPressed;
+    private int nMistakes;
+    private int numReps;
 
 
     /**
@@ -24,9 +30,20 @@ public abstract class AbstractMinigame {
     }
 
     /**
-     * Notifies the minigame that a button has been pressed.
+     * Increments the number of times the button has been pressed.
      */
-    public abstract void notifyUserAction();
+    public void incrementNTimePressed() {
+        nTimesPressed++;
+    }
+
+
+    /**
+     * Notify the model of an action of the player.
+     *
+     * @param params the parameters of the action
+     */
+    public abstract void notifyUserAction(int... params);
+
 
     /**
      * Sets the difficulty level of the minigame.
@@ -55,6 +72,11 @@ public abstract class AbstractMinigame {
         return difficulty;
     }
 
+    /**
+     * Sets the state of the minigame.
+     *
+     * @param state the state of the minigame
+     */
     public void setMinigameState(final MinigameState state) {
         this.minigameState = state;
     }
@@ -75,7 +97,67 @@ public abstract class AbstractMinigame {
     public abstract void validatePress();
 
 
+    /**
+     * Set the time to put in the scoringTable.
+     *
+     * @param endMinigame the time to put in the scoringTable
+     */
     public void setEndMinigame(final long endMinigame) {
         this.endMinigame = endMinigame;
     }
+
+
+    /**
+     * Handles the case when the player's press is valid.
+     *
+     * @return true if the reps has been completed, false otherwise
+     */
+    public boolean handleValidPress() {
+        if (nTimesPressed == getDifficulty().getTouchForLift()) {
+            nTimesPressed = 0;
+            numReps++;
+            setMinigameState(MinigameState.REP_REACHED);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Handles the case when the player's press is invalid.
+     */
+    public void handleInvalidPress() {
+        nMistakes++;
+        setMinigameState(MinigameState.MISTAKE_MADE);
+        if (nMistakes > getDifficulty().getMaxMistakes()) {
+            setMinigameState(MinigameState.ENDED_LOST);
+        }
+        nTimesPressed = 0;
+    }
+
+    /**
+     * Checks if the required number of reps has been completed.
+     *
+     * @param startMinigame the start time of the minigame
+     */
+    public void checkIfMinigameHasEnded(final long startMinigame) {
+        if (numReps == getDifficulty().getRequiredReps()) {
+            setEndMinigame(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
+            setMinigameState(MinigameState.ENDED_WON);
+        }
+    }
+
+    /**
+     * Abstract method to check if the players action.
+     *
+     * @param param the parameter of the minigame
+     * @return true if the condition is met, false otherwise
+     */
+    public abstract boolean conditionOfMinigame(long param);
+
+    /**
+     * Abstract method to get the sequence of the minigame.
+     *
+     * @return the sequence of the minigame
+     */
+    public abstract List<Integer> getSequence();
 }

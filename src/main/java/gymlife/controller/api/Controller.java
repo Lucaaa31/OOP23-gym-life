@@ -97,10 +97,18 @@ public interface Controller {
     void setMinigameDifficulty(MinigameDifficulty difficulty);
 
     /**
-     * Notifies the controller that a button has been pressed.
+     * Method to notify the controller of a user action.
+     *
+     * @param button the button pressed by the user
      */
-    void notifyUserAction();
+    void notifyUserAction(int button);
 
+    /**
+     * Method to get the sequence of the minigame.
+     *
+     * @return Returns the sequence of the minigame.
+     */
+    List<Integer> getSequence();
 
     /**
      * Set the minigame result, update the statistics and change the scenario.
@@ -140,15 +148,16 @@ public interface Controller {
     List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
 
 
-
     /**
      * Method to check if the player has won the game.
+     *
      * @return Returns true if the player has won, false otherwise.
      */
     boolean isWin();
 
     /**
      * Method to check if the game is over.
+     *
      * @return true if the game is over, false otherwise
      */
     boolean isGameOver();

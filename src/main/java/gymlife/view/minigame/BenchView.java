@@ -1,22 +1,11 @@
 package gymlife.view.minigame;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JLayeredPane;
 import javax.swing.border.LineBorder;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.FontLoader;
-import gymlife.utility.minigame.MinigameState;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
@@ -26,11 +15,10 @@ import gymlife.view.api.MinigamePanel;
  * It extends the JPanel class and contains a button, an image label, and a
  * timer view.
  */
-public class BenchView extends AbstractMinigameView implements MinigamePanel{
+public class BenchView extends AbstractMinigameView implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
     private final JButton buttonMinigame = new JButton("START");
-
     private final transient DimensionGetter dimensionGetter;
 
 
@@ -45,7 +33,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel{
     public BenchView(final Controller controller, final DimensionGetter dimensionGetter) {
         super(controller, dimensionGetter, "bench_press");
         this.dimensionGetter = dimensionGetter;
-
         final int borderSize = 5;
 
 
@@ -56,59 +43,20 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel{
 
         addLayeredPanel(buttonMinigame);
 
-        setRandomPositionButton();
-        
+        buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
 
 
         buttonMinigame.addActionListener(e -> {
-            controller.notifyUserAction();
-            switch (controller.getMinigameState()) {
-                case NOT_STARTED -> {
-                    doAnimation();
-                    timerView();
-                }
-                case RUNNING -> {
-                   super.setValueProgressBar(super.getValueProgressBar() + controller.getDifficulty().getProgress());
-                }
-                case REP_REACHED -> {
-                    super.setValueProgressBar(0);
-                    doAnimation();
-                }
-                case MISTAKE_MADE -> {
-                    super.setValueProgressBar(0);
-                    super.setColorBackground("backgroundColorRed");
-                    super.setColorForeground("foregroundColorRed");
-                    doAnimation();
-                    super.setColorBackground("backgroundColorGreen");
-                    super.setColorForeground("foregroundColorGreen");
-                }
-                case ENDED_WON, ENDED_LOST -> this.setVisible(false);
-                default -> {
-                }
-            }
+            controller.notifyUserAction(0);
+            super.handleMinigameState();
             super.progressBarHandler();
-            setRandomPositionButton();
+            buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
         });
 
         this.setFocusable(true);
         this.setVisible(true);
     }
 
-
-    /**
-     * Sets a random position for the button within the panel.
-     */
-    private void setRandomPositionButton() {
-        int x, y;
-        do {
-            x = (int) (Math.random() * (dimensionGetter.getScenarioDimension().width
-                    - buttonMinigame.getWidth()
-                    - super.getWidhtProgressBar()));
-            y = (int) (Math.random() * (dimensionGetter.getScenarioDimension().height
-                    - buttonMinigame.getHeight()));
-        } while (super.limits(x, y, buttonMinigame));
-        this.buttonMinigame.setBounds(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight());
-    }
 
     /**
      * Animates the character image by changing the sprite every second.
@@ -119,14 +67,28 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel{
             buttonMinigame.setEnabled(false);
             buttonMinigame.setBackground(Color.RED);
             buttonMinigame.setText("WAIT...");
-            super.doAnimation("bench_press");
+            for (int state = 3; state >= 0; state--) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ignored) {
+                }
+                setCharacterLabelIcon(super.getCharacterImage("images/Minigame/bench_press/sprite_" + state + ".png"));
+
+            }
             buttonMinigame.setText("Press me!");
             buttonMinigame.setEnabled(true);
             buttonMinigame.setBackground(Color.GREEN);
         }).start();
     }
 
-
+    /**
+     * Resizes the components of the panel.
+     */
+    @Override
+    public void resizeComponents() {
+        super.resizeComponents();
+        buttonMinigame.setSize(dimensionGetter.getButtonMinigameDimension());
+    }
 
 
 }

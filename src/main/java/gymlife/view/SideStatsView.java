@@ -39,7 +39,7 @@ public class SideStatsView extends GamePanel {
     private final JPanel statsPanel2 = new JPanel();
     private final JPanel statsPanel3 = new JPanel();
     private final JPanel statsPanel4 = new JPanel();
-    private JPanel scoreBoardPanel;
+
     /**
      * Starts the main view of the application.
      * Sets the size, layout, and default close operation of the frame.
@@ -55,7 +55,7 @@ public class SideStatsView extends GamePanel {
         this.setBackground(Color.BLACK);
         this.controller = controller;
         this.setBorder(BORDER);
-        this.scoreBoardPanel = new ScoreBoardView(controller);
+        final JPanel scoreBoardPanel = new ScoreBoardView(controller);
 
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 

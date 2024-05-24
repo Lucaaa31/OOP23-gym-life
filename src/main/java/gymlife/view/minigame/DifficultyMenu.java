@@ -73,18 +73,18 @@ public class DifficultyMenu extends GamePanel {
                           final ActionListener mediumListener,
                           final ActionListener hardListener,
                           final MouseListener mouseListener) {
-        final Color backgroundColor = new Color(33, 133, 216);
         this.dimensionGetter = dimensionGetter;
 
         this.buildMenu(easyListener, mediumListener, hardListener);
 
         titleLabel.setText("Minigame");
-        titleLabel.setBackground(backgroundColor);
-        descriptionText.setBackground(backgroundColor);
 
-        panelEasy.setBackground(backgroundColor);
-        panelMedium.setBackground(backgroundColor);
-        panelHard.setBackground(backgroundColor);
+        titleLabel.setBackground(Color.DARK_GRAY);
+        descriptionText.setBackground(Color.DARK_GRAY);
+
+        panelEasy.setBackground(Color.DARK_GRAY);
+        panelMedium.setBackground(Color.DARK_GRAY);
+        panelHard.setBackground(Color.DARK_GRAY);
 
         this.buildMouseListener(mouseListener);
 
@@ -246,10 +246,21 @@ public class DifficultyMenu extends GamePanel {
      */
     @Override
     public void resizeComponents() {
-        final float titleSize = dimensionGetter.getBigFontSize() + 50;
-
+        final int fontTitleSize = 50;
         descriptionText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
-        titleLabel.setFont(FontLoader.getCustomFont(titleSize));
+        titleLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize() + fontTitleSize));
+
+        buttonEasy.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        buttonMedium.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        buttonHard.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+
+        panelEasy.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+        panelMedium.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+        panelHard.setPreferredSize(dimensionGetter.getButtonLabelDimension());
+
+        buttonLabel.setPreferredSize(new Dimension(dimensionGetter.getButtonLabelDimension().width * 3,
+                dimensionGetter.getButtonLabelDimension().height));
+
 
         revalidate();
         repaint();
@@ -264,4 +275,5 @@ public class DifficultyMenu extends GamePanel {
     public String getPanelName() {
         return "difficultyMenu";
     }
+
 }

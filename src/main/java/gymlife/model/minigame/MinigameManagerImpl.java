@@ -6,6 +6,7 @@ import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * The MinigameManager class is responsible for managing the current minigame in
@@ -28,6 +29,17 @@ public class MinigameManagerImpl implements MinigameManager {
 
 
     /**
+     * Get the sequence for the lat and squat minigame.
+     *
+     * @return the sequence of the minigame
+     */
+    @Override
+    public List<Integer> getSequence() {
+        return currentMinigame.getSequence();
+    }
+
+
+    /**
      * Sets the current minigame type.
      *
      * @param minigameType the minigame type to set
@@ -37,7 +49,7 @@ public class MinigameManagerImpl implements MinigameManager {
         this.currentMinigameType = minigameType;
         try {
             this.currentMinigame = (AbstractMinigame) Class
-                    .forName(minigameType.getName())
+                    .forName(minigameType.getClassName())
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
@@ -55,12 +67,17 @@ public class MinigameManagerImpl implements MinigameManager {
         this.currentMinigame.setDifficulty(selectedDifficulty);
     }
 
+
     /**
-     * Notifies the current minigame that the player has done something.
+     * Notify the minigame of an action of the player.
      */
     @Override
-    public void notifyUserAction() {
-        currentMinigame.notifyUserAction();
+    public void notifyUserAction(final int button) {
+        if (button == 0) {
+            this.currentMinigame.notifyUserAction();
+        } else {
+            this.currentMinigame.notifyUserAction(button);
+        }
     }
 
 
