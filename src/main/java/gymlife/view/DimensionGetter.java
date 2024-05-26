@@ -119,7 +119,7 @@ public class DimensionGetter {
      * Returns the encounter image dimensions.
      * @return the encounter image dimensions.
      */
-    public Dimension getEncounterImageDimension() {
+    public Dimension getChoiceImageDimension() {
         return new Dimension((int) (getScenarioDimension().width * ENCOUNTER_IMAGE_PROPORTION),
                 getScenarioDimension().height);
     }
@@ -128,7 +128,7 @@ public class DimensionGetter {
      * Returns the encounter button dimensions.
      * @return the encounter button dimensions.
      */
-    public Dimension getEncounterButtonDimension() {
+    public Dimension getChoiceButtonDimension() {
         return new Dimension((int) (getScenarioDimension().width * (1 - ENCOUNTER_IMAGE_PROPORTION)),
                 getScenarioDimension().height);
     }
