@@ -32,11 +32,9 @@ public final class InteractionsManager {
 
     /**
      * method to call if the interaction of a cell concerns changing the current scenario.
-     *
-     * @param newScenario the new scenario to change to.
      */
-    public void scenarioInteraction(final ScenariosType newScenario) {
-        this.scenariosManager.updateScenarios(newScenario);
+    public void exitInteraction() {
+        this.scenariosManager.updateScenarios(ScenariosType.MAIN_MAP);
     }
 
     /**

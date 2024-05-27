@@ -7,7 +7,6 @@ import java.util.Optional;
 import gymlife.model.InteractionsManager;
 import gymlife.model.map.api.Cell;
 import gymlife.model.api.GameInteraction;
-import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;
 
 /**
@@ -72,7 +71,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    HOUSE_EXIT(13, false, InteractionsManager::exitInteraction),
     /**
      * The cell used to interact with the kitchen, no collisions and interactable.
      */
@@ -96,7 +95,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    SHOP_EXIT(16, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    SHOP_EXIT(16, false, InteractionsManager::exitInteraction),
     /**
      * The cell with a non interactable fridge, with collisions and not interactable.
      */
@@ -172,7 +171,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    GYM_EXIT(27, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    GYM_EXIT(27, false, InteractionsManager::exitInteraction),
     /**
      * The cell with a regular bench, with collisions and not interactable.
      */
