@@ -18,12 +18,13 @@ public class BuyFoodPanel extends ChoicePanel{
 
     @Override
     void acceptButtonAction() {
+        //TODO add the relative action of accept Button.
 
     }
 
     @Override
     void declineButtonAction() {
-
+        //TODO add the relative action of decline Button.
     }
 
     @Override
@@ -33,21 +34,21 @@ public class BuyFoodPanel extends ChoicePanel{
 
     @Override
     String getAcceptButtonText() {
-        return "";
+        return "Buy this food";
     }
 
     @Override
     String getDeclineButtonText() {
-        return "";
+        return "Don't buy this food";
     }
 
     @Override
     String getImagePath() {
-        return "";
+        return "images/icons/";
     }
 
     @Override
     public String getPanelName() {
-        return "";
+        return "buyFood";
     }
 }
