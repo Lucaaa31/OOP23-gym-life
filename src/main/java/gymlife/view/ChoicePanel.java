@@ -9,7 +9,12 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
 import java.io.Serial;
 
 public abstract class ChoicePanel extends GamePanel {
@@ -93,6 +98,11 @@ public abstract class ChoicePanel extends GamePanel {
         this.add(buttonsPanel, BorderLayout.EAST);
     }
 
+    /**
+     * Loads the image from the path given, resized according to the DimensionGetter.
+     * @param path String representing the path from which the image should be taken.
+     * @return the ImageIcon of said path.
+     */
     public ImageIcon loadResizedImage(final String path) {
         final Image imgToResize = new ImageIcon(ClassLoader.getSystemResource(path)).getImage();
         return new ImageIcon(imgToResize.getScaledInstance(
@@ -110,10 +120,10 @@ public abstract class ChoicePanel extends GamePanel {
         buttonsPanel.setPreferredSize(dimensionGetter.getChoiceButtonDimension());
         imageLabel.setIcon(loadResizedImage(getImagePath()));
         descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        descLabel.setText("<html>RANDOM ENCOUNTER<br>" + getDescription() + "</html>");
-        acceptButton.setText("<html>ACCEPT<br>" + getAcceptButtonText() + "</html>");
+        descLabel.setText("<html>" + getDescription() + "</html>");
+        acceptButton.setText("<html>" + getAcceptButtonText() + "</html>");
         acceptButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        declineButton.setText("<html>DECLINE<br>" + getDeclineButtonText() + "</html>");
+        declineButton.setText("<html>" + getDeclineButtonText() + "</html>");
         declineButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
     }
