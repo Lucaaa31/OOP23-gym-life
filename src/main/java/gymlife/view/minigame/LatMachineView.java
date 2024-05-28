@@ -56,6 +56,7 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
             button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GRAY);
             button.setBorder(new LineBorder(Color.WHITE, borderSize));
+            button.setOpaque(true);
             button.setVisible(true);
             addLayeredPanel(button);
             button.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));

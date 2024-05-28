@@ -18,10 +18,7 @@ import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.ScenariosType;
-import gymlife.utility.GameDifficulty;
-import gymlife.utility.Position;
-import gymlife.utility.Directions;
+import gymlife.utility.*;
 import gymlife.controller.api.Controller;
 import gymlife.model.character.api.CharacterModel;
 import gymlife.utility.minigame.MinigameDifficulty;
@@ -38,6 +35,7 @@ import java.util.Optional;
  * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
+    private final MusicPlayer player = new MusicPlayer("src/main/resources/HWR-Zyzz.wav");
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;
@@ -230,6 +228,8 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void setMinigameDifficulty(final MinigameDifficulty difficulty) {
+        player.open();
+        player.play();
         minigameManager.setMinigameDifficulty(difficulty);
     }
 
@@ -241,6 +241,11 @@ public class ControllerImpl implements Controller {
     @Override
     public void notifyUserAction(final int button) {
         minigameManager.notifyUserAction(button);
+        if (minigameManager.getMinigameState().equals(MinigameState.ENDED_WON)
+                || minigameManager.getMinigameState().equals(MinigameState.ENDED_LOST)) {
+            player.pause();
+            player.close();
+        }
     }
 
     /**
