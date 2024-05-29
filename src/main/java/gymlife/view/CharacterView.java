@@ -18,16 +18,20 @@ public class CharacterView extends JLabel {
     private static final long serialVersionUID = -3544425405375144844L;
     // An instance of DimensionGetter to get the dimensions for the character image
     private final transient DimensionGetter dimensionGetter;
-    private int level = 1;
+    private int level;
     private Directions dir = Directions.DOWN;
     /**
      * Constructs a CharacterView object with the specified DimensionGetter.
      * It sets the initial image for the character and sets the size of the JLabel to the cell dimension.
      * @param dimensionGetter the DimensionGetter to be used to get the dimensions for the character image
+     * @param level the level of the character
      */
-    public CharacterView(final DimensionGetter dimensionGetter) {
+    public CharacterView(final DimensionGetter dimensionGetter, final int level) {
+        this.level = level;
         this.dimensionGetter = dimensionGetter;
-        final String p = "images/character/level1_down.png";
+        final String p = "images/character/level"
+                + level
+                + "_down.png";
         final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.
                 getSystemResource(p)).
                 getImage().

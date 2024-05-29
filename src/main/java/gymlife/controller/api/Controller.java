@@ -2,7 +2,8 @@ package gymlife.controller.api;
 
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.Counter;
+import gymlife.model.statistics.CounterImpl;
+import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -43,7 +44,21 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, Counter> getStatistics();
+    Map<StatsType, LimitedCounterImpl> getStatistics();
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    CounterImpl getDays();
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    CounterImpl getMoney();
 
     /**
      * Changes the current game map to the specified new map.
@@ -110,10 +125,18 @@ public interface Controller {
     void setMinigameDifficulty(MinigameDifficulty difficulty);
 
     /**
-     * Notifies the controller that a button has been pressed.
+     * Method to notify the controller of a user action.
+     *
+     * @param button the button pressed by the user
      */
-    void notifyUserAction();
+    void notifyUserAction(int button);
 
+    /**
+     * Method to get the sequence of the minigame.
+     *
+     * @return Returns the sequence of the minigame.
+     */
+    List<Integer> getSequence();
 
     /**
      * Set the minigame result, update the statistics and change the scenario.
@@ -153,16 +176,19 @@ public interface Controller {
     List<Integer> getScores(MinigameType minigameType, MinigameDifficulty difficulty);
 
 
-
     /**
      * Method to check if the player has won the game.
+     *
      * @return Returns true if the player has won, false otherwise.
      */
     boolean isWin();
 
     /**
      * Method to check if the game is over.
+     *
      * @return true if the game is over, false otherwise
      */
     boolean isGameOver();
+
+
 }

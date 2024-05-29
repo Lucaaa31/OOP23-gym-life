@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.character.api;
 
 
 

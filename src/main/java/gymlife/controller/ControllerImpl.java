@@ -1,6 +1,6 @@
 package gymlife.controller;
 
-import gymlife.model.CharacterModelImpl;
+import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
@@ -8,21 +8,22 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
+import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.statistics.StatsType;
+import gymlife.model.statistics.CounterImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
-import gymlife.model.statistics.Counter;
 
-import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.Directions;
+import gymlife.utility.ScenariosType;
 import gymlife.utility.GameDifficulty;
 import gymlife.utility.Position;
+import gymlife.utility.Directions;
 import gymlife.controller.api.Controller;
-import gymlife.model.api.CharacterModel;
-import gymlife.utility.ScenariosType;
+import gymlife.model.character.api.CharacterModel;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -97,8 +98,28 @@ public class ControllerImpl implements Controller {
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, Counter> getStatistics() {
-        return statsManager.getAllStats();
+    public Map<StatsType, LimitedCounterImpl> getStatistics() {
+        return statsManager.getStats();
+    }
+
+    /**
+     * Returns the number of days that have passed in the game.
+     *
+     * @return the number of days
+     */
+    @Override
+    public CounterImpl getDays() {
+        return statsManager.getDays();
+    }
+
+    /**
+     * Returns the money of the player.
+     *
+     * @return the number of days
+     */
+    @Override
+    public CounterImpl getMoney() {
+        return statsManager.getMoney();
     }
 
     /**
@@ -146,7 +167,8 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return statsManager.getStats().get(StatsType.MASS).getCount() / div + 1;
+        return statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+                ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
     /**
@@ -211,13 +233,24 @@ public class ControllerImpl implements Controller {
         minigameManager.setMinigameDifficulty(difficulty);
     }
 
-
     /**
-     * Notifies the current minigame that a button has been pressed.
+     * Notifies the current minigame that the player has done something.
+     *
+     * @param button the button pressed by the player
      */
     @Override
-    public void notifyUserAction() {
-        minigameManager.notifyUserAction();
+    public void notifyUserAction(final int button) {
+        minigameManager.notifyUserAction(button);
+    }
+
+    /**
+     * Retrieves the sequence of the current minigame.
+     *
+     * @return the sequence of the current minigame
+     */
+    @Override
+    public List<Integer> getSequence() {
+        return minigameManager.getSequence();
     }
 
     /**
@@ -238,13 +271,14 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void setMinigameResult() {
+        final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
                 minigameManager.getEndTime());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
-                        ? minigameManager.getDifficulty().getExperienceGained() : 0);
+                        ? minigameManager.getDifficulty().getExperienceGained() : -winExperience);
         statsManager.multiIncrementStat(StatsType.STAMINA, StatsConstants.GYM_STAMINA_CONSUMPTION);
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
     }
