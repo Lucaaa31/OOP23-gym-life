@@ -15,8 +15,12 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
+import java.awt.event.ActionListener;
 import java.io.Serial;
 
+/**
+ * Abstract class with GUI for binary choices, can be extended by a class to have custom text and button actions.
+ */
 public abstract class ChoicePanel extends GamePanel {
 
     @Serial
@@ -85,14 +89,6 @@ public abstract class ChoicePanel extends GamePanel {
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
 
-        acceptButton.addActionListener((event) -> {
-            acceptButtonAction();
-            super.transferFocus();
-        });
-        declineButton.addActionListener((event) -> {
-            declineButtonAction();
-            super.transferFocus();
-        });
 
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.EAST);
@@ -128,9 +124,21 @@ public abstract class ChoicePanel extends GamePanel {
 
     }
 
-    abstract void acceptButtonAction();
+    /**
+     * Method to set the action to be performed when clicking the accept button.
+     * @param acceptAction actionListener to add to the button.
+     */
+    protected void setAcceptAction(final ActionListener acceptAction) {
+        acceptButton.addActionListener(acceptAction);
+    }
 
-    abstract void declineButtonAction();
+    /**
+     * Method to set the action to be performed when clicking the decline button.
+     * @param declineAction actionListener to add to the button.
+     */
+    protected void setDeclineAction(final ActionListener declineAction) {
+        declineButton.addActionListener(declineAction);
+    }
 
     abstract String getDescription();
 

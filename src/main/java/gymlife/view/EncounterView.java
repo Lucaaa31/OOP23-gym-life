@@ -1,8 +1,9 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.FontLoader;
 
+
+import java.io.Serial;
 import java.util.Locale;
 
 /**
@@ -10,6 +11,8 @@ import java.util.Locale;
  */
 public class EncounterView extends ChoicePanel {
 
+    @Serial
+    private static final long serialVersionUID = 3208674110651780044L;
     private final transient Controller controller;
 
 
@@ -19,9 +22,19 @@ public class EncounterView extends ChoicePanel {
      * @param controller      Controller inherited by the class that instantiates this.
      * @param dimensionGetter dimensionGetter inherited by the class that instantiates this.
      */
-    public EncounterView(Controller controller, DimensionGetter dimensionGetter) {
+    public EncounterView(final Controller controller, final DimensionGetter dimensionGetter) {
         super(dimensionGetter);
         this.controller = controller;
+
+        this.setAcceptAction(e -> {
+            controller.resolveEncounter(true);
+            this.transferFocus();
+        });
+
+        this.setDeclineAction(e -> {
+            controller.resolveEncounter(false);
+            this.transferFocus();
+        });
     }
 
 
@@ -34,16 +47,11 @@ public class EncounterView extends ChoicePanel {
         return "encounter";
     }
 
-    @Override
-    void acceptButtonAction() {
-        controller.resolveEncounter(true);
-    }
 
-    @Override
-    void declineButtonAction() {
-        controller.resolveEncounter(false);
-    }
-
+    /**
+     * Method to get what text the info panel should show.
+     * @return String with said description.
+     */
     @Override
     String getDescription() {
         if (controller.getCurrentEncounter() != null) {
@@ -52,6 +60,10 @@ public class EncounterView extends ChoicePanel {
         return "";
     }
 
+    /**
+     * Method to get what text should be displayed on the accept button.
+     * @return a String.
+     */
     @Override
     String getAcceptButtonText() {
         if (controller.getCurrentEncounter() != null) {
@@ -60,6 +72,10 @@ public class EncounterView extends ChoicePanel {
         return "";
     }
 
+    /**
+     * Method to get what text should be displayed on the decline button.
+     * @return a String.
+     */
     @Override
     String getDeclineButtonText() {
         if (controller.getCurrentEncounter() != null) {
@@ -68,6 +84,10 @@ public class EncounterView extends ChoicePanel {
         return "";
     }
 
+    /**
+     * Method to get the image to be displayed in the image panel.
+     * @return the chosen ImageIcon.
+     */
     @Override
     String getImagePath() {
 

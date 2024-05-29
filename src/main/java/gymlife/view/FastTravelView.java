@@ -72,7 +72,7 @@ public final class FastTravelView extends GamePanel {
             public void mouseEntered(final MouseEvent e) {
                 final JButton button = (JButton) e.getSource();
                 button.setBackground(Color.GREEN);
-                final String loc = (button.getText().toLowerCase(Locale.ROOT));
+                final String loc = button.getText().toLowerCase(Locale.ROOT);
                 if (!loc.equals(getMap())) {
                     showWay(loc);
                 }

@@ -34,6 +34,7 @@ class TestStats {
     @Test
     void testIncrementDecrement() {
         final StatsModel stats = new StatsModelImpl();
+        stats.resetAll();
         assertEquals(3, stats.getStats(StatsType.MASS));
         assertEquals(1, stats.getStats(StatsType.LEG_MASS));
         assertEquals(1, stats.getStats(StatsType.CHEST_MASS));
