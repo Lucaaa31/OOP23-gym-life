@@ -54,10 +54,11 @@ public class EncounterView extends ChoicePanel {
      */
     @Override
     String getDescription() {
-        if (controller.getCurrentEncounter() != null) {
+        try {
             return "RANDOM ENCOUNTER<br>" + controller.getCurrentEncounter().description();
+        } catch (NullPointerException e) {
+            return "description";
         }
-        return "";
     }
 
     /**
@@ -66,10 +67,12 @@ public class EncounterView extends ChoicePanel {
      */
     @Override
     String getAcceptButtonText() {
-        if (controller.getCurrentEncounter() != null) {
+        try {
             return "ACCEPT<br>" + controller.getCurrentEncounter().acceptCase().toString();
+        } catch (NullPointerException e) {
+            return "accept";
         }
-        return "";
+
     }
 
     /**
@@ -78,10 +81,13 @@ public class EncounterView extends ChoicePanel {
      */
     @Override
     String getDeclineButtonText() {
-        if (controller.getCurrentEncounter() != null) {
+
+        try {
             return "DECLINE<br>" + controller.getCurrentEncounter().denyCase().toString();
+        } catch (Exception e) {
+            return "decline";
         }
-        return "";
+
     }
 
     /**
@@ -90,12 +96,12 @@ public class EncounterView extends ChoicePanel {
      */
     @Override
     String getImagePath() {
-
-        if (controller.getCurrentEncounter() != null) {
+        try {
             return "images/randomEncounters/"
                     + controller.getCurrentEncounter().name().toLowerCase(Locale.ROOT)
                     + ".png";
+        } catch (NullPointerException e) {
+            return "images/randomEncounters/ice_cream.png";
         }
-        return "images/randomEncounters/ice_cream.png";
     }
 }
