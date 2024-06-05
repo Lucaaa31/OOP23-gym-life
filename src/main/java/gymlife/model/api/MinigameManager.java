@@ -5,6 +5,7 @@ import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.List;
 
 
 /**
@@ -21,6 +22,13 @@ public interface MinigameManager {
     void setCurrentMinigame(MinigameType minigameType);
 
     /**
+     * Retrieves the sequence of the current minigame.
+     *
+     * @return the sequence of the current minigame
+     */
+    List<Integer> getSequence();
+
+    /**
      * Sets the difficulty level of the current minigame.
      *
      * @param selectedDifficulty the difficulty level to set
@@ -29,8 +37,10 @@ public interface MinigameManager {
 
     /**
      * Notifies the current minigame that the player has done something.
+     *
+     * @param button the button pressed by the player
      */
-    void notifyUserAction();
+    void notifyUserAction(int button);
 
     /**
      * Retrieves the current minigame type.

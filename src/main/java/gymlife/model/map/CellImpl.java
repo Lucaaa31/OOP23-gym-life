@@ -192,7 +192,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train back, no collisions and interactable.
      */
-    GYM_BACK_INTERACT(32, false),
+    GYM_BACK_INTERACT(32, false, e -> e.minigameInteraction(MinigameType.LAT_MACHINE)),
     /**
      * The cell with the squat rack, with collisions not interactable.
      */

@@ -43,7 +43,7 @@ public class SquatView extends JPanel {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                controller.notifyUserAction();
+                controller.notifyUserAction(0);
             }
         });
         this.setVisible(true);

@@ -21,25 +21,29 @@ public enum MinigameType {
     BENCH_PRESS(
             BenchMinigame.class.getCanonicalName(),
             BenchView.class.getCanonicalName(),
-            StatsType.CHEST_MASS),
+            StatsType.CHEST_MASS,
+            "Bench Press"),
     /**
      * Squat minigame type.
      */
     SQUAT(
             SquatMinigame.class.getCanonicalName(),
             SquatView.class.getCanonicalName(),
-            StatsType.LEG_MASS),
+            StatsType.LEG_MASS,
+            "Squat"),
     /**
      * Lat machine minigame type.
      */
     LAT_MACHINE(
             LatMachineMinigame.class.getCanonicalName(),
             LatMachineView.class.getCanonicalName(),
-            StatsType.BACK_MASS);
+            StatsType.BACK_MASS,
+            "Lat Machine");
 
     private final String minigameType;
     private final String minigameViewType;
     private final StatsType statsType;
+    private final String name;
 
     /**
      * Constructs a MinigameType enum constant with the specified minigame type and
@@ -50,11 +54,14 @@ public enum MinigameType {
      * @param minigameViewType the fully qualified name of the minigame view class
      *                         associated with this minigame type
      * @param statsType        the stats type associated with this minigame type
+     * @param name             the name of the minigame type
      */
-    MinigameType(final String minigameType, final String minigameViewType, final StatsType statsType) {
+    MinigameType(final String minigameType, final String minigameViewType, final StatsType statsType,
+                 final String name) {
         this.minigameType = minigameType;
         this.minigameViewType = minigameViewType;
         this.statsType = statsType;
+        this.name = name;
     }
 
     /**
@@ -62,7 +69,7 @@ public enum MinigameType {
      *
      * @return the name of the minigame type
      */
-    public String getName() {
+    public String getClassName() {
         return this.minigameType;
     }
 
@@ -82,5 +89,14 @@ public enum MinigameType {
      */
     public StatsType getStatsType() {
         return this.statsType;
+    }
+
+    /**
+     * Returns the name of the minigame type.
+     *
+     * @return the name of the minigame type
+     */
+    public String getName() {
+        return this.name;
     }
 }

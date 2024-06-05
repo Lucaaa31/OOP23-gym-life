@@ -1,12 +1,12 @@
 package gymlife.model.minigame;
 
-import gymlife.model.api.Minigame;
 import gymlife.model.api.MinigameManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * The MinigameManager class is responsible for managing the current minigame in
@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
  * and retrieve the current minigame type and instance.
  */
 public class MinigameManagerImpl implements MinigameManager {
-    private Minigame currentMinigame;
+    private AbstractMinigame currentMinigame;
     private MinigameType currentMinigameType;
 
     /**
@@ -29,6 +29,17 @@ public class MinigameManagerImpl implements MinigameManager {
 
 
     /**
+     * Get the sequence for the lat and squat minigame.
+     *
+     * @return the sequence of the minigame
+     */
+    @Override
+    public List<Integer> getSequence() {
+        return currentMinigame.getSequence();
+    }
+
+
+    /**
      * Sets the current minigame type.
      *
      * @param minigameType the minigame type to set
@@ -37,8 +48,8 @@ public class MinigameManagerImpl implements MinigameManager {
     public void setCurrentMinigame(final MinigameType minigameType) {
         this.currentMinigameType = minigameType;
         try {
-            this.currentMinigame = (Minigame) Class
-                    .forName(minigameType.getName())
+            this.currentMinigame = (AbstractMinigame) Class
+                    .forName(minigameType.getClassName())
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
@@ -56,12 +67,17 @@ public class MinigameManagerImpl implements MinigameManager {
         this.currentMinigame.setDifficulty(selectedDifficulty);
     }
 
+
     /**
-     * Notifies the current minigame that the player has done something.
+     * Notify the minigame of an action of the player.
      */
     @Override
-    public void notifyUserAction() {
-        currentMinigame.notifyUserAction();
+    public void notifyUserAction(final int button) {
+        if (button == 0) {
+            this.currentMinigame.notifyUserAction();
+        } else {
+            this.currentMinigame.notifyUserAction(button);
+        }
     }
 
 
