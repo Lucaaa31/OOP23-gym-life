@@ -16,17 +16,17 @@ class TestMultiplier {
     @Test
     void equal() throws InterruptedException {
         final ControllerImpl controller = new ControllerImpl(GameDifficulty.EASY);
-        final PlaneGameModel number = new PlaneGameModel(controller.getSync1(), controller.getSync2());
+        final PlaneGameModel model = new PlaneGameModel(controller.getSync1(), controller.getSync2());
         final BankGameView view = new BankGameView(controller, new DimensionGetter());
         final float money = 20;
 
         final Thread modelThread = new Thread(() -> {
-            number.runMultiplier(money);
+            model.runMultiplier(money);
         });
+
         modelThread.start();
-        controller.getSync2().signal();
         view.showsMulti(controller);
         modelThread.join();
-        assertEquals(number.getThreshold(), number.getMultiplierShort());
+        assertEquals(model.getThreshold(), model.getMultiplierShort());
     }
 }

@@ -25,6 +25,14 @@ public class Inventory {
     }
 
     /**
+     *  Retrieves a copy of the current food inventory.
+     * @return a map representing the current food inventory.
+     */
+    public Map<FoodType, Integer> getFoodCount() {
+        return Map.copyOf(foodInventory);
+    }
+
+    /**
      * Adds a food item to the inventory.
      *
      * @param food The type of food to add to the inventory.

@@ -14,6 +14,8 @@ public final class PlaneGameModel {
     private float multiplier;
     private float multiplierShort;
     private float moneyMultiplied = 1;
+    private static final float START_MULTIPLIER = 0.7f;
+    private static final float MIN_THRESHOLD_VALUE = 0.70f;
     private final SynchronizerModel mySync, otherSync;
 
     /**
@@ -25,15 +27,15 @@ public final class PlaneGameModel {
     public PlaneGameModel(final SynchronizerModel mySync, final SynchronizerModel otherSync) {
         this.mySync = mySync;
         this.otherSync = otherSync;
-        multiplier = 0.7f;
-        threshold = (float) (Math.round((0.70 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = START_MULTIPLIER;
+        threshold = (float) (Math.round((MIN_THRESHOLD_VALUE + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
         multiplierShort = 0;
     }
 
     /**
-     * This method checks if the multiplier is equal to the treshold.
+     * This method checks if the multiplier is equal to the threshold.
      *
-     * @return true if the variable treshold is equal to the multiplier variable.
+     * @return true if the variable threshold is equal to the multiplier variable.
      */
     public boolean boundControl() {
         multiplierShort = (float) (Math.round(multiplier * 1000.0) / 1000.0);
@@ -60,21 +62,19 @@ public final class PlaneGameModel {
                 }
                 otherSync.signal();
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
     }
 
     /**
      * Generates a new random threshold value within a specified range and resets
      * the multiplier.
-     * 
-     * @return The newly generated threshold value.
+     *
      */
-    public float randomizeNewThreshold() {
-        threshold = (float) (Math.round((0.70 + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
-        multiplier = 0.7f;
+    public void randomizeNewThreshold() {
+        threshold = (float) (Math.round((MIN_THRESHOLD_VALUE + R.nextFloat() * MAX_BOUND) * 1000.0) / 1000.0);
+        multiplier = START_MULTIPLIER;
         flag = true;
-        return threshold;
     }
 
     /**

@@ -1,7 +1,8 @@
 package gymlife.view.bankgame;
 
-import javax.swing.JLayeredPane;
 import javax.swing.Timer;
+import javax.swing.JLayeredPane;
+import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +17,7 @@ public class PlaneAnimationView {
     private int planeTargetX;
     private int planeTargetY;
     private boolean flagUpDownAnimation;
-    private final int PLANE_SPEED = 50;
+    private static final int PLANE_SPEED = 50;
 
     /**
      * Constructor to initialize the timers for the plane animations.
@@ -33,8 +34,9 @@ public class PlaneAnimationView {
      *
      * @param layeredPane The parent layered pane.
      * @param planeLayer  The plane image label.
+     * @param startButton The startButton of the view.
      */
-    public void startPlaneAnimation(final JLayeredPane layeredPane, final ImageLabelView planeLayer) {
+    public void startPlaneAnimation(final JLayeredPane layeredPane, final ImageLabelView planeLayer, final JButton startButton) {
         flagUpDownAnimation = true;
         final int startX = -planeLayer.getWidth();
         final int startY = layeredPane.getHeight() / 2 - planeLayer.getHeight() / 2;
@@ -58,6 +60,7 @@ public class PlaneAnimationView {
                     planeLayer.setLocation(x, planeTargetY);
                 } else {
                     animationTimerStart.stop();
+                    startButton.setEnabled(true);
                 }
             }
         });
@@ -115,7 +118,7 @@ public class PlaneAnimationView {
         for (final ActionListener listener : animationTimerExit.getActionListeners()) {
             animationTimerExit.removeActionListener(listener);
         }
-
+        stopUpDownAnimation();
         animationTimerExit.addActionListener(new ActionListener() {
             private int x = planeLayer.getX();
 

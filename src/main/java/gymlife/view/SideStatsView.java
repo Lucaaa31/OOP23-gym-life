@@ -1,6 +1,7 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.model.inventory.FoodType;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
@@ -57,7 +58,6 @@ public class SideStatsView extends GamePanel {
 
         this.setLayout(new GridLayout(4, 1, 10, BORDER_SIZE));
 
-        statsPanel1.setLayout(new GridLayout(1, 3));
 
         statsPanel1.addMouseListener(new MouseListener() {
            @Override
@@ -83,6 +83,10 @@ public class SideStatsView extends GamePanel {
            }
         });
         buildPanelStandard();
+        buildFoodPanel();
+        statsPanel1.setLayout(new GridLayout(1, 3));
+        statsPanel2.setLayout(new GridLayout(1, 3));
+
         statsPanel3.setLayout(new GridLayout(1, 2));
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
@@ -108,6 +112,19 @@ public class SideStatsView extends GamePanel {
         statsPanel1.setBorder(BORDER);
         statsPanel1.revalidate();
         statsPanel1.repaint();
+    }
+    /**
+     * Builds the detailed panel for StatsPanel2.
+     * It contains food quantity.
+     */
+    private void buildFoodPanel() {
+        statsPanel2.removeAll();
+        statsPanel2.add(buildLabel(FoodType.MEAT, "images/icons/meat.png"));
+        statsPanel2.add(buildLabel(FoodType.HAMBURGER, "images/icons/hamburger.png"));
+        statsPanel2.add(buildLabel(FoodType.BROCCOLI, "images/icons/broccoli.png"));
+        statsPanel2.setBorder(BORDER);
+        statsPanel2.revalidate();
+        statsPanel2.repaint();
     }
     /**
      * Builds the standard panel for StatsPanel1.
@@ -138,7 +155,7 @@ public class SideStatsView extends GamePanel {
     @Override
     public void resizeComponents() {
         buildPanelStandard();
-
+        buildFoodPanel();
         statsPanel3.removeAll();
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
@@ -197,21 +214,21 @@ public class SideStatsView extends GamePanel {
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
-        final JLabel lablelNumber = new JLabel(String.valueOf(value),
+        final JLabel labelNumber = new JLabel(String.valueOf(value),
             SwingConstants.CENTER);
-        final JLabel moneyLablel = new JLabel();
+        final JLabel moneyLabel = new JLabel();
 
-        moneyLablel.setLayout(new GridLayout(2, 1));
+        moneyLabel.setLayout(new GridLayout(2, 1));
 
         labelText.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
-        lablelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        labelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
-        moneyLablel.add(labelText);
-        moneyLablel.add(lablelNumber);
+        moneyLabel.add(labelText);
+        moneyLabel.add(labelNumber);
         labelText.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, BOX_BORDER_5, Color.BLACK));
-        lablelNumber.setBorder(new MatteBorder(0, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
+        labelNumber.setBorder(new MatteBorder(0, BOX_BORDER_5, BOX_BORDER_5, BOX_BORDER_5, Color.BLACK));
         this.setBorder(BORDER);
-        return moneyLablel;
+        return moneyLabel;
     }
     /**
      * Return the ImageIcona that is in the path.
@@ -226,6 +243,8 @@ public class SideStatsView extends GamePanel {
                         dimensionGetter.getSquareStatsDimension().height,
                         Image.SCALE_SMOOTH));
     }
+
+
     private JLabel buildLabel(final StatsType statsType, final String path) {
         final int value = controller.getStatistics().get(statsType).getCount();
         final JLabel labelImage = new JLabel();
@@ -254,6 +273,32 @@ public class SideStatsView extends GamePanel {
 
         labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
         lablelNumber.setBorder(BORDER);
+        return label;
+    }
+
+    private JLabel buildLabel(final FoodType foodType, final String path) {
+        final int value = controller.getFoodCount(foodType);
+        final JLabel labelImage = new JLabel();
+
+        this.setSize(dimensionGetter.getCellDimension());
+        JLabel labelNumber;
+        labelNumber = new JLabel(String.valueOf(value), SwingConstants.CENTER);
+        final JLabel label = new JLabel();
+        label.setLayout(new GridLayout(2, 1));
+        label.add(labelImage);
+        label.add(labelNumber);
+        FontLoader.loadFont();
+        labelImage.setIcon(getIcon(path));
+        this.setSize(dimensionGetter.getCellDimension());
+        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        labelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+
+        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+
+        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
+        labelNumber.setBorder(BORDER);
+
         return label;
     }
 

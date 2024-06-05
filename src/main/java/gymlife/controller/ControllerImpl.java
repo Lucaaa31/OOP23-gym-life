@@ -2,6 +2,8 @@ package gymlife.controller;
 
 import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.Inventory;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
@@ -51,7 +53,9 @@ public class ControllerImpl implements Controller {
     private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
+    private final Inventory inventory = new Inventory();
     private Encounter currentEncounter;
+    private static final int MONEY_START = 50;
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -62,7 +66,7 @@ public class ControllerImpl implements Controller {
         this.statsManager = new StatsManagerImpl(difficulty);
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
-        statsManager.multiIncrementStat(StatsType.MONEY, 50);
+        statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
         this.scenariosManager = new ScenariosManager();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
@@ -71,6 +75,7 @@ public class ControllerImpl implements Controller {
                 statsManager,
                 minigameManager
         );
+
     }
 
     /**
@@ -105,6 +110,19 @@ public class ControllerImpl implements Controller {
     public void startMultiplier(final float money) {
         planeGameModel.runMultiplier(money);
     }
+
+    /**
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
+     *
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
+     */
+    @Override
+    public int getFoodCount(final FoodType foodType) {
+        return inventory.getFoodCount().get(foodType);
+    }
+
     /**
      * Returns the current value of the multiplier.
      *
@@ -144,16 +162,6 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Returns the value of the new threshold.
-     *
-     * @return The new threshold.
-     */
-    @Override
-    public float randomizeNewThreshold() {
-        return planeGameModel.randomizeNewThreshold();
-    }
-
-    /**
      * Moves the character in the specified direction.
      *
      * @param dir the direction in which to move the character
@@ -189,9 +197,26 @@ public class ControllerImpl implements Controller {
         return statsManager.getStats();
     }
 
+    /**
+     * Returns the current amount of money.
+     *
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
     @Override
     public int returnMoney() {
         return statsManager.getMoney().getCount();
+    }
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     *
+     */
+    @Override
+    public void newThreshold() {
+        planeGameModel.randomizeNewThreshold();
     }
 
     /**

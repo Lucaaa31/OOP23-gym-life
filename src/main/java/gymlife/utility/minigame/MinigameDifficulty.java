@@ -30,7 +30,7 @@ public enum MinigameDifficulty {
     HARD(
             7,
             5,
-            1500,
+            800,
             10,
             0,
             10);

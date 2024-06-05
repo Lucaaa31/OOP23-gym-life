@@ -216,7 +216,7 @@ public enum CellImpl implements Cell {
 
     private final int id;
     private final boolean collision;
-    private final GameInteraction interaction;
+    private final transient GameInteraction interaction;
 
     /**
      * Standard constructor with 3 parameters.

@@ -1,5 +1,6 @@
 package gymlife.controller.api;
 
+import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.CounterImpl;
@@ -47,6 +48,13 @@ public interface Controller {
      */
     Map<StatsType, LimitedCounterImpl> getStatistics();
 
+    /**
+     * Returns the current amount of money.
+     *
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
     int returnMoney();
 
     /**
@@ -192,11 +200,13 @@ public interface Controller {
     void startMultiplier(float money);
 
     /**
-     * Returns the value of the new threshold.
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
      *
-     * @return The new threshold.
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
      */
-    float randomizeNewThreshold();
+    int getFoodCount(FoodType foodType);
 
     /**
      * Returns the threshold of the multiplier.
@@ -246,4 +256,11 @@ public interface Controller {
      * @param value the amount to increment the money value by. This value can be positive or negative.
      */
     void changeMoney(int value);
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     *
+     */
+    void newThreshold();
 }
