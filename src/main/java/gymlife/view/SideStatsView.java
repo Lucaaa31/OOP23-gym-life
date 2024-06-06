@@ -128,7 +128,6 @@ public class SideStatsView extends GamePanel {
         statsPanel1.add(buildLabel(StatsType.STAMINA, "images/icons/stamina.png"));
         statsPanel1.add(buildLabel(StatsType.MASS, "images/icons/mass.png"));
         statsPanel1.setBorder(BORDER);
-
         statsPanel1.revalidate();
         statsPanel1.repaint();
     }
@@ -242,7 +241,6 @@ public class SideStatsView extends GamePanel {
         label.add(labelImage);
         label.add(lablelNumber);
         FontLoader.loadFont();
-
         labelImage.setIcon(getIcon(path));
 
         this.setSize(dimensionGetter.getCellDimension());
@@ -251,7 +249,6 @@ public class SideStatsView extends GamePanel {
 
         labelImage.setHorizontalAlignment(SwingConstants.CENTER);
         labelImage.setVerticalAlignment(SwingConstants.CENTER);
-
         labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
         lablelNumber.setBorder(BORDER);
         return label;
