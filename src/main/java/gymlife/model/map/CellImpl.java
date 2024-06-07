@@ -74,9 +74,17 @@ public enum CellImpl implements Cell {
      */
     HOUSE_EXIT(13, false, InteractionsManager::exitInteraction),
     /**
-     * The cell used to interact with the kitchen, no collisions and interactable.
+     * The cell used to eat some meat from the inventory, no collisions and interactable.
      */
-    HOUSE_KITCHEN_INTERACT(14, false),
+    HOUSE_MEAT_INTERACT(14, false),
+    /**
+     * The cell used to eat a hamburger from the inventory, no collisions and interactable.
+     */
+    HOUSE_HAMBURGER_INTERACT(48, false),
+    /**
+     * The cell used to eat some broccoli from the inventory, no collisions and interactable.
+     */
+    HOUSE_BROCCOLI_INTERACT(49, false),
     /**
      * The cell that contains a part of the house couch, with collisions and not interactable.
      */
