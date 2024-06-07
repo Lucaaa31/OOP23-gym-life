@@ -73,7 +73,8 @@ public class ControllerImpl implements Controller {
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager,
-                minigameManager
+                minigameManager,
+                inventory
         );
 
     }

@@ -1,6 +1,8 @@
 package gymlife.model;
 
 import gymlife.model.api.MinigameManager;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.Inventory;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
@@ -14,6 +16,7 @@ public final class InteractionsManager {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final MinigameManager minigameManager;
+    private final Inventory inventory;
 
     /**
      * Constructor of the interactionsManager. All the managers of the game are given to it in order to act as a filter
@@ -24,10 +27,11 @@ public final class InteractionsManager {
      * @param minigameManager  the MinigameManager on which the interactions will occur.
      */
     public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager,
-                               final MinigameManager minigameManager) {
+                               final MinigameManager minigameManager, final Inventory inventory) {
         this.scenariosManager = scenariosManager;
         this.statsManager = statsManager;
         this.minigameManager = minigameManager;
+        this.inventory = inventory;
     }
 
     /**
@@ -61,5 +65,12 @@ public final class InteractionsManager {
      */
     public void bankInteraction() {
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_BANK);
+    }
+
+    public void buyFoodInteraction(final FoodType food) {
+        if (statsManager.getMoney().getCount() >= food.getCost()) {
+            inventory.addFood(food);
+            statsManager.setStat(StatsType.MONEY,statsManager.getMoney().getCount() - (int) food.getCost());
+        }
     }
 }

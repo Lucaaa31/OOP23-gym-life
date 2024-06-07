@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 import gymlife.model.InteractionsManager;
+import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.Cell;
 import gymlife.model.api.GameInteraction;
 import gymlife.utility.minigame.MinigameType;
@@ -115,15 +116,15 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to purchase hamburger, no collisions and interactable.
      */
-    SHOP_HAMBURGER_INTERACT(21, false),
+    SHOP_HAMBURGER_INTERACT(21, false, e -> e.buyFoodInteraction(FoodType.HAMBURGER)),
     /**
      * The cell that allows players to purchase broccoli, no collisions and interactable.
      */
-    SHOP_BROCCOLI_INTERACT(22, false),
+    SHOP_BROCCOLI_INTERACT(22, false, e -> e.buyFoodInteraction(FoodType.BROCCOLI)),
     /**
      * The cell that allows players to purchase meat, no collisions and interactable.
      */
-    SHOP_MEAT_INTERACT(23, false),
+    SHOP_MEAT_INTERACT(23, false, e -> e.buyFoodInteraction(FoodType.MEAT)),
     /**
      * The cell that allows players to get money, no collisions and interactable.
      */
