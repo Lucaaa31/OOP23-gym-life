@@ -1,10 +1,12 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.model.statistics.StatsType;
 import gymlife.utility.ScenariosType;
 
 
 import java.io.Serial;
+import java.util.Locale;
 
 /**
  * Class that extends ChoicePanel for giving the character a choice when buying food.
@@ -25,6 +27,7 @@ public class BuyFoodPanel extends ChoicePanel {
         this.controller = controller;
 
         this.setAcceptAction(e -> {
+            controller.buyFood();
             controller.changeScenario(ScenariosType.INDOOR_MAP);
             this.transferFocus();
         });
@@ -44,7 +47,11 @@ public class BuyFoodPanel extends ChoicePanel {
      */
     @Override
     String getDescription() {
-        return controller.getCurrentMap().getName();
+        String result = "PRICE : " + controller.getFoodToBuy().getCost() + "$<br>";
+        for (StatsType st : controller.getFoodToBuy().returnFoodPerks().keySet()) {
+            result = result.concat( st.toString() + " : " + controller.getFoodToBuy().returnFoodPerks().get(st) + "<br>");
+        }
+        return result;
     }
 
     /**
@@ -74,7 +81,7 @@ public class BuyFoodPanel extends ChoicePanel {
      */
     @Override
     String getImagePath() {
-        return "images/icons/";
+        return "images/icons/" + controller.getFoodToBuy().toString().toLowerCase(Locale.ROOT) + ".png";
     }
 
     /**

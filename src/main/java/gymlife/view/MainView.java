@@ -88,6 +88,7 @@ public class MainView extends JFrame {
         final GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
         final GamePanel sleepView = new SleepView(controller, dimensionGetter);
         final GamePanel encounterView = new EncounterView(controller, dimensionGetter);
+        final GamePanel buyFoodView = new BuyFoodPanel(controller, dimensionGetter);
         final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
         final GamePanel bankGameView = new BankGameView(controller, dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
@@ -96,7 +97,8 @@ public class MainView extends JFrame {
                 ScenariosType.SLEEPING, sleepView,
                 ScenariosType.MINIGAME_GYM, minigameView,
                 ScenariosType.ENCOUNTER, encounterView,
-                ScenariosType.MINIGAME_BANK, bankGameView);
+                ScenariosType.MINIGAME_BANK, bankGameView,
+                ScenariosType.BUY_FOOD, buyFoodView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -154,6 +156,7 @@ public class MainView extends JFrame {
         scenariosContainer.add(minigameView.getPanelName(), minigameView);
         scenariosContainer.add(encounterView.getPanelName(), encounterView);
         scenariosContainer.add(bankGameView.getPanelName(), bankGameView);
+        scenariosContainer.add(buyFoodView.getPanelName(), buyFoodView);
 
 
         statsView.setVisible(true);
