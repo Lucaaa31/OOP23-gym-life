@@ -68,9 +68,7 @@ public final class InteractionsManager {
     }
 
     public void buyFoodInteraction(final FoodType food) {
-        if (statsManager.getMoney().getCount() >= food.getCost()) {
-            inventory.addFood(food);
-            statsManager.setStat(StatsType.MONEY,statsManager.getMoney().getCount() - (int) food.getCost());
-        }
+        inventory.changeFoodToBuy(food);
+        scenariosManager.updateScenarios(ScenariosType.BUY_FOOD);
     }
 }
