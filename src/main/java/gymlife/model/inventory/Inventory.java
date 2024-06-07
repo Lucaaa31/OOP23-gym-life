@@ -11,6 +11,7 @@ import gymlife.model.statistics.StatsType;
 public class Inventory {
     private final Map<FoodType, Integer> foodInventory;
     private boolean inventoryAccessable;
+    private FoodType currentFoodToBuy;
 
     /**
      * Constructs a new Inventory object with an empty food inventory.
@@ -18,6 +19,7 @@ public class Inventory {
 
     public Inventory() {
         this.inventoryAccessable = false;
+        this.currentFoodToBuy = FoodType.HAMBURGER;
         this.foodInventory = new HashMap<>();
         for (final FoodType food : FoodType.values()) {
             foodInventory.put(food, 0);
@@ -67,6 +69,16 @@ public class Inventory {
      */
     public void enableInventory() {
         this.inventoryAccessable = true;
+    }
+
+
+    public FoodType getCurrentFoodToBuy() {
+        return currentFoodToBuy;
+    }
+
+
+    public void changeFoodToBuy(final FoodType food) {
+        this.currentFoodToBuy = food;
     }
 
 }
