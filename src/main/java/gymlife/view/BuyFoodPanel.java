@@ -48,8 +48,8 @@ public class BuyFoodPanel extends ChoicePanel {
     @Override
     String getDescription() {
         String result = "PRICE : " + controller.getFoodToBuy().getCost() + "$<br>";
-        for (StatsType st : controller.getFoodToBuy().returnFoodPerks().keySet()) {
-            result = result.concat( st.toString() + " : " + controller.getFoodToBuy().returnFoodPerks().get(st) + "<br>");
+        for (final StatsType st : controller.getFoodToBuy().returnFoodPerks().keySet()) {
+            result = result.concat(st.toString() + " : " + controller.getFoodToBuy().returnFoodPerks().get(st) + "<br>");
         }
         return result;
     }

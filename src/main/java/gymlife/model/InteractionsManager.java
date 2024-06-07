@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.model.api.MinigameManager;
 import gymlife.model.inventory.FoodType;
-import gymlife.model.inventory.Inventory;
+import gymlife.model.inventory.api.Inventory;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
@@ -28,6 +28,7 @@ public final class InteractionsManager {
      * @param scenariosManager the scenarioManager on which the interactions will occur.
      * @param statsManager     the StatsManager on which the interactions will occur.
      * @param minigameManager  the MinigameManager on which the interactions will occur.
+     * @param inventory        the Inventory on which the interactions will occur.
      */
     public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager,
                                final MinigameManager minigameManager, final Inventory inventory) {
@@ -70,16 +71,24 @@ public final class InteractionsManager {
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_BANK);
     }
 
+    /**
+     * method to call if the interaction of a cell concerns buying a food item.
+     * @param food {@code FoodType} to buy.
+     */
     public void buyFoodInteraction(final FoodType food) {
         inventory.changeFoodToBuy(food);
         scenariosManager.updateScenarios(ScenariosType.BUY_FOOD);
     }
 
+    /**
+     * Method to call if the interaction of a cell concerns consuming a food item.
+     * @param food {@code FoodType} to consume.
+     */
     public void eatFood(final FoodType food) {
         inventory.enableInventory();
         final Optional<Map<StatsType, Integer>> foodMap = inventory.consume(food);
         if (foodMap.isPresent()) {
-            for (StatsType st : foodMap.get().keySet()) {
+            for (final StatsType st : foodMap.get().keySet()) {
                 statsManager.multiIncrementStat(st, foodMap.get().get(st));
             }
         }

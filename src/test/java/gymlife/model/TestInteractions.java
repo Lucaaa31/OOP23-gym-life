@@ -1,6 +1,7 @@
 package gymlife.model;
 
-import gymlife.model.inventory.Inventory;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.InventoryImpl;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
@@ -23,14 +24,14 @@ class TestInteractions {
     private InteractionsManager interactionsManager;
     private MapManager mapManager;
     private final MinigameManagerImpl minigameManagerImpl = new MinigameManagerImpl();
-    private  Inventory inventory;
+    private InventoryImpl inventory;
 
     @BeforeEach
     void init() {
         scenariosManager = new ScenariosManager();
         scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
         statsManager = new StatsManagerImpl(GameDifficulty.EASY);
-        inventory = new Inventory();
+        inventory = new InventoryImpl();
         interactionsManager = new InteractionsManager(scenariosManager, statsManager, minigameManagerImpl, inventory);
         mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     }
@@ -48,6 +49,22 @@ class TestInteractions {
         final Position pos = new Position(7, 2);
         interactOnCell(pos);
         assertEquals(ScenariosType.MAIN_MAP, scenariosManager.getActualScenariosType());
+    }
+
+    @Test
+    void testBuyFood() {
+        mapManager.changeMap(GameMapImpl.SHOP_MAP);
+        final Position pos = new Position(1, 1);
+        interactOnCell(pos);
+        assertEquals(ScenariosType.BUY_FOOD, scenariosManager.getActualScenariosType());
+    }
+
+    @Test
+    void testEatFood() {
+        inventory.addFood(FoodType.HAMBURGER);
+        final Position pos = new Position(0, 4);
+        interactOnCell(pos);
+        assertEquals(0, inventory.getFoodCount().get(FoodType.HAMBURGER));
     }
 
     private void interactOnCell(final Position pos) {

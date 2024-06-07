@@ -3,7 +3,8 @@ package gymlife.controller;
 import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.inventory.FoodType;
-import gymlife.model.inventory.Inventory;
+import gymlife.model.inventory.InventoryImpl;
+import gymlife.model.inventory.api.Inventory;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
@@ -53,7 +54,7 @@ public class ControllerImpl implements Controller {
     private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
-    private final Inventory inventory = new Inventory();
+    private final Inventory inventory = new InventoryImpl();
     private Encounter currentEncounter;
     private static final int MONEY_START = 50;
 
