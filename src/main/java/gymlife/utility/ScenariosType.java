@@ -27,5 +27,9 @@ public enum ScenariosType {
     /**
      * Represents the random encounter scenario.
      */
-    ENCOUNTER;
+    ENCOUNTER,
+    /**
+     * Represents the purchasing of food scenario.
+     */
+    BUY_FOOD;
 }
