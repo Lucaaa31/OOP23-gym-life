@@ -8,6 +8,9 @@ import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;
 
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * A class that contains the methods used for cell interactions.
  */
@@ -70,5 +73,15 @@ public final class InteractionsManager {
     public void buyFoodInteraction(final FoodType food) {
         inventory.changeFoodToBuy(food);
         scenariosManager.updateScenarios(ScenariosType.BUY_FOOD);
+    }
+
+    public void eatFood(final FoodType food) {
+        inventory.enableInventory();
+        final Optional<Map<StatsType, Integer>> foodMap = inventory.consume(food);
+        if (foodMap.isPresent()) {
+            for (StatsType st : foodMap.get().keySet()) {
+                statsManager.multiIncrementStat(st, foodMap.get().get(st));
+            }
+        }
     }
 }
