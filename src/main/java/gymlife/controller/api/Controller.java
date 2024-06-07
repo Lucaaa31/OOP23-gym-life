@@ -225,6 +225,17 @@ public interface Controller {
     float getThreshold();
 
     /**
+     * Returns what is the current food to be bought.
+     * @return the FoodType to to buy.
+     */
+    FoodType getFoodToBuy();
+
+    /**
+     * Method to actually buy the food and add it to the inventory.
+     */
+    void buyFood();
+
+    /**
      * Return the current value of the multiplier.
      *
      * @return the current value of the multiplier.

@@ -125,6 +125,25 @@ public class ControllerImpl implements Controller {
     }
 
     /**
+     *
+     * @return
+     */
+    @Override
+    public FoodType getFoodToBuy() {
+        return inventory.getCurrentFoodToBuy();
+    }
+
+    /**
+     * Method that adds the food to the inventory and also reduces money by the cost of the food.
+     */
+    @Override
+    public void buyFood() {
+        final FoodType food = inventory.getCurrentFoodToBuy();
+        statsManager.setStat(StatsType.MONEY, statsManager.getMoney().getCount() - (int) food.getCost());
+        inventory.addFood(food);
+    }
+
+    /**
      * Returns the current value of the multiplier.
      *
      * @return The current value of the multiplier.
