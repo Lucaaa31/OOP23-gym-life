@@ -1,10 +1,11 @@
 package gymlife.view;
 
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Action;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
+import javax.swing.JComponent;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -12,21 +13,18 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.KeyEvent;
-import java.io.File;
+
 import java.io.Serial;
 import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.MusicPlayer;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
-
 
 /**
  * The MainView class represents the main view of the application.

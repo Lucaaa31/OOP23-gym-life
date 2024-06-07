@@ -1,5 +1,7 @@
 package gymlife.controller;
 
+import gymlife.controller.api.Controller;
+
 import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.map.GameMapImpl;
@@ -16,15 +18,17 @@ import gymlife.model.statistics.CounterImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
-
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.*;
-import gymlife.controller.api.Controller;
 import gymlife.model.character.api.CharacterModel;
+
+import gymlife.utility.MusicPlayer;
+import gymlife.utility.GameDifficulty;
+import gymlife.utility.Directions;
+import gymlife.utility.Position;
+import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-
 
 import java.util.List;
 import java.util.Map;

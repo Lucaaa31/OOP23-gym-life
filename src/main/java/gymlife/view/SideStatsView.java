@@ -4,7 +4,6 @@ import gymlife.controller.api.Controller;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

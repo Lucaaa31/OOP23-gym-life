@@ -48,4 +48,16 @@ class TestCharacter {
         pos = new Position(pos.X()  + Constants.MOVEMENT, pos.Y());
         assertEquals(pos, character.getCharacterPos());
     }
+
+    /**
+     * Test Character setting position.
+     */
+    @Test
+    void testSetPos() {
+        final CharacterModel character = new CharacterModelImpl();
+        final Position position = new Position(2, 3);
+        assertEquals(Constants.CHARACTER_START_POS, character.getCharacterPos());
+        character.setPosition(position);
+        assertEquals(character.getCharacterPos(), position);
+    }
 }
