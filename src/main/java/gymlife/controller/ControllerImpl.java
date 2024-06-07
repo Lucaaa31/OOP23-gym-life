@@ -2,6 +2,8 @@ package gymlife.controller;
 
 import gymlife.model.character.CharacterModelImpl;
 import gymlife.model.InteractionsManager;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.Inventory;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
@@ -10,10 +12,13 @@ import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
+import gymlife.model.PlaneGameModel;
 import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.ScenariosManager;
+import gymlife.model.SynchronizerModel;
+
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.CounterImpl;
-import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 
@@ -43,9 +48,14 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
+    private final SynchronizerModel sync1 = new SynchronizerModel();
+    private final SynchronizerModel sync2 = new SynchronizerModel();
+    private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
+    private final Inventory inventory = new Inventory();
     private Encounter currentEncounter;
+    private static final int MONEY_START = 50;
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -56,6 +66,7 @@ public class ControllerImpl implements Controller {
         this.statsManager = new StatsManagerImpl(difficulty);
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
+        statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
         this.scenariosManager = new ScenariosManager();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
@@ -64,6 +75,90 @@ public class ControllerImpl implements Controller {
                 statsManager,
                 minigameManager
         );
+
+    }
+
+    /**
+     * Gets the first synchronization object used to coordinate threads.
+     *
+     * @return the first SynchronizerModel instance used for thread synchronization.
+     */
+    @Override
+    public SynchronizerModel getSync1() {
+        return sync1;
+    }
+
+    /**
+     * Gets the second synchronization object used to coordinate threads.
+     *
+     * @return the second SynchronizerModel instance used for thread
+     *         synchronization.
+     */
+    @Override
+    public SynchronizerModel getSync2() {
+        return sync2;
+    }
+
+    /**
+     * This method starts the multiplier thread, continuously updates the view with
+     * the current multiplier value,
+     * and waits for the thread to finish.
+     *
+     * @param money the money value with which to start the multiplier.
+     */
+    @Override
+    public void startMultiplier(final float money) {
+        planeGameModel.runMultiplier(money);
+    }
+
+    /**
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
+     *
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
+     */
+    @Override
+    public int getFoodCount(final FoodType foodType) {
+        return inventory.getFoodCount().get(foodType);
+    }
+
+    /**
+     * Returns the current value of the multiplier.
+     *
+     * @return The current value of the multiplier.
+     */
+    @Override
+    public float getMultiplier() {
+        return planeGameModel.getMultiplierShort();
+    }
+
+    /**
+     * Returns the threshold of the multiplier.
+     *
+     * @return The value of the multiplier's threshold.
+     */
+    @Override
+    public float getThreshold() {
+        return planeGameModel.getThreshold();
+    }
+
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
+    @Override
+    public void controllerStopMultiplier() {
+        planeGameModel.stopMultiplier();
+    }
+
+    /**
+     * Returns the value of the money.
+     *
+     * @return The current value of the money.
+     */
+    @Override
+    public float controllerGetMoney() {
+        return planeGameModel.getMoneyMultiplied();
     }
 
     /**
@@ -100,6 +195,28 @@ public class ControllerImpl implements Controller {
     @Override
     public Map<StatsType, LimitedCounterImpl> getStatistics() {
         return statsManager.getStats();
+    }
+
+    /**
+     * Returns the current amount of money.
+     *
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
+    @Override
+    public int returnMoney() {
+        return statsManager.getMoney().getCount();
+    }
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     *
+     */
+    @Override
+    public void newThreshold() {
+        planeGameModel.randomizeNewThreshold();
     }
 
     /**
@@ -183,7 +300,6 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to change the scenario.
-     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     @Override
@@ -335,6 +451,16 @@ public class ControllerImpl implements Controller {
     @Override
     public boolean isGameOver() {
         return statsManager.isGameOver();
+    }
+
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
+    @Override
+    public void changeMoney(final int value) {
+        statsManager.multiIncrementStat(StatsType.MONEY, value);
     }
 
 }

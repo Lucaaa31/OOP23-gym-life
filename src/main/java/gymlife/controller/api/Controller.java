@@ -1,9 +1,11 @@
 package gymlife.controller.api;
 
+import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.CounterImpl;
 import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.SynchronizerModel;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -45,6 +47,15 @@ public interface Controller {
      * @return a Map of the statistics
      */
     Map<StatsType, LimitedCounterImpl> getStatistics();
+
+    /**
+     * Returns the current amount of money.
+     *
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
+    int returnMoney();
 
     /**
      * Returns the number of days that have passed in the game.
@@ -190,5 +201,75 @@ public interface Controller {
      */
     boolean isGameOver();
 
+    /**
+     * Starts the multiplier with the specified money value.
+     *
+     * @param money the money value.
+     */
+    void startMultiplier(float money);
 
+    /**
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
+     *
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
+     */
+    int getFoodCount(FoodType foodType);
+
+    /**
+     * Returns the threshold of the multiplier.
+     *
+     * @return The value of the multiplier's threshold.
+     */
+    float getThreshold();
+
+    /**
+     * Return the current value of the multiplier.
+     *
+     * @return the current value of the multiplier.
+     */
+    float getMultiplier();
+
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
+    void controllerStopMultiplier();
+
+    /**
+     * Returns the value of the money controlled by the controller.
+     *
+     * @return the current value of the money.
+     */
+    float controllerGetMoney();
+
+    /**
+     * Returns the first synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the first {@link SynchronizerModel} instance.
+     */
+    SynchronizerModel getSync1();
+
+    /**
+     * Returns the second synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the second {@link SynchronizerModel} instance.
+     */
+    SynchronizerModel getSync2();
+
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
+    void changeMoney(int value);
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     *
+     */
+    void newThreshold();
 }

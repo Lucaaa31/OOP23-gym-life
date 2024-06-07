@@ -10,7 +10,7 @@ import gymlife.model.statistics.StatsType;
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
-    private static final double ENCOUNTER_CHANCE = 1;
+    private static final double ENCOUNTER_CHANCE = 0.2;
     private static final double ICE_CREAM_CHANCE = 1;
     private static final double GYM_BRO_CHANCE = 0.8;
     private static final double PUSHER_CHANCE = 0.6;

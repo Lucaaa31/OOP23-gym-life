@@ -59,6 +59,7 @@ public class StatsManagerImpl implements StatsManager {
             gameStats.multiIncrementStats(stats, value);
         }
     }
+
     /**
      * Multincrement a Map of stats.
      *
