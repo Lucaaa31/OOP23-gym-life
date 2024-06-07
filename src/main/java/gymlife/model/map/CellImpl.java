@@ -76,15 +76,15 @@ public enum CellImpl implements Cell {
     /**
      * The cell used to eat some meat from the inventory, no collisions and interactable.
      */
-    HOUSE_MEAT_INTERACT(14, false),
+    HOUSE_MEAT_INTERACT(14, false, e -> e.eatFood(FoodType.MEAT)),
     /**
      * The cell used to eat a hamburger from the inventory, no collisions and interactable.
      */
-    HOUSE_HAMBURGER_INTERACT(48, false),
+    HOUSE_HAMBURGER_INTERACT(48, false, e -> e.eatFood(FoodType.HAMBURGER)),
     /**
      * The cell used to eat some broccoli from the inventory, no collisions and interactable.
      */
-    HOUSE_BROCCOLI_INTERACT(49, false),
+    HOUSE_BROCCOLI_INTERACT(49, false, e -> e.eatFood(FoodType.BROCCOLI)),
     /**
      * The cell that contains a part of the house couch, with collisions and not interactable.
      */
