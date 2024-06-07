@@ -6,7 +6,7 @@ import java.util.Optional;
 import gymlife.model.statistics.StatsType;
 
 /**
- * Class representig an inventory that manages food items.
+ * Class representing an inventory that manages food items.
  */
 public class Inventory {
     private final Map<FoodType, Integer> foodInventory;
@@ -57,9 +57,9 @@ public class Inventory {
             final int currentQuantity = foodInventory.get(food);
             if (currentQuantity > 0) {
                 foodInventory.put(food, foodInventory.get(food) - 1);
+                inventoryAccessable = false;
+                return Optional.of(food.returnFoodPerks());
             }
-            inventoryAccessable = false;
-            return Optional.of(food.returnFoodPerks());
         }
         return Optional.empty();
     }
