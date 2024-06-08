@@ -39,7 +39,7 @@ import java.util.Optional;
  * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
-    private final MusicPlayer player = new MusicPlayer("src/main/resources/HWR-Zyzz.wav");
+    private final MusicPlayer player = new MusicPlayer("src/main/resources/sounds/HWR-Zyzz.wav");
     private final CharacterModel characterModel = new CharacterModelImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;

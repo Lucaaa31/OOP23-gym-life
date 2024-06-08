@@ -111,13 +111,8 @@ public class StatsManagerImpl implements StatsManager {
         if (gameDays.isDayOver()) {
             return true;
         }
-        final Map<StatsType, LimitedCounterImpl> statsMap = gameStats.getMap();
-        for (final Map.Entry<StatsType, LimitedCounterImpl> entry : statsMap.entrySet()) {
-            if (entry.getValue().getCount() == 0) {
-                return true;
-            }
-        }
-        return false;
+        return gameStats.getMap().values().stream()
+                .anyMatch(counter -> counter.getCount() == 0);
     }
     /**
      * Checks if the player has won the game.

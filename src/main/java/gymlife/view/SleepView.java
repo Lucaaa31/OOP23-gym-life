@@ -53,7 +53,7 @@ public class SleepView extends GamePanel {
 
     private void startAnimation() {
         new Thread(() -> {
-            final MusicPlayer musicPlayer = new MusicPlayer("src/main/resources/sleeping_sound.wav");
+            final MusicPlayer musicPlayer = new MusicPlayer("src/main/resources/sounds/sleeping_sound.wav");
             musicPlayer.open();
             musicPlayer.play();
             for (int i = 0; i < 4; i++) {

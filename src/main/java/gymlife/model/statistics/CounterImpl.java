@@ -1,24 +1,27 @@
 package gymlife.model.statistics;
 
 /**
- * The Counter class represents a counter with basic increment and decrement operations.
+ * The CounterImpl class represents a counter with basic increment and decrement operations.
  */
 public class CounterImpl implements gymlife.model.statistics.api.Counter {
     private int count;
+
     /**
-     * Constructs a new Counter object with an initial count of the specified value.
+     * Constructs a new CounterImpl object with an initial count of the specified value.
      *
      * @param count the initial count value
      */
     public CounterImpl(final int count) {
-        this.count = count;
+        this.count = Math.max(count, 0);
     }
+
     /**
-     * Constructs a new Counter object with an initial count of 0.
+     * Constructs a new CounterImpl object with an initial count of 0.
      */
     public CounterImpl() {
-        this.count = 0;
+        this(0);
     }
+
     /**
      * Returns the current count.
      *
@@ -28,23 +31,23 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
     public int getCount() {
         return this.count;
     }
+
     /**
      * Increments the count by 1.
      */
     @Override
     public void increment() {
-        count++;
+        this.count++;
     }
+
     /**
      * Decrements the count by 1. If the count becomes negative, it is set to 0.
      */
     @Override
     public void decrement() {
-        count--;
-        if (count < 0) {
-            count = 0;
-        }
+        this.count = Math.max(this.count - 1, 0);
     }
+
     /**
      * Increments or decrements the count by the specified value.
      *
@@ -52,18 +55,17 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
      */
     @Override
     public void multiIncrement(final int value) {
-        count += value;
-        if (count < 0) {
-            count = 0;
-        }
+        this.count = Math.max(this.count + value, 0);
     }
+
     /**
      * Resets the count to 0.
      */
     @Override
     public void resetCount() {
-        count = 0;
+        this.count = 0;
     }
+
     /**
      * Sets the count to the specified amount.
      *
@@ -71,6 +73,6 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
      */
     @Override
     public void setCount(final int amount) {
-        count = amount;
+        this.count = Math.max(amount, 0);
     }
 }

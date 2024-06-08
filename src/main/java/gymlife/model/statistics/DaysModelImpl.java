@@ -12,7 +12,7 @@ public class DaysModelImpl extends CounterImpl implements DaysModel {
      * @param numDays the number of days for the model
      */
     public DaysModelImpl(final int numDays) {
-        this.setCount(numDays);
+        super(numDays);
     }
     /**
      * Decrement the days count by one.

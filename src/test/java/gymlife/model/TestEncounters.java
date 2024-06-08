@@ -6,64 +6,59 @@ import gymlife.model.encounter.EncountersFactoryImpl;
 import gymlife.model.statistics.StatsType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestEncounters {
+
+    private static final int TEST_ITERATIONS = 1000;
+
     @Test
     void testGetRandomEncounter() {
-        for (int i = 0; i < 1000; i++) {
-            boolean isValid = false;
-            final Optional<Encounter> encounters = EncountersFactoryImpl.getRandomEncounter();
-            if (encounters.isEmpty() 
-                || "PUSHER".equals(encounters.get().name())
-                || "ICE_CREAM".equals(encounters.get().name())
-                || "MONEY_BAG".equals(encounters.get().name())
-                || "ROBBER".equals(encounters.get().name())
-                || "GYM_BRO".equals(encounters.get().name())
-            ) {
-                isValid = true;
-            }
-            assertTrue(isValid);
-        }
+        final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
+            final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
+            return encounter.isEmpty()
+                    || "PUSHER".equals(encounter.map(Encounter::name).orElse(""))
+                    || "ICE_CREAM".equals(encounter.map(Encounter::name).orElse(""))
+                    || "MONEY_BAG".equals(encounter.map(Encounter::name).orElse(""))
+                    || "ROBBER".equals(encounter.map(Encounter::name).orElse(""))
+                    || "GYM_BRO".equals(encounter.map(Encounter::name).orElse(""));
+        });
+        assertTrue(allValid, "One or more encounters are not valid");
     }
 
     @Test
     void testGetAcceptCase() {
-        for (int i = 0; i < 1000; i++) {
+        final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
             final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
-            boolean isValid = false;
-            if (encounter.isPresent()) {
-                final Map<StatsType, Integer> acceptCase = encounter.get().acceptCase();
-                if (acceptCase.equals(EncountersConstants.gymBroAccept())
+            return encounter.map(enc -> {
+                final Map<StatsType, Integer> acceptCase = enc.acceptCase();
+                return acceptCase.equals(EncountersConstants.gymBroAccept())
                         || acceptCase.equals(EncountersConstants.iceCreamAccept())
                         || acceptCase.equals(EncountersConstants.moneyBagAccept())
                         || acceptCase.equals(EncountersConstants.pusherAccept())
-                        || acceptCase.equals(EncountersConstants.robberAccept())) {
-                    isValid = true;
-                }
-                assertTrue(isValid);
-            }
-        }
+                        || acceptCase.equals(EncountersConstants.robberAccept());
+            }).orElse(true); // If encounter is empty, consider it valid
+        });
+        assertTrue(allValid, "One or more accept cases are not valid");
     }
+
     @Test
     void testGetDenyCase() {
-        for (int i = 0; i < 1000; i++) {
+        final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
             final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
-            boolean isValid = false;
-            if (encounter.isPresent()) {
-                final Map<StatsType, Integer> denyCase = encounter.get().denyCase();
-                if (denyCase.equals(EncountersConstants.gymBroDeny())
+            return encounter.map(enc -> {
+                final Map<StatsType, Integer> denyCase = enc.denyCase();
+                return denyCase.equals(EncountersConstants.gymBroDeny())
                         || denyCase.equals(EncountersConstants.iceCreamDeny())
                         || denyCase.equals(EncountersConstants.moneyBagDeny())
                         || denyCase.equals(EncountersConstants.pusherDeny())
-                        || denyCase.equals(EncountersConstants.robberDeny())) {
-                    isValid = true;
-                }
-                assertTrue(isValid);
-            }
-        }
+                        || denyCase.equals(EncountersConstants.robberDeny());
+            }).orElse(true); // If encounter is empty, consider it valid
+        });
+        assertTrue(allValid, "One or more deny cases are not valid");
     }
 }

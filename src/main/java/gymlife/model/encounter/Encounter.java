@@ -1,7 +1,6 @@
 package gymlife.model.encounter;
 
 import gymlife.model.statistics.StatsType;
-
 import java.util.Map;
 
 /**
