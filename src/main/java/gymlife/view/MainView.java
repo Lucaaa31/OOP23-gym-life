@@ -26,6 +26,7 @@ import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
+import gymlife.view.bankgame.BankGameView;
 
 
 /**
@@ -88,12 +89,14 @@ public class MainView extends JFrame {
         final GamePanel sleepView = new SleepView(controller, dimensionGetter);
         final GamePanel encounterView = new EncounterView(controller, dimensionGetter);
         final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
+        final GamePanel bankGameView = new BankGameView(controller, dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
                 ScenariosType.SLEEPING, sleepView,
                 ScenariosType.MINIGAME_GYM, minigameView,
-                ScenariosType.ENCOUNTER, encounterView);
+                ScenariosType.ENCOUNTER, encounterView,
+                ScenariosType.MINIGAME_BANK, bankGameView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -150,6 +153,8 @@ public class MainView extends JFrame {
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
         scenariosContainer.add(minigameView.getPanelName(), minigameView);
         scenariosContainer.add(encounterView.getPanelName(), encounterView);
+        scenariosContainer.add(bankGameView.getPanelName(), bankGameView);
+
 
         statsView.setVisible(true);
 
@@ -158,9 +163,11 @@ public class MainView extends JFrame {
             public void focusLost(final FocusEvent e) {
                 final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
                 layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
-                ((SideStatsView) statsView).updateStats();
-                panelToSwitchTo.requestFocusInWindow();
+                if (!panelToSwitchTo.equals(bankGameView)) {
+                    panelToSwitchTo.requestFocusInWindow();
+                }
                 panelToSwitchTo.resizeComponents();
+                ((SideStatsView) statsView).updateStats();
             }
         };
 

@@ -58,5 +58,10 @@ public final class InteractionsManager {
         minigameManager.setCurrentMinigame(minigameType);
     }
 
-
+    /**
+     * This method triggers an update to the scenario manager to change the current scenario to the bank mini-game.
+     */
+    public void bankInteraction() {
+        scenariosManager.updateScenarios(ScenariosType.MINIGAME_BANK);
+    }
 }

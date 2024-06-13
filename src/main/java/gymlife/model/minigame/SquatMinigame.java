@@ -1,5 +1,8 @@
 package gymlife.model.minigame;
 
+import gymlife.utility.minigame.DimensionMinigame;
+
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -7,11 +10,14 @@ import java.util.List;
  */
 public final class SquatMinigame extends AbstractMinigame {
 
-    /**
-     * Constructs a new SquatMinigame object.
-     */
+
     @Override
-    public void notifyUserAction(final int... params) {
+    public void notifyUserAction(int buttonCode) {
+
+    }
+
+    @Override
+    public void notifyUserAction() {
 
     }
 
@@ -42,5 +48,10 @@ public final class SquatMinigame extends AbstractMinigame {
     @Override
     public List<Integer> getSequence() {
         return List.of();
+    }
+
+    @Override
+    public Point getRandomPositionButton(DimensionMinigame dimensionMinigame) {
+        return null;
     }
 }

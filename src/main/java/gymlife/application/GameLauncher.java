@@ -3,7 +3,6 @@ package gymlife.application;
 import gymlife.view.MainView;
 
 /**
- *
  * Main Class of the Java application.
  */
 public final class GameLauncher {

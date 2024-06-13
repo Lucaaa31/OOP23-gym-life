@@ -43,22 +43,6 @@ public abstract class AbstractMinigameView extends GamePanel {
     private static final String FOREGROUND_COLOR_GREEN = "foregroundColorGreen";
     private final JLabel orderLabel = new JLabel("Press button to start!");
 
-    /**
-     * Method that sets the position of a button in a random position.
-     *
-     * @param buttonMinigame the button to set the position.
-     * @return the position of the button.
-     */
-    public Point getRandomPositionButton(final JButton buttonMinigame) {
-        int x, y;
-        do {
-            x = (int) (Math.random() * (dimensionGetter.getMinigameScenarioWeight()
-                    - buttonMinigame.getWidth()));
-            y = (int) (Math.random() * (dimensionGetter.getScenarioDimension().height
-                    - buttonMinigame.getHeight()));
-        } while (limits(x, y, buttonMinigame));
-        return new Point(x, y);
-    }
 
 
     /**
@@ -106,18 +90,7 @@ public abstract class AbstractMinigameView extends GamePanel {
         return progressBar.getWidth();
     }
 
-    /**
-     * Method that check if the button is out of bounds.
-     *
-     * @param x              the x position.
-     * @param y              the y position.
-     * @param buttonMinigame the button to set the position.
-     * @return the height of the progressBar.
-     */
-    public boolean limits(final int x, final int y, final JButton buttonMinigame) {
-        return characterLabel.getBounds()
-                .intersects(new Rectangle(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight()));
-    }
+
 
 
     /**

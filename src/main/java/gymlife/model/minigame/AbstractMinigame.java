@@ -1,8 +1,10 @@
 package gymlife.model.minigame;
 
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -40,9 +42,11 @@ public abstract class AbstractMinigame {
     /**
      * Notify the model of an action of the player.
      *
-     * @param params the parameters of the action
+     * @param buttonCode the parameters of the action
      */
-    public abstract void notifyUserAction(int... params);
+    public abstract void notifyUserAction(int buttonCode);
+
+    public abstract void notifyUserAction();
 
 
     /**
@@ -160,4 +164,7 @@ public abstract class AbstractMinigame {
      * @return the sequence of the minigame
      */
     public abstract List<Integer> getSequence();
+
+
+    public abstract Point getRandomPositionButton(final DimensionMinigame dimensionMinigame);
 }
