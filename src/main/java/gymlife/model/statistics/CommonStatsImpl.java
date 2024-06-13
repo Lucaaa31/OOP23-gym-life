@@ -3,12 +3,10 @@ package gymlife.model.statistics;
 import java.util.HashMap;
 import java.util.Map;
 
-import gymlife.model.statistics.api.StatsModel;
-
 /**
  * Implementation of the StatsModel interface that represents the statistics of a gym member.
  */
-public final class StatsModelImpl implements StatsModel {
+public final class CommonStatsImpl implements gymlife.model.statistics.api.CommonStats {
     private final Map<StatsType, LimitedCounterImpl> gameStats = new HashMap<>();
     private final LimitedCounterImpl legMass = new LimitedCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
             StatsConstants.MAX_STATS_LEVEL);
@@ -21,7 +19,7 @@ public final class StatsModelImpl implements StatsModel {
      * Constructs a new StatsModelImpl object.
      * Initializes the gameStats map with the initial values for each stat.
      */
-    public StatsModelImpl() {
+    public CommonStatsImpl() {
         gameStats.put(StatsType.BACK_MASS, backMass);
         gameStats.put(StatsType.CHEST_MASS, chestMass);
         gameStats.put(StatsType.LEG_MASS, legMass);

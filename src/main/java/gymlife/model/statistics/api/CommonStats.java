@@ -9,7 +9,7 @@ import gymlife.model.statistics.StatsType;
  * This interface represents the stats model for a gym life application.
  * It provides methods to retrieve and update various stats related to the Character's body.
  */
-public interface StatsModel {
+public interface CommonStats {
     /**
      * Increases the specified stat by 1.
      * 
