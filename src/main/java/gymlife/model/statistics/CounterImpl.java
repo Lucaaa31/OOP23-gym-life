@@ -64,7 +64,7 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
      */
     @Override
     public void resetCount() {
-        this.count = 0;
+        this.count = StatsConstants.STARTING_STATS_LEVEL;
     }
 
     /**
