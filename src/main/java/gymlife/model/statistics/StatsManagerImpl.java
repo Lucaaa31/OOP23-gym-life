@@ -53,8 +53,8 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void multiIncrementStat(final StatsType stats, final int value) {
-        if ("MONEY".equals(stats.toString())) {
-            gameMoney.setMoney(value);
+        if (stats.equals(StatsType.MONEY)) {
+            gameMoney.multiIncrementMoney(value);
         } else {
             gameStats.multiIncrementStats(stats, value);
         }
@@ -64,6 +64,7 @@ public class StatsManagerImpl implements StatsManager {
      *
      * @param stats to be changed
      */
+    @Override
     public void changeStatsWithFood(final Map<StatsType, Integer> stats) {
         for (final Map.Entry<StatsType, Integer> entry : stats.entrySet()) {
             gameStats.multiIncrementStats(entry.getKey(), entry.getValue());

@@ -94,4 +94,13 @@ class TestStats {
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.BACK_MASS));
         stats.resetAll();
     }
+
+    @Test
+    void testResetCount() {
+        final StatsModel stats = new StatsModelImpl();
+        stats.resetAll();
+        assertEquals(StatsConstants.STARTING_MASS_LEVEL, stats.getStats(StatsType.MASS));
+    }
+
+
 }

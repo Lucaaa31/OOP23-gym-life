@@ -133,7 +133,7 @@ public final class StatsModelImpl implements StatsModel {
     @Override
     public void resetAll() {
         for (final Map.Entry<StatsType, LimitedCounterImpl> entry : gameStats.entrySet()) {
-            entry.getValue().setCount(StatsConstants.STARTING_STATS_LEVEL);
+            entry.getValue().resetCount();
         }
     }
 

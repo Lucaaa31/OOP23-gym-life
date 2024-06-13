@@ -6,7 +6,7 @@ import java.util.Map;
 import gymlife.model.statistics.StatsType;
 
 /**
- * EncountersConstants class contains constants and methods related to different encounter cases in the application.
+ * EncountersConstants class contains constants and methods related to different encounter cases made from the player.
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;

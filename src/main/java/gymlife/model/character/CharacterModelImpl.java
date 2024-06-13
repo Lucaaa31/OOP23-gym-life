@@ -26,7 +26,7 @@ public class CharacterModelImpl implements CharacterModel {
     }
 
     /**
-     * Sets a new direction for the character's movement.
+     * Move the character in  the given direction.
      * @param dir The new direction for the character's movement.
      */
     @Override

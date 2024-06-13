@@ -60,11 +60,8 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
         super.multiIncrement(value);
         if (super.getCount() > limit) {
             setCount(limit);
-        } else if (super.getCount() < 0) {
-            resetCount();
         }
     }
-
     /**
      * Sets the count to the specified amount.
      *
@@ -75,8 +72,8 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
         super.setCount(count);
         if (super.getCount() > limit) {
             super.setCount(limit);
-        } else if (super.getCount() < 0) {
-            super.resetCount();
+        } else if (super.getCount() <= 0) {
+            resetCount();
         }
     }
 

@@ -4,6 +4,8 @@ import gymlife.model.statistics.MoneyModelImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import gymlife.model.statistics.api.MoneyModel;
 
 
@@ -38,5 +40,13 @@ class TestMoney {
         assertEquals(2, money.getMoney());
         money.multiIncrementMoney(TestConstants.TEST_MULTI_INCREMENT_NEGATIVE_3);
         assertEquals(0, money.getMoney());
+    }
+    @Test
+    void testIsOver() {
+        final int zero = 0;
+        final MoneyModel money = new MoneyModelImpl();
+        money.setMoney(zero);
+        assertEquals(zero, money.getMoney());
+        assertTrue(money.isOver());
     }
 }

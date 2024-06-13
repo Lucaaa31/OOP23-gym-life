@@ -1,5 +1,7 @@
 package gymlife.model;
 
+import java.util.Map;
+import java.util.HashMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.encounter.EncountersConstants;
 import gymlife.model.statistics.StatsManagerImpl;
@@ -36,6 +38,11 @@ class TestStatsmanager {
         assertTrue(stats.isGameOver());
         stats.getStats().get(StatsType.HAPPINESS).multiIncrement(1);
         assertFalse(stats.isGameOver());
+        stats.resetAll();
+        for (int i = 0; i < GameDifficulty.EASY.getDays(); i++) {
+            stats.newDay();
+        }
+        assertTrue(stats.isGameOver());
     }
 
     @Test
@@ -94,6 +101,9 @@ class TestStatsmanager {
         assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + StatsConstants.STARTING_STATS_LEVEL,
                 stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.resetAll();
+        stats.multiIncrementStat(StatsType.MONEY, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + StatsConstants.STARTING_STATS_LEVEL,
+                stats.getMoney().getCount());
     }
 
     @Test
@@ -102,6 +112,41 @@ class TestStatsmanager {
         stats.setStat(StatsType.HAPPINESS, 10);
         assertEquals(10, stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.resetAll();
+        stats.setStat(StatsType.MONEY, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, stats.getMoney().getCount());
+        stats.setStat(StatsType.MASS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 * 3, stats.getStats().get(StatsType.MASS).getCount());
+    }
+
+    @Test
+    void testDenyEncounter() {
+        final int medium = 10;
+        final int zero = 0;
+        final int high =  20;
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.setStat(StatsType.HAPPINESS, medium);
+        assertEquals(medium, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        stats.denyEncounter(new Encounter("GYM_BRO", "prova",
+                EncountersConstants.gymBroAccept(), EncountersConstants.gymBroDeny()));
+        assertEquals(zero, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        stats.setStat(StatsType.MONEY, high);
+        stats.denyEncounter(new Encounter("ROBBER", "prova",
+                EncountersConstants.robberAccept(), EncountersConstants.robberDeny()));
+        assertEquals(zero, stats.getMoney().getCount());
+    }
+
+    @Test
+    void testChangeStatsWithFood() {
+        final int medium = 10;
+        final int zero = 0;
+        final Map<StatsType, Integer> statsChanged = new HashMap<>();
+        statsChanged.put(StatsType.HAPPINESS, -medium);
+        final StatsManager stats = new StatsManagerImpl(GameDifficulty.EASY);
+        stats.setStat(StatsType.HAPPINESS, medium);
+        assertEquals(medium, stats.getStats().get(StatsType.HAPPINESS).getCount());
+        stats.changeStatsWithFood(statsChanged);
+        assertEquals(zero, stats.getStats().get(StatsType.HAPPINESS).getCount());
+
     }
 
 }

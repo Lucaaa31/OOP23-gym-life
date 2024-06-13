@@ -11,7 +11,7 @@ import java.util.Optional;
 public final class EncountersFactoryImpl {
     /**
      * Create a random Optional Encounter or Optional empty, depending on if the encounter appened or not.
-     * 
+     * Every Encounter has a different probability of happening, defined in the EncountersConstants class.
      * @return The random encounter.
      */
     public static Optional<Encounter> getRandomEncounter() {

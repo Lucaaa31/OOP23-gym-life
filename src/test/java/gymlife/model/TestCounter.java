@@ -1,5 +1,6 @@
 package gymlife.model;
 
+import gymlife.model.statistics.StatsConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,6 @@ class TestCounter {
     void testResetCount() {
         counter.multiIncrement(10);
         counter.resetCount();
-        assertEquals(0, counter.getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, counter.getCount());
     }
 }

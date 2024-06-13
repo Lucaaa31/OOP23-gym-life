@@ -29,4 +29,9 @@ public interface LimitedCounter {
      * @return true if the counter is at its limit, false otherwise.
      */
     boolean isMax();
+
+    /**
+     * Resets the counter to starting stats level.
+     */
+    void resetCount();
 }

@@ -33,4 +33,29 @@ class TestLimitedCounterImpl {
         assertTrue(counter2.isMax());
         assertEquals(StatsConstants.MAX_STATS_LEVEL, counter2.getCount());
     }
+
+    @Test
+    void testSetCount() {
+        final int zero = 0;
+        final int biggerLimit = StatsConstants.MAX_STATS_LEVEL + 1;
+        final LimitedCounterImpl counter1 = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL);
+        counter1.setCount(biggerLimit);
+        assertEquals(StatsConstants.MAX_STATS_LEVEL, counter1.getCount());
+        counter1.setCount(zero);
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, counter1.getCount());
+        counter2.multiIncrement(StatsConstants.MAX_STATS_LEVEL);
+        assertTrue(counter2.isMax());
+        assertEquals(StatsConstants.MAX_STATS_LEVEL, counter2.getCount());
+    }
+
+    @Test
+    void testMultiIncrementCount() {
+        final LimitedCounterImpl counter1 = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL);
+        counter1.multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
+        counter1.multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
+        assertEquals(0, counter1.getCount());
+        counter2.multiIncrement(StatsConstants.MAX_STATS_LEVEL);
+        assertTrue(counter2.isMax());
+        assertEquals(StatsConstants.MAX_STATS_LEVEL, counter2.getCount());
+    }
 }

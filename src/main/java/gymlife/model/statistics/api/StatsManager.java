@@ -78,4 +78,10 @@ public interface StatsManager {
      * @param value to set the stat
      */
     void setStat(StatsType stats, int value);
+    /**
+     * Change the stats of the game according to the food eaten.
+     *
+     * @param stats of the game
+     */
+    void changeStatsWithFood(Map<StatsType, Integer> stats);
 }

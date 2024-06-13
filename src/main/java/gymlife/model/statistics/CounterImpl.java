@@ -2,13 +2,14 @@ package gymlife.model.statistics;
 
 /**
  * The CounterImpl class represents a counter with basic increment and decrement operations.
+ * The counter can be incremented, decremented, and reset to 0, but it cannot go below 0.
  */
 public class CounterImpl implements gymlife.model.statistics.api.Counter {
     private int count;
 
     /**
      * Constructs a new CounterImpl object with an initial count of the specified value.
-     *
+     * If the specified count is negative, the count is set to 0.
      * @param count the initial count value
      */
     public CounterImpl(final int count) {
@@ -17,6 +18,7 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
 
     /**
      * Constructs a new CounterImpl object with an initial count of 0.
+     * The count is set to 0.
      */
     public CounterImpl() {
         this(0);
@@ -24,7 +26,6 @@ public class CounterImpl implements gymlife.model.statistics.api.Counter {
 
     /**
      * Returns the current count.
-     *
      * @return the current count
      */
     @Override
