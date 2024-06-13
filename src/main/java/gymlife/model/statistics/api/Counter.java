@@ -29,7 +29,7 @@ public interface Counter {
     void multiIncrement(int value);
 
     /**
-     * Resets the count to 0.
+     * Resets the count to Starting stats level.
      */
     void resetCount();
 
