@@ -39,7 +39,7 @@ import java.util.Optional;
  */
 public class ControllerImpl implements Controller {
     private final CharacterModel characterModel = new CharacterModelImpl();
-    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
+    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.GYM_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
@@ -130,12 +130,12 @@ public class ControllerImpl implements Controller {
     @Override
     public void goToNewMap(final GameMap newMap) {
         final Optional<Encounter> encounter = mapManager.changeMap(newMap);
-        if (encounter.isPresent()) {
-            currentEncounter = encounter.get();
-            changeScenario(ScenariosType.ENCOUNTER);
-        } else {
+//        if (encounter.isPresent()) {
+//            currentEncounter = encounter.get();
+//            changeScenario(ScenariosType.ENCOUNTER);
+//        } else {
             changeScenario(ScenariosType.INDOOR_MAP);
-        }
+//        }
     }
 
     /**

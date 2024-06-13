@@ -185,9 +185,8 @@ public class DimensionGetter {
      * @return the character position
      */
     public Dimension getCharacterMinigamePos() {
-        final float x = this.getScenarioDimension().width / 3.457f;
         return new Dimension(
-                (int) x,
+                this.getMinigameScenarioWeight() / 3,
                 this.getScenarioDimension().height / 3
         );
     }

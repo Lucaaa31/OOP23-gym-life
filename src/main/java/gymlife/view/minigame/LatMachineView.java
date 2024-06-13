@@ -80,30 +80,7 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
 
             button.addActionListener(e -> {
                 controller.notifyUserAction(Integer.parseInt(button.getText()));
-                switch (controller.getMinigameState()) {
-                    case NOT_STARTED -> {
-                        doAnimation();
-                        timerView();
-                    }
-                    case RUNNING -> {
-                        super.setValueProgressBar(super.getValueProgressBar() + controller.getDifficulty().getProgress());
-                    }
-                    case REP_REACHED -> {
-                        super.setValueProgressBar(0);
-                        doAnimation();
-                    }
-                    case MISTAKE_MADE -> {
-                        super.setValueProgressBar(0);
-                        super.setColorBackground("backgroundColorRed");
-                        super.setColorForeground("foregroundColorRed");
-                        doAnimation();
-                        super.setColorBackground("backgroundColorGreen");
-                        super.setColorForeground("foregroundColorGreen");
-                    }
-                    case ENDED_WON, ENDED_LOST -> this.setVisible(false);
-                    default -> {
-                    }
-                }
+                super.handleMinigameState();
                 progressBarHandler();
             });
 

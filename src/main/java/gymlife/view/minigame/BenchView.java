@@ -73,7 +73,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
                 } catch (InterruptedException ignored) {
                 }
                 setCharacterLabelIcon(super.getCharacterImage("images/Minigame/bench_press/sprite_" + state + ".png"));
-
             }
             buttonMinigame.setText("Press me!");
             buttonMinigame.setEnabled(true);

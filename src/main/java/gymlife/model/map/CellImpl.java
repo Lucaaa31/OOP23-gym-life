@@ -200,7 +200,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train legs, no collisions and interactable.
      */
-    GYM_LEGS_INTERACT(34, false),
+    GYM_LEGS_INTERACT(34, false, e -> e.minigameInteraction(MinigameType.SQUAT)),
     /**
      * The cell with a couple of weights, with collisions and not interactable.
      */

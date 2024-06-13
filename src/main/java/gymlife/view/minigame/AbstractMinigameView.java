@@ -6,12 +6,7 @@ import gymlife.utility.minigame.MinigameState;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JProgressBar;
-import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Image;
@@ -46,6 +41,7 @@ public abstract class AbstractMinigameView extends GamePanel {
     private final ImageIcon backgroundImage;
     private static final String BACKGROUND_COLOR_GREEN = "backgroundColorGreen";
     private static final String FOREGROUND_COLOR_GREEN = "foregroundColorGreen";
+    private final JLabel orderLabel = new JLabel("Press button to start!");
 
     /**
      * Method that sets the position of a button in a random position.
@@ -169,7 +165,8 @@ public abstract class AbstractMinigameView extends GamePanel {
                 dimensionGetter.getTimerMinigameDimension().height);
 
         backgroundImage.setImage(backgroundImage.getImage()
-                .getScaledInstance(dimensionGetter.getMinigameScenarioWeight(),
+                .getScaledInstance(
+                        dimensionGetter.getMinigameScenarioWeight(),
                         dimensionGetter.getScenarioDimension().height,
                         Image.SCALE_SMOOTH));
 
@@ -180,7 +177,7 @@ public abstract class AbstractMinigameView extends GamePanel {
 
         characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
 
-        characterLabel.setLocation(dimensionGetter.getCharacterMinigamePos().width,
+        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWeight() / 2 ,
                 dimensionGetter.getCharacterMinigamePos().height);
 
         characterLabel.setIcon(characterImage);
@@ -190,6 +187,17 @@ public abstract class AbstractMinigameView extends GamePanel {
         layeredPane.add(characterLabel, Integer.valueOf(1));
         layeredPane.add(timerView, Integer.valueOf(1));
 
+
+
+        orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        orderLabel.setForeground(Color.YELLOW);
+        orderLabel.setBounds(
+                dimensionGetter.getMinigameScenarioWeight() / 3  - 50,
+                150,
+                600,
+                dimensionGetter.getTimerMinigameDimension().height);
+
+        layeredPane.add(orderLabel, Integer.valueOf(1));
 
     }
 
@@ -311,12 +319,14 @@ public abstract class AbstractMinigameView extends GamePanel {
             }
             case REP_REACHED -> {
                 progressBar.setValue(0);
+                orderLabel.setText("Rep done!");
                 doAnimation();
             }
             case MISTAKE_MADE -> {
                 progressBar.setValue(0);
                 progressBar.setBackground(colorMap.get("backgroundColorRed"));
                 progressBar.setForeground(colorMap.get("foregroundColorRed"));
+                orderLabel.setText("Mistake made!");
                 doAnimation();
                 progressBar.setBackground(colorMap.get("backgroundColorGreen"));
                 progressBar.setForeground(colorMap.get("foregroundColorGreen"));
@@ -325,6 +335,7 @@ public abstract class AbstractMinigameView extends GamePanel {
             default -> {
             }
         }
+        setOrderLabel(controller.getMinigameState().getText());
     }
 
     /**
@@ -339,6 +350,10 @@ public abstract class AbstractMinigameView extends GamePanel {
 
     private void setCharacterImageIcon(final ImageIcon icon) {
         characterImage = icon;
+    }
+
+    public void setOrderLabel(final String text) {
+        orderLabel.setText(text);
     }
 
 }
