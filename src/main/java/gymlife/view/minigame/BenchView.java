@@ -2,10 +2,11 @@ package gymlife.view.minigame;
 
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
+import java.awt.*;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
@@ -20,6 +21,7 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
     private static final long serialVersionUID = -2554575966007368L;
     private final JButton buttonMinigame = new JButton("START");
     private final transient DimensionGetter dimensionGetter;
+    private final transient DimensionMinigame dimensionMinigame;
 
 
     /**
@@ -35,22 +37,30 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
         this.dimensionGetter = dimensionGetter;
         final int borderSize = 5;
 
-
         buttonMinigame.setSize(dimensionGetter.getButtonMinigameDimension());
         buttonMinigame.setBackground(Color.GREEN);
         buttonMinigame.setBorder(new LineBorder(Color.WHITE, borderSize));
 
+        this.dimensionMinigame = new DimensionMinigame(
+                dimensionGetter.getScenarioDimension().width,
+                dimensionGetter.getScenarioDimension().height,
+                dimensionGetter.getCharacterMinigameDimension().width,
+                dimensionGetter.getCharacterMinigameDimension().height,
+                buttonMinigame.getSize().width,
+                buttonMinigame.getSize().height
+        );
+
 
         addLayeredPanel(buttonMinigame);
 
-        buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
+        buttonMinigame.setLocation(controller.getRandomButtonPosition(dimensionMinigame));
 
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction(0);
             super.handleMinigameState();
             super.progressBarHandler();
-            buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
+            buttonMinigame.setLocation(controller.getRandomButtonPosition(dimensionMinigame));
         });
 
         this.setFocusable(true);
@@ -73,7 +83,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
                 } catch (InterruptedException ignored) {
                 }
                 setCharacterLabelIcon(super.getCharacterImage("images/Minigame/bench_press/sprite_" + state + ".png"));
-
             }
             buttonMinigame.setText("Press me!");
             buttonMinigame.setEnabled(true);
@@ -90,5 +99,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
         buttonMinigame.setSize(dimensionGetter.getButtonMinigameDimension());
     }
 
-
 }
+
+

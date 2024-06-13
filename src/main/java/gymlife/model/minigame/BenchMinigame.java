@@ -1,7 +1,9 @@
 package gymlife.model.minigame;
 
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
 
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -19,10 +21,16 @@ public final class BenchMinigame extends AbstractMinigame {
      * Notifies the bench minigame that a button has been pressed.
      * Starts the timer if it is the first time the button is pressed.
      *
-     * @param params the button that has been pressed
+     * @param buttonCode the button that has been pressed
      */
     @Override
-    public void notifyUserAction(final int... params) {
+    public void notifyUserAction(final int buttonCode) {
+        notifyUserAction();
+    }
+
+
+    @Override
+    public void notifyUserAction() {
         if (isFirstTimePressed) {
             isFirstTimePressed = false;
             startMinigame = System.nanoTime();
@@ -37,7 +45,6 @@ public final class BenchMinigame extends AbstractMinigame {
             }
         }
     }
-
 
     /**
      * Validates the user's press timing and updates the game state accordingly.
@@ -93,6 +100,28 @@ public final class BenchMinigame extends AbstractMinigame {
     public List<Integer> getSequence() {
         return List.of();
     }
+
+    @Override
+    public Point getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
+        int x, y;
+        do {
+            x = (int) (Math.random() * (dimensionMinigame.widthMinigameScenario()
+                    - dimensionMinigame.buttonMinigameWidth()));
+            y = (int) (Math.random() * (dimensionMinigame.heightMinigameScenario()
+                    - dimensionMinigame.buttonMinigameHeight()));
+        } while (limits(x, y, dimensionMinigame));
+        return new Point(x, y);
+    }
+
+    private boolean limits(final int x, final int y, final DimensionMinigame dimensionMinigame) {
+        final int xMin = dimensionMinigame.widthMinigameScenario() / 2 - dimensionMinigame.buttonMinigameWidth();
+        final int xMax = dimensionMinigame.widthMinigameScenario() / 2 + dimensionMinigame.buttonMinigameWidth();
+        final int yMin = dimensionMinigame.heightMinigameScenario() / 2 - dimensionMinigame.buttonMinigameHeight();
+        final int yMax = dimensionMinigame.heightMinigameScenario() / 2 + dimensionMinigame.buttonMinigameHeight();
+
+        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
+    }
+
 
 
 }

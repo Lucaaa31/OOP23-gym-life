@@ -1,8 +1,10 @@
 package gymlife.model.minigame;
 
 
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -28,24 +30,25 @@ public final class LatMachineMinigame extends AbstractMinigame {
         sequence = new ArrayList<>();
     }
 
-
-    /**
-     * Notifies the lat machine minigame that a button has been pressed.
-     * Starts the timer if it is the first time the button is pressed.
-     */
     @Override
-    public void notifyUserAction(final int... params) {
+    public void notifyUserAction(int buttonCode) {
         if (isFirstTimePressed) {
             startMinigame = System.nanoTime();
             createRandomSequence();
             isFirstTimePressed = false;
         } else {
             incrementNTimePressed();
-            numberPressed = params[0];
+            numberPressed = buttonCode;
             setMinigameState(MinigameState.RUNNING);
             validatePress();
         }
     }
+
+    @Override
+    public void notifyUserAction() {
+        notifyUserAction(0);
+    }
+
 
     /**
      * Validates the user's press timing and updates the game state accordingly.
@@ -95,6 +98,11 @@ public final class LatMachineMinigame extends AbstractMinigame {
     @Override
     public List<Integer> getSequence() {
         return List.copyOf(sequence);
+    }
+
+    @Override
+    public Point getRandomPositionButton(DimensionMinigame dimensionMinigame) {
+        return null;
     }
 
 }

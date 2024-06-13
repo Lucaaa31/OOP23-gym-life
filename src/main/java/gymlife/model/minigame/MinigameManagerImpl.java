@@ -1,10 +1,12 @@
 package gymlife.model.minigame;
 
 import gymlife.model.api.MinigameManager;
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -81,6 +83,8 @@ public class MinigameManagerImpl implements MinigameManager {
     }
 
 
+
+
     /**
      * Retrieves the current minigame type.
      *
@@ -123,6 +127,11 @@ public class MinigameManagerImpl implements MinigameManager {
     @Override
     public int getEndTime() {
         return currentMinigame.getTimeMinigame();
+    }
+
+    @Override
+    public Point getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
+        return currentMinigame.getRandomPositionButton(dimensionMinigame);
     }
 
 

@@ -10,11 +10,13 @@ import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
+import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
 
 import javax.annotation.concurrent.Immutable;
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +52,7 @@ public interface Controller {
 
     /**
      * Returns the current amount of money.
-     *
+     * <p>
      * This method retrieves the money count from the `statsManager` and returns it.
      *
      * @return money.
@@ -118,12 +120,14 @@ public interface Controller {
 
     /**
      * Method to return the current randomEncounter.
+     *
      * @return Encounter object.
      */
     Encounter getCurrentEncounter();
 
     /**
      * Method to resolve the encounter either by accepting or declining the encounter.
+     *
      * @param choice boolean indicating whether to accept or decline the encounter.
      */
     void resolveEncounter(boolean choice);
@@ -269,7 +273,8 @@ public interface Controller {
     /**
      * Generates a new random threshold value within a specified range and resets
      * the multiplier.
-     *
      */
     void newThreshold();
+
+    Point getRandomButtonPosition(DimensionMinigame dimensionMinigame);
 }
