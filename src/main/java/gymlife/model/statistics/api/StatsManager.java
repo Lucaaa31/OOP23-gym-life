@@ -3,7 +3,6 @@ package gymlife.model.statistics.api;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.CounterImpl;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
 
@@ -25,7 +24,7 @@ public interface StatsManager {
      *
      * @return the number of days
      */
-    CounterImpl getDays();
+    int getDays();
     /**
      * Decrement the number of day of one.
      *
@@ -63,7 +62,7 @@ public interface StatsManager {
      *
      * @return the money of the game
      */
-    CounterImpl getMoney();
+    int getMoney();
     /**
      * Multincrement a specified stats to the value.
      *

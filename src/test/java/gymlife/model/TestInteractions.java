@@ -37,7 +37,7 @@ class TestInteractions {
         final int expectedDays = 39;
         final Position pos = new Position(1, 2);
         interactOnCell(pos);
-        assertEquals(expectedDays, statsManager.getDays().getCount());
+        assertEquals(expectedDays, statsManager.getDays());
     }
 
     @Test

@@ -164,7 +164,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
-        final int moneyValue = controller.getMoney().getCount();
+        final int moneyValue = controller.getMoney();
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
@@ -191,7 +191,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
-        final int value = controller.getDays().getCount();
+        final int value = controller.getDays();
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);

@@ -13,7 +13,7 @@ import gymlife.model.statistics.StatsType;
 /**
  * This class contains unit tests for the StatsModel implementation.
  */
-class TestStats {
+class TestCommonStats {
 
     @Test
     void testInitialization() {

@@ -88,8 +88,8 @@ class TestStatsmanager {
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats().get(StatsType.HAPPINESS).getCount());
         assertEquals(StatsConstants.STARTING_MASS_LEVEL, stats.getStats().get(StatsType.MASS).getCount());
-        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney().getCount());
-        assertEquals(GameDifficulty.EASY.getDays(), stats.getDays().getCount());
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getMoney());
+        assertEquals(GameDifficulty.EASY.getDays(), stats.getDays());
         stats.resetAll();
     }
 
@@ -103,7 +103,7 @@ class TestStatsmanager {
         stats.resetAll();
         stats.multiIncrementStat(StatsType.MONEY, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
         assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 + StatsConstants.STARTING_STATS_LEVEL,
-                stats.getMoney().getCount());
+                stats.getMoney());
     }
 
     @Test
@@ -113,7 +113,7 @@ class TestStatsmanager {
         assertEquals(10, stats.getStats().get(StatsType.HAPPINESS).getCount());
         stats.resetAll();
         stats.setStat(StatsType.MONEY, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
-        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, stats.getMoney().getCount());
+        assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5, stats.getMoney());
         stats.setStat(StatsType.MASS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
         assertEquals(TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5 * 3, stats.getStats().get(StatsType.MASS).getCount());
     }
@@ -132,7 +132,7 @@ class TestStatsmanager {
         stats.setStat(StatsType.MONEY, high);
         stats.denyEncounter(new Encounter("ROBBER", "prova",
                 EncountersConstants.robberAccept(), EncountersConstants.robberDeny()));
-        assertEquals(zero, stats.getMoney().getCount());
+        assertEquals(zero, stats.getMoney());
     }
 
     @Test

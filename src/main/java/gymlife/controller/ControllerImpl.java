@@ -14,7 +14,6 @@ import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.statistics.CounterImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
@@ -108,7 +107,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getDays() {
+    public int getDays() {
         return statsManager.getDays();
     }
 
@@ -118,7 +117,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getMoney() {
+    public int getMoney() {
         return statsManager.getMoney();
     }
 

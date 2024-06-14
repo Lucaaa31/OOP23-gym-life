@@ -2,7 +2,6 @@ package gymlife.controller.api;
 
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.CounterImpl;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
@@ -51,14 +50,14 @@ public interface Controller {
      *
      * @return the number of days
      */
-    CounterImpl getDays();
+    int getDays();
 
     /**
      * Returns the money of the player.
      *
      * @return the number of days
      */
-    CounterImpl getMoney();
+    int getMoney();
 
     /**
      * Changes the current game map to the specified new map.
