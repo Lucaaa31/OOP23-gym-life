@@ -1,7 +1,6 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.MusicPlayer;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 
@@ -53,9 +52,6 @@ public class SleepView extends GamePanel {
 
     private void startAnimation() {
         new Thread(() -> {
-            final MusicPlayer musicPlayer = new MusicPlayer("src/main/resources/sounds/sleeping_sound.wav");
-            musicPlayer.open();
-            musicPlayer.play();
             for (int i = 0; i < 4; i++) {
                 try {
                     imageLabel.setIcon(loadResizedImage(i));
@@ -66,8 +62,6 @@ public class SleepView extends GamePanel {
             controller.changeScenario(ScenariosType.INDOOR_MAP);
             imageLabel.setIcon(loadResizedImage(0));
             this.transferFocus();
-            musicPlayer.pause();
-            musicPlayer.close();
         }).start();
     }
 

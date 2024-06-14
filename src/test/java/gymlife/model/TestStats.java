@@ -1,12 +1,12 @@
 package gymlife.model;
 
-import gymlife.model.statistics.StatsModelImpl;
+import gymlife.model.statistics.CommonStatsImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-import gymlife.model.statistics.api.StatsModel;
+import gymlife.model.statistics.api.CommonStats;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
@@ -17,7 +17,7 @@ class TestStats {
 
     @Test
     void testInitialization() {
-        final StatsModel stats = new StatsModelImpl();
+        final CommonStats stats = new CommonStatsImpl();
         stats.resetAll();
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.HAPPINESS));
         assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.STAMINA));
@@ -34,9 +34,9 @@ class TestStats {
 
     @Test
     void testIncrementDecrement() {
-        final StatsModel stats = new StatsModelImpl();
+        final CommonStats stats = new CommonStatsImpl();
         stats.resetAll();
-        assertEquals(1, stats.getStats(StatsType.STAMINA));
+        assertEquals(StatsConstants.STARTING_STATS_LEVEL, stats.getStats(StatsType.STAMINA));
         stats.increase(StatsType.STAMINA);
 
 
@@ -85,7 +85,7 @@ class TestStats {
 
     @Test
     void testMultiIncrement() {
-        final StatsModel stats = new StatsModelImpl();
+        final CommonStats stats = new CommonStatsImpl();
         stats.resetAll();
         stats.multiIncrementStats(StatsType.BACK_MASS, TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5);
         assertEquals(StatsConstants.STARTING_STATS_LEVEL + TestConstants.TEST_MULTI_INCREMENT_POSITIVE_5,
@@ -97,7 +97,7 @@ class TestStats {
 
     @Test
     void testResetCount() {
-        final StatsModel stats = new StatsModelImpl();
+        final CommonStats stats = new CommonStatsImpl();
         stats.resetAll();
         assertEquals(StatsConstants.STARTING_MASS_LEVEL, stats.getStats(StatsType.MASS));
     }

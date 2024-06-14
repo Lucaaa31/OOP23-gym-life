@@ -6,14 +6,14 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.model.statistics.api.DaysModel;
 import gymlife.model.statistics.api.MoneyModel;
-import gymlife.model.statistics.api.StatsModel;
+import gymlife.model.statistics.api.CommonStats;
 import gymlife.utility.GameDifficulty;
 /**
  * Implementation of the StatsManager interface.
  * This class manages the game statistics and provides methods to retrieve the stats.
  */
 public class StatsManagerImpl implements StatsManager {
-    private final StatsModel gameStats;
+    private final CommonStats gameStats;
     private final DaysModel gameDays;
     private final MoneyModel gameMoney;
     /**
@@ -23,7 +23,7 @@ public class StatsManagerImpl implements StatsManager {
      * @param difficulty the game difficulty
      */
     public StatsManagerImpl(final GameDifficulty difficulty) {
-        gameStats = new StatsModelImpl();
+        gameStats = new CommonStatsImpl();
         gameDays = new DaysModelImpl(difficulty.getDays());
         gameMoney = new MoneyModelImpl(StatsConstants.STARTING_STATS_LEVEL);
     }

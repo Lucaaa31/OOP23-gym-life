@@ -84,7 +84,7 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                final char key = e.getKeyChar();
+                final char key = Character.toLowerCase(e.getKeyChar());
                 if (Directions.getDir(key).isPresent()) {
                     controller.moveCharacter(Directions.getDir(key).get());
                     characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(key).get());
