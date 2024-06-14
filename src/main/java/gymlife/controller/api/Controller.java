@@ -2,7 +2,7 @@ package gymlife.controller.api;
 
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -43,7 +43,7 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, LimitedCounterImpl> getStatistics();
+    Map<StatsType, LimitedGameCounterImpl> getStatistics();
 
     /**
      * Returns the number of days that have passed in the game.

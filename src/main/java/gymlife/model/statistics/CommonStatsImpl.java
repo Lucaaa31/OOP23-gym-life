@@ -7,12 +7,12 @@ import java.util.Map;
  * Implementation of the StatsModel interface that represents the statistics of a gym member.
  */
 public final class CommonStatsImpl implements gymlife.model.statistics.api.CommonStats {
-    private final Map<StatsType, LimitedCounterImpl> gameStats = new HashMap<>();
-    private final LimitedCounterImpl legMass = new LimitedCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
+    private final Map<StatsType, LimitedGameCounterImpl> gameStats = new HashMap<>();
+    private final LimitedGameCounterImpl legMass = new LimitedGameCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
             StatsConstants.MAX_STATS_LEVEL);
-    private final LimitedCounterImpl backMass = new LimitedCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
+    private final LimitedGameCounterImpl backMass = new LimitedGameCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
             StatsConstants.MAX_STATS_LEVEL);
-    private final LimitedCounterImpl chestMass = new LimitedCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
+    private final LimitedGameCounterImpl chestMass = new LimitedGameCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
             StatsConstants.MAX_STATS_LEVEL);
 
     /**
@@ -23,7 +23,7 @@ public final class CommonStatsImpl implements gymlife.model.statistics.api.Commo
         gameStats.put(StatsType.BACK_MASS, backMass);
         gameStats.put(StatsType.CHEST_MASS, chestMass);
         gameStats.put(StatsType.LEG_MASS, legMass);
-        final LimitedCounterImpl mass = new LimitedCounterImpl(StatsConstants.STARTING_MASS_LEVEL,
+        final LimitedGameCounterImpl mass = new LimitedGameCounterImpl(StatsConstants.STARTING_MASS_LEVEL,
                 StatsConstants.MAX_MASS_LEVEL) {
             @Override
             public void increment() {
@@ -61,10 +61,10 @@ public final class CommonStatsImpl implements gymlife.model.statistics.api.Commo
             }
         };
         gameStats.put(StatsType.MASS, mass);
-        final LimitedCounterImpl stamina = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL,
+        final LimitedGameCounterImpl stamina = new LimitedGameCounterImpl(StatsConstants.MAX_STATS_LEVEL,
                 StatsConstants.MAX_STATS_LEVEL);
         gameStats.put(StatsType.STAMINA, stamina);
-        final LimitedCounterImpl happiness = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL,
+        final LimitedGameCounterImpl happiness = new LimitedGameCounterImpl(StatsConstants.MAX_STATS_LEVEL,
                 StatsConstants.MAX_STATS_LEVEL);
         gameStats.put(StatsType.HAPPINESS, happiness);
     }
@@ -109,7 +109,7 @@ public final class CommonStatsImpl implements gymlife.model.statistics.api.Commo
      * @return the map of all the game stats
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getMap() {
+    public Map<StatsType, LimitedGameCounterImpl> getMap() {
         return Map.copyOf(gameStats);
     }
 
@@ -130,7 +130,7 @@ public final class CommonStatsImpl implements gymlife.model.statistics.api.Commo
      */
     @Override
     public void resetAll() {
-        for (final Map.Entry<StatsType, LimitedCounterImpl> entry : gameStats.entrySet()) {
+        for (final Map.Entry<StatsType, LimitedGameCounterImpl> entry : gameStats.entrySet()) {
             entry.getValue().resetCount();
         }
     }

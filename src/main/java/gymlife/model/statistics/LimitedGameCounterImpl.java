@@ -5,7 +5,7 @@ package gymlife.model.statistics;
  * This counter can be incremented and decremented, but it cannot exceed its limit or go below zero.
  * It extends the Counter class.
  */
-public class LimitedCounterImpl extends CounterImpl implements gymlife.model.statistics.api.LimitedCounter {
+public class LimitedGameCounterImpl extends GameCounterImpl implements gymlife.model.statistics.api.LimitedCounter {
     // The maximum value that this counter can reach.
     private final int limit;
 
@@ -15,7 +15,7 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
      * @param count The initial count.
      * @param limit The maximum value that this counter can reach.
      */
-    public LimitedCounterImpl(final int count, final int limit) {
+    public LimitedGameCounterImpl(final int count, final int limit) {
         super(count);
         this.limit = limit;
     }
@@ -25,7 +25,7 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
      *
      * @param limit The maximum value that this counter can reach.
      */
-    public LimitedCounterImpl(final int limit) {
+    public LimitedGameCounterImpl(final int limit) {
         super();
         this.limit = limit;
     }
@@ -58,7 +58,7 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
     @Override
     public void multiIncrement(final int value) {
         super.multiIncrement(value);
-        if (super.getCount() > limit) {
+        if (this.isMax()) {
             setCount(limit);
         }
     }
@@ -70,7 +70,7 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
     @Override
     public void setCount(final int count) {
         super.setCount(count);
-        if (super.getCount() > limit) {
+        if (this.isMax()) {
             super.setCount(limit);
         } else if (super.getCount() <= 0) {
             resetCount();
@@ -84,6 +84,6 @@ public class LimitedCounterImpl extends CounterImpl implements gymlife.model.sta
      */
     @Override
     public boolean isMax() {
-        return limit == super.getCount();
+        return limit <= super.getCount();
     }
 }

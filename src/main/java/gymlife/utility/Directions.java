@@ -49,7 +49,7 @@ public enum Directions {
      */
     public static Optional<Directions> getDir(final char key) {
         for (final Directions elem : Directions.values()) {
-            if (elem.key == key) {
+            if (elem.key == Character.toLowerCase(key)) {
                 return Optional.of(elem);
             }
         }

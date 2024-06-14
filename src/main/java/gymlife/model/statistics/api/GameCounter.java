@@ -3,7 +3,7 @@ package gymlife.model.statistics.api;
 /**
  * The Counter class represents a counter with basic increment and decrement operations.
  */
-public interface Counter {
+public interface GameCounter {
     /**
      * Returns the current count.
      *

@@ -1,6 +1,6 @@
 package gymlife.model;
 
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * .
  */
-class TestLimitedCounter {
+class TestLimitedGameCounter {
     /**
      * .
      */
-    private final LimitedCounterImpl counter2 = new LimitedCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
+    private final LimitedGameCounterImpl counter2 = new LimitedGameCounterImpl(StatsConstants.STARTING_STATS_LEVEL,
             StatsConstants.MAX_STATS_LEVEL);
     @Test
     void testIsMax() {
@@ -38,7 +38,7 @@ class TestLimitedCounter {
     void testSetCount() {
         final int zero = 0;
         final int biggerLimit = StatsConstants.MAX_STATS_LEVEL + 1;
-        final LimitedCounterImpl counter1 = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL);
+        final LimitedGameCounterImpl counter1 = new LimitedGameCounterImpl(StatsConstants.MAX_STATS_LEVEL);
         counter1.setCount(biggerLimit);
         assertEquals(StatsConstants.MAX_STATS_LEVEL, counter1.getCount());
         counter1.setCount(zero);
@@ -50,7 +50,7 @@ class TestLimitedCounter {
 
     @Test
     void testMultiIncrementCount() {
-        final LimitedCounterImpl counter1 = new LimitedCounterImpl(StatsConstants.MAX_STATS_LEVEL);
+        final LimitedGameCounterImpl counter1 = new LimitedGameCounterImpl(StatsConstants.MAX_STATS_LEVEL);
         counter1.multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
         counter1.multiIncrement(-StatsConstants.MAX_STATS_LEVEL);
         assertEquals(0, counter1.getCount());

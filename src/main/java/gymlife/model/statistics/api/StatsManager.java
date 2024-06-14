@@ -3,7 +3,7 @@ package gymlife.model.statistics.api;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 
 import javax.annotation.concurrent.Immutable;
@@ -18,7 +18,7 @@ public interface StatsManager {
      *
      * @return a map of statistics
      */
-    Map<StatsType, LimitedCounterImpl> getStats();
+    Map<StatsType, LimitedGameCounterImpl> getCommonStats();
     /**
      * Returns the number of days in the gym life.
      *

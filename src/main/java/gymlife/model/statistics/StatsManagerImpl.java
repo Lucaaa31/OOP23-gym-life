@@ -12,8 +12,8 @@ import gymlife.utility.GameDifficulty;
  */
 public class StatsManagerImpl implements StatsManager {
     private final CommonStats gameStats;
-    private final CounterImpl gameDays;
-    private final CounterImpl gameMoney;
+    private final GameCounterImpl gameDays;
+    private final GameCounterImpl gameMoney;
     /**
      * Constructs a StatsManagerImpl object with the given game difficulty.
      * Initializes the gameStats and gameDays objects.
@@ -22,8 +22,8 @@ public class StatsManagerImpl implements StatsManager {
      */
     public StatsManagerImpl(final GameDifficulty difficulty) {
         gameStats = new CommonStatsImpl();
-        gameDays = new CounterImpl(difficulty.getDays());
-        gameMoney = new CounterImpl(StatsConstants.STARTING_STATS_LEVEL);
+        gameDays = new GameCounterImpl(difficulty.getDays());
+        gameMoney = new GameCounterImpl(StatsConstants.STARTING_STATS_LEVEL);
     }
     /**
      * Retrieves the game statistics as a map of StatsType and their corresponding values.
@@ -31,7 +31,7 @@ public class StatsManagerImpl implements StatsManager {
      * @return a map of StatsType and their corresponding values
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getStats() {
+    public Map<StatsType, LimitedGameCounterImpl> getCommonStats() {
         return gameStats.getMap();
     }
     /**

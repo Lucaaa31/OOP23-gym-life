@@ -2,7 +2,7 @@ package gymlife.model.statistics.api;
 
 import java.util.Map;
 
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 
 /**
@@ -34,7 +34,7 @@ public interface CommonStats {
      * 
      * @return the map of stats and their corresponding values
      */
-    Map<StatsType, LimitedCounterImpl> getMap();
+    Map<StatsType, LimitedGameCounterImpl> getMap();
     /**
      * Increases or decrease the specified stat by the given value.
      * 

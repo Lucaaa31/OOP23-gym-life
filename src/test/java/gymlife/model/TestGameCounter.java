@@ -4,14 +4,14 @@ import gymlife.model.statistics.StatsConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gymlife.model.statistics.CounterImpl;
+import gymlife.model.statistics.GameCounterImpl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TestCounter {
-    private CounterImpl counter;
+class TestGameCounter {
+    private GameCounterImpl counter;
     @BeforeEach
     void setUp() {
-        counter = new CounterImpl();
+        counter = new GameCounterImpl();
     }
     @Test
     void testGetCount() {

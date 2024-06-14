@@ -10,7 +10,7 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.StatsType;
@@ -97,8 +97,8 @@ public class ControllerImpl implements Controller {
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getStatistics() {
-        return statsManager.getStats();
+    public Map<StatsType, LimitedGameCounterImpl> getStatistics() {
+        return statsManager.getCommonStats();
     }
 
     /**
@@ -166,8 +166,8 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
-                ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
+        return statsManager.getCommonStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+                ? statsManager.getCommonStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
     /**
