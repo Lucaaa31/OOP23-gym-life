@@ -1,18 +1,16 @@
 package gymlife.view.minigame;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameDifficulty;
+import gymlife.utility.minigame.MinigameType;
+import gymlife.view.DimensionGetter;
 
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.util.List;
 
@@ -28,19 +26,39 @@ public class ScoreBoardView extends JPanel {
     private final JPanel mediumPanel = createPanel();
     private final JPanel hardPanel = createPanel();
     private final CardLayout cardLayout = new CardLayout();
-    private final JButton easyButton = new JButton("Easy");
-    private final JButton mediumButton = new JButton("Medium");
-    private final JButton hardButton = new JButton("Hard");
+    private final JLabel easyButton = new JLabel("Easy");
+    private final JLabel mediumButton = new JLabel("Medium");
+    private final JLabel hardButton = new JLabel("Hard");
     private static final int MAX_TIMES = 5;
 
     /**
      * Creates a new ScoreBoardView object.
      *
      * @param controller the controller
+     * @param backButton the back button
      */
-    public ScoreBoardView(final Controller controller) {
+    public ScoreBoardView(final Controller controller,
+                          final MinigameType currentMinigameType,
+                          final MouseAdapter backButton,
+                          final DimensionGetter dimensionGetter) {
         this.setLayout(new BorderLayout());
         final JPanel buttonPanel = new JPanel(new FlowLayout());
+
+
+        final JLabel back = new JLabel("Back");
+
+        back.setFont(FontLoader.getCustomFont(20));
+
+
+        JPanel backPanel = new JPanel(new BorderLayout());
+        backPanel.add(back, BorderLayout.WEST);
+        this.add(backPanel, BorderLayout.SOUTH);
+
+
+        back.addMouseListener(backButton);
+
+
+        back.setBackground(Color.BLACK);
 
         buttonPanel.add(easyButton);
         buttonPanel.add(mediumButton);
@@ -59,24 +77,35 @@ public class ScoreBoardView extends JPanel {
         cards.add(mediumPanel, "Medium");
         cards.add(hardPanel, "Hard");
 
+
+        this.add(back, BorderLayout.SOUTH);
         this.add(cards, BorderLayout.CENTER);
 
-        easyButton.addActionListener(e -> {
-            cardLayout.show(cards, "Easy");
-            updatePanel(easyPanel, controller.getScores(controller.getMinigameType(), MinigameDifficulty.EASY));
-            updateButton(MinigameDifficulty.EASY);
+        easyButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cardLayout.show(cards, "Easy");
+                updatePanel(easyPanel, controller.getScores(currentMinigameType, MinigameDifficulty.EASY));
+                updateButton(MinigameDifficulty.EASY);
+            }
         });
 
-        mediumButton.addActionListener(e -> {
-            cardLayout.show(cards, "Medium");
-            updatePanel(mediumPanel, controller.getScores(controller.getMinigameType(), MinigameDifficulty.MEDIUM));
-            updateButton(MinigameDifficulty.MEDIUM);
+        mediumButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cardLayout.show(cards, "Medium");
+                updatePanel(mediumPanel, controller.getScores(currentMinigameType, MinigameDifficulty.MEDIUM));
+                updateButton(MinigameDifficulty.MEDIUM);
+            }
         });
 
-        hardButton.addActionListener(e -> {
-            cardLayout.show(cards, "Hard");
-            updatePanel(hardPanel, controller.getScores(controller.getMinigameType(), MinigameDifficulty.HARD));
-            updateButton(MinigameDifficulty.HARD);
+        hardButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cardLayout.show(cards, "Hard");
+                updatePanel(hardPanel, controller.getScores(currentMinigameType, MinigameDifficulty.HARD));
+                updateButton(MinigameDifficulty.HARD);
+            }
         });
 
         this.setVisible(true);
