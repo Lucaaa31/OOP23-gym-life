@@ -10,6 +10,9 @@ public enum MinigameState {
     NOT_STARTED(
             "The minigame has not started yet."
     ),
+    PRESSED_START(
+            "Press start to begin the minigame."
+    ),
     /**
      * The minigame is running.
      */

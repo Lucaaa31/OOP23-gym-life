@@ -10,9 +10,7 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.BorderLayout;
-import java.awt.Point;
 import java.io.Serial;
 import java.util.Map;
 
@@ -281,11 +279,11 @@ public abstract class AbstractMinigameView extends GamePanel {
     /**
      * Method that updates the view based on the minigame player action.
      */
-    protected void handleMinigameState() {
+    public void handleMinigameState() {
         switch (controller.getMinigameState()) {
-            case NOT_STARTED -> {
-                doAnimation();
+            case PRESSED_START -> {
                 timerView();
+                doAnimation();
             }
             case RUNNING -> {
                 progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());

@@ -1,10 +1,7 @@
 package gymlife.model.minigame;
 
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.awt.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +12,6 @@ public final class BenchMinigame extends AbstractMinigame {
     private long startReactionTime;
     private long startMinigame;
     private boolean isReactionTimeSet;
-    private boolean isFirstTimePressed = true;
 
 
     /**
@@ -32,9 +28,9 @@ public final class BenchMinigame extends AbstractMinigame {
 
     @Override
     public void notifyUserAction() {
-        if (isFirstTimePressed) {
-            isFirstTimePressed = false;
+        if (getMinigameState() == MinigameState.NOT_STARTED) {
             startMinigame = System.nanoTime();
+            setMinigameState(MinigameState.PRESSED_START);
         } else {
             setMinigameState(MinigameState.RUNNING);
             incrementNTimePressed();
