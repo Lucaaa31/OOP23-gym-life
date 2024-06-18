@@ -2,19 +2,13 @@ package gymlife.model.encounter;
 
 import java.util.Optional;
 
-
 /**
  * Factory class that generate a random code Optional of Encounter based on the different probability of every encounter
  * type. The probability of each encounter is defined in the EncountersConstants class.
  *.
  */
-public final class EncountersFactoryImpl {
-    /**
-     * Create a random Optional Encounter or Optional empty, depending on if the encounter appened or not.
-     * Every Encounter has a different probability of happening, defined in the EncountersConstants class.
-     * @return The random encounter.
-     */
-    public static Optional<Encounter> getRandomEncounter() {
+public final class EncountersFactoryImpl{
+    static Optional<Encounter> getRandomEncounter() {
         if (Math.random() < EncountersConstants.encounterChance()) {
             final double e = Math.random();
             if (e < EncountersConstants.moneyBagChance()) {
@@ -35,7 +29,5 @@ public final class EncountersFactoryImpl {
             }
         }
         return Optional.empty();
-    }
-    private EncountersFactoryImpl() {
     }
 }

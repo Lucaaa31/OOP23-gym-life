@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.model.encounter.Encounter;
 import gymlife.model.encounter.EncountersConstants;
-import gymlife.model.encounter.EncountersFactoryImpl;
+import gymlife.model.encounter.api.EncountersFactory;
 import gymlife.model.statistics.StatsType;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class TestEncounters {
     @Test
     void testGetRandomEncounter() {
         final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
-            final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
+            final Optional<Encounter> encounter = EncountersFactory.getRandomEncounter();
             return encounter.isEmpty()
                     || "PUSHER".equals(encounter.map(Encounter::name).orElse(""))
                     || "ICE_CREAM".equals(encounter.map(Encounter::name).orElse(""))
@@ -33,7 +33,7 @@ class TestEncounters {
     @Test
     void testGetAcceptCase() {
         final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
-            final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
+            final Optional<Encounter> encounter = EncountersFactory.getRandomEncounter();
             return encounter.map(enc -> {
                 final Map<StatsType, Integer> acceptCase = enc.acceptCase();
                 return acceptCase.equals(EncountersConstants.gymBroAccept())
@@ -49,9 +49,9 @@ class TestEncounters {
     @Test
     void testGetDenyCase() {
         final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
-            final Optional<Encounter> encounter = EncountersFactoryImpl.getRandomEncounter();
+            final Optional<Encounter> encounter = EncountersFactory.getRandomEncounter();
             return encounter.map(enc -> {
-                final Map<StatsType, Integer> denyCase = enc.denyCase();
+                final Map<StatsType, Integer> denyCase = enc.getDenyCase();
                 return denyCase.equals(EncountersConstants.gymBroDeny())
                         || denyCase.equals(EncountersConstants.iceCreamDeny())
                         || denyCase.equals(EncountersConstants.moneyBagDeny())

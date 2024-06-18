@@ -149,11 +149,11 @@ public class StatsManagerImpl implements StatsManager {
     /**
      * Modifies the game statistics according to the encounter type and the deny case of the specific encounter.
      * 
-     * @param encounter the encounter to deny
+     * @param encounterImpl the encounter to deny
      */
     @Override
-    public void denyEncounter(final Encounter encounter) {
-        final Map<StatsType, Integer> denyCase = encounter.denyCase();
+    public void denyEncounter(final Encounter encounterImpl) {
+        final Map<StatsType, Integer> denyCase = encounterImpl.getDenyCase();
         for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
                 gameMoney.multiIncrement(entry.getValue());

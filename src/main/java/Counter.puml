@@ -1,0 +1,21 @@
+@startuml
+interface GameCounter {
+    + getCount() int
+    + increment() void
+    + multiIncrement() void
+    + setCount() void
+}
+
+interface LimitedGameCounter {
+    + isMax() boolean
+}
+
+class GameCounterImpl implements GameCounter {
+    - int count
+}
+
+class LimitedGameCounterImpl extends GameCounterImpl implements LimitedGameCounter{
+    - limit int
+}
+
+@enduml

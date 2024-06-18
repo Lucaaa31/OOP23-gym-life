@@ -66,7 +66,7 @@ public class EncounterView extends GamePanel {
         infoPanel.setBackground(lightBlue);
 
         this.imageLabel = new JLabel();
-        this.descLabel = new JLabel("description.", SwingConstants.CENTER);
+        this.descLabel = new JLabel("getDescription.", SwingConstants.CENTER);
         descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         descLabel.setOpaque(true);
         descLabel.setBackground(lightBlue);
@@ -118,9 +118,9 @@ public class EncounterView extends GamePanel {
             imageLabel.setIcon(loadResizedImage());
             descLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
             descLabel.setText(
-                    "<html><h1>RANDOM ENCOUNTER</h1><br>" + controller.getCurrentEncounter().description() + "</html>");
+                    "<html><h1>RANDOM ENCOUNTER</h1><br>" + controller.getCurrentEncounter().getDescription() + "</html>");
             acceptButton.setText("<html>ACCEPT<br>" + controller.getCurrentEncounter().acceptCase() + "</html>");
-            declineButton.setText("<html>DECLINE<br>" + controller.getCurrentEncounter().denyCase() + "</html>");
+            declineButton.setText("<html>DECLINE<br>" + controller.getCurrentEncounter().getDenyCase() + "</html>");
         }
     }
 

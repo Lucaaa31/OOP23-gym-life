@@ -200,7 +200,7 @@ public class DifficultyMenu extends GamePanel {
     }
 
     /**
-     * Updates the description text based on the selected difficulty level.
+     * Updates the getDescription text based on the selected difficulty level.
      *
      * @param source the button that was clicked
      */

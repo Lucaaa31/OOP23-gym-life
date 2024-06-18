@@ -1,9 +1,9 @@
 package gymlife.model.map;
 
+import gymlife.model.encounter.api.EncountersFactory;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.encounter.EncountersFactoryImpl;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ public final class MapManagerImpl implements MapManager {
     @Override
     public Optional<Encounter> changeMap(final GameMap newMap) {
         this.currentMap = newMap;
-        return EncountersFactoryImpl.getRandomEncounter();
+        return EncountersFactory.getRandomEncounter();
     }
 
     @Override

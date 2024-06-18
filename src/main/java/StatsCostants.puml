@@ -1,0 +1,36 @@
+@startuml
+StatsManagerImpl  ...> CommonStatsImpl : uses
+StatsManagerImpl  ...> StatsType : uses
+CommonStats ...> StatsType : uses
+
+interface StatsManager {
+    + isGameOver() boolean
+    + isWin() boolean
+    + getCommonStats() MapMap<StatsType, Counter>
+}
+
+interface CommonStats {
+    + getStat(StatsType)
+    + setStat(StatsType)
+    ...
+}
+
+class StatsManagerImpl implements StatsManager {
+    - Commonstats  gameStats
+    - Counter gameDays
+    ...
+}
+
+class CommonStatsImpl implements CommonStats {
+    - Map<StatsType, LimitedCounter> stats
+    ...
+}
+
+enum StatsType {
+    - MASS
+    - HAPPYNESS
+    - DAYS
+    ...
+}
+@enduml
+
