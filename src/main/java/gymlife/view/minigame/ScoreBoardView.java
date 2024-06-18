@@ -8,11 +8,13 @@ import gymlife.view.DimensionGetter;
 
 
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.util.List;
+
 
 /**
  * The ScoreBoardView class represents the view component for the ScoreBoard mini-game.
@@ -41,13 +43,33 @@ public class ScoreBoardView extends JPanel {
                           final MinigameType currentMinigameType,
                           final MouseAdapter backButton,
                           final DimensionGetter dimensionGetter) {
+        FontLoader.loadFont();
         this.setLayout(new BorderLayout());
+
         final JPanel buttonPanel = new JPanel(new FlowLayout());
 
+        buttonPanel.add(easyButton);
+        buttonPanel.add(mediumButton);
+        buttonPanel.add(hardButton);
+
+
+        for(Component button : buttonPanel.getComponents()){
+            button.setFont(FontLoader.getCustomFont(20));
+            button.setBackground(getColor(((JLabel)button).getText()));
+            ((JLabel)button).setOpaque(true);
+            button.setPreferredSize(new Dimension(70, 30));
+            ((JLabel) button).setHorizontalAlignment(SwingConstants.CENTER);
+            ((JLabel) button).setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+        }
 
         final JLabel back = new JLabel("Back");
 
         back.setFont(FontLoader.getCustomFont(20));
+        back.setHorizontalAlignment(SwingConstants.CENTER);
+        back.setBackground(Color.BLACK);
+        back.setForeground(Color.WHITE);
+        back.setOpaque(true);
+
 
 
         JPanel backPanel = new JPanel(new BorderLayout());
@@ -58,11 +80,8 @@ public class ScoreBoardView extends JPanel {
         back.addMouseListener(backButton);
 
 
-        back.setBackground(Color.BLACK);
+        back.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-        buttonPanel.add(easyButton);
-        buttonPanel.add(mediumButton);
-        buttonPanel.add(hardButton);
 
         this.add(buttonPanel, BorderLayout.NORTH);
 
@@ -109,6 +128,16 @@ public class ScoreBoardView extends JPanel {
         });
 
         this.setVisible(true);
+    }
+
+    private Color getColor(final String difficulty){
+        return switch (difficulty) {
+            case "Easy" -> Color.GREEN;
+            case "Medium" -> Color.YELLOW;
+            case "Hard" -> Color.RED;
+            default -> Color.BLACK;
+        };
+
     }
 
     /**
