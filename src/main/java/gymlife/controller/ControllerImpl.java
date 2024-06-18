@@ -33,6 +33,7 @@ import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
+import org.apache.commons.lang3.tuple.Pair;
 
 
 import java.awt.*;
@@ -221,7 +222,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public Point getRandomButtonPosition(final DimensionMinigame dimensionMinigame) {
+    public Position getRandomButtonPosition(final DimensionMinigame dimensionMinigame) {
         return minigameManager.getRandomPositionButton(dimensionMinigame);
     }
 

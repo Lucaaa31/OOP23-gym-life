@@ -1,10 +1,12 @@
 package gymlife.model.minigame;
 
 import gymlife.model.api.MinigameManager;
+import gymlife.utility.Position;
 import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -130,7 +132,7 @@ public class MinigameManagerImpl implements MinigameManager {
     }
 
     @Override
-    public Point getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
+    public Position getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
         return currentMinigame.getRandomPositionButton(dimensionMinigame);
     }
 

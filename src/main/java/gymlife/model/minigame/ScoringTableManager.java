@@ -46,6 +46,9 @@ public class ScoringTableManager {
      * @return the scores of the minigame
      */
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
+        if (!scoringTables.containsKey(minigameType)) {
+            return List.of();
+        }
         return scoringTables.get(minigameType).getScores(difficulty);
     }
 }

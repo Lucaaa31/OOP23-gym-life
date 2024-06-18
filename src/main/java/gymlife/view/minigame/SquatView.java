@@ -8,12 +8,9 @@ import gymlife.view.api.MinigamePanel;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 /**
  * The SquatView class represents the view component for the Squat mini-game.
@@ -30,7 +27,6 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
     private final JButton buttonMinigame2 = new JButton("2");
     private final JButton buttonMinigame3 = new JButton("3");
     private final JButton buttonMinigame4 = new JButton("4");
-    private final Random random = new Random();
     final List<JButton> buttonList = new ArrayList<>(
             List.of(buttonMinigame1, buttonMinigame2, buttonMinigame3, buttonMinigame4));
 
@@ -45,50 +41,20 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         this.controller = controller;
         final int borderSize = 5;
 
-
-
         for (JButton button : buttonList) {
             button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GREEN);
             button.setBorder(new LineBorder(Color.WHITE, borderSize));
             addLayeredPanel(button);
-
             button.addActionListener(e -> {
                 controller.notifyUserAction(Integer.parseInt(button.getText()));
-                buttonAnimation(button);
                 super.progressBarHandler();
             });
         }
 
-
         this.setFocusable(true);
         this.setVisible(true);
-
     }
-
-    private void buttonAnimation(final JButton button) {
-        new Timer(5, new ActionListener() {
-            int y = 0;
-            final int direction = 1;
-            final int speed = 5;
-            int x = (int) (Math.random() * (dimensionGetter.getMinigameScenarioWeight() - button.getWidth()));
-
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-
-                y += direction * speed;
-                do {
-                    button.setLocation(x, y);
-                    System.out.println("Button: " + button.getText() + " x: " + x + " y: " + y);
-                }while (buttonList.stream()
-                        .anyMatch(b -> b != button && b.getBounds().intersects(button.getBounds())));
-
-                SquatView.super.repaint(); 
-            }
-        }).start();
-    }
-
 
 
     @Override

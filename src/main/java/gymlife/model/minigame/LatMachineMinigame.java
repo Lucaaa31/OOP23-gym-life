@@ -1,8 +1,10 @@
 package gymlife.model.minigame;
 
 
+import gymlife.utility.Position;
 import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -101,7 +103,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
     }
 
     @Override
-    public Point getRandomPositionButton(DimensionMinigame dimensionMinigame) {
+    public Position getRandomPositionButton(DimensionMinigame dimensionMinigame) {
         return null;
     }
 

@@ -125,12 +125,12 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
             for (int i = 0; i < controller.getDifficulty().getTouchForLift(); i++) {
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.MAGENTA);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException ignored) {
                 }
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.DARK_GRAY);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException ignored) {
                 }
             }

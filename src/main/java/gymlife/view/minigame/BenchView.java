@@ -2,7 +2,8 @@ package gymlife.view.minigame;
 
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Point;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
@@ -22,7 +23,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
     private final JButton buttonMinigame = new JButton("START");
     private final transient DimensionGetter dimensionGetter;
     private final transient DimensionMinigame dimensionMinigame;
-
 
     /**
      * Constructs a BenchView object with the specified controller.
@@ -50,23 +50,22 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
                 buttonMinigame.getSize().height
         );
 
-
         addLayeredPanel(buttonMinigame);
-
-        buttonMinigame.setLocation(controller.getRandomButtonPosition(dimensionMinigame));
-
+        buttonMinigame.setLocation(new Point(
+                controller.getRandomButtonPosition(dimensionMinigame).X(),
+                controller.getRandomButtonPosition(dimensionMinigame).Y()));
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction(0);
             super.handleMinigameState();
             super.progressBarHandler();
-            buttonMinigame.setLocation(controller.getRandomButtonPosition(dimensionMinigame));
+            buttonMinigame.setLocation(new Point(
+                    controller.getRandomButtonPosition(dimensionMinigame).X(),
+                    controller.getRandomButtonPosition(dimensionMinigame).Y()));
         });
-
         this.setFocusable(true);
         this.setVisible(true);
     }
-
 
     /**
      * Animates the character image by changing the sprite every second.

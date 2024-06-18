@@ -2,6 +2,7 @@ package gymlife.model.minigame;
 
 import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
 import java.util.List;
@@ -100,28 +101,6 @@ public final class BenchMinigame extends AbstractMinigame {
     public List<Integer> getSequence() {
         return List.of();
     }
-
-    @Override
-    public Point getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
-        int x, y;
-        do {
-            x = (int) (Math.random() * (dimensionMinigame.widthMinigameScenario()
-                    - dimensionMinigame.buttonMinigameWidth()));
-            y = (int) (Math.random() * (dimensionMinigame.heightMinigameScenario()
-                    - dimensionMinigame.buttonMinigameHeight()));
-        } while (limits(x, y, dimensionMinigame));
-        return new Point(x, y);
-    }
-
-    private boolean limits(final int x, final int y, final DimensionMinigame dimensionMinigame) {
-        final int xMin = dimensionMinigame.widthMinigameScenario() / 2 - dimensionMinigame.buttonMinigameWidth();
-        final int xMax = dimensionMinigame.widthMinigameScenario() / 2 + dimensionMinigame.buttonMinigameWidth();
-        final int yMin = dimensionMinigame.heightMinigameScenario() / 2 - dimensionMinigame.buttonMinigameHeight();
-        final int yMax = dimensionMinigame.heightMinigameScenario() / 2 + dimensionMinigame.buttonMinigameHeight();
-
-        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
-    }
-
 
 
 }

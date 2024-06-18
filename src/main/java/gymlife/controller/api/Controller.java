@@ -14,6 +14,7 @@ import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.concurrent.Immutable;
 import java.awt.*;
@@ -276,5 +277,5 @@ public interface Controller {
      */
     void newThreshold();
 
-    Point getRandomButtonPosition(DimensionMinigame dimensionMinigame);
+    Position getRandomButtonPosition(DimensionMinigame dimensionMinigame);
 }
