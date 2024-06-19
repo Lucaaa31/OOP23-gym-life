@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.model.encounter.Encounter;
 import gymlife.model.encounter.EncountersConstants;
-import gymlife.model.encounter.api.EncountersFactory;
+import gymlife.model.encounter.EncountersFactory;
 import gymlife.model.statistics.StatsType;
 import org.junit.jupiter.api.Test;
 

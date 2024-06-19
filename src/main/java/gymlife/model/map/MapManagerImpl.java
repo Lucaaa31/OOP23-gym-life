@@ -1,6 +1,6 @@
 package gymlife.model.map;
 
-import gymlife.model.encounter.api.EncountersFactory;
+import gymlife.model.encounter.EncountersFactory;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.encounter.Encounter;

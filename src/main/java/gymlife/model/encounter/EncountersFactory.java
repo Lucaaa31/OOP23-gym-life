@@ -7,8 +7,15 @@ import java.util.Optional;
  * type. The probability of each encounter is defined in the EncountersConstants class.
  *.
  */
-public final class EncountersFactoryImpl{
-    static Optional<Encounter> getRandomEncounter() {
+public final class EncountersFactory {
+    private EncountersFactory() {
+    }
+    /**
+     * Returns a random encounter based on the probability of each encounter type.
+     *
+     * @return a random encounter
+     */
+    public static Optional<Encounter> getRandomEncounter() {
         if (Math.random() < EncountersConstants.encounterChance()) {
             final double e = Math.random();
             if (e < EncountersConstants.moneyBagChance()) {
