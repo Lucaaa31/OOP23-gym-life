@@ -10,6 +10,9 @@ public enum MinigameState {
     NOT_STARTED(
             "Press a button to start!"
     ),
+    /**
+     * The player has pressed the start button.
+     */
     PRESSED_START(
             ""
     ),

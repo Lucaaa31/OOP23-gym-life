@@ -1,12 +1,9 @@
 package gymlife.model.minigame;
 
-import gymlife.utility.Position;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,12 +39,15 @@ public abstract class AbstractMinigame {
 
 
     /**
-     * Notify the model of an action of the player.
+     * Notify the model of an action of the player in the lat and squat mini-games.
      *
      * @param buttonCode the parameters of the action
      */
     public abstract void notifyUserAction(String buttonCode);
 
+    /**
+     * Notify the model of an action of the player in the bench minigame.
+     */
     public abstract void notifyUserAction();
 
 
@@ -160,24 +160,4 @@ public abstract class AbstractMinigame {
      */
     public abstract List<String> getSequence();
 
-
-    public Position getRandomPositionButton(final DimensionMinigame dimensionMinigame){
-        int x, y;
-        do {
-            x = (int) (Math.random() * (dimensionMinigame.widthMinigameScenario()
-                    - dimensionMinigame.buttonMinigameWidth()));
-            y = (int) (Math.random() * (dimensionMinigame.heightMinigameScenario()
-                    - dimensionMinigame.buttonMinigameHeight()));
-        } while (limits(x, y, dimensionMinigame));
-        return new Position(x, y);
-    }
-
-    private boolean limits(final int x, final int y, final DimensionMinigame dimensionMinigame) {
-        final int xMin = dimensionMinigame.widthMinigameScenario() / 2 - dimensionMinigame.buttonMinigameWidth();
-        final int xMax = dimensionMinigame.widthMinigameScenario() / 2 + dimensionMinigame.buttonMinigameWidth();
-        final int yMin = dimensionMinigame.heightMinigameScenario() / 2 - dimensionMinigame.buttonMinigameHeight();
-        final int yMax = dimensionMinigame.heightMinigameScenario() / 2 + dimensionMinigame.buttonMinigameHeight();
-
-        return x >= xMin && x <= xMax && y >= yMin && y <= yMax;
-    }
 }

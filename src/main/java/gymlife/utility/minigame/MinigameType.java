@@ -107,6 +107,11 @@ public enum MinigameType {
         return this.name;
     }
 
+    /**
+     * Returns the description of the minigame type.
+     *
+     * @return the description of the minigame type
+     */
     public String getDescription() {
         return description;
     }

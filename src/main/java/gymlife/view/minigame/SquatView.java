@@ -7,7 +7,8 @@ import gymlife.utility.minigame.Colors;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -33,27 +34,30 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
     private final JButton buttonMinigame3 = new JButton("Start!");
     private final List<JButton> buttonList = new ArrayList<>(
             List.of(buttonMinigame1, buttonMinigame2, buttonMinigame3));
-    private String actualColor;
 
     /**
      * Creates a new SquatView object.
      *
-     * @param controller the controller for the mini-game
+     * @param controller      the controller for the mini-game
+     * @param dimensionGetter the dimension getter for the mini-game
      */
     public SquatView(final Controller controller, final DimensionGetter dimensionGetter) {
         super(controller, dimensionGetter, "squat");
         this.dimensionGetter = dimensionGetter;
         this.controller = controller;
         final int borderSize = 5;
-        JPanel panel = new JPanel();
+        final int offset = 25;
+        final JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 3));
 
 
-        for (JButton button : buttonList) {
+        for (final JButton button : buttonList) {
             button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GREEN);
             button.setBorder(new LineBorder(Color.BLACK, borderSize));
-            button.setFont(FontLoader.getCustomFont(25));
+            button.setFont(FontLoader
+                    .getCustomFont((float) dimensionGetter.getButtonMinigameDimension().height
+                            / DimensionGetter.getMinigameButtonFontProportion()));
             button.setOpaque(true);
             button.addActionListener(e -> {
                 controller.notifyUserAction(Objects.requireNonNull(Colors.getColorName(
@@ -68,7 +72,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         }
         panel.setBounds(dimensionGetter.getMinigameScenarioWidht() / 2
                         - buttonMinigame1.getWidth() * 3 / 2
-                        + 25,
+                        + offset,
                 dimensionGetter.getScenarioDimension().height - buttonMinigame1.getHeight(),
                 buttonMinigame1.getWidth() * 3,
                 buttonMinigame1.getHeight());
@@ -77,11 +81,14 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
 
     }
 
+    /**
+     * Handles the state of the mini-game.
+     */
     @Override
     public void handleMinigameState() {
         super.handleMinigameState();
-        final List<String> sequence = controller.getSequence();
-        actualColor = sequence.get(0);
+        final List<String> sequence = new ArrayList<>(controller.getSequence());
+        final String actualColor = sequence.get(0);
         final Color color = Objects.requireNonNull(Colors.getColor(sequence.get(1))).getColor();
         Collections.shuffle(sequence);
         for (int i = 0; i < 3; i++) {
@@ -93,11 +100,13 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         super.setText("Press the " + actualColor + " button!", color);
     }
 
+    /**
+     * Performs the animation for the mini-game.
+     */
+    @Override
     public void doAnimation() {
         new Thread(() -> {
-            buttonList.forEach(button -> {
-                button.setEnabled(false);
-            });
+            buttonList.forEach(button -> button.setEnabled(false));
             for (int state = 3; state >= 0; state--) {
                 try {
                     Thread.sleep(1000);
@@ -105,15 +114,14 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
                 }
                 setCharacterLabelIcon(super.getCharacterImage("images/Minigame/squat/sprite_" + state + ".png"));
             }
-            buttonList.forEach(button -> {
-                button.setEnabled(true);
-            });
+            buttonList.forEach(button -> button.setEnabled(true));
         }).start();
     }
 
     /**
      * Resizes the components of the view.
      */
+    @Override
     public void resizeComponents() {
         super.resizeComponents();
         buttonList.forEach(button -> button.setSize(dimensionGetter.getButtonMinigameDimension()));

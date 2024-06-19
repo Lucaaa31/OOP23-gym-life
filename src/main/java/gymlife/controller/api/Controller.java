@@ -10,14 +10,11 @@ import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.concurrent.Immutable;
-import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -277,5 +274,4 @@ public interface Controller {
      */
     void newThreshold();
 
-    Position getRandomButtonPosition(DimensionMinigame dimensionMinigame);
 }

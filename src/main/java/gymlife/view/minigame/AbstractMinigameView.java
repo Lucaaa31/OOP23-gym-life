@@ -6,11 +6,17 @@ import gymlife.utility.minigame.MinigameState;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
-import javax.swing.*;
-import java.awt.Dimension;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.JComponent;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
 import java.io.Serial;
 import java.util.Map;
 
@@ -59,8 +65,12 @@ public abstract class AbstractMinigameView extends GamePanel {
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());
 
-        backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
-        characterImage = getCharacterImage("images/Minigame/" + minigameType + "/sprite_0.png");
+        backgroundImage = new ImageIcon(ClassLoader
+                .getSystemResource("images/Minigame/background.png"));
+        characterImage = new ImageIcon(ClassLoader
+                .getSystemResource("images/Minigame/"
+                        + minigameType
+                        + "/sprite_0.png"));
 
         this.add(progressBar, BorderLayout.EAST);
 
@@ -98,7 +108,7 @@ public abstract class AbstractMinigameView extends GamePanel {
 
         characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
 
-        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWidht() / 2 ,
+        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWidht() / 2,
                 dimensionGetter.getCharacterMinigamePos().height);
 
         characterLabel.setIcon(characterImage);
@@ -107,7 +117,6 @@ public abstract class AbstractMinigameView extends GamePanel {
         layeredPane.add(backgroundLabel, Integer.valueOf(0));
         layeredPane.add(characterLabel, Integer.valueOf(1));
         layeredPane.add(timerView, Integer.valueOf(1));
-
 
 
         orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
@@ -261,17 +270,33 @@ public abstract class AbstractMinigameView extends GamePanel {
         characterLabel.setIcon(characterImage);
     }
 
+    /**
+     * Method that sets the icon of the character.
+     *
+     * @param icon the icon of the character.
+     */
     private void setCharacterImageIcon(final ImageIcon icon) {
         characterImage = icon;
     }
 
-    public void setOrderLabel(final String text) {
-        orderLabel.setText(text);
-    }
-
+    /**
+     * Method that sets the text of the order label for the squat minigame.
+     *
+     * @param text  the text of the order label.
+     * @param color the color of the order label.
+     */
     public void setText(final String text, final Color color) {
         orderLabel.setForeground(color);
         orderLabel.setText(text);
+    }
+
+    /**
+     * Method that gets the character label dimension.
+     *
+     * @return the character label dimension.
+     */
+    public Rectangle getCharacterLabelDimension() {
+        return characterLabel.getBounds();
     }
 
 }

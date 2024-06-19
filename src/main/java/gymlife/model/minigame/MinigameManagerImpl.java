@@ -1,14 +1,10 @@
 package gymlife.model.minigame;
 
 import gymlife.model.api.MinigameManager;
-import gymlife.utility.Position;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -77,14 +73,12 @@ public class MinigameManagerImpl implements MinigameManager {
      */
     @Override
     public void notifyUserAction(final String button) {
-        if (button.equals("0")) {
+        if ("0".equals(button)) {
             this.currentMinigame.notifyUserAction();
         } else {
             this.currentMinigame.notifyUserAction(button);
         }
     }
-
-
 
 
     /**
@@ -129,11 +123,6 @@ public class MinigameManagerImpl implements MinigameManager {
     @Override
     public int getEndTime() {
         return currentMinigame.getTimeMinigame();
-    }
-
-    @Override
-    public Position getRandomPositionButton(final DimensionMinigame dimensionMinigame) {
-        return currentMinigame.getRandomPositionButton(dimensionMinigame);
     }
 
 

@@ -6,14 +6,23 @@ import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.view.DimensionGetter;
 
-
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.util.List;
+
 
 
 /**
@@ -28,16 +37,21 @@ public class ScoreBoardView extends JPanel {
     private final JPanel mediumPanel = createPanel();
     private final JPanel hardPanel = createPanel();
     private final CardLayout cardLayout = new CardLayout();
-    private final JLabel easyButton = new JLabel("Easy");
-    private final JLabel mediumButton = new JLabel("Medium");
-    private final JLabel hardButton = new JLabel("Hard");
     private static final int MAX_TIMES = 5;
+    private static final String EASY = "Easy";
+    private static final String MEDIUM = "Medium";
+    private static final String HARD = "Hard";
+    private final JLabel easyButton = new JLabel(EASY);
+    private final JLabel mediumButton = new JLabel(MEDIUM);
+    private final JLabel hardButton = new JLabel(HARD);
 
     /**
      * Creates a new ScoreBoardView object.
      *
-     * @param controller the controller
-     * @param backButton the back button
+     * @param controller          the controller
+     * @param currentMinigameType the current minigame type
+     * @param backButton          the back button
+     * @param dimensionGetter     the dimension getter
      */
     public ScoreBoardView(final Controller controller,
                           final MinigameType currentMinigameType,
@@ -45,7 +59,6 @@ public class ScoreBoardView extends JPanel {
                           final DimensionGetter dimensionGetter) {
         FontLoader.loadFont();
         this.setLayout(new BorderLayout());
-
         final JPanel buttonPanel = new JPanel(new FlowLayout());
 
         buttonPanel.add(easyButton);
@@ -53,34 +66,33 @@ public class ScoreBoardView extends JPanel {
         buttonPanel.add(hardButton);
 
 
-        for(Component button : buttonPanel.getComponents()){
-            button.setFont(FontLoader.getCustomFont(20));
-            button.setBackground(getColor(((JLabel)button).getText()));
-            ((JLabel)button).setOpaque(true);
-            button.setPreferredSize(new Dimension(70, 30));
+        for (final Component button : buttonPanel.getComponents()) {
+            button.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize() / 2));
+            button.setBackground(getColor(((JLabel) button).getText()));
+            ((JLabel) button).setOpaque(true);
+            button.setPreferredSize(new Dimension(
+                    dimensionGetter.getSideDimension().width / 4,
+                    dimensionGetter.getScenarioDimension().height / DimensionGetter.
+                            getMinigameButtonFontProportion()));
             ((JLabel) button).setHorizontalAlignment(SwingConstants.CENTER);
-            ((JLabel) button).setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
+            ((JLabel) button).setBorder(new MatteBorder(3, 3, 3, 3, Color.BLACK));
         }
 
         final JLabel back = new JLabel("Back");
 
-        back.setFont(FontLoader.getCustomFont(20));
+        back.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize() / 2));
         back.setHorizontalAlignment(SwingConstants.CENTER);
         back.setBackground(Color.BLACK);
         back.setForeground(Color.WHITE);
         back.setOpaque(true);
 
 
-
-        JPanel backPanel = new JPanel(new BorderLayout());
+        final JPanel backPanel = new JPanel(new BorderLayout());
         backPanel.add(back, BorderLayout.WEST);
         this.add(backPanel, BorderLayout.SOUTH);
 
 
         back.addMouseListener(backButton);
-
-
-        back.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 
         this.add(buttonPanel, BorderLayout.NORTH);
@@ -92,9 +104,9 @@ public class ScoreBoardView extends JPanel {
         }
 
         final JPanel cards = new JPanel(cardLayout);
-        cards.add(easyPanel, "Easy");
-        cards.add(mediumPanel, "Medium");
-        cards.add(hardPanel, "Hard");
+        cards.add(easyPanel, EASY);
+        cards.add(mediumPanel, MEDIUM);
+        cards.add(hardPanel, HARD);
 
 
         this.add(back, BorderLayout.SOUTH);
@@ -102,8 +114,8 @@ public class ScoreBoardView extends JPanel {
 
         easyButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                cardLayout.show(cards, "Easy");
+            public void mouseClicked(final MouseEvent e) {
+                cardLayout.show(cards, EASY);
                 updatePanel(easyPanel, controller.getScores(currentMinigameType, MinigameDifficulty.EASY));
                 updateButton(MinigameDifficulty.EASY);
             }
@@ -111,8 +123,8 @@ public class ScoreBoardView extends JPanel {
 
         mediumButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                cardLayout.show(cards, "Medium");
+            public void mouseClicked(final MouseEvent e) {
+                cardLayout.show(cards, MEDIUM);
                 updatePanel(mediumPanel, controller.getScores(currentMinigameType, MinigameDifficulty.MEDIUM));
                 updateButton(MinigameDifficulty.MEDIUM);
             }
@@ -120,8 +132,8 @@ public class ScoreBoardView extends JPanel {
 
         hardButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                cardLayout.show(cards, "Hard");
+            public void mouseClicked(final MouseEvent e) {
+                cardLayout.show(cards, HARD);
                 updatePanel(hardPanel, controller.getScores(currentMinigameType, MinigameDifficulty.HARD));
                 updateButton(MinigameDifficulty.HARD);
             }
@@ -130,11 +142,17 @@ public class ScoreBoardView extends JPanel {
         this.setVisible(true);
     }
 
-    private Color getColor(final String difficulty){
+    /**
+     * Returns the color based on the difficulty.
+     *
+     * @param difficulty the difficulty level.
+     * @return the color based on the difficulty level.
+     */
+    private Color getColor(final String difficulty) {
         return switch (difficulty) {
-            case "Easy" -> Color.GREEN;
-            case "Medium" -> Color.YELLOW;
-            case "Hard" -> Color.RED;
+            case EASY -> Color.GREEN;
+            case MEDIUM -> Color.YELLOW;
+            case HARD -> Color.RED;
             default -> Color.BLACK;
         };
 

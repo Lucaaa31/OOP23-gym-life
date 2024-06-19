@@ -28,6 +28,16 @@ public class DimensionGetter {
     private static final int FRAME_HEIGHT = 9;
     private static final int FRAME_WIDTH = 16;
     private static final int SQUARE_STATS = 10;
+    private static final int MINIGAME_BUTTON_FONT_PROPORTION = 26;
+
+    /**
+     * Returns the minigame button font proportion.
+     *
+     * @return the minigame button font proportion
+     */
+    public static int getMinigameButtonFontProportion() {
+        return MINIGAME_BUTTON_FONT_PROPORTION;
+    }
 
     /**
      * Returns the actual frame dimension.

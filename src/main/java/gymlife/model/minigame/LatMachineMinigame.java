@@ -1,13 +1,10 @@
 package gymlife.model.minigame;
 
-
-import gymlife.utility.Position;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a lat machine minigame that implements the Minigame interface.
@@ -31,7 +28,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
 
     @Override
     public void notifyUserAction(final String buttonCode) {
-        if (getMinigameState() == MinigameState.NOT_STARTED){
+        if (getMinigameState() == MinigameState.NOT_STARTED) {
             startMinigame = System.nanoTime();
             createRandomSequence();
             setMinigameState(MinigameState.PRESSED_START);
@@ -95,12 +92,11 @@ public final class LatMachineMinigame extends AbstractMinigame {
      */
     @Override
     public List<String> getSequence() {
-        return List.copyOf(sequence.stream().map(Object::toString).toList());
+        return List.copyOf(sequence.stream()
+                .map(Object::toString)
+                .toList());
     }
 
-    @Override
-    public Position getRandomPositionButton(DimensionMinigame dimensionMinigame) {
-        return null;
-    }
+
 
 }

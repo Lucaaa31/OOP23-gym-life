@@ -6,11 +6,17 @@ import gymlife.model.statistics.StatsConstants;
 import gymlife.model.statistics.StatsType;
 
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,7 +25,6 @@ import java.io.Serial;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.view.api.GamePanel;
-import gymlife.view.api.MinigamePanel;
 import gymlife.view.minigame.ScoreBoardView;
 
 /**
@@ -142,7 +147,7 @@ public class SideStatsView extends GamePanel {
         benchLabel.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 benchLabel.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.BLACK));
             }
 
@@ -160,7 +165,7 @@ public class SideStatsView extends GamePanel {
         squatLabel.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 squatLabel.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.BLACK));
             }
 
@@ -178,7 +183,7 @@ public class SideStatsView extends GamePanel {
         latLabel.addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mouseExited(MouseEvent e) {
+            public void mouseExited(final MouseEvent e) {
                 latLabel.setBorder(new MatteBorder(BOX_BORDER_5, BOX_BORDER_5, 0, 0, Color.BLACK));
             }
 

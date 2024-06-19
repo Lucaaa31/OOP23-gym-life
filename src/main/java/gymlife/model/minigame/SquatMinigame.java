@@ -3,7 +3,11 @@ package gymlife.model.minigame;
 import gymlife.utility.minigame.Colors;
 import gymlife.utility.minigame.MinigameState;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,17 +20,15 @@ public final class SquatMinigame extends AbstractMinigame {
     private String colorPressed;
     private final Random random = new Random();
     private final List<String> sequence = new ArrayList<>();
-    private boolean isReactionTimeSet = false;
+    private boolean isReactionTimeSet;
     private long startReactionTime;
 
     @Override
     public void notifyUserAction(final String buttonCode) {
         if (getMinigameState() == MinigameState.NOT_STARTED) {
-            startMinigame = System.currentTimeMillis();
+            startMinigame = System.nanoTime();
             setMinigameState(MinigameState.PRESSED_START);
-        }else{
-            System.out.println("Button pressed: " + buttonCode);
-            System.out.println("Right color: " + currentColor.getColorName());
+        } else {
             colorPressed = buttonCode;
             setMinigameState(MinigameState.RUNNING);
             if (!isReactionTimeSet) {
@@ -49,21 +51,22 @@ public final class SquatMinigame extends AbstractMinigame {
      */
     @Override
     public void validatePress() {
-        long reactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
+        final long reactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
         startReactionTime = System.nanoTime();
-        if (Objects.equals(currentColor.getColorName(), colorPressed) && reactionTime < getDifficulty().getReactionTime()){
+        if (Objects.equals(currentColor.getColorName(), colorPressed) && reactionTime < getDifficulty().getReactionTime()) {
             incrementNTimePressed();
-            System.out.println("Valid press");
             if (handleValidPress()) {
-                System.out.println("REPS");
                 checkIfMinigameHasEnded(startMinigame);
-                isReactionTimeSet = false;
+                resetReactionTime();
             }
         } else {
-            isReactionTimeSet = false;
-            System.out.println("Invalid press");
+            resetReactionTime();
             handleInvalidPress();
         }
+    }
+
+    private void resetReactionTime() {
+        isReactionTimeSet = false;
     }
 
 
@@ -74,7 +77,7 @@ public final class SquatMinigame extends AbstractMinigame {
      */
     @Override
     public List<String> getSequence() {
-        return sequence;
+        return List.copyOf(sequence);
     }
 
     private void createRandomColor() {

@@ -120,7 +120,8 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
     private void memoryAnimation() {
         new Thread(() -> {
             final List<Integer> tmpList = new ArrayList<>();
-            for(String s : controller.getSequence()) {
+            final int sleepTime = 500;
+            for (final String s : controller.getSequence()) {
                 tmpList.add(Integer.parseInt(s));
             }
 
@@ -128,12 +129,12 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
             for (int i = 0; i < controller.getDifficulty().getTouchForLift(); i++) {
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.MAGENTA);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException ignored) {
                 }
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.DARK_GRAY);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException ignored) {
                 }
             }

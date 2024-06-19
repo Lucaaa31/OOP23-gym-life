@@ -29,14 +29,11 @@ import gymlife.utility.Position;
 import gymlife.utility.Directions;
 import gymlife.controller.api.Controller;
 import gymlife.model.character.api.CharacterModel;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-import org.apache.commons.lang3.tuple.Pair;
 
 
-import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -221,10 +218,6 @@ public class ControllerImpl implements Controller {
         planeGameModel.randomizeNewThreshold();
     }
 
-    @Override
-    public Position getRandomButtonPosition(final DimensionMinigame dimensionMinigame) {
-        return minigameManager.getRandomPositionButton(dimensionMinigame);
-    }
 
     /**
      * Returns the number of days that have passed in the game.
@@ -254,12 +247,12 @@ public class ControllerImpl implements Controller {
     @Override
     public void goToNewMap(final GameMap newMap) {
         final Optional<Encounter> encounter = mapManager.changeMap(newMap);
-//        if (encounter.isPresent()) {
-//            currentEncounter = encounter.get();
-//            changeScenario(ScenariosType.ENCOUNTER);
-//        } else {
+        if (encounter.isPresent()) {
+            currentEncounter = encounter.get();
+            changeScenario(ScenariosType.ENCOUNTER);
+        } else {
             changeScenario(ScenariosType.INDOOR_MAP);
-//        }
+        }
     }
 
     /**

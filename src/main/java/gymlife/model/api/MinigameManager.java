@@ -1,14 +1,10 @@
 package gymlife.model.api;
 
-import gymlife.utility.Position;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.concurrent.Immutable;
-import java.awt.*;
 import java.util.List;
 
 
@@ -75,5 +71,4 @@ public interface MinigameManager {
     int getEndTime();
 
 
-    Position getRandomPositionButton(DimensionMinigame dimensionMinigame);
 }

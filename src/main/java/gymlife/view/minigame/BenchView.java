@@ -4,10 +4,10 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
@@ -22,7 +22,6 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
     private static final long serialVersionUID = -2554575966007368L;
     private final JButton buttonMinigame = new JButton("START");
     private final transient DimensionGetter dimensionGetter;
-    private final transient DimensionMinigame dimensionMinigame;
 
     /**
      * Constructs a BenchView object with the specified controller.
@@ -41,27 +40,18 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
         buttonMinigame.setBackground(Color.GREEN);
         buttonMinigame.setBorder(new LineBorder(Color.WHITE, borderSize));
 
-        this.dimensionMinigame = new DimensionMinigame(
-                dimensionGetter.getScenarioDimension().width,
-                dimensionGetter.getScenarioDimension().height,
-                dimensionGetter.getCharacterMinigameDimension().width,
-                dimensionGetter.getCharacterMinigameDimension().height,
-                buttonMinigame.getSize().width,
-                buttonMinigame.getSize().height
-        );
 
         addLayeredPanel(buttonMinigame);
-        buttonMinigame.setLocation(new Point(
-                controller.getRandomButtonPosition(dimensionMinigame).X(),
-                controller.getRandomButtonPosition(dimensionMinigame).Y()));
+        buttonMinigame.setLocation(
+                dimensionGetter.getScenarioDimension().width / 2 - buttonMinigame.getWidth(),
+                dimensionGetter.getScenarioDimension().height / 2 - buttonMinigame.getHeight());
+
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction("0");
             super.handleMinigameState();
             super.progressBarHandler();
-            buttonMinigame.setLocation(new Point(
-                    controller.getRandomButtonPosition(dimensionMinigame).X(),
-                    controller.getRandomButtonPosition(dimensionMinigame).Y()));
+            buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
         });
         this.setFocusable(true);
         this.setVisible(true);
@@ -88,6 +78,37 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
             buttonMinigame.setBackground(Color.GREEN);
         }).start();
     }
+
+    /**
+     * Method that sets the position of a button in a random position.
+     *
+     * @param buttonMinigame the button to set the position.
+     * @return the position of the button.
+     */
+    public Point getRandomPositionButton(final JButton buttonMinigame) {
+        int x, y;
+        do {
+            x = (int) (Math.random() * (dimensionGetter.getMinigameScenarioWidht()
+                    - buttonMinigame.getWidth()));
+            y = (int) (Math.random() * (dimensionGetter.getScenarioDimension().height
+                    - buttonMinigame.getHeight()));
+        } while (limits(x, y, buttonMinigame));
+        return new Point(x, y);
+    }
+
+    /**
+     * Method that check if the button is out of bounds.
+     *
+     * @param x              the x position.
+     * @param y              the y position.
+     * @param buttonMinigame the button to set the position.
+     * @return the height of the progressBar.
+     */
+    public boolean limits(final int x, final int y, final JButton buttonMinigame) {
+        return getCharacterLabelDimension().getBounds()
+                .intersects(new Rectangle(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight()));
+    }
+
 
     /**
      * Resizes the components of the panel.
