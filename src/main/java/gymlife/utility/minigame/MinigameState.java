@@ -8,40 +8,40 @@ public enum MinigameState {
      * The minigame has not started yet.
      */
     NOT_STARTED(
-            "The minigame has not started yet."
+            "Press a button to start!"
     ),
     PRESSED_START(
-            "Press start to begin the minigame."
+            ""
     ),
     /**
      * The minigame is running.
      */
     RUNNING(
-            "The minigame is running."
+            ""
     ),
     /**
      * The player has reached the required amount for do a rep.
      */
     REP_REACHED(
-            "The player has reached the required amount for do a rep."
+            "You made a rep!"
     ),
     /**
      * The player has made a mistake.
      */
     MISTAKE_MADE(
-            "The player has made a mistake."
+            "Ah! You made a mistake!"
     ),
     /**
      * The minigame has ended and the player has won.
      */
     ENDED_WON(
-            "The minigame has ended and the player has won."
+            "YOU WON!"
     ),
     /**
      * The minigame has ended and the player has lost.
      */
     ENDED_LOST(
-            "The minigame has ended and the player has lost."
+            "YOU LOST!"
     );
 
 

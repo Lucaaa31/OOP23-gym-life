@@ -1,6 +1,6 @@
 package gymlife.utility.minigame;
 
-import java.awt.*;
+import java.awt.Color;
 
 public enum Colors {
     RED(

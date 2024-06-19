@@ -113,11 +113,11 @@ public abstract class AbstractMinigameView extends GamePanel {
         orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
         orderLabel.setForeground(Color.YELLOW);
         orderLabel.setBounds(
-                dimensionGetter.getMinigameScenarioWidht() / 3,
                 0,
-                600,
+                dimensionGetter.getScenarioDimension().height / 4,
+                dimensionGetter.getMinigameScenarioWidht(),
                 dimensionGetter.getTimerMinigameDimension().height);
-
+        orderLabel.setHorizontalAlignment(SwingConstants.CENTER);
         layeredPane.add(orderLabel, Integer.valueOf(1));
 
     }
@@ -230,6 +230,7 @@ public abstract class AbstractMinigameView extends GamePanel {
      * Method that updates the view based on the minigame player action.
      */
     public void handleMinigameState() {
+        orderLabel.setText(controller.getMinigameState().getText());
         switch (controller.getMinigameState()) {
             case PRESSED_START -> {
                 timerView();
@@ -237,20 +238,11 @@ public abstract class AbstractMinigameView extends GamePanel {
             }
             case RUNNING -> {
                 progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
+                orderLabel.setText(controller.getMinigameType().getDescription());
             }
-            case REP_REACHED -> {
+            case REP_REACHED, MISTAKE_MADE -> {
                 progressBar.setValue(0);
-                orderLabel.setText("Rep done!");
                 doAnimation();
-            }
-            case MISTAKE_MADE -> {
-                progressBar.setValue(0);
-                progressBar.setBackground(colorMap.get("backgroundColorRed"));
-                progressBar.setForeground(colorMap.get("foregroundColorRed"));
-                orderLabel.setText("Mistake made!");
-                doAnimation();
-                progressBar.setBackground(colorMap.get("backgroundColorGreen"));
-                progressBar.setForeground(colorMap.get("foregroundColorGreen"));
             }
             case ENDED_WON, ENDED_LOST -> this.setVisible(false);
             default -> {

@@ -9,7 +9,8 @@ import gymlife.view.api.MinigamePanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         panel.setBounds(dimensionGetter.getMinigameScenarioWidht() / 2
                         - buttonMinigame1.getWidth() * 3 / 2
                         + 25,
-                100,
+                dimensionGetter.getScenarioDimension().height - buttonMinigame1.getHeight(),
                 buttonMinigame1.getWidth() * 3,
                 buttonMinigame1.getHeight());
 
@@ -89,7 +90,6 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
                     .getColor());
             buttonList.get(i).setText("?");
         }
-
         super.setText("Press the " + actualColor + " button!", color);
     }
 
