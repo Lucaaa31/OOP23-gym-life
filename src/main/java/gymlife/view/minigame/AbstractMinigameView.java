@@ -10,14 +10,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JProgressBar;
-import javax.swing.JButton;
+import javax.swing.SwingConstants;
 import javax.swing.JComponent;
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.BorderLayout;
-import java.awt.Point;
+import java.awt.Rectangle;
 import java.io.Serial;
 import java.util.Map;
 
@@ -46,83 +45,7 @@ public abstract class AbstractMinigameView extends GamePanel {
     private final ImageIcon backgroundImage;
     private static final String BACKGROUND_COLOR_GREEN = "backgroundColorGreen";
     private static final String FOREGROUND_COLOR_GREEN = "foregroundColorGreen";
-
-    /**
-     * Method that sets the position of a button in a random position.
-     *
-     * @param buttonMinigame the button to set the position.
-     * @return the position of the button.
-     */
-    public Point getRandomPositionButton(final JButton buttonMinigame) {
-        int x, y;
-        do {
-            x = (int) (Math.random() * (dimensionGetter.getMinigameScenarioWeight()
-                    - buttonMinigame.getWidth()));
-            y = (int) (Math.random() * (dimensionGetter.getScenarioDimension().height
-                    - buttonMinigame.getHeight()));
-        } while (limits(x, y, buttonMinigame));
-        return new Point(x, y);
-    }
-
-
-    /**
-     * Method that sets the background color of the progressBar.
-     *
-     * @param colorName the button to set the position.
-     */
-    public void setColorBackground(final String colorName) {
-        progressBar.setBackground(colorMap.get(colorName));
-    }
-
-    /**
-     * Method that sets the foreground color of the progressBar.
-     *
-     * @param colorName the button to set the position.
-     */
-    public void setColorForeground(final String colorName) {
-        progressBar.setForeground(colorMap.get(colorName));
-    }
-
-    /**
-     * Method that sets the value of the progressBar.
-     *
-     * @param value the value to set.
-     */
-    public void setValueProgressBar(final int value) {
-        progressBar.setValue(value);
-    }
-
-    /**
-     * Method that gets the value of the progressBar.
-     *
-     * @return the value of the progressBar.
-     */
-    public int getValueProgressBar() {
-        return progressBar.getValue();
-    }
-
-    /**
-     * Method that gets the width of the progressBar.
-     *
-     * @return the width of the progressBar.
-     */
-    public int getWidhtProgress() {
-        return progressBar.getWidth();
-    }
-
-    /**
-     * Method that check if the button is out of bounds.
-     *
-     * @param x              the x position.
-     * @param y              the y position.
-     * @param buttonMinigame the button to set the position.
-     * @return the height of the progressBar.
-     */
-    public boolean limits(final int x, final int y, final JButton buttonMinigame) {
-        return characterLabel.getBounds()
-                .intersects(new Rectangle(x, y, buttonMinigame.getWidth(), buttonMinigame.getHeight()));
-    }
-
+    private final JLabel orderLabel = new JLabel("Press button to start!");
 
     /**
      * Constructor of the class.
@@ -142,8 +65,12 @@ public abstract class AbstractMinigameView extends GamePanel {
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());
 
-        backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
-        characterImage = new ImageIcon("src/main/resources/images/Minigame/" + minigameType + "/sprite_0.png");
+        backgroundImage = new ImageIcon(ClassLoader
+                .getSystemResource("images/Minigame/background.png"));
+        characterImage = new ImageIcon(ClassLoader
+                .getSystemResource("images/Minigame/"
+                        + minigameType
+                        + "/sprite_0.png"));
 
         this.add(progressBar, BorderLayout.EAST);
 
@@ -169,18 +96,19 @@ public abstract class AbstractMinigameView extends GamePanel {
                 dimensionGetter.getTimerMinigameDimension().height);
 
         backgroundImage.setImage(backgroundImage.getImage()
-                .getScaledInstance(dimensionGetter.getMinigameScenarioWeight(),
+                .getScaledInstance(
+                        dimensionGetter.getMinigameScenarioWidht(),
                         dimensionGetter.getScenarioDimension().height,
                         Image.SCALE_SMOOTH));
 
 
         backgroundLabel.setIcon(backgroundImage);
-        backgroundLabel.setBounds(0, 0, dimensionGetter.getMinigameScenarioWeight(),
+        backgroundLabel.setBounds(0, 0, dimensionGetter.getMinigameScenarioWidht(),
                 dimensionGetter.getScenarioDimension().height);
 
         characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
 
-        characterLabel.setLocation(dimensionGetter.getCharacterMinigamePos().width,
+        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWidht() / 2,
                 dimensionGetter.getCharacterMinigamePos().height);
 
         characterLabel.setIcon(characterImage);
@@ -190,6 +118,16 @@ public abstract class AbstractMinigameView extends GamePanel {
         layeredPane.add(characterLabel, Integer.valueOf(1));
         layeredPane.add(timerView, Integer.valueOf(1));
 
+
+        orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        orderLabel.setForeground(Color.YELLOW);
+        orderLabel.setBounds(
+                0,
+                dimensionGetter.getScenarioDimension().height / 4,
+                dimensionGetter.getMinigameScenarioWidht(),
+                dimensionGetter.getTimerMinigameDimension().height);
+        orderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        layeredPane.add(orderLabel, Integer.valueOf(1));
 
     }
 
@@ -204,7 +142,7 @@ public abstract class AbstractMinigameView extends GamePanel {
      * @param component the component to add.
      */
     public void addLayeredPanel(final JComponent component) {
-        layeredPane.add(component, Integer.valueOf(1));
+        layeredPane.add(component, Integer.valueOf(1000));
     }
 
     /**
@@ -300,31 +238,26 @@ public abstract class AbstractMinigameView extends GamePanel {
     /**
      * Method that updates the view based on the minigame player action.
      */
-    protected void handleMinigameState() {
+    public void handleMinigameState() {
+        orderLabel.setText(controller.getMinigameState().getText());
         switch (controller.getMinigameState()) {
-            case NOT_STARTED -> {
-                doAnimation();
+            case PRESSED_START -> {
                 timerView();
+                doAnimation();
             }
             case RUNNING -> {
                 progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
+                orderLabel.setText(controller.getMinigameType().getDescription());
             }
-            case REP_REACHED -> {
+            case REP_REACHED, MISTAKE_MADE -> {
                 progressBar.setValue(0);
                 doAnimation();
-            }
-            case MISTAKE_MADE -> {
-                progressBar.setValue(0);
-                progressBar.setBackground(colorMap.get("backgroundColorRed"));
-                progressBar.setForeground(colorMap.get("foregroundColorRed"));
-                doAnimation();
-                progressBar.setBackground(colorMap.get("backgroundColorGreen"));
-                progressBar.setForeground(colorMap.get("foregroundColorGreen"));
             }
             case ENDED_WON, ENDED_LOST -> this.setVisible(false);
             default -> {
             }
         }
+
     }
 
     /**
@@ -337,8 +270,33 @@ public abstract class AbstractMinigameView extends GamePanel {
         characterLabel.setIcon(characterImage);
     }
 
+    /**
+     * Method that sets the icon of the character.
+     *
+     * @param icon the icon of the character.
+     */
     private void setCharacterImageIcon(final ImageIcon icon) {
         characterImage = icon;
+    }
+
+    /**
+     * Method that sets the text of the order label for the squat minigame.
+     *
+     * @param text  the text of the order label.
+     * @param color the color of the order label.
+     */
+    public void setText(final String text, final Color color) {
+        orderLabel.setForeground(color);
+        orderLabel.setText(text);
+    }
+
+    /**
+     * Method that gets the character label dimension.
+     *
+     * @return the character label dimension.
+     */
+    public Rectangle getCharacterLabelDimension() {
+        return characterLabel.getBounds();
     }
 
 }

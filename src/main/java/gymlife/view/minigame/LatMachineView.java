@@ -62,48 +62,24 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
             button.setForeground(Color.WHITE);
             switch (button.getText()) {
                 case "1" -> button.setLocation(
-                        (dimensionGetter.getMinigameScenarioWeight() - button.getWidth()) / 2, // Center horizontally
+                        (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
                         0); // Top (up)
                 case "2" -> button.setLocation(
-                        dimensionGetter.getMinigameScenarioWeight() - button.getWidth(), // Right
+                        dimensionGetter.getMinigameScenarioWidht() - button.getWidth(), // Right
                         (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
                 case "3" -> button.setLocation(
-                        (dimensionGetter.getMinigameScenarioWeight() - button.getWidth()) / 2, // Center horizontally
+                        (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
                         dimensionGetter.getScenarioDimension().height - button.getHeight()); // Bottom
                 case "4" -> button.setLocation(
                         0, // Left
                         (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
                 default -> {
-                    throw new IllegalStateException("Unexpected value: " + button.getText());
                 }
             }
 
             button.addActionListener(e -> {
-                controller.notifyUserAction(Integer.parseInt(button.getText()));
-                switch (controller.getMinigameState()) {
-                    case NOT_STARTED -> {
-                        doAnimation();
-                        timerView();
-                    }
-                    case RUNNING -> {
-                        super.setValueProgressBar(super.getValueProgressBar() + controller.getDifficulty().getProgress());
-                    }
-                    case REP_REACHED -> {
-                        super.setValueProgressBar(0);
-                        doAnimation();
-                    }
-                    case MISTAKE_MADE -> {
-                        super.setValueProgressBar(0);
-                        super.setColorBackground("backgroundColorRed");
-                        super.setColorForeground("foregroundColorRed");
-                        doAnimation();
-                        super.setColorBackground("backgroundColorGreen");
-                        super.setColorForeground("foregroundColorGreen");
-                    }
-                    case ENDED_WON, ENDED_LOST -> this.setVisible(false);
-                    default -> {
-                    }
-                }
+                controller.notifyUserAction(button.getText());
+                super.handleMinigameState();
                 progressBarHandler();
             });
 
@@ -143,17 +119,22 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
      */
     private void memoryAnimation() {
         new Thread(() -> {
-            final List<Integer> tmpList = controller.getSequence();
+            final List<Integer> tmpList = new ArrayList<>();
+            final int sleepTime = 500;
+            for (final String s : controller.getSequence()) {
+                tmpList.add(Integer.parseInt(s));
+            }
+
             buttons.forEach(e -> e.setEnabled(false));
             for (int i = 0; i < controller.getDifficulty().getTouchForLift(); i++) {
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.MAGENTA);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException ignored) {
                 }
                 buttons.get(tmpList.get(i) - 1).setBackground(Color.DARK_GRAY);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException ignored) {
                 }
             }
