@@ -38,7 +38,7 @@ public class MinigameManagerImpl implements MinigameManager {
      * @return the sequence of the minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return currentMinigame.getSequence();
     }
 
@@ -76,8 +76,8 @@ public class MinigameManagerImpl implements MinigameManager {
      * Notify the minigame of an action of the player.
      */
     @Override
-    public void notifyUserAction(final int button) {
-        if (button == 0) {
+    public void notifyUserAction(final String button) {
+        if (button.equals("0")) {
             this.currentMinigame.notifyUserAction();
         } else {
             this.currentMinigame.notifyUserAction(button);

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * The Minigame interface represents a game that can be played within the gym.
  * It provides methods for notifying button presses, setting a timer, getting
@@ -22,14 +23,13 @@ public abstract class AbstractMinigame {
     private int nTimesPressed;
     private int nMistakes;
     private int numReps;
-    private Random random = new Random();
 
 
     /**
      * Constructs a new Minigame object and initializes the instance variables.
      */
     public AbstractMinigame() {
-        this.difficulty = MinigameDifficulty.EASY;
+        this.difficulty = null;
         this.minigameState = MinigameState.NOT_STARTED;
     }
 
@@ -46,7 +46,7 @@ public abstract class AbstractMinigame {
      *
      * @param buttonCode the parameters of the action
      */
-    public abstract void notifyUserAction(int buttonCode);
+    public abstract void notifyUserAction(String buttonCode);
 
     public abstract void notifyUserAction();
 
@@ -152,20 +152,13 @@ public abstract class AbstractMinigame {
         }
     }
 
-    /**
-     * Abstract method to check if the players action.
-     *
-     * @param param the parameter of the minigame
-     * @return true if the condition is met, false otherwise
-     */
-    public abstract boolean conditionOfMinigame(long param);
 
     /**
      * Abstract method to get the sequence of the minigame.
      *
      * @return the sequence of the minigame
      */
-    public abstract List<Integer> getSequence();
+    public abstract List<String> getSequence();
 
 
     public Position getRandomPositionButton(final DimensionMinigame dimensionMinigame){

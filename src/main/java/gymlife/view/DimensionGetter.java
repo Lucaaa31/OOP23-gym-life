@@ -186,7 +186,7 @@ public class DimensionGetter {
      */
     public Dimension getCharacterMinigamePos() {
         return new Dimension(
-                this.getMinigameScenarioWeight() / 3,
+                this.getMinigameScenarioWidht() / 3,
                 this.getScenarioDimension().height / 3
         );
     }
@@ -221,7 +221,7 @@ public class DimensionGetter {
      *
      * @return timer position
      */
-    public int getMinigameScenarioWeight() {
+    public int getMinigameScenarioWidht() {
         final int progressBarWeight = 100;
         return this.getScenarioDimension().width - progressBarWeight;
     }

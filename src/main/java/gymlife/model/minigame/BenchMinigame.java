@@ -21,7 +21,7 @@ public final class BenchMinigame extends AbstractMinigame {
      * @param buttonCode the button that has been pressed
      */
     @Override
-    public void notifyUserAction(final int buttonCode) {
+    public void notifyUserAction(final String buttonCode) {
         notifyUserAction();
     }
 
@@ -83,7 +83,6 @@ public final class BenchMinigame extends AbstractMinigame {
      * @param reactionTime the reaction time of the player
      * @return true if the reaction time is valid, false otherwise
      */
-    @Override
     public boolean conditionOfMinigame(final long reactionTime) {
         return reactionTime < getDifficulty().getReactionTime();
     }
@@ -94,7 +93,7 @@ public final class BenchMinigame extends AbstractMinigame {
      * @return the sequence of the bench minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return List.of();
     }
 

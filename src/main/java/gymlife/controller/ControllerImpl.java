@@ -365,7 +365,7 @@ public class ControllerImpl implements Controller {
      * @param button the button pressed by the player
      */
     @Override
-    public void notifyUserAction(final int button) {
+    public void notifyUserAction(final String button) {
         minigameManager.notifyUserAction(button);
     }
 
@@ -375,7 +375,7 @@ public class ControllerImpl implements Controller {
      * @return the sequence of the current minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return minigameManager.getSequence();
     }
 

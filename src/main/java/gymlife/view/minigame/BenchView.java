@@ -56,7 +56,7 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
                 controller.getRandomButtonPosition(dimensionMinigame).Y()));
 
         buttonMinigame.addActionListener(e -> {
-            controller.notifyUserAction(0);
+            controller.notifyUserAction("0");
             super.handleMinigameState();
             super.progressBarHandler();
             buttonMinigame.setLocation(new Point(

@@ -30,7 +30,7 @@ public interface MinigameManager {
      *
      * @return the sequence of the current minigame
      */
-    List<Integer> getSequence();
+    List<String> getSequence();
 
     /**
      * Sets the difficulty level of the current minigame.
@@ -44,7 +44,7 @@ public interface MinigameManager {
      *
      * @param button the button pressed by the player
      */
-    void notifyUserAction(int button);
+    void notifyUserAction(String button);
 
     /**
      * Retrieves the current minigame type.

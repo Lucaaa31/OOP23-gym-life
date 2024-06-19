@@ -41,56 +41,6 @@ public abstract class AbstractMinigameView extends GamePanel {
     private static final String FOREGROUND_COLOR_GREEN = "foregroundColorGreen";
     private final JLabel orderLabel = new JLabel("Press button to start!");
 
-
-
-    /**
-     * Method that sets the background color of the progressBar.
-     *
-     * @param colorName the button to set the position.
-     */
-    public void setColorBackground(final String colorName) {
-        progressBar.setBackground(colorMap.get(colorName));
-    }
-
-    /**
-     * Method that sets the foreground color of the progressBar.
-     *
-     * @param colorName the button to set the position.
-     */
-    public void setColorForeground(final String colorName) {
-        progressBar.setForeground(colorMap.get(colorName));
-    }
-
-    /**
-     * Method that sets the value of the progressBar.
-     *
-     * @param value the value to set.
-     */
-    public void setValueProgressBar(final int value) {
-        progressBar.setValue(value);
-    }
-
-    /**
-     * Method that gets the value of the progressBar.
-     *
-     * @return the value of the progressBar.
-     */
-    public int getValueProgressBar() {
-        return progressBar.getValue();
-    }
-
-    /**
-     * Method that gets the width of the progressBar.
-     *
-     * @return the width of the progressBar.
-     */
-    public int getWidhtProgress() {
-        return progressBar.getWidth();
-    }
-
-
-
-
     /**
      * Constructor of the class.
      *
@@ -110,7 +60,7 @@ public abstract class AbstractMinigameView extends GamePanel {
         this.setSize(dimensionGetter.getScenarioDimension());
 
         backgroundImage = new ImageIcon("src/main/resources/images/Minigame/background.png");
-        characterImage = new ImageIcon("src/main/resources/images/Minigame/" + minigameType + "/sprite_0.png");
+        characterImage = getCharacterImage("images/Minigame/" + minigameType + "/sprite_0.png");
 
         this.add(progressBar, BorderLayout.EAST);
 
@@ -137,18 +87,18 @@ public abstract class AbstractMinigameView extends GamePanel {
 
         backgroundImage.setImage(backgroundImage.getImage()
                 .getScaledInstance(
-                        dimensionGetter.getMinigameScenarioWeight(),
+                        dimensionGetter.getMinigameScenarioWidht(),
                         dimensionGetter.getScenarioDimension().height,
                         Image.SCALE_SMOOTH));
 
 
         backgroundLabel.setIcon(backgroundImage);
-        backgroundLabel.setBounds(0, 0, dimensionGetter.getMinigameScenarioWeight(),
+        backgroundLabel.setBounds(0, 0, dimensionGetter.getMinigameScenarioWidht(),
                 dimensionGetter.getScenarioDimension().height);
 
         characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
 
-        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWeight() / 2 ,
+        characterLabel.setLocation(dimensionGetter.getMinigameScenarioWidht() / 2 ,
                 dimensionGetter.getCharacterMinigamePos().height);
 
         characterLabel.setIcon(characterImage);
@@ -163,8 +113,8 @@ public abstract class AbstractMinigameView extends GamePanel {
         orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
         orderLabel.setForeground(Color.YELLOW);
         orderLabel.setBounds(
-                dimensionGetter.getMinigameScenarioWeight() / 3  - 50,
-                150,
+                dimensionGetter.getMinigameScenarioWidht() / 3,
+                0,
                 600,
                 dimensionGetter.getTimerMinigameDimension().height);
 
@@ -183,7 +133,7 @@ public abstract class AbstractMinigameView extends GamePanel {
      * @param component the component to add.
      */
     public void addLayeredPanel(final JComponent component) {
-        layeredPane.add(component, Integer.valueOf(1));
+        layeredPane.add(component, Integer.valueOf(1000));
     }
 
     /**
@@ -306,7 +256,7 @@ public abstract class AbstractMinigameView extends GamePanel {
             default -> {
             }
         }
-        setOrderLabel(controller.getMinigameState().getText());
+
     }
 
     /**
@@ -324,6 +274,11 @@ public abstract class AbstractMinigameView extends GamePanel {
     }
 
     public void setOrderLabel(final String text) {
+        orderLabel.setText(text);
+    }
+
+    public void setText(final String text, final Color color) {
+        orderLabel.setForeground(color);
         orderLabel.setText(text);
     }
 

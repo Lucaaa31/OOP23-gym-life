@@ -145,14 +145,14 @@ public interface Controller {
      *
      * @param button the button pressed by the user
      */
-    void notifyUserAction(int button);
+    void notifyUserAction(String button);
 
     /**
      * Method to get the sequence of the minigame.
      *
      * @return Returns the sequence of the minigame.
      */
-    List<Integer> getSequence();
+    List<String> getSequence();
 
     /**
      * Set the minigame result, update the statistics and change the scenario.

@@ -4,9 +4,7 @@ package gymlife.model.minigame;
 import gymlife.utility.Position;
 import gymlife.utility.minigame.DimensionMinigame;
 import gymlife.utility.minigame.MinigameState;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
  */
 public final class LatMachineMinigame extends AbstractMinigame {
     private List<Integer> sequence;
-    private boolean isFirstTimePressed = true;
     private int numberPressed;
     private int index;
     private long startMinigame;
@@ -33,14 +30,14 @@ public final class LatMachineMinigame extends AbstractMinigame {
     }
 
     @Override
-    public void notifyUserAction(int buttonCode) {
-        if (isFirstTimePressed) {
+    public void notifyUserAction(final String buttonCode) {
+        if (getMinigameState() == MinigameState.NOT_STARTED){
             startMinigame = System.nanoTime();
             createRandomSequence();
-            isFirstTimePressed = false;
+            setMinigameState(MinigameState.PRESSED_START);
         } else {
             incrementNTimePressed();
-            numberPressed = buttonCode;
+            numberPressed = Integer.parseInt(buttonCode);
             setMinigameState(MinigameState.RUNNING);
             validatePress();
         }
@@ -48,7 +45,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
 
     @Override
     public void notifyUserAction() {
-        notifyUserAction(0);
+        notifyUserAction("0");
     }
 
 
@@ -77,8 +74,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
      * @param buttonPressed the user's pressed button
      * @return true if the user's press timing is correct, false otherwise
      */
-    @Override
-    public boolean conditionOfMinigame(final long buttonPressed) {
+    public boolean conditionOfMinigame(final int buttonPressed) {
         return sequence.get(index) == buttonPressed;
     }
 
@@ -98,8 +94,8 @@ public final class LatMachineMinigame extends AbstractMinigame {
      * @return the sequence of numbers
      */
     @Override
-    public List<Integer> getSequence() {
-        return List.copyOf(sequence);
+    public List<String> getSequence() {
+        return List.copyOf(sequence.stream().map(Object::toString).toList());
     }
 
     @Override
