@@ -1,18 +1,16 @@
 package gymlife.model.minigame;
 
-
 import gymlife.utility.minigame.MinigameState;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a lat machine minigame that implements the Minigame interface.
  */
 public final class LatMachineMinigame extends AbstractMinigame {
     private List<Integer> sequence;
-    private boolean isFirstTimePressed = true;
     private int numberPressed;
     private int index;
     private long startMinigame;
@@ -28,24 +26,25 @@ public final class LatMachineMinigame extends AbstractMinigame {
         sequence = new ArrayList<>();
     }
 
-
-    /**
-     * Notifies the lat machine minigame that a button has been pressed.
-     * Starts the timer if it is the first time the button is pressed.
-     */
     @Override
-    public void notifyUserAction(final int... params) {
-        if (isFirstTimePressed) {
+    public void notifyUserAction(final String buttonCode) {
+        if (getMinigameState() == MinigameState.NOT_STARTED) {
             startMinigame = System.nanoTime();
             createRandomSequence();
-            isFirstTimePressed = false;
+            setMinigameState(MinigameState.PRESSED_START);
         } else {
             incrementNTimePressed();
-            numberPressed = params[0];
+            numberPressed = Integer.parseInt(buttonCode);
             setMinigameState(MinigameState.RUNNING);
             validatePress();
         }
     }
+
+    @Override
+    public void notifyUserAction() {
+        notifyUserAction("0");
+    }
+
 
     /**
      * Validates the user's press timing and updates the game state accordingly.
@@ -72,8 +71,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
      * @param buttonPressed the user's pressed button
      * @return true if the user's press timing is correct, false otherwise
      */
-    @Override
-    public boolean conditionOfMinigame(final long buttonPressed) {
+    public boolean conditionOfMinigame(final int buttonPressed) {
         return sequence.get(index) == buttonPressed;
     }
 
@@ -93,8 +91,12 @@ public final class LatMachineMinigame extends AbstractMinigame {
      * @return the sequence of numbers
      */
     @Override
-    public List<Integer> getSequence() {
-        return List.copyOf(sequence);
+    public List<String> getSequence() {
+        return List.copyOf(sequence.stream()
+                .map(Object::toString)
+                .toList());
     }
+
+
 
 }

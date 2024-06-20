@@ -12,20 +12,25 @@ public final class BenchMinigame extends AbstractMinigame {
     private long startReactionTime;
     private long startMinigame;
     private boolean isReactionTimeSet;
-    private boolean isFirstTimePressed = true;
 
 
     /**
      * Notifies the bench minigame that a button has been pressed.
      * Starts the timer if it is the first time the button is pressed.
      *
-     * @param params the button that has been pressed
+     * @param buttonCode the button that has been pressed
      */
     @Override
-    public void notifyUserAction(final int... params) {
-        if (isFirstTimePressed) {
-            isFirstTimePressed = false;
+    public void notifyUserAction(final String buttonCode) {
+        notifyUserAction();
+    }
+
+
+    @Override
+    public void notifyUserAction() {
+        if (getMinigameState() == MinigameState.NOT_STARTED) {
             startMinigame = System.nanoTime();
+            setMinigameState(MinigameState.PRESSED_START);
         } else {
             setMinigameState(MinigameState.RUNNING);
             incrementNTimePressed();
@@ -37,7 +42,6 @@ public final class BenchMinigame extends AbstractMinigame {
             }
         }
     }
-
 
     /**
      * Validates the user's press timing and updates the game state accordingly.
@@ -79,7 +83,6 @@ public final class BenchMinigame extends AbstractMinigame {
      * @param reactionTime the reaction time of the player
      * @return true if the reaction time is valid, false otherwise
      */
-    @Override
     public boolean conditionOfMinigame(final long reactionTime) {
         return reactionTime < getDifficulty().getReactionTime();
     }
@@ -90,7 +93,7 @@ public final class BenchMinigame extends AbstractMinigame {
      * @return the sequence of the bench minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return List.of();
     }
 

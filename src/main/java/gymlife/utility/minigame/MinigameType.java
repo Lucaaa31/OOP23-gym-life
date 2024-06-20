@@ -4,9 +4,9 @@ import gymlife.model.minigame.BenchMinigame;
 import gymlife.model.minigame.LatMachineMinigame;
 import gymlife.model.minigame.SquatMinigame;
 import gymlife.model.statistics.StatsType;
+import gymlife.view.minigame.BenchView;
 import gymlife.view.minigame.LatMachineView;
 import gymlife.view.minigame.SquatView;
-import gymlife.view.minigame.BenchView;
 
 /**
  * The MinigameType enum represents the different types of minigames available
@@ -22,7 +22,8 @@ public enum MinigameType {
             BenchMinigame.class.getCanonicalName(),
             BenchView.class.getCanonicalName(),
             StatsType.CHEST_MASS,
-            "Bench Press"),
+            "Bench Press",
+            "Press the button as fast as you can!"),
     /**
      * Squat minigame type.
      */
@@ -30,7 +31,8 @@ public enum MinigameType {
             SquatMinigame.class.getCanonicalName(),
             SquatView.class.getCanonicalName(),
             StatsType.LEG_MASS,
-            "Squat"),
+            "Squat",
+            ""),
     /**
      * Lat machine minigame type.
      */
@@ -38,12 +40,15 @@ public enum MinigameType {
             LatMachineMinigame.class.getCanonicalName(),
             LatMachineView.class.getCanonicalName(),
             StatsType.BACK_MASS,
-            "Lat Machine");
+            "Lat Machine",
+            "Press the buttons in order!");
+
 
     private final String minigameType;
     private final String minigameViewType;
     private final StatsType statsType;
     private final String name;
+    private final String description;
 
     /**
      * Constructs a MinigameType enum constant with the specified minigame type and
@@ -55,13 +60,15 @@ public enum MinigameType {
      *                         associated with this minigame type
      * @param statsType        the stats type associated with this minigame type
      * @param name             the name of the minigame type
+     * @param description      the description of the minigame type
      */
     MinigameType(final String minigameType, final String minigameViewType, final StatsType statsType,
-                 final String name) {
+                 final String name, final String description) {
         this.minigameType = minigameType;
         this.minigameViewType = minigameViewType;
         this.statsType = statsType;
         this.name = name;
+        this.description = description;
     }
 
     /**
@@ -98,5 +105,14 @@ public enum MinigameType {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Returns the description of the minigame type.
+     *
+     * @return the description of the minigame type
+     */
+    public String getDescription() {
+        return description;
     }
 }

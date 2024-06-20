@@ -94,7 +94,7 @@ public class ControllerImpl implements Controller {
      * Gets the second synchronization object used to coordinate threads.
      *
      * @return the second SynchronizerModel instance used for thread
-     *         synchronization.
+     * synchronization.
      */
     @Override
     public SynchronizerModel getSync2() {
@@ -220,7 +220,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Returns the current amount of money.
-     *
+     * <p>
      * This method retrieves the money count from the `statsManager` and returns it.
      *
      * @return money.
@@ -233,12 +233,12 @@ public class ControllerImpl implements Controller {
     /**
      * Generates a new random threshold value within a specified range and resets
      * the multiplier.
-     *
      */
     @Override
     public void newThreshold() {
         planeGameModel.randomizeNewThreshold();
     }
+
 
     /**
      * Returns the number of days that have passed in the game.
@@ -321,6 +321,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to change the scenario.
+     *
      * @param newScenario The ScenariosType to change the current one to.
      */
     @Override
@@ -338,6 +339,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method that returns the current Encounter.
+     *
      * @return the encounter object.
      */
     @Override
@@ -347,6 +349,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to either accept or decline the encounter. Changes to INDOOR scenario after.
+     *
      * @param choice boolean indicating whether to accept or decline the encounter.
      */
     @Override
@@ -376,7 +379,7 @@ public class ControllerImpl implements Controller {
      * @param button the button pressed by the player
      */
     @Override
-    public void notifyUserAction(final int button) {
+    public void notifyUserAction(final String button) {
         minigameManager.notifyUserAction(button);
     }
 
@@ -386,7 +389,7 @@ public class ControllerImpl implements Controller {
      * @return the sequence of the current minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return minigameManager.getSequence();
     }
 

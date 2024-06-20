@@ -6,6 +6,7 @@ import gymlife.utility.minigame.MinigameState;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 /**
  * The Minigame interface represents a game that can be played within the gym.
  * It provides methods for notifying button presses, setting a timer, getting
@@ -25,7 +26,7 @@ public abstract class AbstractMinigame {
      * Constructs a new Minigame object and initializes the instance variables.
      */
     public AbstractMinigame() {
-        this.difficulty = MinigameDifficulty.EASY;
+        this.difficulty = null;
         this.minigameState = MinigameState.NOT_STARTED;
     }
 
@@ -38,11 +39,16 @@ public abstract class AbstractMinigame {
 
 
     /**
-     * Notify the model of an action of the player.
+     * Notify the model of an action of the player in the lat and squat mini-games.
      *
-     * @param params the parameters of the action
+     * @param buttonCode the parameters of the action
      */
-    public abstract void notifyUserAction(int... params);
+    public abstract void notifyUserAction(String buttonCode);
+
+    /**
+     * Notify the model of an action of the player in the bench minigame.
+     */
+    public abstract void notifyUserAction();
 
 
     /**
@@ -146,18 +152,12 @@ public abstract class AbstractMinigame {
         }
     }
 
-    /**
-     * Abstract method to check if the players action.
-     *
-     * @param param the parameter of the minigame
-     * @return true if the condition is met, false otherwise
-     */
-    public abstract boolean conditionOfMinigame(long param);
 
     /**
      * Abstract method to get the sequence of the minigame.
      *
      * @return the sequence of the minigame
      */
-    public abstract List<Integer> getSequence();
+    public abstract List<String> getSequence();
+
 }

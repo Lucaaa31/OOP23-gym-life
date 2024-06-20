@@ -50,7 +50,7 @@ public interface Controller {
 
     /**
      * Returns the current amount of money.
-     *
+     * <p>
      * This method retrieves the money count from the `statsManager` and returns it.
      *
      * @return money.
@@ -118,12 +118,14 @@ public interface Controller {
 
     /**
      * Method to return the current randomEncounter.
+     *
      * @return Encounter object.
      */
     Encounter getCurrentEncounter();
 
     /**
      * Method to resolve the encounter either by accepting or declining the encounter.
+     *
      * @param choice boolean indicating whether to accept or decline the encounter.
      */
     void resolveEncounter(boolean choice);
@@ -140,14 +142,14 @@ public interface Controller {
      *
      * @param button the button pressed by the user
      */
-    void notifyUserAction(int button);
+    void notifyUserAction(String button);
 
     /**
      * Method to get the sequence of the minigame.
      *
      * @return Returns the sequence of the minigame.
      */
-    List<Integer> getSequence();
+    List<String> getSequence();
 
     /**
      * Set the minigame result, update the statistics and change the scenario.
@@ -280,7 +282,7 @@ public interface Controller {
     /**
      * Generates a new random threshold value within a specified range and resets
      * the multiplier.
-     *
      */
     void newThreshold();
+
 }
