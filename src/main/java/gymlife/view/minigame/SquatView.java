@@ -93,8 +93,8 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         Collections.shuffle(sequence);
         for (int i = 0; i < 3; i++) {
             buttonList.get(i).setBackground(Objects.requireNonNull(
-                            Colors.getColor(controller.getSequence().get(i)))
-                    .getColor());
+                            Objects.requireNonNull(Colors.getColor(sequence.get(i)))
+                    .getColor()));
             buttonList.get(i).setText("?");
         }
         super.setText("Press the " + actualColor + " button!", color);
