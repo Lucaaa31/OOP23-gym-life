@@ -276,30 +276,32 @@ public class SideStatsView extends GamePanel {
         return label;
     }
 
-    private JLabel buildLabel(final FoodType foodType, final String path) {
-        final int value = controller.getFoodCount(foodType);
-        final JLabel labelImage = new JLabel();
-
+    private JLabel buildLabel(final FoodType foodType, final String imagePath) {
+        final int countValue = controller.getFoodCount(foodType);
+        final JLabel foodLabelImage = new JLabel();
         this.setSize(dimensionGetter.getCellDimension());
-        JLabel labelNumber;
-        labelNumber = new JLabel(String.valueOf(value), SwingConstants.CENTER);
-        final JLabel label = new JLabel();
-        label.setLayout(new GridLayout(2, 1));
-        label.add(labelImage);
-        label.add(labelNumber);
+        final JLabel foodLabelNumber = new JLabel(String.valueOf(countValue), SwingConstants.CENTER);
+        final JLabel foodLabel = new JLabel();
+        foodLabel.setLayout(new GridLayout(2, 1));
+
+        foodLabel.add(foodLabelImage);
+        foodLabel.add(foodLabelNumber);
+
         FontLoader.loadFont();
-        labelImage.setIcon(getIcon(path));
+        foodLabelImage.setIcon(getIcon(imagePath));
         this.setSize(dimensionGetter.getCellDimension());
-        labelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-        labelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
-        labelImage.setHorizontalAlignment(SwingConstants.CENTER);
-        labelImage.setVerticalAlignment(SwingConstants.CENTER);
+        foodLabelImage.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        foodLabelNumber.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
-        labelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
-        labelNumber.setBorder(BORDER);
+        foodLabelImage.setHorizontalAlignment(SwingConstants.CENTER);
+        foodLabelImage.setVerticalAlignment(SwingConstants.CENTER);
 
-        return label;
+        foodLabelImage.setBorder(new MatteBorder(3, BOX_BORDER_5, 0, 0, Color.BLACK));
+        foodLabelNumber.setBorder(BORDER);
+
+        return foodLabel;
     }
+
 
 }

@@ -2,6 +2,7 @@ package gymlife.view.bankgame;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.Serial;
 
 import javax.swing.JLabel;
 
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
  * It provides a method to reload the appearance of the multiplier.
  */
 public abstract class TextLabelView extends JLabel implements BankGameComponent {
+    @Serial
     private static final long serialVersionUID = -8840823320252661066L;
     private static final float SIZE_NUM = 15;
 

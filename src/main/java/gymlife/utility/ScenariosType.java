@@ -27,5 +27,14 @@ public enum ScenariosType {
     /**
      * Represents the random encounter scenario.
      */
-    ENCOUNTER;
+    ENCOUNTER,
+    /**
+     *Represents the GameOver scenario.
+     */
+    GAME_OVER,
+    /**
+     *Represents the GameWin scenario.
+     */
+    GAME_WON;
+
 }
