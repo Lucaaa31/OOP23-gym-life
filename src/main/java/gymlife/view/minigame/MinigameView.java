@@ -46,7 +46,7 @@ public class MinigameView extends GamePanel {
     public MinigameView(final Controller controller, final DimensionGetter dimensionGetter) {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
-        final JPanel minigameEndView = new MinigameEndView(controller);
+        final JPanel minigameEndView = new MinigameEndView(controller, dimensionGetter);
         this.setLayout(cardLayout);
 
 

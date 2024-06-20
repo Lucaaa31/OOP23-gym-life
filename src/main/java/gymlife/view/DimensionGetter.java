@@ -28,6 +28,16 @@ public class DimensionGetter {
     private static final int FRAME_HEIGHT = 9;
     private static final int FRAME_WIDTH = 16;
     private static final int SQUARE_STATS = 10;
+    private static final int MINIGAME_BUTTON_FONT_PROPORTION = 26;
+
+    /**
+     * Returns the minigame button font proportion.
+     *
+     * @return the minigame button font proportion
+     */
+    public static int getMinigameButtonFontProportion() {
+        return MINIGAME_BUTTON_FONT_PROPORTION;
+    }
 
     /**
      * Returns the actual frame dimension.
@@ -185,9 +195,8 @@ public class DimensionGetter {
      * @return the character position
      */
     public Dimension getCharacterMinigamePos() {
-        final float x = this.getScenarioDimension().width / 3.457f;
         return new Dimension(
-                (int) x,
+                this.getMinigameScenarioWidht() / 3,
                 this.getScenarioDimension().height / 3
         );
     }
@@ -222,7 +231,7 @@ public class DimensionGetter {
      *
      * @return timer position
      */
-    public int getMinigameScenarioWeight() {
+    public int getMinigameScenarioWidht() {
         final int progressBarWeight = 100;
         return this.getScenarioDimension().width - progressBarWeight;
     }

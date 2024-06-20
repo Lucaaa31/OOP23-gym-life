@@ -262,4 +262,6 @@ public class MainView extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
     }
+
+
 }
