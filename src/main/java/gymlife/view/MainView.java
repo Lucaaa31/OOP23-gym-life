@@ -91,6 +91,8 @@ public class MainView extends JFrame {
         final GamePanel buyFoodView = new BuyFoodPanel(controller, dimensionGetter);
         final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
         final GamePanel bankGameView = new BankGameView(controller, dimensionGetter);
+        final GamePanel gameOverView = new GameOverView(dimensionGetter);
+        final GamePanel gameWonView = new WinView(dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
@@ -99,6 +101,9 @@ public class MainView extends JFrame {
                 ScenariosType.ENCOUNTER, encounterView,
                 ScenariosType.MINIGAME_BANK, bankGameView,
                 ScenariosType.BUY_FOOD, buyFoodView);
+                ScenariosType.MINIGAME_BANK, bankGameView,
+                ScenariosType.GAME_OVER, gameOverView,
+                ScenariosType.GAME_WON, gameWonView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -157,6 +162,9 @@ public class MainView extends JFrame {
         scenariosContainer.add(encounterView.getPanelName(), encounterView);
         scenariosContainer.add(bankGameView.getPanelName(), bankGameView);
         scenariosContainer.add(buyFoodView.getPanelName(), buyFoodView);
+        scenariosContainer.add(gameOverView.getPanelName(), gameOverView);
+        scenariosContainer.add(gameWonView.getPanelName(), gameWonView);
+
 
 
         statsView.setVisible(true);
@@ -164,6 +172,12 @@ public class MainView extends JFrame {
         final FocusAdapter fa = new FocusAdapter() {
             @Override
             public void focusLost(final FocusEvent e) {
+                if (controller.isGameOver()) {
+                    controller.changeScenario(ScenariosType.GAME_OVER);
+                }
+                if (controller.isWin()) {
+                    controller.changeScenario(ScenariosType.GAME_WON);
+                }
                 final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
                 layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
                 if (!panelToSwitchTo.equals(bankGameView)) {

@@ -6,7 +6,7 @@ import java.util.Random;
  * This class create a multiplier.
  */
 public final class PlaneGameModel {
-    private static final float MAX_BOUND = 4.00f;
+    private static final float MAX_BOUND = 5.00f;
     private static final float INCREMENT = 0.001f;
     private boolean flag = true;
     private static final Random R = new Random();

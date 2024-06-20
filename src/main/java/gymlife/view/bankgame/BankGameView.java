@@ -67,7 +67,7 @@ public final class BankGameView extends GamePanel {
         moneyLabel = new MoneyGameView();
         mainPanel = new JLayeredPane();
         planeLayer = new ImageLabelView("gymlife/airplane/airplane.png");
-        skyLayer = new ImageLabelView("gymlife/sky/sky.png");
+        skyLayer = new ImageLabelView("gymlife/sky/sky.jpg");
         startButton = new JButton();
         restartButton = new JButton();
         boxMoney = new JTextField();
@@ -85,8 +85,8 @@ public final class BankGameView extends GamePanel {
         mainPanel.add(moneyLabel, JLayeredPane.MODAL_LAYER);
 
         planeLayer.setVisible(false);
-        startButton.setText("play/stop");
-        restartButton.setText("Restart");
+        startButton.setText("PLAY");
+        restartButton.setText("RESTART");
         startButton.setBackground(new Color(START_BUTTON_RED, START_BUTTON_GREEN, 0));
         restartButton.setBackground(new Color(RESTART_BUTTON_RED, 0, 0));
         restartButton.setForeground(Color.black);
@@ -109,24 +109,30 @@ public final class BankGameView extends GamePanel {
         boxMoney.addActionListener(e -> {
             numberLabel.setForeground(Color.black);
             moneyLabel.setForeground(Color.black);
+            moneyLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
             final String temp = boxMoney.getText();
-            moneyStart = Float.parseFloat(temp);
-            if (moneyStart <= controller.returnMoney()) {
-                ((MoneyGameView) moneyLabel).updateText(controller.returnMoney());
-                moneyLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-                moneyLabel.setVisible(true);
-                restartButton.setEnabled(true);
-                ((MultiplierGameView) numberLabel).updateText(0.5, moneyStart);
-                numberLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-                if (!flagAnimation) {
-                    planeLayer.setVisible(true);
-                    planeAnimation.startPlaneAnimation(mainPanel, planeLayer, startButton);
-                    flagAnimation = true;
+            try {
+                moneyStart = Float.parseFloat(temp);
+                if (moneyStart <= controller.returnMoney()) {
+                    ((MoneyGameView) moneyLabel).updateText(controller.returnMoney());
+                    moneyLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+                    moneyLabel.setVisible(true);
+                    restartButton.setEnabled(true);
+                    ((MultiplierGameView) numberLabel).updateText(0.5, moneyStart);
+                    numberLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+                    if (!flagAnimation) {
+                        planeLayer.setVisible(true);
+                        planeAnimation.startPlaneAnimation(mainPanel, planeLayer, startButton);
+                        flagAnimation = true;
+                    }
+                } else {
+                    moneyLabel.setText("You're broke, man.");
                 }
-            } else {
-                moneyLabel.setText("You're broke, man.");
+            } catch (NumberFormatException ex) {
+                moneyLabel.setText("Enter a valid number.");
             }
         });
+
 
         boxMoney.addKeyListener(new KeyAdapter() {
             @Override
@@ -147,6 +153,7 @@ public final class BankGameView extends GamePanel {
                 if (!started) {
                     startMulti(controller);
                     showsMulti(controller);
+                    startButton.setText("STOP");
                     numberLabel.setVisible(true);
                     boxMoney.setEditable(false);
                     restartButton.setEnabled(false);
@@ -161,8 +168,9 @@ public final class BankGameView extends GamePanel {
                     controller.changeMoney(controller.returnMoney() + Math.round(moneyMultiplied));
                     if (controller.getMultiplier() < 1) {
                         numberLabel.setForeground(Color.red);
+                    } else {
+                        numberLabel.setForeground(new Color(NUMBER_LABEL_RED, 100, 0));
                     }
-                    numberLabel.setForeground(new Color(NUMBER_LABEL_RED, 100, 0));
                 }
             }
 
@@ -185,6 +193,7 @@ public final class BankGameView extends GamePanel {
             startButton.setEnabled(false);
             planeLayer.setVisible(false);
             flagAnimation = false;
+            startButton.setText("PLAY");
             boxMoney.setText("");
             numberLabel.setForeground(Color.black);
             ((MoneyGameView) moneyLabel).updateText(controller.returnMoney());
@@ -282,6 +291,4 @@ public final class BankGameView extends GamePanel {
         controller.changeScenario(ScenariosType.INDOOR_MAP);
         transferFocus();
     }
-
-
 }
