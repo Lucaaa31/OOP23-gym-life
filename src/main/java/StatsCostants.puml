@@ -4,9 +4,9 @@ StatsManagerImpl  ...> StatsType : uses
 CommonStats ...> StatsType : uses
 
 interface StatsManager {
-    + isGameOver() boolean
-    + isWin() boolean
-    + getCommonStats() MapMap<StatsType, Counter>
+    + boolean isGameOver()
+    + boolean isWin()
+    + MapMap<StatsType, Counter> getCommonStats()
 }
 
 interface CommonStats {

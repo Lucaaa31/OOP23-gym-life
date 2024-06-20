@@ -1,27 +1,19 @@
 @startuml
-'https://plantuml.com/class-diagram
+EncountersFactoryImpl  ..> Encounter : uses
+EncountersFactoryImpl  ...> EncountersConstants : uses
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class Encounter {
+    + String getdescritpion()
+    + String getDeny()
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class EncountersFactoryImpl {
+    + Encounter getRandomEncounter()
 }
 
+class EncountersConstants {
+    + {static}encounterChance
+    + {static}gymBroChance
+    ...
+}
 @enduml
