@@ -39,6 +39,6 @@ public enum ScenariosType {
     /**
      *Represents the GameWin scenario.
      */
-    GAME_WON;
+    GAME_WON
 
 }

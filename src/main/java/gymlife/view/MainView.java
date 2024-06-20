@@ -100,8 +100,7 @@ public class MainView extends JFrame {
                 ScenariosType.MINIGAME_GYM, minigameView,
                 ScenariosType.ENCOUNTER, encounterView,
                 ScenariosType.MINIGAME_BANK, bankGameView,
-                ScenariosType.BUY_FOOD, buyFoodView);
-                ScenariosType.MINIGAME_BANK, bankGameView,
+                ScenariosType.BUY_FOOD, buyFoodView,
                 ScenariosType.GAME_OVER, gameOverView,
                 ScenariosType.GAME_WON, gameWonView);
 
