@@ -179,41 +179,41 @@ public final class EncountersConstants {
         return PUSHER_CHANCE;
     }
     /**
-     * The getDescription of a pusher encounter.
+     * The description of a pusher encounter.
      * 
-     * @return a string representing the getDescription of a pusher encounter
+     * @return a string representing the description of a pusher encounter
      */
     public static String pusherDescription() {
         return PUSHER_DESCRIPTION;
     }
     /**
-     * The getDescription of an ice cream encounter.
+     * The description of an ice cream encounter.
      * 
-     * @return a string representing the getDescription of an ice cream encounter
+     * @return a string representing the description of an ice cream encounter
      */
     public static String iceCreamDescription() {
         return ICE_CREAM_DESCRIPTION;
     }
     /**
-     * The getDescription of a money bag encounter.
+     * The description of a money bag encounter.
      * 
-     * @return a string representing the getDescription of a money bag encounter
+     * @return a string representing the description of a money bag encounter
      */
     public static String moneyBagDescription() {
         return MONEY_BAG_DESCRIPTION;
     }
     /**
-     * The getDescription of a robber encounter.
+     * The description of a robber encounter.
      * 
-     * @return a string representing the getDescription of a robber encounter
+     * @return a string representing the description of a robber encounter
      */
     public static String robberDescription() {
         return ROBBER_DESCRIPTION;
     }
     /**
-     * The getDescription of a gym bro encounter.
+     * The description of a gym bro encounter.
      * 
-     * @return a string representing the getDescription of a gym bro encounter
+     * @return a string representing the description of a gym bro encounter
      */
     public static String gymBroDescription() {
         return GYM_BRO_DESCRIPTION;

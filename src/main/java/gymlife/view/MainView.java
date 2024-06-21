@@ -25,6 +25,7 @@ import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
+import gymlife.view.bankgame.BankGameView;
 
 /**
  * The MainView class represents the main view of the application.
@@ -86,13 +87,21 @@ public class MainView extends JFrame {
         final GamePanel fastTravelView = new FastTravelView(controller, dimensionGetter);
         final GamePanel sleepView = new SleepView(controller, dimensionGetter);
         final GamePanel encounterView = new EncounterView(controller, dimensionGetter);
+        final GamePanel buyFoodView = new BuyFoodPanel(controller, dimensionGetter);
         final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
+        final GamePanel bankGameView = new BankGameView(controller, dimensionGetter);
+        final GamePanel gameOverView = new GameOverView(dimensionGetter);
+        final GamePanel gameWonView = new WinView(dimensionGetter);
         final Map<ScenariosType, GamePanel> scenariosPanels = Map.of(
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
                 ScenariosType.SLEEPING, sleepView,
                 ScenariosType.MINIGAME_GYM, minigameView,
-                ScenariosType.ENCOUNTER, encounterView);
+                ScenariosType.ENCOUNTER, encounterView,
+                ScenariosType.MINIGAME_BANK, bankGameView,
+                ScenariosType.BUY_FOOD, buyFoodView,
+                ScenariosType.GAME_OVER, gameOverView,
+                ScenariosType.GAME_WON, gameWonView);
 
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
@@ -149,17 +158,31 @@ public class MainView extends JFrame {
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
         scenariosContainer.add(minigameView.getPanelName(), minigameView);
         scenariosContainer.add(encounterView.getPanelName(), encounterView);
+        scenariosContainer.add(bankGameView.getPanelName(), bankGameView);
+        scenariosContainer.add(buyFoodView.getPanelName(), buyFoodView);
+        scenariosContainer.add(gameOverView.getPanelName(), gameOverView);
+        scenariosContainer.add(gameWonView.getPanelName(), gameWonView);
+
+
 
         statsView.setVisible(true);
 
         final FocusAdapter fa = new FocusAdapter() {
             @Override
             public void focusLost(final FocusEvent e) {
+                if (controller.isGameOver()) {
+                    controller.changeScenario(ScenariosType.GAME_OVER);
+                }
+                if (controller.isWin()) {
+                    controller.changeScenario(ScenariosType.GAME_WON);
+                }
                 final GamePanel panelToSwitchTo = scenariosPanels.get(controller.getActualScenario());
                 layout.show(scenariosContainer, panelToSwitchTo.getPanelName());
-                ((SideStatsView) statsView).updateStats();
-                panelToSwitchTo.requestFocusInWindow();
+                if (!panelToSwitchTo.equals(bankGameView)) {
+                    panelToSwitchTo.requestFocusInWindow();
+                }
                 panelToSwitchTo.resizeComponents();
+                ((SideStatsView) statsView).updateStats();
             }
         };
 
@@ -241,4 +264,6 @@ public class MainView extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
     }
+
+
 }

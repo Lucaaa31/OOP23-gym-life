@@ -5,9 +5,9 @@ import java.util.Locale;
 import java.util.Optional;
 
 import gymlife.model.InteractionsManager;
+import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.Cell;
 import gymlife.model.api.GameInteraction;
-import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameType;
 
 /**
@@ -72,11 +72,19 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    HOUSE_EXIT(13, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    HOUSE_EXIT(13, false, InteractionsManager::exitInteraction),
     /**
-     * The cell used to interact with the kitchen, no collisions and interactable.
+     * The cell used to eat some meat from the inventory, no collisions and interactable.
      */
-    HOUSE_KITCHEN_INTERACT(14, false),
+    HOUSE_MEAT_INTERACT(14, false, e -> e.eatFood(FoodType.MEAT)),
+    /**
+     * The cell used to eat a hamburger from the inventory, no collisions and interactable.
+     */
+    HOUSE_HAMBURGER_INTERACT(48, false, e -> e.eatFood(FoodType.HAMBURGER)),
+    /**
+     * The cell used to eat some broccoli from the inventory, no collisions and interactable.
+     */
+    HOUSE_BROCCOLI_INTERACT(49, false, e -> e.eatFood(FoodType.BROCCOLI)),
     /**
      * The cell that contains a part of the house couch, with collisions and not interactable.
      */
@@ -96,7 +104,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    SHOP_EXIT(16, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    SHOP_EXIT(16, false, InteractionsManager::exitInteraction),
     /**
      * The cell with a non interactable fridge, with collisions and not interactable.
      */
@@ -116,19 +124,19 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to purchase hamburger, no collisions and interactable.
      */
-    SHOP_HAMBURGER_INTERACT(21, false),
+    SHOP_HAMBURGER_INTERACT(21, false, e -> e.buyFoodInteraction(FoodType.HAMBURGER)),
     /**
      * The cell that allows players to purchase broccoli, no collisions and interactable.
      */
-    SHOP_BROCCOLI_INTERACT(22, false),
+    SHOP_BROCCOLI_INTERACT(22, false, e -> e.buyFoodInteraction(FoodType.BROCCOLI)),
     /**
      * The cell that allows players to purchase meat, no collisions and interactable.
      */
-    SHOP_MEAT_INTERACT(23, false),
+    SHOP_MEAT_INTERACT(23, false, e -> e.buyFoodInteraction(FoodType.MEAT)),
     /**
      * The cell that allows players to get money, no collisions and interactable.
      */
-    SHOP_MONEY(24, false),
+    SHOP_MONEY(24, false, InteractionsManager::bankInteraction),
     /**
      * The cell with an ATM, with collisions and not interactable.
      */
@@ -172,7 +180,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that lets players go to another {@code GameMap}, no collisions and interactable.
      */
-    GYM_EXIT(27, false, e -> e.scenarioInteraction(ScenariosType.MAIN_MAP)),
+    GYM_EXIT(27, false, InteractionsManager::exitInteraction),
     /**
      * The cell with a regular bench, with collisions and not interactable.
      */
@@ -200,7 +208,7 @@ public enum CellImpl implements Cell {
     /**
      * The cell that allows players to train legs, no collisions and interactable.
      */
-    GYM_LEGS_INTERACT(34, false),
+    GYM_LEGS_INTERACT(34, false, e -> e.minigameInteraction(MinigameType.SQUAT)),
     /**
      * The cell with a couple of weights, with collisions and not interactable.
      */
@@ -216,7 +224,7 @@ public enum CellImpl implements Cell {
 
     private final int id;
     private final boolean collision;
-    private final GameInteraction interaction;
+    private final transient GameInteraction interaction;
 
     /**
      * Standard constructor with 3 parameters.

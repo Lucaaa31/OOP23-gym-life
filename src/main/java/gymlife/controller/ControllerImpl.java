@@ -2,8 +2,10 @@ package gymlife.controller;
 
 import gymlife.controller.api.Controller;
 
-import gymlife.model.character.CharacterImpl;
 import gymlife.model.InteractionsManager;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.InventoryImpl;
+import gymlife.model.inventory.api.Inventory;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
@@ -12,9 +14,14 @@ import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
+import gymlife.model.PlaneGameModel;
 import gymlife.model.statistics.StatsManagerImpl;
+import gymlife.model.ScenariosManager;
+import gymlife.model.SynchronizerModel;
+
 import gymlife.model.statistics.StatsType;
 import gymlife.model.ScenariosManager;
+import gymlife.model.statistics.GameCounterImpl;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.api.StatsManager;
@@ -42,9 +49,14 @@ public class ControllerImpl implements Controller {
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
+    private final SynchronizerModel sync1 = new SynchronizerModel();
+    private final SynchronizerModel sync2 = new SynchronizerModel();
+    private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
+    private final Inventory inventory = new InventoryImpl();
     private Encounter currentEncounter;
+    private static final int MONEY_START = 50;
 
     /**
      * Constructs a new ControllerImpl object with the specified game difficulty.
@@ -55,14 +67,119 @@ public class ControllerImpl implements Controller {
         this.statsManager = new StatsManagerImpl(difficulty);
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
+        statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
         this.scenariosManager = new ScenariosManager();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
         this.interactionsManager = new InteractionsManager(
                 scenariosManager,
                 statsManager,
-                minigameManager
+                minigameManager,
+                inventory
         );
+
+    }
+
+    /**
+     * Gets the first synchronization object used to coordinate threads.
+     *
+     * @return the first SynchronizerModel instance used for thread synchronization.
+     */
+    @Override
+    public SynchronizerModel getSync1() {
+        return sync1;
+    }
+
+    /**
+     * Gets the second synchronization object used to coordinate threads.
+     *
+     * @return the second SynchronizerModel instance used for thread
+     * synchronization.
+     */
+    @Override
+    public SynchronizerModel getSync2() {
+        return sync2;
+    }
+
+    /**
+     * This method starts the multiplier thread, continuously updates the view with
+     * the current multiplier value,
+     * and waits for the thread to finish.
+     *
+     * @param money the money value with which to start the multiplier.
+     */
+    @Override
+    public void startMultiplier(final float money) {
+        planeGameModel.runMultiplier(money);
+    }
+
+    /**
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
+     *
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
+     */
+    @Override
+    public int getFoodCount(final FoodType foodType) {
+        return inventory.getFoodCount().get(foodType);
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public FoodType getFoodToBuy() {
+        return inventory.getCurrentFoodToBuy();
+    }
+
+    /**
+     * Method that adds the food to the inventory and also reduces money by the cost of the food.
+     */
+    @Override
+    public void buyFood() {
+        final FoodType food = inventory.getCurrentFoodToBuy();
+        statsManager.setStat(StatsType.MONEY, statsManager.getMoney() - (int) food.getCost());
+        inventory.addFood(food);
+    }
+
+    /**
+     * Returns the current value of the multiplier.
+     *
+     * @return The current value of the multiplier.
+     */
+    @Override
+    public float getMultiplier() {
+        return planeGameModel.getMultiplierShort();
+    }
+
+    /**
+     * Returns the threshold of the multiplier.
+     *
+     * @return The value of the multiplier's threshold.
+     */
+    @Override
+    public float getThreshold() {
+        return planeGameModel.getThreshold();
+    }
+
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
+    @Override
+    public void controllerStopMultiplier() {
+        planeGameModel.stopMultiplier();
+    }
+
+    /**
+     * Returns the value of the money.
+     *
+     * @return The current value of the money.
+     */
+    @Override
+    public float controllerGetMoney() {
+        return planeGameModel.getMoneyMultiplied();
     }
 
     /**
@@ -100,6 +217,28 @@ public class ControllerImpl implements Controller {
     public Map<StatsType, LimitedGameCounterImpl> getStatistics() {
         return statsManager.getCommonStats();
     }
+
+    /**
+     * Returns the current amount of money.
+     * <p>
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
+    @Override
+    public int returnMoney() {
+        return statsManager.getMoney();
+    }
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     */
+    @Override
+    public void newThreshold() {
+        planeGameModel.randomizeNewThreshold();
+    }
+
 
     /**
      * Returns the number of days that have passed in the game.
@@ -200,6 +339,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method that returns the current Encounter.
+     *
      * @return the encounter object.
      */
     @Override
@@ -209,6 +349,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to either accept or decline the encounter. Changes to INDOOR scenario after.
+     *
      * @param choice boolean indicating whether to accept or decline the encounter.
      */
     @Override
@@ -238,7 +379,7 @@ public class ControllerImpl implements Controller {
      * @param button the button pressed by the player
      */
     @Override
-    public void notifyUserAction(final int button) {
+    public void notifyUserAction(final String button) {
         minigameManager.notifyUserAction(button);
     }
 
@@ -248,7 +389,7 @@ public class ControllerImpl implements Controller {
      * @return the sequence of the current minigame
      */
     @Override
-    public List<Integer> getSequence() {
+    public List<String> getSequence() {
         return minigameManager.getSequence();
     }
 
@@ -334,6 +475,16 @@ public class ControllerImpl implements Controller {
     @Override
     public boolean isGameOver() {
         return statsManager.isGameOver();
+    }
+
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
+    @Override
+    public void changeMoney(final int value) {
+        statsManager.multiIncrementStat(StatsType.MONEY, value);
     }
 
 }

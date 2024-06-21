@@ -70,7 +70,9 @@ public final class FastTravelView extends GamePanel {
         final MouseAdapter ml = new MouseAdapter() {
             @Override
             public void mouseEntered(final MouseEvent e) {
-                final String loc = ((JButton) e.getSource()).getText().toLowerCase(new Locale("en"));
+                final JButton button = (JButton) e.getSource();
+                button.setBackground(Color.GREEN);
+                final String loc = button.getText().toLowerCase(Locale.ROOT);
                 if (!loc.equals(getMap())) {
                     showWay(loc);
                 }
@@ -79,6 +81,7 @@ public final class FastTravelView extends GamePanel {
             @Override
             public void mouseExited(final MouseEvent e) {
                 changeLocation();
+                ((JButton) e.getSource()).setBackground(MapConstants.BUTTONS_COLOR);
             }
         };
 
@@ -89,6 +92,7 @@ public final class FastTravelView extends GamePanel {
             changeLocation();
             disableFocus();
         };
+
 
         buttonsList.forEach(button -> {
             button.addMouseListener(ml);

@@ -15,7 +15,7 @@ public enum ScenariosType {
     /**
     * Represents the bank scenario.
     */
-    MINGAME_BANK,
+    MINIGAME_BANK,
     /**
      * Represents the indoor maps' scenario.
      */
@@ -27,5 +27,18 @@ public enum ScenariosType {
     /**
      * Represents the random encounter scenario.
      */
-    ENCOUNTER;
+    ENCOUNTER,
+    /**
+     * Represents the purchasing of food scenario.
+     */
+    BUY_FOOD,
+    /**
+     *Represents the GameOver scenario.
+     */
+    GAME_OVER,
+    /**
+     *Represents the GameWin scenario.
+     */
+    GAME_WON
+
 }

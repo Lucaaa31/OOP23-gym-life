@@ -1,7 +1,9 @@
 package gymlife.controller.api;
 
+import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
+import gymlife.model.SynchronizerModel;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Direction;
@@ -44,6 +46,15 @@ public interface Controller {
      * @return a Map of the statistics
      */
     Map<StatsType, LimitedGameCounterImpl> getStatistics();
+
+    /**
+     * Returns the current amount of money.
+     * <p>
+     * This method retrieves the money count from the `statsManager` and returns it.
+     *
+     * @return money.
+     */
+    int returnMoney();
 
     /**
      * Returns the number of days that have passed in the game.
@@ -106,12 +117,14 @@ public interface Controller {
 
     /**
      * Method to return the current randomEncounter.
+     *
      * @return Encounter object.
      */
     Encounter getCurrentEncounter();
 
     /**
      * Method to resolve the encounter either by accepting or declining the encounter.
+     *
      * @param choice boolean indicating whether to accept or decline the encounter.
      */
     void resolveEncounter(boolean choice);
@@ -128,14 +141,14 @@ public interface Controller {
      *
      * @param button the button pressed by the user
      */
-    void notifyUserAction(int button);
+    void notifyUserAction(String button);
 
     /**
      * Method to get the sequence of the minigame.
      *
      * @return Returns the sequence of the minigame.
      */
-    List<Integer> getSequence();
+    List<String> getSequence();
 
     /**
      * Set the minigame result, update the statistics and change the scenario.
@@ -189,5 +202,86 @@ public interface Controller {
      */
     boolean isGameOver();
 
+    /**
+     * Starts the multiplier with the specified money value.
+     *
+     * @param money the money value.
+     */
+    void startMultiplier(float money);
+
+    /**
+     * Retrieves the count of a specific type of food from the inventory.
+     * This method returns the number of items for a given `FoodType` from the inventory.
+     *
+     * @param foodType the type of food whose count is to be retrieved.
+     * @return the count of the specified food type.
+     */
+    int getFoodCount(FoodType foodType);
+
+    /**
+     * Returns the threshold of the multiplier.
+     *
+     * @return The value of the multiplier's threshold.
+     */
+    float getThreshold();
+
+    /**
+     * Returns what is the current food to be bought.
+     * @return the FoodType to to buy.
+     */
+    FoodType getFoodToBuy();
+
+    /**
+     * Method to actually buy the food and add it to the inventory.
+     */
+    void buyFood();
+
+    /**
+     * Return the current value of the multiplier.
+     *
+     * @return the current value of the multiplier.
+     */
+    float getMultiplier();
+
+    /**
+     * Stops the multiplier controlled by the controller.
+     */
+    void controllerStopMultiplier();
+
+    /**
+     * Returns the value of the money controlled by the controller.
+     *
+     * @return the current value of the money.
+     */
+    float controllerGetMoney();
+
+    /**
+     * Returns the first synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the first {@link SynchronizerModel} instance.
+     */
+    SynchronizerModel getSync1();
+
+    /**
+     * Returns the second synchronization model used for coordinating thread
+     * operations.
+     *
+     * @return the second {@link SynchronizerModel} instance.
+     */
+    SynchronizerModel getSync2();
+
+    /**
+     * Updates the money value in the statistics manager by incrementing it with the specified value.
+     *
+     * @param value the amount to increment the money value by. This value can be positive or negative.
+     */
+    void changeMoney(int value);
+
+    /**
+     * Generates a new random threshold value within a specified range and resets
+     * the multiplier.
+     */
+    void newThreshold();
 
 }
