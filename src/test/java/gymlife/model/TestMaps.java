@@ -5,9 +5,13 @@ import gymlife.model.map.api.MapManager;
 import gymlife.model.map.CellImpl;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
+import gymlife.utility.MapConstants;
+import gymlife.utility.MapLoader;
 import gymlife.utility.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -76,5 +80,22 @@ class TestMaps {
         assertEquals(manager.getCurrentMap(), GameMapImpl.GYM_MAP);
         manager.changeMap(shop);
         assertEquals(manager.getCurrentMap(), GameMapImpl.SHOP_MAP);
+    }
+
+    @Test
+    void testGeneral() {
+        assertEquals(Map.of(), MapLoader.load("invalid_map"));
+        assertEquals(MapConstants.MAP_X_DIM, house.getDimX());
+        assertEquals(MapConstants.MAP_Y_DIM, house.getDimY());
+        assertEquals(0, house.getId());
+        assertEquals("house", house.getName());
+        final Position pos = new Position(6, 2);
+        assertEquals(pos, house.getDefaultPosition());
+    }
+
+    @Test
+    void testStrings() {
+        assertEquals(gym, GameMapImpl.fromString("gym"));
+        assertEquals("house_floor", house.getCellAtCoord(new Position(0, 2)).getName());
     }
 }

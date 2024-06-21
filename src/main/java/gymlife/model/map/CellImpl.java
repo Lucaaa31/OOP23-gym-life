@@ -272,7 +272,7 @@ public enum CellImpl implements Cell {
 
     @Override
     public String getName() {
-        return this.toString().toLowerCase(new Locale("en"));
+        return this.toString().toLowerCase(Locale.ROOT);
     }
 
     /**
