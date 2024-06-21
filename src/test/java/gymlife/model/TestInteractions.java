@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TestInteractions {
@@ -57,14 +59,60 @@ class TestInteractions {
         final Position pos = new Position(1, 1);
         interactOnCell(pos);
         assertEquals(ScenariosType.BUY_FOOD, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+        final Position pos2 = new Position(3, 1);
+        interactOnCell(pos2);
+        assertEquals(ScenariosType.BUY_FOOD, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+        final Position pos3 = new Position(5, 1);
+        interactOnCell(pos3);
+        assertEquals(ScenariosType.BUY_FOOD, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+
     }
 
     @Test
     void testEatFood() {
         inventory.addFood(FoodType.HAMBURGER);
-        final Position pos = new Position(0, 4);
+        inventory.addFood(FoodType.BROCCOLI);
+        inventory.addFood(FoodType.MEAT);
+        Position pos = new Position(0, 4);
         interactOnCell(pos);
         assertEquals(0, inventory.getFoodCount().get(FoodType.HAMBURGER));
+        pos = new Position(1, 4);
+        interactOnCell(pos);
+        assertEquals(0, inventory.getFoodCount().get(FoodType.MEAT));
+        pos = new Position(2, 4);
+        interactOnCell(pos);
+        assertEquals(0, inventory.getFoodCount().get(FoodType.BROCCOLI));
+    }
+
+    @Test
+    void testMinigame() {
+        mapManager.changeMap(GameMapImpl.GYM_MAP);
+        final Position pos = new Position(1, 1);
+        interactOnCell(pos);
+        assertEquals(ScenariosType.MINIGAME_GYM, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+        final Position pos2 = new Position(6, 1);
+        interactOnCell(pos2);
+        assertEquals(ScenariosType.MINIGAME_GYM, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+        final Position pos3 = new Position(5, 4);
+        interactOnCell(pos3);
+        assertEquals(ScenariosType.MINIGAME_GYM, scenariosManager.getActualScenariosType());
+        scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
+
+        mapManager.changeMap(GameMapImpl.SHOP_MAP);
+        final Position pos4 = new Position(7, 1);
+        interactOnCell(pos4);
+        assertEquals(ScenariosType.MINIGAME_BANK, scenariosManager.getActualScenariosType());
+    }
+
+    @Test
+    void testNoInteraction() {
+        final Position pos = new Position(4, 4);
+        assertEquals(Optional.empty(), mapManager.getCurrentMap().getCellAtCoord(pos).getInteraction());
     }
 
     private void interactOnCell(final Position pos) {
