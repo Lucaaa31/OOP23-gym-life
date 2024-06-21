@@ -2,7 +2,7 @@ package gymlife.controller;
 
 import gymlife.controller.api.Controller;
 
-import gymlife.model.character.CharacterModelImpl;
+import gymlife.model.character.CharacterImpl;
 import gymlife.model.InteractionsManager;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
@@ -18,10 +18,10 @@ import gymlife.model.ScenariosManager;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.model.character.api.CharacterModel;
+import gymlife.model.character.api.Character;
 
 import gymlife.utility.GameDifficulty;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
@@ -37,7 +37,7 @@ import java.util.Optional;
  * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
-    private final CharacterModel characterModel = new CharacterModelImpl();
+    private final Character character = new CharacterImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
@@ -71,13 +71,13 @@ public class ControllerImpl implements Controller {
      * @param dir the direction in which to move the character
      */
     @Override
-    public void moveCharacter(final Directions dir) {
+    public void moveCharacter(final Direction dir) {
         final Position positionToGo = new Position(
-                getCharacterPos().X() + dir.getPos().X(),
-                getCharacterPos().Y() + dir.getPos().Y());
+                getCharacterPos().X() + dir.getOffSet().X(),
+                getCharacterPos().Y() + dir.getOffSet().Y());
         if (mapManager.getCurrentMap().checkBorders(positionToGo)
                 && !mapManager.getCurrentMap().isCellCollidable(positionToGo)) {
-            characterModel.move(dir);
+            character.move(dir);
         }
     }
 
@@ -88,7 +88,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public Position getCharacterPos() {
-        return characterModel.getCharacterPos();
+        return character.getCharacterPos();
     }
 
     /**
@@ -153,7 +153,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void cellInteraction() {
         mapManager.getCurrentMap()
-                .getCellAtCoord(characterModel.getCharacterPos())
+                .getCellAtCoord(character.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
@@ -195,7 +195,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void resetPlayerPosition() {
-        characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
+        character.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
     /**

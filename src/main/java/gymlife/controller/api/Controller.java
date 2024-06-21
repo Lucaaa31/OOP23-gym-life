@@ -4,7 +4,7 @@ import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
@@ -29,7 +29,7 @@ public interface Controller {
      *
      * @param dir the direction in which to move the character
      */
-    void moveCharacter(Directions dir);
+    void moveCharacter(Direction dir);
 
     /**
      * Returns the current position of the character.

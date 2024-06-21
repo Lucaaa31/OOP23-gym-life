@@ -14,7 +14,7 @@ public final class EncountersFactory {
     private EncountersFactory() {
     }
     /**
-     * Returns a random encounter based on the probability of each encounter type.
+     * Returns a random optional encounter based on the probability of each encounter type.
      *
      * @return a random encounter
      */

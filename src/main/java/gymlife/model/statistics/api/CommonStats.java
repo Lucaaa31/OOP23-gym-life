@@ -6,8 +6,8 @@ import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 
 /**
- * This interface represents the stats model for a gym life application.
- * It provides methods to retrieve and update various stats related to the Character's body.
+ * This interface represents a container of all LimitedStats of the game.
+ * It provides methods to retrieve and update various stats related to the player.
  */
 public interface CommonStats {
     /**

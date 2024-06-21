@@ -1,7 +1,7 @@
 package gymlife.model.statistics.api;
 
 /**
- * The Counter class represents a counter with basic increment and decrement operations.
+ * This class represent a classic counter whit some more sofisticated features.
  */
 public interface GameCounter {
     /**

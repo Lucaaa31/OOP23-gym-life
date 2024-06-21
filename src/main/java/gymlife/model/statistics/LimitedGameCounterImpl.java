@@ -1,11 +1,12 @@
 package gymlife.model.statistics;
 
+import gymlife.model.statistics.api.LimitedCounter;
 /**
  * A class that represents a counter with a limit.
  * This counter can be incremented and decremented, but it cannot exceed its limit or go below zero.
  * It extends the Counter class.
  */
-public class LimitedGameCounterImpl extends GameCounterImpl implements gymlife.model.statistics.api.LimitedCounter {
+public class LimitedGameCounterImpl extends GameCounterImpl implements LimitedCounter {
     // The maximum value that this counter can reach.
     private final int limit;
 

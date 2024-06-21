@@ -2,12 +2,12 @@ package gymlife.model.character.api;
 
 
 
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
 /**
 *  Class responsable for Character model.
 */
-public interface CharacterModel {
+public interface Character {
     /**
     *  Return Character position.
     * @return Position
@@ -17,7 +17,7 @@ public interface CharacterModel {
     *  Keylistener responsable for managing movement inputs.
     * @param dir
     */
-    void move(Directions dir);
+    void move(Direction dir);
 
     /**
      * Moves the character to a specific location.

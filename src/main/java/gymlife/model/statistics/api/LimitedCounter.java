@@ -2,7 +2,7 @@ package gymlife.model.statistics.api;
 
 /**
  * A class that represents a counter with a limit.
- * This counter can be incremented and decremented, but it cannot exceed its limit or go below zero.
+ * This counter can be incremented and decremented, but it cannot exceed its limit.
  * It extends the Counter class.
  */
 public interface LimitedCounter {

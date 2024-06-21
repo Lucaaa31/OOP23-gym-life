@@ -1,0 +1,34 @@
+@startuml
+CharacterImpl --> Direction
+CharacterImpl ..> Position : uses
+CharacterView ..> Direction: uses
+CharacterView .. CharacterImpl
+
+class CharacterView {
+    Take input from Keyboard
+    and call methods of
+    CharacterImpl
+}
+
+class CharacterImpl{
+    - Position characterPos
+    + Position getCharacterPos()
+    + void move(Direction )
+}
+class Position <<(R,green)>>{
+    - int x
+    - int y
+}
+note right of (Direction)
+    convert pressed key
+    into a Direction
+end note
+enum Direction {
+    + UP
+    + DOWN
+    + RIGHT
+    + LEFT
+    + getDir(char)
+}
+
+@enduml

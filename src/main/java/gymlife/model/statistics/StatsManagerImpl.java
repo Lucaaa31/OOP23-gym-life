@@ -9,6 +9,7 @@ import gymlife.utility.GameDifficulty;
 /**
  * Implementation of the StatsManager interface.
  * This class manages the game statistics and provides methods to retrieve the stats.
+ * This class is also responsible for hanling stats variations and the logic of that change.
  */
 public class StatsManagerImpl implements StatsManager {
     private final CommonStats gameStats;

@@ -3,18 +3,17 @@ package gymlife.model.character;
 
 import java.util.function.BiFunction;
 
-import gymlife.model.character.api.CharacterModel;
+import gymlife.model.character.api.Character;
 import gymlife.utility.Position;
 import gymlife.utility.Constants;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 
 /**
  * Implementation of the CharacterModel interface.
  * This class represents the character in the game and provides methods for managing its movement.
  */
-public class CharacterModelImpl implements CharacterModel {
-
-    private Position pos = Constants.CHARACTER_START_POS;
+public class CharacterImpl implements Character {
+    private Position characterPos = Constants.CHARACTER_START_POS;
 
     /**
      * Retrieves the current position of the character.
@@ -22,7 +21,7 @@ public class CharacterModelImpl implements CharacterModel {
      */
     @Override
     public Position getCharacterPos() {
-        return pos;
+        return characterPos;
     }
 
     /**
@@ -30,9 +29,9 @@ public class CharacterModelImpl implements CharacterModel {
      * @param dir The new direction for the character's movement.
      */
     @Override
-    public void move(final Directions dir) {
+    public void move(final Direction dir) {
         final BiFunction<Integer, Integer, Position> newPosition = Position::new;
-        pos = newPosition.apply(pos.X() + dir.getPos().X(), pos.Y() + dir.getPos().Y());
+        characterPos = newPosition.apply(characterPos.X() + dir.getOffSet().X(), characterPos.Y() + dir.getOffSet().Y());
     }
 
     /**
@@ -41,7 +40,7 @@ public class CharacterModelImpl implements CharacterModel {
      */
     @Override
     public void setPosition(final Position pos) {
-        this.pos = pos;
+        this.characterPos = pos;
     }
 
 }

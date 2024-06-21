@@ -3,9 +3,9 @@ package gymlife.utility;
 import java.util.Optional;
 
 /**
- * Keylistener responsible for managing movement inputs.
+ * Enum responsible for converting key input into directions
  */
-public enum Directions {
+public enum Direction {
     /**
      * Direction UP.
      */
@@ -27,28 +27,28 @@ public enum Directions {
     DOWN('s', new Position(0, +1));
 
     private final char key;
-    private final Position pos;
+    private final Position offSet;
 
     /**
      * Private constructor.
      *
      * @param key the character key associated with the direction
-     * @param pos the position change associated with the direction
+     * @param offSet the position change associated with the direction
      */
-    Directions(final char key, final Position pos) {
+    Direction(final char key, final Position offSet) {
         this.key = key;
-        this.pos = pos;
+        this.offSet = offSet;
     }
 
     /**
      * Returns an Optional containing the Directions enum value associated with the given character key.
-     * Used to convert the key pressed into a direction, into the 
+     * Used to convert the key pressed into a direction.
      *
      * @param key the character key
      * @return an Optional containing the Directions enum value, or an empty Optional if no match is found
      */
-    public static Optional<Directions> getDir(final char key) {
-        for (final Directions elem : Directions.values()) {
+    public static Optional<Direction> getDir(final char key) {
+        for (final Direction elem : Direction.values()) {
             if (elem.key == Character.toLowerCase(key)) {
                 return Optional.of(elem);
             }
@@ -61,7 +61,7 @@ public enum Directions {
      *
      * @return the position change
      */
-    public Position getPos() {
-        return pos;
+    public Position getOffSet() {
+        return offSet;
     }
 }

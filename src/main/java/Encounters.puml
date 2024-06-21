@@ -8,7 +8,7 @@ class Encounter {
 }
 
 class EncountersFactoryImpl {
-    + Encounter getRandomEncounter()
+    + Optional<Encounter> getRandomEncounter()
 }
 
 class EncountersConstants {

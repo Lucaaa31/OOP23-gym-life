@@ -1,7 +1,7 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
 import gymlife.view.api.GamePanel;
@@ -85,9 +85,9 @@ public final class GameMapView extends GamePanel {
             @Override
             public void keyTyped(final KeyEvent e) {
                 final char key = Character.toLowerCase(e.getKeyChar());
-                if (Directions.getDir(key).isPresent()) {
-                    controller.moveCharacter(Directions.getDir(key).get());
-                    characterLabel.changeImage(controller.getPlayerLevel(), Directions.getDir(key).get());
+                if (Direction.getDir(key).isPresent()) {
+                    controller.moveCharacter(Direction.getDir(key).get());
+                    characterLabel.changeImage(controller.getPlayerLevel(), Direction.getDir(key).get());
                     moveCharacter();
                 } else if (key == 'e' && controller.getCurrentMap()
                             .getCellAtCoord(controller.getCharacterPos())
