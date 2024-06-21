@@ -3,7 +3,7 @@ package gymlife.utility;
 import java.util.Optional;
 
 /**
- * Enum responsible for converting key input into directions
+ * Enum responsible for converting key input into directions.
  */
 public enum Direction {
     /**
