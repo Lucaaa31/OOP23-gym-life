@@ -19,9 +19,8 @@ import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.SynchronizerModel;
 
+import gymlife.model.character.CharacterImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.ScenariosManager;
-import gymlife.model.statistics.GameCounterImpl;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.api.StatsManager;

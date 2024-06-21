@@ -28,7 +28,7 @@ public class BuyFoodPanel extends ChoicePanel {
 
         this.setAcceptAction(e -> {
 
-            if (controller.getMoney().getCount() > controller.getFoodToBuy().getCost()) {
+            if (controller.getMoney() > controller.getFoodToBuy().getCost()) {
                 controller.buyFood();
                 controller.changeScenario(ScenariosType.INDOOR_MAP);
                 this.transferFocus();
