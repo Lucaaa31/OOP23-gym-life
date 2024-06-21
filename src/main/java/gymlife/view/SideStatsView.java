@@ -392,7 +392,6 @@ public class SideStatsView extends GamePanel {
         label.setLayout(new GridLayout(2, 1));
         label.add(labelImage);
         label.add(lablelNumber);
-        FontLoader.loadFont();
 
         labelImage.setIcon(getIcon(path));
 
@@ -419,7 +418,7 @@ public class SideStatsView extends GamePanel {
         foodLabel.add(foodLabelImage);
         foodLabel.add(foodLabelNumber);
 
-        FontLoader.loadFont();
+
         foodLabelImage.setIcon(getIcon(imagePath));
         this.setSize(dimensionGetter.getCellDimension());
 

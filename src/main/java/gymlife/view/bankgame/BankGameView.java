@@ -94,7 +94,7 @@ public final class BankGameView extends GamePanel {
         startButton.setBorder(darkBorder);
         restartButton.setBorder(darkBorder);
         startButton.setEnabled(false);
-        FontLoader.loadFont();
+
         boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
 
         boxMoney.addKeyListener(new KeyAdapter() {

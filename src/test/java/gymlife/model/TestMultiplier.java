@@ -1,6 +1,7 @@
 package gymlife.model;
 
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
 import gymlife.view.DimensionGetter;
 import gymlife.view.bankgame.BankGameView;
@@ -15,11 +16,11 @@ class TestMultiplier {
 
     @Test
     void equal() throws InterruptedException {
+        FontLoader.loadFont();
         final ControllerImpl controller = new ControllerImpl(GameDifficulty.EASY);
         final PlaneGameModel model = new PlaneGameModel(controller.getSync1(), controller.getSync2());
         final BankGameView view = new BankGameView(controller, new DimensionGetter());
         final float money = 20;
-
         final Thread modelThread = new Thread(() -> {
             model.runMultiplier(money);
         });

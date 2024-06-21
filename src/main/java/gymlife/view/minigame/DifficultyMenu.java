@@ -112,7 +112,7 @@ public class DifficultyMenu extends GamePanel {
                            final ActionListener mediumListener,
                            final ActionListener hardListener) {
 
-        FontLoader.loadFont();
+
         final int borderSize = 15;
         final int fontDescriptionSize = 55;
 

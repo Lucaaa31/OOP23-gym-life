@@ -39,7 +39,7 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
         this.dimensionGetter = dimensionGetter;
         final int borderSize = 5;
 
-        FontLoader.loadFont();
+
 
         final JButton button1 = new JButton("1");
         final JButton button2 = new JButton("2");

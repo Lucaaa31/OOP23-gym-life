@@ -20,6 +20,7 @@ import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
@@ -49,7 +50,7 @@ public class MainView extends JFrame {
      * Sets the size of the frame, requests focus, sets the location relative to null and makes it visible.
      */
     public MainView() {
-
+        FontLoader.loadFont();
         // Creazione dell'azione per il tasto 'esc'
         final Action closeGameAction = new AbstractAction() {
             @Override

@@ -50,7 +50,7 @@ public abstract class ChoicePanel extends GamePanel {
         this.setBackground(lightBlue);
         this.setBorder(new LineBorder(lightBlue, 10));
 
-        FontLoader.loadFont();
+
 
         final BorderLayout layout = new BorderLayout();
         layout.setHgap(10);

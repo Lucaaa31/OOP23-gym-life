@@ -60,7 +60,7 @@ public abstract class AbstractMinigameView extends GamePanel {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
 
-        FontLoader.loadFont();
+
 
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());

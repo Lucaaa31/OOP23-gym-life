@@ -57,7 +57,7 @@ public class ScoreBoardView extends JPanel {
                           final MinigameType currentMinigameType,
                           final MouseAdapter backButton,
                           final DimensionGetter dimensionGetter) {
-        FontLoader.loadFont();
+
         this.setLayout(new BorderLayout());
         final JPanel buttonPanel = new JPanel(new FlowLayout());
 
