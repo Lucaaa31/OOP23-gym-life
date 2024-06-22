@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Represents a lat machine minigame that implements the Minigame interface.
  */
-public final class LatMachineMinigame extends AbstractMinigame {
+public final class LatStrategy extends Minigame {
     private List<Integer> sequence;
     private int numberPressed;
     private int index;
@@ -20,7 +20,7 @@ public final class LatMachineMinigame extends AbstractMinigame {
     /**
      * Constructs a new LatMachineMinigame object and initializes the instance variables.
      */
-    public LatMachineMinigame() {
+    public LatStrategy() {
         super();
         this.index = 0;
         sequence = new ArrayList<>();

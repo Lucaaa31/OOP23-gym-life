@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * The SquatMinigame class represents a squat minigame that can be played within the gym.
  */
-public final class SquatMinigame extends AbstractMinigame {
+public final class SquatStrategy extends Minigame {
     private final List<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
     private Colors currentColor;
     private long startMinigame;

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Represents a bench minigame that implements the Minigame interface.
  */
-public final class BenchMinigame extends AbstractMinigame {
+public final class BenchStrategy extends Minigame {
     private long startReactionTime;
     private long startMinigame;
     private boolean isReactionTimeSet;

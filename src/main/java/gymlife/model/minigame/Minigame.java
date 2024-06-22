@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * the current state,
  * and setting the difficulty level of the minigame.
  */
-public abstract class AbstractMinigame {
+public abstract class Minigame {
     private MinigameDifficulty difficulty;
     private MinigameState minigameState;
     private long endMinigame;
@@ -25,7 +25,7 @@ public abstract class AbstractMinigame {
     /**
      * Constructs a new Minigame object and initializes the instance variables.
      */
-    public AbstractMinigame() {
+    public Minigame() {
         this.difficulty = null;
         this.minigameState = MinigameState.NOT_STARTED;
     }

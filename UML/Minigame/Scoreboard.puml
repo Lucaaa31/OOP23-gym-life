@@ -1,0 +1,9 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class ScoringTable
+class ScoringTablemanager
+
+ScoringTablemanager --* ScoringTable
+
+@enduml

@@ -1,8 +1,8 @@
 package gymlife.utility.minigame;
 
-import gymlife.model.minigame.BenchMinigame;
-import gymlife.model.minigame.LatMachineMinigame;
-import gymlife.model.minigame.SquatMinigame;
+import gymlife.model.minigame.BenchStrategy;
+import gymlife.model.minigame.LatStrategy;
+import gymlife.model.minigame.SquatStrategy;
 import gymlife.model.statistics.StatsType;
 import gymlife.view.minigame.BenchView;
 import gymlife.view.minigame.LatMachineView;
@@ -19,7 +19,7 @@ public enum MinigameType {
      * Bench press minigame type.
      */
     BENCH_PRESS(
-            BenchMinigame.class.getCanonicalName(),
+            BenchStrategy.class.getCanonicalName(),
             BenchView.class.getCanonicalName(),
             StatsType.CHEST_MASS,
             "Bench Press",
@@ -28,7 +28,7 @@ public enum MinigameType {
      * Squat minigame type.
      */
     SQUAT(
-            SquatMinigame.class.getCanonicalName(),
+            SquatStrategy.class.getCanonicalName(),
             SquatView.class.getCanonicalName(),
             StatsType.LEG_MASS,
             "Squat",
@@ -37,7 +37,7 @@ public enum MinigameType {
      * Lat machine minigame type.
      */
     LAT_MACHINE(
-            LatMachineMinigame.class.getCanonicalName(),
+            LatStrategy.class.getCanonicalName(),
             LatMachineView.class.getCanonicalName(),
             StatsType.BACK_MASS,
             "Lat Machine",

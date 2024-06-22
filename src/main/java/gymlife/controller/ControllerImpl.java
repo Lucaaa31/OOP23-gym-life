@@ -9,7 +9,7 @@ import gymlife.model.inventory.api.Inventory;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedGameCounterImpl;
