@@ -33,7 +33,7 @@ public final class LatStrategy extends Minigame {
             createRandomSequence();
             setMinigameState(MinigameState.PRESSED_START);
         } else {
-            incrementNTimePressed();
+            incrementInteractions();
             numberPressed = Integer.parseInt(buttonCode);
             setMinigameState(MinigameState.RUNNING);
             validatePress();

@@ -76,7 +76,7 @@ public enum MinigameType {
      *
      * @return the name of the minigame type
      */
-    public String getClassName() {
+    public String getStrategy() {
         return this.minigameType;
     }
 

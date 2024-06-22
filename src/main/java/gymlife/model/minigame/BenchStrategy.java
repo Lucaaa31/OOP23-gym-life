@@ -33,7 +33,7 @@ public final class BenchStrategy extends Minigame {
             setMinigameState(MinigameState.PRESSED_START);
         } else {
             setMinigameState(MinigameState.RUNNING);
-            incrementNTimePressed();
+            incrementInteractions();
             if (!isReactionTimeSet) {
                 resetStartReactionTime();
                 isReactionTimeSet = true;

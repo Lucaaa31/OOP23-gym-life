@@ -49,7 +49,7 @@ public class MinigameManagerImpl implements MinigameManager {
         this.currentMinigameType = minigameType;
         try {
             this.currentMinigame = (Minigame) Class
-                    .forName(minigameType.getClassName())
+                    .forName(minigameType.getStrategy())
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException

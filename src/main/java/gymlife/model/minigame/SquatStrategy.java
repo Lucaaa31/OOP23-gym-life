@@ -16,29 +16,29 @@ import java.util.concurrent.TimeUnit;
 public final class SquatStrategy extends Minigame {
     private final List<Colors> colors = new ArrayList<>(Arrays.asList(Colors.values()));
     private Colors currentColor;
-    private long startMinigame;
+    private long startingTime;
     private String colorPressed;
     private final Random random = new Random();
     private final List<String> sequence = new ArrayList<>();
     private boolean isReactionTimeSet;
-    private long startReactionTime;
+    private long startCountDown;
 
     @Override
     public void notifyUserAction(final String buttonCode) {
         if (getMinigameState() == MinigameState.NOT_STARTED) {
-            startMinigame = System.nanoTime();
+            startingTime = System.nanoTime();
             setMinigameState(MinigameState.PRESSED_START);
         } else {
             colorPressed = buttonCode;
             setMinigameState(MinigameState.RUNNING);
             if (!isReactionTimeSet) {
-                startReactionTime = System.nanoTime();
+                startCountDown = System.nanoTime();
                 isReactionTimeSet = true;
             }
             validatePress();
 
         }
-        createRandomColor();
+        createRandomSequence();
     }
 
     @Override
@@ -51,12 +51,12 @@ public final class SquatStrategy extends Minigame {
      */
     @Override
     public void validatePress() {
-        final long reactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startReactionTime);
-        startReactionTime = System.nanoTime();
+        final long reactionTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startCountDown);
+        startCountDown = System.nanoTime();
         if (Objects.equals(currentColor.getColorName(), colorPressed) && reactionTime < getDifficulty().getReactionTime()) {
-            incrementNTimePressed();
+            incrementInteractions();
             if (handleValidPress()) {
-                checkIfMinigameHasEnded(startMinigame);
+                checkIfMinigameHasEnded(startingTime);
                 resetReactionTime();
             }
         } else {
@@ -80,15 +80,15 @@ public final class SquatStrategy extends Minigame {
         return List.copyOf(sequence);
     }
 
-    private void createRandomColor() {
-        // Clear the previous sequence
+    /**
+     * Creates a random sequence for the minigame.
+     */
+    public void createRandomSequence() {
         sequence.clear();
 
-        // Select the current color
         currentColor = colors.get(random.nextInt(colors.size()));
         sequence.add(currentColor.getColorName());
 
-        // Select two different colors
         Colors color1;
         Colors color2;
 
@@ -100,7 +100,6 @@ public final class SquatStrategy extends Minigame {
             color2 = colors.get(random.nextInt(colors.size()));
         } while (color2.equals(currentColor) || color2.equals(color1));
 
-        // Add the different colors to the sequence
         sequence.add(color1.getColorName());
         sequence.add(color2.getColorName());
 

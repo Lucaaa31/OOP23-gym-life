@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 public abstract class Minigame {
     private MinigameDifficulty difficulty;
     private MinigameState minigameState;
-    private long endMinigame;
-    private int nTimesPressed;
-    private int nMistakes;
+    private long timeMinigame;
+    private int interactions;
+    private int mistakes;
     private int numReps;
 
 
@@ -33,8 +33,8 @@ public abstract class Minigame {
     /**
      * Increments the number of times the button has been pressed.
      */
-    public void incrementNTimePressed() {
-        nTimesPressed++;
+    public void incrementInteractions() {
+        interactions++;
     }
 
 
@@ -93,25 +93,22 @@ public abstract class Minigame {
      * @return the time to complete the minigame
      */
     public int getTimeMinigame() {
-        return Math.toIntExact(endMinigame);
+        return Math.toIntExact(timeMinigame);
     }
-
 
     /**
      * Checks the validity of the press.
      */
     public abstract void validatePress();
 
-
     /**
      * Set the time to put in the scoringTable.
      *
-     * @param endMinigame the time to put in the scoringTable
+     * @param timeMinigame the time to put in the scoringTable
      */
-    public void setEndMinigame(final long endMinigame) {
-        this.endMinigame = endMinigame;
+    public void setTimeMinigame(final long timeMinigame) {
+        this.timeMinigame = timeMinigame;
     }
-
 
     /**
      * Handles the case when the player's press is valid.
@@ -119,8 +116,8 @@ public abstract class Minigame {
      * @return true if the reps has been completed, false otherwise
      */
     public boolean handleValidPress() {
-        if (nTimesPressed == getDifficulty().getTouchForLift()) {
-            nTimesPressed = 0;
+        if (interactions == getDifficulty().getTouchForLift()) {
+            interactions = 0;
             numReps++;
             setMinigameState(MinigameState.REP_REACHED);
             return true;
@@ -132,12 +129,12 @@ public abstract class Minigame {
      * Handles the case when the player's press is invalid.
      */
     public void handleInvalidPress() {
-        nMistakes++;
+        mistakes++;
         setMinigameState(MinigameState.MISTAKE_MADE);
-        if (nMistakes > getDifficulty().getMaxMistakes()) {
+        if (mistakes > getDifficulty().getMaxMistakes()) {
             setMinigameState(MinigameState.ENDED_LOST);
         }
-        nTimesPressed = 0;
+        interactions = 0;
     }
 
     /**
@@ -147,11 +144,10 @@ public abstract class Minigame {
      */
     public void checkIfMinigameHasEnded(final long startMinigame) {
         if (numReps == getDifficulty().getRequiredReps()) {
-            setEndMinigame(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
+            setTimeMinigame(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
             setMinigameState(MinigameState.ENDED_WON);
         }
     }
-
 
     /**
      * Abstract method to get the sequence of the minigame.
@@ -159,5 +155,12 @@ public abstract class Minigame {
      * @return the sequence of the minigame
      */
     public abstract List<String> getSequence();
+
+    /**
+     * Creates a random sequence depending on the minigame.
+     */
+    public void createRandomSequence() {
+
+    }
 
 }
