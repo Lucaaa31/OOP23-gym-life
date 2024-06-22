@@ -24,7 +24,6 @@ import java.io.Serial;
 import java.util.List;
 
 
-
 /**
  * The ScoreBoardView class represents the view component for the ScoreBoard mini-game.
  * It extends the JPanel class and provides the necessary UI elements and functionality
@@ -72,8 +71,8 @@ public class ScoreBoardView extends JPanel {
             ((JLabel) button).setOpaque(true);
             button.setPreferredSize(new Dimension(
                     dimensionGetter.getSideDimension().width / 4,
-                    dimensionGetter.getScenarioDimension().height / DimensionGetter.
-                            getMinigameButtonFontProportion()));
+                    dimensionGetter.getScenarioDimension().height
+                            / DimensionGetter.getMinigameButtonFontProportion()));
             ((JLabel) button).setHorizontalAlignment(SwingConstants.CENTER);
             ((JLabel) button).setBorder(new MatteBorder(3, 3, 3, 3, Color.BLACK));
         }
@@ -138,6 +137,7 @@ public class ScoreBoardView extends JPanel {
                 updateButton(MinigameDifficulty.HARD);
             }
         });
+
 
         this.setVisible(true);
     }
@@ -214,5 +214,6 @@ public class ScoreBoardView extends JPanel {
             default -> throw new IllegalArgumentException("Invalid difficulty level");
         }
     }
+
 
 }

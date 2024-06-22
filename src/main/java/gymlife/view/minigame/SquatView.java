@@ -34,6 +34,9 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
     private final JButton buttonMinigame3 = new JButton("Start!");
     private final List<JButton> buttonList = new ArrayList<>(
             List.of(buttonMinigame1, buttonMinigame2, buttonMinigame3));
+    private final JPanel buttonPanel = new JPanel();
+    private static final int FONT_PROPORTION = 5;
+    private static final int OFFSET = 25;
 
     /**
      * Creates a new SquatView object.
@@ -46,9 +49,8 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         this.dimensionGetter = dimensionGetter;
         this.controller = controller;
         final int borderSize = 5;
-        final int offset = 25;
-        final JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 3));
+
+        buttonPanel.setLayout(new GridLayout(1, 3));
 
 
         for (final JButton button : buttonList) {
@@ -57,7 +59,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
             button.setBorder(new LineBorder(Color.BLACK, borderSize));
             button.setFont(FontLoader
                     .getCustomFont((float) dimensionGetter.getButtonMinigameDimension().height
-                            / DimensionGetter.getMinigameButtonFontProportion()));
+                            / FONT_PROPORTION));
             button.setOpaque(true);
             button.addActionListener(e -> {
                 controller.notifyUserAction(Objects.requireNonNull(Colors.getColorName(
@@ -68,16 +70,16 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
                 super.progressBarHandler();
                 handleMinigameState();
             });
-            panel.add(button);
+            buttonPanel.add(button);
         }
-        panel.setBounds(dimensionGetter.getMinigameScenarioWidht() / 2
+        buttonPanel.setBounds(dimensionGetter.getMinigameScenarioWidht() / 2
                         - buttonMinigame1.getWidth() * 3 / 2
-                        + offset,
+                        + OFFSET,
                 dimensionGetter.getScenarioDimension().height - buttonMinigame1.getHeight(),
                 buttonMinigame1.getWidth() * 3,
                 buttonMinigame1.getHeight());
 
-        addLayeredPanel(panel);
+        addLayeredPanel(buttonPanel);
 
     }
 
@@ -93,8 +95,8 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         Collections.shuffle(sequence);
         for (int i = 0; i < 3; i++) {
             buttonList.get(i).setBackground(Objects.requireNonNull(
-                            Objects.requireNonNull(Colors.getColor(sequence.get(i)))
-                    .getColor()));
+                    Objects.requireNonNull(Colors.getColor(sequence.get(i)))
+                            .getColor()));
             buttonList.get(i).setText("?");
         }
         super.setText("Press the " + actualColor + " button!", color);
@@ -124,6 +126,18 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
     @Override
     public void resizeComponents() {
         super.resizeComponents();
-        buttonList.forEach(button -> button.setSize(dimensionGetter.getButtonMinigameDimension()));
+        buttonList.forEach(button -> {
+            button.setSize(dimensionGetter.getButtonMinigameDimension());
+            button.setFont(FontLoader
+                    .getCustomFont((float) dimensionGetter.getButtonMinigameDimension().height
+                            / FONT_PROPORTION));
+
+        });
+        buttonPanel.setBounds(dimensionGetter.getMinigameScenarioWidht() / 2
+                        - buttonMinigame1.getWidth() * 3 / 2
+                        + OFFSET,
+                dimensionGetter.getScenarioDimension().height - buttonMinigame1.getHeight(),
+                buttonMinigame1.getWidth() * 3,
+                buttonMinigame1.getHeight());
     }
 }

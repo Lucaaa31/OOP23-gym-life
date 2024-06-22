@@ -112,13 +112,13 @@ public class SideStatsView extends GamePanel {
 
 
     private void buildScoreboardPanel() {
+
         statsPanel4.setLayout(scoreBoardLayout);
 
         final JPanel panelSwitcher = new JPanel();
         final JLabel benchLabel = new JLabel(getIcon("images/icons/push.png"));
         final JLabel squatLabel = new JLabel(getIcon("images/icons/legs.png"));
         final JLabel latLabel = new JLabel(getIcon("images/icons/pull.png"));
-
 
         final JPanel benchPanel = createBoardsPanel(MinigameType.BENCH_PRESS);
         final JPanel squatPanel = createBoardsPanel(MinigameType.SQUAT);
@@ -204,7 +204,6 @@ public class SideStatsView extends GamePanel {
     private JPanel createBoardsPanel(final MinigameType minigameType) {
         statsPanel4.removeAll();
         final JPanel mainPanel = new JPanel();
-
         mainPanel.add(new ScoreBoardView(controller,
                 minigameType,
                 new MouseAdapter() {
@@ -215,9 +214,7 @@ public class SideStatsView extends GamePanel {
                 },
                 dimensionGetter)
         );
-
         statsPanel4.add(mainPanel);
-
         return mainPanel;
     }
 
@@ -280,6 +277,7 @@ public class SideStatsView extends GamePanel {
     public void resizeComponents() {
         buildPanelStandard();
         buildFoodPanel();
+        buildScoreboardPanel();
         statsPanel3.removeAll();
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
