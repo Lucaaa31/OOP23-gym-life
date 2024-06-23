@@ -66,9 +66,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void changeStatsWithFood(final Map<StatsType, Integer> stats) {
-        for (final Map.Entry<StatsType, Integer> entry : stats.entrySet()) {
-            gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
-        }
+        stats.forEach(gameStats::multiIncrementStats);
     }
     /**
      * Set a specified stats to the value.
@@ -140,13 +138,13 @@ public class StatsManagerImpl implements StatsManager {
     @Override
     public void acceptEncounter(final Encounter encounter) {
         final Map<StatsType, Integer> acceptCase = encounter.acceptCase();
-        for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
-            if (entry.getKey() == StatsType.MONEY) {
-                gameMoney.multiIncrement(entry.getValue());
+        acceptCase.forEach((key, value) -> {
+            if (key == StatsType.MONEY) {
+                gameMoney.multiIncrement(value);
             } else {
-                gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+                gameStats.multiIncrementStats(key, value);
             }
-        }
+        });
     }
     /**
      * Modifies the game statistics according to the encounter type and the deny case of the specific encounter.
@@ -156,12 +154,12 @@ public class StatsManagerImpl implements StatsManager {
     @Override
     public void denyEncounter(final Encounter encounterImpl) {
         final Map<StatsType, Integer> denyCase = encounterImpl.getDenyCase();
-        for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
-            if (entry.getKey() == StatsType.MONEY) {
-                gameMoney.multiIncrement(entry.getValue());
+        denyCase.forEach((key, value) -> {
+            if (key == StatsType.MONEY) {
+                gameMoney.multiIncrement(value);
             } else {
-                gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
+                gameStats.multiIncrementStats(key, value);
             }
-        }
+        });
     }
 }

@@ -5,7 +5,6 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 /**
  * The FontLoader class is responsible for loading a custom font and providing access to it.
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 public final class FontLoader {
     private static final float DEFAULT_FONT_SIZE = 25f;
     private static Font customFont;
-    private static final Logger LOGGER = Logger.getLogger(FontLoader.class.getName());
 
     static {
         loadFont();
@@ -33,9 +31,7 @@ public final class FontLoader {
             customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(DEFAULT_FONT_SIZE);
             final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
-            LOGGER.info("Custom font loaded successfully.");
         } catch (IOException | FontFormatException e) {
-            LOGGER.severe("Failed to load custom font. Using default font. Error: " + e.getMessage());
             customFont = new Font("Arial", Font.BOLD, (int) DEFAULT_FONT_SIZE);
         }
     }

@@ -9,8 +9,8 @@ public enum MinigameDifficulty {
      */
     EASY(
             1,
-            193,
-            5000,
+            5,
+            3000,
             3,
             3,
             34),
@@ -19,8 +19,8 @@ public enum MinigameDifficulty {
      */
     MEDIUM(
             3,
-            3,
-            3000,
+            10,
+            2000,
             5,
             1,
             20),
@@ -29,8 +29,8 @@ public enum MinigameDifficulty {
      */
     HARD(
             7,
-            5,
-            800,
+            20,
+            1000,
             10,
             0,
             10);

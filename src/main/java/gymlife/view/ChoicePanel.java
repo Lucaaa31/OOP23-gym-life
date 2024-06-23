@@ -88,7 +88,8 @@ public abstract class ChoicePanel extends GamePanel {
         declineButton.setForeground(Color.WHITE);
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
-
+        acceptButton.setBorder(new LineBorder(Color.WHITE, 10));
+        declineButton.setBorder(new LineBorder(Color.WHITE, 10));
 
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.EAST);
@@ -121,7 +122,8 @@ public abstract class ChoicePanel extends GamePanel {
         acceptButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
         declineButton.setText("<html>" + getDeclineButtonText() + "</html>");
         declineButton.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
+        declineButton.setOpaque(true);
+        acceptButton.setOpaque(true);
     }
 
     /**
@@ -130,6 +132,7 @@ public abstract class ChoicePanel extends GamePanel {
      */
     protected void setAcceptAction(final ActionListener acceptAction) {
         acceptButton.addActionListener(acceptAction);
+        acceptButton.setOpaque(true);
     }
 
     /**
@@ -138,6 +141,7 @@ public abstract class ChoicePanel extends GamePanel {
      */
     protected void setDeclineAction(final ActionListener declineAction) {
         declineButton.addActionListener(declineAction);
+        declineButton.setOpaque(true);
     }
 
     abstract String getDescription();

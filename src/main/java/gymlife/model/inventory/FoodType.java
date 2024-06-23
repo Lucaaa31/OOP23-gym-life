@@ -13,21 +13,21 @@ public enum FoodType {
      * Hamburger food type with cost, stamina bonus, happiness bonus, and mass
      * penalty.
      */
-    HAMBURGER(12.99, 5, 10, -10),
+    HAMBURGER(12, 5, 10, -10),
 
     /**
      * Broccoli food type with cost, stamina bonus, happiness penalty, and mass
      * bonus.
      */
-    BROCCOLI(4.99, 10, -10, 5),
+    BROCCOLI(4, 10, -10, 5),
 
     /**
      * Meat food type with cost, stamina bonus, happiness bonus, and mass penalty.
      */
-    MEAT(9.99, 5, -5, 10);
+    MEAT(9, 5, -5, 10);
 
-    private final double cost;
-    private Map<StatsType, Integer> foodPerks;
+    private final int cost;
+    private final Map<StatsType, Integer> foodPerks;
 
     /**
      * Constructs a new FoodType with the specified cost and stat bonuses.
@@ -37,7 +37,7 @@ public enum FoodType {
      * @param happinessValue The bonus/penalty to happiness provided by the food.
      * @param massValue      The penalty to mass provided by the food.
      */
-    FoodType(final double cost, final int staminaValue, final int happinessValue, final int massValue) {
+    FoodType(final int cost, final int staminaValue, final int happinessValue, final int massValue) {
         this.cost = cost;
         this.foodPerks = new HashMap<>();
         foodPerks.put(StatsType.STAMINA, staminaValue);
@@ -59,7 +59,7 @@ public enum FoodType {
      *
      * @return cost.
      */
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 }
