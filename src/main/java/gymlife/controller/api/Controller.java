@@ -5,7 +5,7 @@ import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.CounterImpl;
 import gymlife.model.statistics.LimitedCounterImpl;
-import gymlife.model.SynchronizerModel;
+import gymlife.model.bankgame.SynchronizerModel;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.Directions;
 import gymlife.utility.Position;
@@ -273,5 +273,12 @@ public interface Controller {
      * the multiplier.
      */
     void newThreshold();
+
+    /**
+     * Returns the list of thresholds from the plane game model.
+     *
+     * @return A list containing the thresholds from the plane game model.
+     */
+    List<Float> returnList();
 
 }

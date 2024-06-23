@@ -12,10 +12,10 @@ import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.statistics.StatsConstants;
-import gymlife.model.PlaneGameModel;
+import gymlife.model.bankgame.PlaneGameModelImpl;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
-import gymlife.model.SynchronizerModel;
+import gymlife.model.bankgame.SynchronizerModel;
 
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.CounterImpl;
@@ -50,7 +50,7 @@ public class ControllerImpl implements Controller {
     private final InteractionsManager interactionsManager;
     private final SynchronizerModel sync1 = new SynchronizerModel();
     private final SynchronizerModel sync2 = new SynchronizerModel();
-    private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
+    private final PlaneGameModelImpl planeGameModel = new PlaneGameModelImpl(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
     private final Inventory inventory = new Inventory();
@@ -464,6 +464,16 @@ public class ControllerImpl implements Controller {
     @Override
     public void changeMoney(final int value) {
         statsManager.multiIncrementStat(StatsType.MONEY, value);
+    }
+
+    /**
+     * Returns the list of thresholds from the plane game model.
+     *
+     * @return A list containing the thresholds from the plane game model.
+     */
+    @Override
+    public List<Float> returnList() {
+        return planeGameModel.getList();
     }
 
 }

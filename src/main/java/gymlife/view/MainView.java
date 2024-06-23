@@ -22,6 +22,8 @@ import java.util.Map;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.GameDifficulty;
+import gymlife.view.bankgame.GameOverView;
+import gymlife.view.bankgame.WinView;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;

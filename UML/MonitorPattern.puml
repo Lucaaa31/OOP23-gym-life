@@ -1,0 +1,9 @@
+@startuml
+class PlaneGameModelImpl implements PlaneGameModel {
++run()
+}
+PlaneGameModelImpl --* SynchornizerModel
+
+PlaneGameModelImpl --* GameStatistics
+
+@enduml

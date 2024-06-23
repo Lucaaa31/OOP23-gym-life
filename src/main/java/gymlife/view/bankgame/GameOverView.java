@@ -1,6 +1,7 @@
-package gymlife.view;
+package gymlife.view.bankgame;
 
 import gymlife.utility.FontLoader;
+import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
 import javax.swing.JLayeredPane;

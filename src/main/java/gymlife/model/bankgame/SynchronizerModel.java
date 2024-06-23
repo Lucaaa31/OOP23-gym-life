@@ -1,4 +1,4 @@
-package gymlife.model;
+package gymlife.model.bankgame;
 
 /**
  * This class provides a synchronization mechanism for coordinating
