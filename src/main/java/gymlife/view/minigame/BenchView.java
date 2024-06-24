@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
 /**
@@ -52,6 +52,7 @@ public class BenchView extends MinigameView implements MinigamePanel {
             super.progressBarHandler();
             super.handleMinigameState();
             buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
+            buttonMinigame.setOpaque(true);
         });
         this.setFocusable(true);
         this.setVisible(true);

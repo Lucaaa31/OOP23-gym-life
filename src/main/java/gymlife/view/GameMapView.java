@@ -1,10 +1,12 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.Direction;
 import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
 import gymlife.view.api.GamePanel;
+import gymlife.view.character.CharacterView;
 
 import java.awt.Point;
 import java.awt.BorderLayout;

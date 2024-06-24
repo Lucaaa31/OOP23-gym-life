@@ -1,6 +1,4 @@
-package gymlife.view;
-
-import gymlife.utility.MapConstants;
+package gymlife.utility;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

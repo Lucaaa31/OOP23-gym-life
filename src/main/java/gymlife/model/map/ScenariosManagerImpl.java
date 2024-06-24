@@ -1,11 +1,12 @@
-package gymlife.model;
+package gymlife.model.map;
 
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.utility.ScenariosType;
 
 /**
  * The ScenariosManager class is responsible for managing the scenarios in the gym life application.
  */
-public class ScenariosManager {
+public class ScenariosManagerImpl implements ScenariosManager {
     /**
      * The actualScenariosType represents the current scenario type.
      */
@@ -15,6 +16,7 @@ public class ScenariosManager {
      * 
      * @param scenariosType the new scenario type to be set
      */
+    @Override
     public void updateScenarios(final ScenariosType scenariosType) {
         this.actualScenariosType = scenariosType;
     }
@@ -23,6 +25,7 @@ public class ScenariosManager {
      * 
      * @return the current scenario type
      */
+    @Override
     public ScenariosType getActualScenariosType() {
         return actualScenariosType;
     }

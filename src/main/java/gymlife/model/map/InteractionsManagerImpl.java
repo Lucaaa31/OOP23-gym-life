@@ -1,8 +1,10 @@
-package gymlife.model;
+package gymlife.model.map;
 
 import gymlife.model.minigame.api.MinigameManager;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.api.Inventory;
+import gymlife.model.map.api.InteractionsManager;
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.statistics.StatsType;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.utility.ScenariosType;
@@ -14,7 +16,7 @@ import java.util.Optional;
 /**
  * A class that contains the methods used for cell interactions.
  */
-public final class InteractionsManager {
+public final class InteractionsManagerImpl implements InteractionsManager {
 
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
@@ -30,8 +32,8 @@ public final class InteractionsManager {
      * @param minigameManager  the MinigameManager on which the interactions will occur.
      * @param inventory        the Inventory on which the interactions will occur.
      */
-    public InteractionsManager(final ScenariosManager scenariosManager, final StatsManager statsManager,
-                               final MinigameManager minigameManager, final Inventory inventory) {
+    public InteractionsManagerImpl(final ScenariosManager scenariosManager, final StatsManager statsManager,
+                                   final MinigameManager minigameManager, final Inventory inventory) {
         this.scenariosManager = scenariosManager;
         this.statsManager = statsManager;
         this.minigameManager = minigameManager;
@@ -41,6 +43,7 @@ public final class InteractionsManager {
     /**
      * method to call if the interaction of a cell concerns changing the current scenario.
      */
+    @Override
     public void exitInteraction() {
         this.scenariosManager.updateScenarios(ScenariosType.MAIN_MAP);
     }
@@ -48,6 +51,7 @@ public final class InteractionsManager {
     /**
      * Method to advance the days, decreasing the Days counter.
      */
+    @Override
     public void daysInteraction() {
         this.scenariosManager.updateScenarios(ScenariosType.SLEEPING);
         statsManager.setStat(StatsType.STAMINA, 100);
@@ -59,6 +63,7 @@ public final class InteractionsManager {
      *
      * @param minigameType the new minigame to change to.
      */
+    @Override
     public void minigameInteraction(final MinigameType minigameType) {
         this.scenariosManager.updateScenarios(ScenariosType.MINIGAME_GYM);
         minigameManager.setCurrentMinigame(minigameType);
@@ -67,6 +72,7 @@ public final class InteractionsManager {
     /**
      * This method triggers an update to the scenario manager to change the current scenario to the bank mini-game.
      */
+    @Override
     public void bankInteraction() {
         scenariosManager.updateScenarios(ScenariosType.MINIGAME_BANK);
     }
@@ -75,6 +81,7 @@ public final class InteractionsManager {
      * method to call if the interaction of a cell concerns buying a food item.
      * @param food {@code FoodType} to buy.
      */
+    @Override
     public void buyFoodInteraction(final FoodType food) {
         inventory.changeFoodToBuy(food);
         scenariosManager.updateScenarios(ScenariosType.BUY_FOOD);
@@ -84,6 +91,7 @@ public final class InteractionsManager {
      * Method to call if the interaction of a cell concerns consuming a food item.
      * @param food {@code FoodType} to consume.
      */
+    @Override
     public void eatFood(final FoodType food) {
         inventory.enableInventory();
         final Optional<Map<StatsType, Integer>> foodMap = inventory.consume(food);

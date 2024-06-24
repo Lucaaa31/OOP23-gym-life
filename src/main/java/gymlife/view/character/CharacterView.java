@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.character;
 
 import java.awt.Image;
 import java.io.Serial;
@@ -6,6 +6,8 @@ import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.Direction;
 
 /**

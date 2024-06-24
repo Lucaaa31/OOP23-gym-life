@@ -1,5 +1,6 @@
 package gymlife.view;
 
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
 
@@ -8,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import java.awt.Image;
@@ -40,6 +42,7 @@ public abstract class ChoicePanel extends GamePanel {
      * @param dimensionGetter dimensionGetter inherited by the class that instantiates this.
      */
     public ChoicePanel(final DimensionGetter dimensionGetter) {
+        final Border border = new LineBorder(Color.WHITE, 10);
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
 
@@ -88,7 +91,8 @@ public abstract class ChoicePanel extends GamePanel {
         declineButton.setForeground(Color.WHITE);
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
-
+        acceptButton.setBorder(border);
+        declineButton.setBorder(border);
 
         this.add(infoPanel, BorderLayout.CENTER);
         this.add(buttonsPanel, BorderLayout.EAST);

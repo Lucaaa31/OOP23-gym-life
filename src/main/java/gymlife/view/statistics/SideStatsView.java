@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.statistics;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.inventory.FoodType;
@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serial;
 
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.view.api.GamePanel;

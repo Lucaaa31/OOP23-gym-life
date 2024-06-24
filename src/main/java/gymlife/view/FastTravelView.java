@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.map.GameMapImpl;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.utility.MapConstants;
 import gymlife.view.api.GamePanel;

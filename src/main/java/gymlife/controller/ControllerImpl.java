@@ -2,21 +2,23 @@ package gymlife.controller;
 
 import gymlife.controller.api.Controller;
 
-import gymlife.model.InteractionsManager;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
+import gymlife.model.map.InteractionsManagerImpl;
+import gymlife.model.map.ScenariosManagerImpl;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.InventoryImpl;
 import gymlife.model.inventory.api.Inventory;
-import gymlife.model.map.GameMapImpl;
-import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.minigame.api.MinigameManager;
+import gymlife.model.map.api.InteractionsManager;
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.PlaneGameModel;
 import gymlife.model.statistics.StatsManagerImpl;
-import gymlife.model.ScenariosManager;
 import gymlife.model.SynchronizerModel;
 
 import gymlife.model.character.CharacterImpl;
@@ -26,7 +28,7 @@ import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.model.character.api.Character;
 
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.Direction;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
@@ -67,10 +69,10 @@ public class ControllerImpl implements Controller {
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
         statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
-        this.scenariosManager = new ScenariosManager();
+        this.scenariosManager = new ScenariosManagerImpl();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
-        this.interactionsManager = new InteractionsManager(
+        this.interactionsManager = new InteractionsManagerImpl(
                 scenariosManager,
                 statsManager,
                 minigameManager,
@@ -125,8 +127,8 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     *
-     * @return
+     * Method to get what food is about to be bought.
+     * @return the food to be bought.
      */
     @Override
     public FoodType getFoodToBuy() {
@@ -139,7 +141,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void buyFood() {
         final FoodType food = inventory.getCurrentFoodToBuy();
-        statsManager.setStat(StatsType.MONEY, statsManager.getMoney() - (int) food.getCost());
+        statsManager.multiIncrementStat(StatsType.MONEY, -(int) food.getCost());
         inventory.addFood(food);
     }
 

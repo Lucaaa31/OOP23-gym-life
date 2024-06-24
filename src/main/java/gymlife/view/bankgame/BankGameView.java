@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.ScenariosType;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
 import java.awt.BorderLayout;
@@ -61,6 +61,7 @@ public final class BankGameView extends GamePanel {
      * @param dimensionGetter an object for getting dimensions.
      */
     public BankGameView(final Controller controller, final DimensionGetter dimensionGetter) {
+        final float buttonTextSIze = dimensionGetter.getBigFontSize() / 3;
         this.setPreferredSize(dimensionGetter.getScenarioDimension());
         this.setLayout(new BorderLayout());
         numberLabel = new MultiplierGameView();
@@ -94,8 +95,11 @@ public final class BankGameView extends GamePanel {
         startButton.setBorder(darkBorder);
         restartButton.setBorder(darkBorder);
         startButton.setEnabled(false);
-
-        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        restartButton.setOpaque(true);
+        startButton.setOpaque(true);
+        startButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        restartButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
         boxMoney.addKeyListener(new KeyAdapter() {
             @Override
@@ -158,14 +162,14 @@ public final class BankGameView extends GamePanel {
                     boxMoney.setEditable(false);
                     restartButton.setEnabled(false);
                     planeAnimation.planeUpDownAnimation(planeLayer);
-                    controller.changeMoney(controller.returnMoney() - (int) moneyStart);
+                    controller.changeMoney(-(int) moneyStart);
                 } else {
                     started = false;
                     controller.controllerStopMultiplier();
                     restartButton.setEnabled(true);
                     startButton.setEnabled(false);
                     planeAnimation.planeExitAnimation(mainPanel, planeLayer);
-                    controller.changeMoney(controller.returnMoney() + Math.round(moneyMultiplied));
+                    controller.changeMoney(Math.round(moneyMultiplied));
                     if (controller.getMultiplier() < 1) {
                         numberLabel.setForeground(Color.red);
                     } else {

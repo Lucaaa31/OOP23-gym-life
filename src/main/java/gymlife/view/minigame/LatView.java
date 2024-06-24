@@ -2,7 +2,7 @@ package gymlife.view.minigame;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
 import javax.swing.JButton;
@@ -55,6 +55,7 @@ public class LatView extends MinigameView implements MinigamePanel {
             button.setBorder(new LineBorder(Color.WHITE, borderSize));
             button.setOpaque(true);
             button.setVisible(true);
+            button.setOpaque(true);
             addLayeredPanel(button);
             button.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
             button.setForeground(Color.WHITE);
