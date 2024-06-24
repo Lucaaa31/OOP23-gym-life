@@ -127,8 +127,8 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     *
-     * @return
+     * Method to get what food is about to be bought.
+     * @return the food to be bought.
      */
     @Override
     public FoodType getFoodToBuy() {
