@@ -44,7 +44,7 @@ import java.util.Optional;
  */
 public class ControllerImpl implements Controller {
     private final Character character = new CharacterImpl();
-    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
+    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.GYM_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;
@@ -413,7 +413,7 @@ public class ControllerImpl implements Controller {
         final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
-                minigameManager.getEndTime());
+                minigameManager.getTimeMinigame());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
@@ -452,7 +452,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
-        return scoringTableManager.getScores(minigameType, difficulty);
+        return scoringTableManager.getMinigameScore(minigameType, difficulty);
     }
 
 

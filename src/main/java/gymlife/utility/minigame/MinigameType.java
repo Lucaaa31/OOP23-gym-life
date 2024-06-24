@@ -5,8 +5,11 @@ import gymlife.model.minigame.LatStrategy;
 import gymlife.model.minigame.SquatStrategy;
 import gymlife.model.statistics.StatsType;
 import gymlife.view.minigame.BenchView;
-import gymlife.view.minigame.LatMachineView;
+import gymlife.view.minigame.LatView;
 import gymlife.view.minigame.SquatView;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * The MinigameType enum represents the different types of minigames available
@@ -23,7 +26,8 @@ public enum MinigameType {
             BenchView.class.getCanonicalName(),
             StatsType.CHEST_MASS,
             "Bench Press",
-            "Press the button as fast as you can!"),
+            "Press the button as fast as you can!"
+    ),
     /**
      * Squat minigame type.
      */
@@ -32,16 +36,18 @@ public enum MinigameType {
             SquatView.class.getCanonicalName(),
             StatsType.LEG_MASS,
             "Squat",
-            ""),
+            ""
+    ),
     /**
      * Lat machine minigame type.
      */
     LAT_MACHINE(
             LatStrategy.class.getCanonicalName(),
-            LatMachineView.class.getCanonicalName(),
+            LatView.class.getCanonicalName(),
             StatsType.BACK_MASS,
             "Lat Machine",
-            "Press the buttons in order!");
+            "Press the buttons in order!"
+    );
 
 
     private final String minigameType;
@@ -115,4 +121,6 @@ public enum MinigameType {
     public String getDescription() {
         return description;
     }
+
+
 }

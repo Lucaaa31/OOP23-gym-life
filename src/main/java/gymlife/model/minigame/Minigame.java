@@ -15,26 +15,13 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class Minigame {
     private MinigameDifficulty difficulty;
-    private MinigameState minigameState;
-    private long timeMinigame;
-    private int interactions;
-    private int mistakes;
-    private int numReps;
-
+    private MinigameState minigameState = MinigameState.NOT_STARTED;
 
     /**
      * Constructs a new Minigame object and initializes the instance variables.
      */
     public Minigame() {
         this.difficulty = null;
-        this.minigameState = MinigameState.NOT_STARTED;
-    }
-
-    /**
-     * Increments the number of times the button has been pressed.
-     */
-    public void incrementInteractions() {
-        interactions++;
     }
 
 
@@ -46,26 +33,22 @@ public abstract class Minigame {
     public abstract void notifyUserAction(String buttonCode);
 
     /**
-     * Notify the model of an action of the player in the bench minigame.
-     */
-    public abstract void notifyUserAction();
-
-
-    /**
      * Sets the difficulty level of the minigame.
      *
      * @param selectedDifficulty the selected difficulty level
      */
     public void setDifficulty(final MinigameDifficulty selectedDifficulty) {
         this.difficulty = selectedDifficulty;
+
     }
+
 
     /**
      * Returns the state of the minigame.
      *
      * @return 0 if the minigame isn't started, 1 if the minigame is running, 2 if the minigame is ended
      */
-    public MinigameState getMinigameState() {
+    public MinigameState getMinigameState(){
         return minigameState;
     }
 
@@ -78,76 +61,16 @@ public abstract class Minigame {
         return difficulty;
     }
 
-    /**
-     * Sets the state of the minigame.
-     *
-     * @param state the state of the minigame
-     */
-    public void setMinigameState(final MinigameState state) {
-        this.minigameState = state;
-    }
 
     /**
      * Returns the time to complete the minigame.
      *
      * @return the time to complete the minigame
      */
-    public int getTimeMinigame() {
-        return Math.toIntExact(timeMinigame);
-    }
+    public abstract int getTimeMinigame();
 
-    /**
-     * Checks the validity of the press.
-     */
-    public abstract void validatePress();
 
-    /**
-     * Set the time to put in the scoringTable.
-     *
-     * @param timeMinigame the time to put in the scoringTable
-     */
-    public void setTimeMinigame(final long timeMinigame) {
-        this.timeMinigame = timeMinigame;
-    }
 
-    /**
-     * Handles the case when the player's press is valid.
-     *
-     * @return true if the reps has been completed, false otherwise
-     */
-    public boolean handleValidPress() {
-        if (interactions == getDifficulty().getTouchForLift()) {
-            interactions = 0;
-            numReps++;
-            setMinigameState(MinigameState.REP_REACHED);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Handles the case when the player's press is invalid.
-     */
-    public void handleInvalidPress() {
-        mistakes++;
-        setMinigameState(MinigameState.MISTAKE_MADE);
-        if (mistakes > getDifficulty().getMaxMistakes()) {
-            setMinigameState(MinigameState.ENDED_LOST);
-        }
-        interactions = 0;
-    }
-
-    /**
-     * Checks if the required number of reps has been completed.
-     *
-     * @param startMinigame the start time of the minigame
-     */
-    public void checkIfMinigameHasEnded(final long startMinigame) {
-        if (numReps == getDifficulty().getRequiredReps()) {
-            setTimeMinigame(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startMinigame));
-            setMinigameState(MinigameState.ENDED_WON);
-        }
-    }
 
     /**
      * Abstract method to get the sequence of the minigame.
@@ -163,4 +86,8 @@ public abstract class Minigame {
 
     }
 
+
+    public void setMinigameState(final MinigameState minigameState) {
+        this.minigameState = minigameState;
+    }
 }

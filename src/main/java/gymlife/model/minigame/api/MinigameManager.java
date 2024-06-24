@@ -68,7 +68,7 @@ public interface MinigameManager {
      *
      * @return the end time of the minigame
      */
-    int getEndTime();
+    int getTimeMinigame();
 
 
 }

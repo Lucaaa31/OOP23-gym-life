@@ -73,11 +73,7 @@ public class MinigameManagerImpl implements MinigameManager {
      */
     @Override
     public void notifyUserAction(final String button) {
-        if ("0".equals(button)) {
-            this.currentMinigame.notifyUserAction();
-        } else {
-            this.currentMinigame.notifyUserAction(button);
-        }
+        currentMinigame.notifyUserAction(button);
     }
 
 
@@ -121,7 +117,7 @@ public class MinigameManagerImpl implements MinigameManager {
      * @return the end time of the minigame
      */
     @Override
-    public int getEndTime() {
+    public int getTimeMinigame() {
         return currentMinigame.getTimeMinigame();
     }
 
