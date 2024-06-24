@@ -139,7 +139,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void buyFood() {
         final FoodType food = inventory.getCurrentFoodToBuy();
-        statsManager.setStat(StatsType.MONEY, statsManager.getMoney() - (int) food.getCost());
+        statsManager.multiIncrementStat(StatsType.MONEY, - (int) food.getCost());
         inventory.addFood(food);
     }
 
