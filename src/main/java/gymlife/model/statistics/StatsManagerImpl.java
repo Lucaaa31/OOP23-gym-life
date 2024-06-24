@@ -5,7 +5,7 @@ import java.util.Map;
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.model.statistics.api.CommonStats;
-import gymlife.utility.GameDifficulty;
+
 /**
  * Implementation of the StatsManager interface.
  * This class manages the game statistics and provides methods to retrieve the stats.

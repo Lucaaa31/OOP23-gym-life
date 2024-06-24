@@ -1,4 +1,4 @@
-package gymlife.utility;
+package gymlife.model.statistics;
 
 /**
  * The GameDifficulty enum represents the difficulty levels of a game.

@@ -12,7 +12,7 @@ import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
 import org.junit.jupiter.api.BeforeEach;

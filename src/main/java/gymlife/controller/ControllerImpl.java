@@ -28,7 +28,7 @@ import gymlife.model.map.api.MapManager;
 import gymlife.model.statistics.api.StatsManager;
 import gymlife.model.character.api.Character;
 
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.Direction;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;

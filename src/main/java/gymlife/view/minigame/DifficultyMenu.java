@@ -1,7 +1,7 @@
 package gymlife.view.minigame;
 
 import gymlife.utility.FontLoader;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;

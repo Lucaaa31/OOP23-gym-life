@@ -2,7 +2,7 @@ package gymlife.model;
 
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.FontLoader;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.DimensionGetter;
 import gymlife.view.bankgame.BankGameView;
 import org.junit.jupiter.api.Test;
