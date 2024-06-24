@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 
-import gymlife.model.InteractionsManager;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.Cell;
-import gymlife.model.api.GameInteraction;
+import gymlife.model.map.api.GameInteraction;
+import gymlife.model.map.api.InteractionsManager;
 import gymlife.utility.minigame.MinigameType;
 
 /**

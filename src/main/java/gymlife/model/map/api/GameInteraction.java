@@ -1,6 +1,4 @@
-package gymlife.model.api;
-
-import gymlife.model.InteractionsManager;
+package gymlife.model.map.api;
 
 /**
  * An interface for Interactions in the game.

@@ -2,9 +2,13 @@ package gymlife.model;
 
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.InventoryImpl;
-import gymlife.model.map.api.MapManager;
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
+import gymlife.model.map.InteractionsManagerImpl;
+import gymlife.model.map.ScenariosManagerImpl;
+import gymlife.model.map.api.InteractionsManager;
+import gymlife.model.map.api.MapManager;
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.statistics.api.StatsManager;
@@ -30,11 +34,11 @@ class TestInteractions {
 
     @BeforeEach
     void init() {
-        scenariosManager = new ScenariosManager();
+        scenariosManager = new ScenariosManagerImpl();
         scenariosManager.updateScenarios(ScenariosType.INDOOR_MAP);
         statsManager = new StatsManagerImpl(GameDifficulty.EASY);
         inventory = new InventoryImpl();
-        interactionsManager = new InteractionsManager(scenariosManager, statsManager, minigameManagerImpl, inventory);
+        interactionsManager = new InteractionsManagerImpl(scenariosManager, statsManager, minigameManagerImpl, inventory);
         mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     }
 

@@ -162,7 +162,7 @@ public final class BankGameView extends GamePanel {
                     boxMoney.setEditable(false);
                     restartButton.setEnabled(false);
                     planeAnimation.planeUpDownAnimation(planeLayer);
-                    controller.changeMoney( - (int) moneyStart);
+                    controller.changeMoney(-(int) moneyStart);
                 } else {
                     started = false;
                     controller.controllerStopMultiplier();
