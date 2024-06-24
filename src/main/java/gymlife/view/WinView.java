@@ -1,5 +1,6 @@
 package gymlife.view;
 
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.view.api.GamePanel;
 

@@ -20,13 +20,16 @@ import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
+import gymlife.view.Encounters.EncounterView;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 import gymlife.view.bankgame.BankGameView;
+import gymlife.view.statistics.SideStatsView;
 
 /**
  * The MainView class represents the main view of the application.

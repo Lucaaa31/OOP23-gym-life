@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.ScenariosType;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
 import java.awt.BorderLayout;

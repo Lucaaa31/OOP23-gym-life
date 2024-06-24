@@ -1,6 +1,8 @@
-package gymlife.view;
+package gymlife.view.Encounters;
 
 import gymlife.controller.api.Controller;
+import gymlife.view.ChoicePanel;
+import gymlife.utility.DimensionGetter;
 
 
 import java.io.Serial;

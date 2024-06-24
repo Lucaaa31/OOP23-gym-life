@@ -4,7 +4,7 @@ package gymlife.view.minigame;
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.Colors;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
 import javax.swing.JButton;
@@ -54,6 +54,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
 
 
         for (final JButton button : buttonList) {
+            button.setOpaque(true);
             button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GREEN);
             button.setBorder(new LineBorder(Color.BLACK, borderSize));

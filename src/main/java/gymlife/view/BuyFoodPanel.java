@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.StatsType;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.ScenariosType;
 
 

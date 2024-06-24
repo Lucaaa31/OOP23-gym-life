@@ -4,7 +4,7 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;
 import gymlife.view.api.MinigamePanel;
 

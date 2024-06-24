@@ -4,7 +4,7 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
