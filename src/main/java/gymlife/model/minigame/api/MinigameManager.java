@@ -1,4 +1,4 @@
-package gymlife.model.api;
+package gymlife.model.minigame.api;
 
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
@@ -68,7 +68,7 @@ public interface MinigameManager {
      *
      * @return the end time of the minigame
      */
-    int getEndTime();
+    int getTimeMinigame();
 
 
 }

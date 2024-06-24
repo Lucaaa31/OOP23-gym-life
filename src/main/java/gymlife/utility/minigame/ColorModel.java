@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * The Colors enum represents the colors that can be used in the Squat mini-game.
  */
-public enum Colors {
+public enum ColorModel {
     /**
      * The RED color.
      */
@@ -83,7 +83,7 @@ public enum Colors {
      * @param blue      the blue value of the color.
      * @param colorName the name of the color.
      */
-    Colors(final int red, final int green, final int blue, final String colorName) {
+    ColorModel(final int red, final int green, final int blue, final String colorName) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -114,8 +114,8 @@ public enum Colors {
      * @param colorName the color name.
      * @return the color based on the color name.
      */
-    public static Colors getColor(final String colorName) {
-        for (final Colors color : Colors.values()) {
+    public static ColorModel getColor(final String colorName) {
+        for (final ColorModel color : ColorModel.values()) {
             if (color.getColorName().equals(colorName)) {
                 return color;
             }
@@ -131,14 +131,13 @@ public enum Colors {
      * @param blue  the blue value.
      * @return the color based on the red, green, and blue values.
      */
-    public static Colors getColorName(final int red, final int green, final int blue) {
-        for (final Colors color : Colors.values()) {
+    public static ColorModel getColorName(final int red, final int green, final int blue) {
+        for (final ColorModel color : ColorModel.values()) {
             if (color.getColor().equals(new Color(red, green, blue))) {
                 return color;
             }
         }
         return null;
-
     }
 
 

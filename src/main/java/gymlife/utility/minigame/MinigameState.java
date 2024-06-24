@@ -23,16 +23,22 @@ public enum MinigameState {
             ""
     ),
     /**
-     * The player has reached the required amount for do a rep.
+     * The player has done a valid press.
      */
-    REP_REACHED(
-            "You made a rep!"
+    VALID_PRESS(
+            ""
     ),
     /**
      * The player has made a mistake.
      */
-    MISTAKE_MADE(
+    INVALID_PRESS(
             "Ah! You made a mistake!"
+    ),
+    /**
+     * The player has reached the required amount for do a rep.
+     */
+    REP_REACHED(
+            "You made a rep!"
     ),
     /**
      * The minigame has ended and the player has won.
@@ -66,5 +72,14 @@ public enum MinigameState {
      */
     public String getText() {
         return text;
+    }
+
+    /**
+     * Returns the next state of the minigame.
+     *
+     * @return The next state of the minigame.
+     */
+    public MinigameState next() {
+        return values()[(this.ordinal() + 1) % values().length];
     }
 }

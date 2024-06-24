@@ -1,6 +1,6 @@
 package gymlife.model.map;
 
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.api.Inventory;
 import gymlife.model.map.api.InteractionsManager;

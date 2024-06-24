@@ -10,7 +10,7 @@ import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.InventoryImpl;
 import gymlife.model.inventory.api.Inventory;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
 import gymlife.model.map.api.InteractionsManager;
 import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
@@ -415,7 +415,7 @@ public class ControllerImpl implements Controller {
         final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
-                minigameManager.getEndTime());
+                minigameManager.getTimeMinigame());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
@@ -454,7 +454,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
-        return scoringTableManager.getScores(minigameType, difficulty);
+        return scoringTableManager.getMinigameScore(minigameType, difficulty);
     }
 
 

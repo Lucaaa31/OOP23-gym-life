@@ -15,14 +15,13 @@ import java.util.List;
 /**
  * The LatMachineView class represents the view component for the Lat Machine mini-game.
  */
-public class LatMachineView extends AbstractMinigameView implements MinigamePanel {
+public class LatView extends MinigameView implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
-
-    private final List<JButton> buttons = new ArrayList<>();
-
     private final transient Controller controller;
     private final transient DimensionGetter dimensionGetter;
+    private final List<JButton> buttons = new ArrayList<>();
+
 
 
     /**
@@ -33,7 +32,7 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
      * @param controller      the controller implementation
      * @param dimensionGetter the dimension getter
      */
-    public LatMachineView(final Controller controller, final DimensionGetter dimensionGetter) {
+    public LatView(final Controller controller, final DimensionGetter dimensionGetter) {
         super(controller, dimensionGetter, "lat_pulldown");
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
@@ -64,8 +63,8 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
 
             button.addActionListener(e -> {
                 controller.notifyUserAction(button.getText());
-                super.handleMinigameState();
                 progressBarHandler();
+                super.handleMinigameState();
             });
 
         }
@@ -88,13 +87,10 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
-                setCharacterLabelIcon(super.getCharacterImage("images/Minigame/lat_pulldown/sprite_" + state + ".png"));
+                setCharacterLabelIcon(super.getCharacterImage("images/minigame/lat_pulldown/sprite_" + state + ".png"));
 
             }
             memoryAnimation();
-            buttons.forEach(e -> {
-                e.setEnabled(true);
-            });
         }).start();
 
     }
@@ -153,9 +149,7 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
     @Override
     public void resizeComponents() {
         super.resizeComponents();
-        buttons.forEach(button -> {
-            buildButton(button);
-        });
+        buttons.forEach(this::buildButton);
     }
 
 }

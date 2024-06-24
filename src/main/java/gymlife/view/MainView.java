@@ -24,7 +24,7 @@ import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.model.statistics.GameDifficulty;
 import gymlife.view.minigame.DifficultyMenu;
-import gymlife.view.minigame.MinigameView;
+import gymlife.view.minigame.MinigameSwitchView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 import gymlife.view.bankgame.BankGameView;
@@ -91,7 +91,7 @@ public class MainView extends JFrame {
         final GamePanel sleepView = new SleepView(controller, dimensionGetter);
         final GamePanel encounterView = new EncounterView(controller, dimensionGetter);
         final GamePanel buyFoodView = new BuyFoodPanel(controller, dimensionGetter);
-        final MinigameView minigameView = new MinigameView(controller, dimensionGetter);
+        final MinigameSwitchView minigameSwitchView = new MinigameSwitchView(controller, dimensionGetter);
         final GamePanel bankGameView = new BankGameView(controller, dimensionGetter);
         final GamePanel gameOverView = new GameOverView(dimensionGetter);
         final GamePanel gameWonView = new WinView(dimensionGetter);
@@ -99,7 +99,7 @@ public class MainView extends JFrame {
                 ScenariosType.INDOOR_MAP, gameMapView,
                 ScenariosType.MAIN_MAP, fastTravelView,
                 ScenariosType.SLEEPING, sleepView,
-                ScenariosType.MINIGAME_GYM, minigameView,
+                ScenariosType.MINIGAME_GYM, minigameSwitchView,
                 ScenariosType.ENCOUNTER, encounterView,
                 ScenariosType.MINIGAME_BANK, bankGameView,
                 ScenariosType.BUY_FOOD, buyFoodView,
@@ -159,7 +159,7 @@ public class MainView extends JFrame {
         scenariosContainer.add(gameMapView.getPanelName(), gameMapView);
         scenariosContainer.add(fastTravelView.getPanelName(), fastTravelView);
         scenariosContainer.add(sleepView.getPanelName(), sleepView);
-        scenariosContainer.add(minigameView.getPanelName(), minigameView);
+        scenariosContainer.add(minigameSwitchView.getPanelName(), minigameSwitchView);
         scenariosContainer.add(encounterView.getPanelName(), encounterView);
         scenariosContainer.add(bankGameView.getPanelName(), bankGameView);
         scenariosContainer.add(buyFoodView.getPanelName(), buyFoodView);
