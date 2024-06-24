@@ -1,10 +1,9 @@
 package gymlife.view;
 
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.Action;
+import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 import javax.swing.JComponent;
 
@@ -14,20 +13,20 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
-
 import java.awt.event.KeyEvent;
+
 import java.io.Serial;
 import java.util.Map;
 
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
+import gymlife.utility.FontLoader;
 import gymlife.utility.GameDifficulty;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
 import gymlife.view.api.GamePanel;
 import gymlife.view.bankgame.BankGameView;
-
 
 /**
  * The MainView class represents the main view of the application.
@@ -51,6 +50,7 @@ public class MainView extends JFrame {
      * Sets the size of the frame, requests focus, sets the location relative to null and makes it visible.
      */
     public MainView() {
+        FontLoader.loadFont();
         // Creazione dell'azione per il tasto 'esc'
         final Action closeGameAction = new AbstractAction() {
             @Override

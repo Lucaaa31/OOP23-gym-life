@@ -55,7 +55,7 @@ public class EncounterView extends ChoicePanel {
     @Override
     String getDescription() {
         if (controller.getCurrentEncounter() != null) {
-            return "RANDOM ENCOUNTER<br>" + controller.getCurrentEncounter().description();
+            return "RANDOM ENCOUNTER<br>" + controller.getCurrentEncounter().getDescription();
         } else {
             return "description";
         }
@@ -83,7 +83,7 @@ public class EncounterView extends ChoicePanel {
     String getDeclineButtonText() {
 
         if (controller.getCurrentEncounter() != null) {
-            return "DECLINE<br>" + controller.getCurrentEncounter().denyCase().toString();
+            return "DECLINE<br>" + controller.getCurrentEncounter().getDenyCase().toString();
         } else {
             return "decline";
         }

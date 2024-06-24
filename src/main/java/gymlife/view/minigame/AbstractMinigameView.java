@@ -60,7 +60,7 @@ public abstract class AbstractMinigameView extends GamePanel {
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
 
-        FontLoader.loadFont();
+
 
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());
@@ -197,43 +197,6 @@ public abstract class AbstractMinigameView extends GamePanel {
 
     }
 
-    /**
-     * Method that updates the view based on the minigame player action.
-     */
-    @Override
-    public void resizeComponents() {
-        this.setSize(dimensionGetter.getScenarioDimension());
-        progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
-        progressBar.setSize(100, dimensionGetter.getScenarioDimension().height);
-
-        characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
-        characterLabel.setLocation(dimensionGetter
-                        .getCharacterMinigamePos().width,
-                dimensionGetter
-                        .getCharacterMinigamePos().height);
-        characterImage.setImage(characterImage.getImage()
-                .getScaledInstance(dimensionGetter.getCharacterMinigameDimension().width,
-                        dimensionGetter.getCharacterMinigameDimension().height,
-                        Image.SCALE_DEFAULT));
-        characterLabel.setIcon(characterImage);
-
-        backgroundLabel.setSize(dimensionGetter.getScenarioDimension().width - progressBar.getWidth(),
-                dimensionGetter.getScenarioDimension().height);
-        backgroundImage.setImage(backgroundImage.getImage()
-                .getScaledInstance(dimensionGetter.getScenarioDimension().width - progressBar.getWidth(),
-                        dimensionGetter.getScenarioDimension().height, Image.SCALE_DEFAULT));
-        backgroundLabel.setIcon(backgroundImage);
-    }
-
-    /**
-     * The game of the GamePanel.
-     *
-     * @return the game of the GamePanel.
-     */
-    @Override
-    public String getPanelName() {
-        return "AbstractMinigameView";
-    }
 
     /**
      * Method that updates the view based on the minigame player action.
@@ -298,5 +261,55 @@ public abstract class AbstractMinigameView extends GamePanel {
     public Rectangle getCharacterLabelDimension() {
         return characterLabel.getBounds();
     }
+
+    /**
+     * Method that updates the view based on the minigame player action.
+     */
+    @Override
+    public void resizeComponents() {
+        this.setSize(dimensionGetter.getScenarioDimension());
+        progressBar.setPreferredSize(new Dimension(100, dimensionGetter.getScenarioDimension().height));
+        progressBar.setSize(100, dimensionGetter.getScenarioDimension().height);
+
+        characterLabel.setSize(dimensionGetter.getCharacterMinigameDimension());
+        characterLabel.setLocation(dimensionGetter
+                        .getCharacterMinigamePos().width,
+                dimensionGetter
+                        .getCharacterMinigamePos().height);
+        characterImage.setImage(characterImage.getImage()
+                .getScaledInstance(dimensionGetter.getCharacterMinigameDimension().width,
+                        dimensionGetter.getCharacterMinigameDimension().height,
+                        Image.SCALE_DEFAULT));
+        characterLabel.setIcon(characterImage);
+
+        backgroundLabel.setSize(dimensionGetter.getScenarioDimension().width - progressBar.getWidth(),
+                dimensionGetter.getScenarioDimension().height);
+        backgroundImage.setImage(backgroundImage.getImage()
+                .getScaledInstance(dimensionGetter.getScenarioDimension().width - progressBar.getWidth(),
+                        dimensionGetter.getScenarioDimension().height, Image.SCALE_DEFAULT));
+        backgroundLabel.setIcon(backgroundImage);
+        orderLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+        orderLabel.setForeground(Color.YELLOW);
+        orderLabel.setBounds(
+                0,
+                dimensionGetter.getScenarioDimension().height / 4,
+                dimensionGetter.getMinigameScenarioWidht(),
+                dimensionGetter.getTimerMinigameDimension().height);
+        timerView.setBounds(10, 10,
+                dimensionGetter.getTimerMinigameDimension().width,
+                dimensionGetter.getTimerMinigameDimension().height);
+        timerView.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
+    }
+
+    /**
+     * The game of the GamePanel.
+     *
+     * @return the game of the GamePanel.
+     */
+    @Override
+    public String getPanelName() {
+        return "AbstractMinigameView";
+    }
+
 
 }

@@ -64,7 +64,7 @@ public final class FastTravelView extends GamePanel {
                 new JButton("House"),
                 new JButton("Shop")));
 
-        FontLoader.loadFont();
+
         buttonsList.forEach(button -> button.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize())));
 
         final MouseAdapter ml = new MouseAdapter() {

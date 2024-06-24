@@ -61,6 +61,7 @@ public final class BankGameView extends GamePanel {
      * @param dimensionGetter an object for getting dimensions.
      */
     public BankGameView(final Controller controller, final DimensionGetter dimensionGetter) {
+        final float buttonTextSIze = dimensionGetter.getBigFontSize() / 3;
         this.setPreferredSize(dimensionGetter.getScenarioDimension());
         this.setLayout(new BorderLayout());
         numberLabel = new MultiplierGameView();
@@ -94,8 +95,11 @@ public final class BankGameView extends GamePanel {
         startButton.setBorder(darkBorder);
         restartButton.setBorder(darkBorder);
         startButton.setEnabled(false);
-        FontLoader.loadFont();
-        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
+        restartButton.setOpaque(true);
+        startButton.setOpaque(true);
+        startButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        restartButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
         boxMoney.addKeyListener(new KeyAdapter() {
             @Override

@@ -6,12 +6,12 @@ import java.util.Map;
 import gymlife.model.statistics.StatsType;
 
 /**
- * EncountersConstants class contains constants and methods related to different encounter cases in the application.
+ * EncountersConstants class contains constants and methods related to different encounter cases made from the player.
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
     private static final double ENCOUNTER_CHANCE = 0.2;
-    private static final double ICE_CREAM_CHANCE = 1;
+    /*No ice-cream chance because ice-cream probability is 1*/
     private static final double GYM_BRO_CHANCE = 0.8;
     private static final double PUSHER_CHANCE = 0.6;
     private static final double ROBBER_CHANCE = 0.4;
@@ -153,14 +153,6 @@ public final class EncountersConstants {
      */
     public static double robberChance() {
         return ROBBER_CHANCE;
-    }
-    /**
-     * The chance of encountering an ice cream truck.
-     * 
-     * @return a double representing the chance of encountering an ice cream truck
-     */
-    public static double iceCreamChance() {
-        return ICE_CREAM_CHANCE;
     }
     /**
      * The chance of encountering a gym bro.

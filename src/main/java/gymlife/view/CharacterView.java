@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 
 /**
  * The CharacterView class represents a panel that displays a character.
@@ -19,7 +19,7 @@ public class CharacterView extends JLabel {
     // An instance of DimensionGetter to get the dimensions for the character image
     private final transient DimensionGetter dimensionGetter;
     private int level;
-    private Directions dir = Directions.DOWN;
+    private Direction dir = Direction.DOWN;
     /**
      * Constructs a CharacterView object with the specified DimensionGetter.
      * It sets the initial image for the character and sets the size of the JLabel to the cell dimension.
@@ -47,7 +47,7 @@ public class CharacterView extends JLabel {
      * @param level the level of the character
      * @param dir the direction of the character
      */
-    public void changeImage(final int level, final Directions dir) {
+    public void changeImage(final int level, final Direction dir) {
         this.level = level;
         this.dir = dir;
         final ImageIcon img = new ImageIcon(new ImageIcon(ClassLoader.

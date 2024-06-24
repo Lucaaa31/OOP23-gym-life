@@ -2,7 +2,7 @@ package gymlife.model.statistics.api;
 
 /**
  * A class that represents a counter with a limit.
- * This counter can be incremented and decremented, but it cannot exceed its limit or go below zero.
+ * This counter can be incremented and decremented, but it cannot exceed its limit.
  * It extends the Counter class.
  */
 public interface LimitedCounter {
@@ -29,4 +29,9 @@ public interface LimitedCounter {
      * @return true if the counter is at its limit, false otherwise.
      */
     boolean isMax();
+
+    /**
+     * Resets the counter to starting stats level.
+     */
+    void resetCount();
 }

@@ -39,7 +39,6 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
         this.dimensionGetter = dimensionGetter;
         final int borderSize = 5;
 
-        FontLoader.loadFont();
 
         final JButton button1 = new JButton("1");
         final JButton button2 = new JButton("2");
@@ -53,29 +52,14 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
 
 
         for (final JButton button : buttons) {
-            button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GRAY);
             button.setBorder(new LineBorder(Color.WHITE, borderSize));
+            button.setOpaque(true);
             button.setVisible(true);
             addLayeredPanel(button);
             button.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
             button.setForeground(Color.WHITE);
-            switch (button.getText()) {
-                case "1" -> button.setLocation(
-                        (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
-                        0); // Top (up)
-                case "2" -> button.setLocation(
-                        dimensionGetter.getMinigameScenarioWidht() - button.getWidth(), // Right
-                        (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
-                case "3" -> button.setLocation(
-                        (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
-                        dimensionGetter.getScenarioDimension().height - button.getHeight()); // Bottom
-                case "4" -> button.setLocation(
-                        0, // Left
-                        (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
-                default -> {
-                }
-            }
+            buildButton(button);
 
             button.addActionListener(e -> {
                 controller.notifyUserAction(button.getText());
@@ -142,6 +126,25 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
         }).start();
     }
 
+    private void buildButton(final JButton button) {
+        button.setSize(dimensionGetter.getButtonMinigameDimension());
+        switch (button.getText()) {
+            case "1" -> button.setLocation(
+                    (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
+                    0); // Top (up)
+            case "2" -> button.setLocation(
+                    dimensionGetter.getMinigameScenarioWidht() - button.getWidth(), // Right
+                    (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
+            case "3" -> button.setLocation(
+                    (dimensionGetter.getMinigameScenarioWidht() - button.getWidth()) / 2, // Center horizontally
+                    dimensionGetter.getScenarioDimension().height - button.getHeight()); // Bottom
+            case "4" -> button.setLocation(
+                    0, // Left
+                    (dimensionGetter.getScenarioDimension().height - button.getHeight()) / 2); // Center vertically
+            default -> {
+            }
+        }
+    }
 
     /**
      * Resizes the buttons of the Lat Machine mini-game.
@@ -149,7 +152,9 @@ public class LatMachineView extends AbstractMinigameView implements MinigamePane
     @Override
     public void resizeComponents() {
         super.resizeComponents();
-        buttons.forEach(e -> e.setSize(dimensionGetter.getButtonMinigameDimension()));
+        buttons.forEach(button -> {
+            buildButton(button);
+        });
     }
 
 }

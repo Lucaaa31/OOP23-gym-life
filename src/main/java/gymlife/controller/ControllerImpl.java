@@ -1,6 +1,7 @@
 package gymlife.controller;
 
-import gymlife.model.character.CharacterModelImpl;
+import gymlife.controller.api.Controller;
+
 import gymlife.model.InteractionsManager;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.InventoryImpl;
@@ -11,29 +12,27 @@ import gymlife.model.encounter.Encounter;
 import gymlife.model.api.MinigameManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.PlaneGameModel;
 import gymlife.model.statistics.StatsManagerImpl;
 import gymlife.model.ScenariosManager;
 import gymlife.model.SynchronizerModel;
 
+import gymlife.model.character.CharacterImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.statistics.CounterImpl;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
-
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.ScenariosType;
+import gymlife.model.character.api.Character;
+
 import gymlife.utility.GameDifficulty;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
-import gymlife.utility.Directions;
-import gymlife.controller.api.Controller;
-import gymlife.model.character.api.CharacterModel;
+import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ import java.util.Optional;
  * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
-    private final CharacterModel characterModel = new CharacterModelImpl();
+    private final Character character = new CharacterImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
@@ -140,7 +139,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void buyFood() {
         final FoodType food = inventory.getCurrentFoodToBuy();
-        statsManager.setStat(StatsType.MONEY, statsManager.getMoney().getCount() - (int) food.getCost());
+        statsManager.setStat(StatsType.MONEY, statsManager.getMoney() - (int) food.getCost());
         inventory.addFood(food);
     }
 
@@ -188,13 +187,13 @@ public class ControllerImpl implements Controller {
      * @param dir the direction in which to move the character
      */
     @Override
-    public void moveCharacter(final Directions dir) {
+    public void moveCharacter(final Direction dir) {
         final Position positionToGo = new Position(
-                getCharacterPos().X() + dir.getPos().X(),
-                getCharacterPos().Y() + dir.getPos().Y());
+                getCharacterPos().X() + dir.getOffSet().X(),
+                getCharacterPos().Y() + dir.getOffSet().Y());
         if (mapManager.getCurrentMap().checkBorders(positionToGo)
                 && !mapManager.getCurrentMap().isCellCollidable(positionToGo)) {
-            characterModel.move(dir);
+            character.move(dir);
         }
     }
 
@@ -205,7 +204,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public Position getCharacterPos() {
-        return characterModel.getCharacterPos();
+        return character.getCharacterPos();
     }
 
     /**
@@ -214,8 +213,8 @@ public class ControllerImpl implements Controller {
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getStatistics() {
-        return statsManager.getStats();
+    public Map<StatsType, LimitedGameCounterImpl> getStatistics() {
+        return statsManager.getCommonStats();
     }
 
     /**
@@ -227,7 +226,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public int returnMoney() {
-        return statsManager.getMoney().getCount();
+        return statsManager.getMoney();
     }
 
     /**
@@ -246,7 +245,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getDays() {
+    public int getDays() {
         return statsManager.getDays();
     }
 
@@ -256,7 +255,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getMoney() {
+    public int getMoney() {
         return statsManager.getMoney();
     }
 
@@ -292,7 +291,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void cellInteraction() {
         mapManager.getCurrentMap()
-                .getCellAtCoord(characterModel.getCharacterPos())
+                .getCellAtCoord(character.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
@@ -305,8 +304,8 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
-                ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
+        return statsManager.getCommonStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+                ? statsManager.getCommonStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
     /**
@@ -334,7 +333,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void resetPlayerPosition() {
-        characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
+        character.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
     /**

@@ -112,13 +112,13 @@ public class SideStatsView extends GamePanel {
 
 
     private void buildScoreboardPanel() {
+
         statsPanel4.setLayout(scoreBoardLayout);
 
         final JPanel panelSwitcher = new JPanel();
         final JLabel benchLabel = new JLabel(getIcon("images/icons/push.png"));
         final JLabel squatLabel = new JLabel(getIcon("images/icons/legs.png"));
         final JLabel latLabel = new JLabel(getIcon("images/icons/pull.png"));
-
 
         final JPanel benchPanel = createBoardsPanel(MinigameType.BENCH_PRESS);
         final JPanel squatPanel = createBoardsPanel(MinigameType.SQUAT);
@@ -204,7 +204,6 @@ public class SideStatsView extends GamePanel {
     private JPanel createBoardsPanel(final MinigameType minigameType) {
         statsPanel4.removeAll();
         final JPanel mainPanel = new JPanel();
-
         mainPanel.add(new ScoreBoardView(controller,
                 minigameType,
                 new MouseAdapter() {
@@ -215,9 +214,7 @@ public class SideStatsView extends GamePanel {
                 },
                 dimensionGetter)
         );
-
         statsPanel4.add(mainPanel);
-
         return mainPanel;
     }
 
@@ -269,7 +266,6 @@ public class SideStatsView extends GamePanel {
         statsPanel1.add(buildLabel(StatsType.STAMINA, "images/icons/stamina.png"));
         statsPanel1.add(buildLabel(StatsType.MASS, "images/icons/mass.png"));
         statsPanel1.setBorder(BORDER);
-
         statsPanel1.revalidate();
         statsPanel1.repaint();
     }
@@ -281,6 +277,7 @@ public class SideStatsView extends GamePanel {
     public void resizeComponents() {
         buildPanelStandard();
         buildFoodPanel();
+        buildScoreboardPanel();
         statsPanel3.removeAll();
         statsPanel3.add(getMoneyLabel());
         statsPanel3.add(getDaysLabel());
@@ -312,7 +309,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the money value
      */
     private JLabel getMoneyLabel() {
-        final int moneyValue = controller.getMoney().getCount();
+        final int moneyValue = controller.getMoney();
         final JLabel labelImage = new JLabel();
 
         final JLabel lablelNumber = new JLabel(String.valueOf(moneyValue),
@@ -341,7 +338,7 @@ public class SideStatsView extends GamePanel {
      * @return the JLabel with the days value
      */
     private JLabel getDaysLabel() {
-        final int value = controller.getDays().getCount();
+        final int value = controller.getDays();
 
         final JLabel labelText = new JLabel("<html><div style='text-align: center;'>DAYS<br>LEFT</div></html",
                 SwingConstants.CENTER);
@@ -393,7 +390,6 @@ public class SideStatsView extends GamePanel {
         label.setLayout(new GridLayout(2, 1));
         label.add(labelImage);
         label.add(lablelNumber);
-        FontLoader.loadFont();
 
         labelImage.setIcon(getIcon(path));
 
@@ -420,7 +416,7 @@ public class SideStatsView extends GamePanel {
         foodLabel.add(foodLabelImage);
         foodLabel.add(foodLabelNumber);
 
-        FontLoader.loadFont();
+
         foodLabelImage.setIcon(getIcon(imagePath));
         this.setSize(dimensionGetter.getCellDimension());
 
