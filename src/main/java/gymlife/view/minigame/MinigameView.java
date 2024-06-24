@@ -61,7 +61,6 @@ public abstract class MinigameView extends GamePanel {
         this.dimensionGetter = dimensionGetter;
 
 
-
         this.setLayout(new BorderLayout());
         this.setSize(dimensionGetter.getScenarioDimension());
 
@@ -208,7 +207,7 @@ public abstract class MinigameView extends GamePanel {
                 timerView();
                 doAnimation();
             }
-            case RUNNING,VALID_PRESS -> {
+            case RUNNING, VALID_PRESS -> {
                 progressBar.setValue(progressBar.getValue() + controller.getDifficulty().getProgress());
                 orderLabel.setText(controller.getMinigameType().getDescription());
             }

@@ -22,6 +22,9 @@ public enum MinigameState {
     RUNNING(
             ""
     ),
+    /**
+     * The player has done a valid press.
+     */
     VALID_PRESS(
             ""
     ),
@@ -71,7 +74,12 @@ public enum MinigameState {
         return text;
     }
 
-    public MinigameState next(){
+    /**
+     * Returns the next state of the minigame.
+     *
+     * @return The next state of the minigame.
+     */
+    public MinigameState next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
 }

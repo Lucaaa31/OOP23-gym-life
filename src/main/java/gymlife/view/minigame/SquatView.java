@@ -38,6 +38,7 @@ public class SquatView extends MinigameView implements MinigamePanel {
     private final JPanel buttonPanel = new JPanel();
     private static final int FONT_PROPORTION = 5;
     private static final int OFFSET = 25;
+    private static final int SLEEP_TIME = 3500;
 
     /**
      * Creates a new SquatView object.
@@ -100,15 +101,16 @@ public class SquatView extends MinigameView implements MinigamePanel {
                             .getColor()));
             buttonList.get(i).setText("?");
         }
-        if (controller.getMinigameState() == MinigameState.REP_REACHED || controller.getMinigameState() == MinigameState.INVALID_PRESS){
+        if (controller.getMinigameState() == MinigameState.REP_REACHED
+                || controller.getMinigameState() == MinigameState.INVALID_PRESS) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(3500);
+                    Thread.sleep(SLEEP_TIME);
                 } catch (InterruptedException ignored) {
                 }
                 super.setText("Press the " + actualColor + " button!", color);
             }).start();
-        }else {
+        } else {
             super.setText("Press the " + actualColor + " button!", color);
         }
 

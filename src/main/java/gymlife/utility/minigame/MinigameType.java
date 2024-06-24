@@ -8,8 +8,6 @@ import gymlife.view.minigame.BenchView;
 import gymlife.view.minigame.LatView;
 import gymlife.view.minigame.SquatView;
 
-import java.util.List;
-import java.util.Objects;
 
 /**
  * The MinigameType enum represents the different types of minigames available

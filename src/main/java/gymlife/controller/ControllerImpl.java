@@ -44,7 +44,7 @@ import java.util.Optional;
  */
 public class ControllerImpl implements Controller {
     private final Character character = new CharacterImpl();
-    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.GYM_MAP);
+    private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
     private final InteractionsManager interactionsManager;

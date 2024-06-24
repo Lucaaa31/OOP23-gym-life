@@ -1,31 +1,46 @@
 package gymlife.model.minigame;
 
-import gymlife.model.minigame.api.MinigameStateHandler;
 import gymlife.utility.minigame.MinigameState;
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a lat machine minigame that implements the Minigame interface.
  */
-public final class LatStrategy extends Minigame implements MinigameStateHandler {
-    private final Map<MinigameState, Consumer<MinigameStateHandler>> actionMap = new EnumMap<>(MinigameState.class);
-    private final MinigameStatistics statistics = new MinigameStatistics();
+public final class LatStrategy extends Minigame {
+    private MinigameStatistics statistics = new MinigameStatistics();
     private List<Integer> sequence;
     private final Random random = new Random();
     private int buttonCode;
 
 
+    /**
+     * Constructs a new LatStrategy object.
+     */
     public LatStrategy() {
-        actionMap.put(MinigameState.NOT_STARTED, MinigameStateHandler::notStarted);
-        actionMap.put(MinigameState.PRESSED_START, MinigameStateHandler::pressedStartButton);
-        actionMap.put(MinigameState.RUNNING, MinigameStateHandler::running);
-        actionMap.put(MinigameState.VALID_PRESS, MinigameStateHandler::validPress);
-        actionMap.put(MinigameState.INVALID_PRESS, MinigameStateHandler::invalidPress);
-        actionMap.put(MinigameState.REP_REACHED, MinigameStateHandler::repReached);
-        actionMap.put(MinigameState.ENDED_WON, MinigameStateHandler::miniGameEndedWon);
-        actionMap.put(MinigameState.ENDED_LOST, MinigameStateHandler::miniGameEndedLost);
+        sequence = new ArrayList<>();
+    }
+
+    /**
+     * Returns the statistics of the minigame.
+     *
+     * @return the statistics of the minigame
+     */
+    @Override
+    public MinigameStatistics getStatistics() {
+        return statistics;
+    }
+
+    /**
+     * Sets the statistics of the minigame.
+     *
+     * @param statistics the statistics of the minigame
+     */
+    @Override
+    public void setStatistics(final MinigameStatistics statistics) {
+        this.statistics = statistics;
     }
 
     /**
@@ -42,94 +57,73 @@ public final class LatStrategy extends Minigame implements MinigameStateHandler 
             setMinigameState(MinigameState.RUNNING);
         }
         this.buttonCode = Integer.parseInt(buttonCode);
-        actionMap.get(getMinigameState()).accept(this);
+        super.notifyUserAction(buttonCode);
     }
 
-
+    /**
+     * Handle the NOT_STARTED state.
+     */
     @Override
     public void notStarted() {
         createRandomSequence();
-        statistics.setStartMinigame();
+        statistics = statistics.startMinigameTime();
         setMinigameState(getMinigameState().next());
     }
 
+    /**
+     * Handle the PRESSED_START state.
+     */
     @Override
     public void pressedStartButton() {
-        setMinigameState(getMinigameState().next());
+        super.pressedStartButton();
         running();
     }
 
+    /**
+     * Handle the RUNNING state.
+     */
     @Override
     public void running() {
-        statistics.incrementInteractions();
-        if (conditionOfMinigame()) {
+        statistics = statistics.incrementInteractions();
+        if (conditionOfMinigame(0)) {
             validPress();
         } else {
             invalidPress();
+            createRandomSequence();
         }
     }
 
-    private boolean conditionOfMinigame() {
-        return sequence.get(statistics.getInteractions() - 1) == buttonCode;
-    }
-
+    /**
+     * The condition of the minigame.
+     *
+     * @param reactionTime the reaction time of the user
+     * @return true if the condition is met, false otherwise
+     */
     @Override
-    public void validPress() {
-        setMinigameState(MinigameState.VALID_PRESS);
-        if (statistics.getInteractions() == getDifficulty().getTouchForLift()) {
-            statistics.resetInteractions();
-            statistics.incrementNumReps();
-            repReached();
-        }
+    public boolean conditionOfMinigame(final long reactionTime) {
+        return sequence.get(statistics.interactions() - 1) == buttonCode;
     }
 
-    @Override
-    public void invalidPress() {
-        statistics.incrementMistakes();
-        setMinigameState(MinigameState.INVALID_PRESS);
-        if (statistics.getMistakes() > getDifficulty().getMaxMistakes()) {
-            miniGameEndedLost();
-        }
-        createRandomSequence();
-        statistics.resetInteractions();
-    }
 
+    /**
+     * Handle the REP_REACHED state.
+     */
     @Override
     public void repReached() {
-        setMinigameState(MinigameState.REP_REACHED);
-        if (statistics.getNumReps() == getDifficulty().getRequiredReps()) {
-            statistics.setMinigameTime();
-            setMinigameState(MinigameState.ENDED_WON);
-        }
+        super.repReached();
         createRandomSequence();
-    }
-
-    @Override
-    public void miniGameEndedWon() {
-        setMinigameState(MinigameState.ENDED_WON);
-    }
-
-    @Override
-    public void miniGameEndedLost() {
-        setMinigameState(MinigameState.ENDED_LOST);
-    }
-
-
-    @Override
-    public int getTimeMinigame() {
-        return statistics.getMinigameTime();
     }
 
 
     /**
      * Creates a random sequence of numbers.
      */
+    @Override
     public void createRandomSequence() {
         sequence = new ArrayList<>();
         for (int i = 0; i < getDifficulty().getTouchForLift(); i++) {
             sequence.add(random.nextInt(4) + 1);
         }
-        System.out.println(sequence);
     }
 
     /**
