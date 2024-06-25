@@ -7,7 +7,7 @@ hide empty members
     GameMap --* Cell
     GameMap --o Position
     Character --o Position
-    StatsManager --o Counter
+    StatsManager --* Counter
     Cell <-- GameInteraction
     GameInteraction <- InteractionsManager
     InteractionsManager --o StatsManager

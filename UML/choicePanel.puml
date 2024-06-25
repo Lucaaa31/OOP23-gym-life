@@ -3,7 +3,7 @@
 
 hide empty members
 
-    abstract class ChoicePanel{
+    abstract class ChoicePanel extends GamePanel{
         +resizeComponents()
         ..
         +description()
@@ -27,6 +27,10 @@ hide empty members
         +image()
         +acceptButtonText()
         +declineButtonText()
+    }
+
+    abstract class GamePanel{
+
     }
 
 @enduml
