@@ -18,7 +18,7 @@ public enum GameDifficulty {
      * Hard difficulty level.
      * The player has 20 days to complete the game.
     */
-    HARD(5);
+    HARD(20);
 
     private final int count;
 

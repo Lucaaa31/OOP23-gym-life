@@ -26,7 +26,7 @@ public enum FoodType {
      */
     MEAT(10, 5, 5, -5);
 
-    private final double cost;
+    private final int cost;
     private final Map<StatsType, Integer> foodPerks;
 
     /**
@@ -37,7 +37,7 @@ public enum FoodType {
      * @param happinessValue The bonus/penalty to happiness provided by the food.
      * @param massValue      The penalty to mass provided by the food.
      */
-    FoodType(final double cost, final int staminaValue, final int happinessValue, final int massValue) {
+    FoodType(final int cost, final int staminaValue, final int happinessValue, final int massValue) {
         this.cost = cost;
         this.foodPerks = new HashMap<>();
         foodPerks.put(StatsType.STAMINA, staminaValue);
@@ -59,7 +59,7 @@ public enum FoodType {
      *
      * @return cost.
      */
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 }

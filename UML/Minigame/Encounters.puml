@@ -1,0 +1,23 @@
+@startuml
+hide empty members
+EncountersFactoryImpl  ..* Encounter
+EncountersFactoryImpl  ...* EncountersConstants
+
+class Encounter <<(R,yellow)>>{
+    + String description
+    ...
+    + String getdescritpion()
+    + String getDeny()
+}
+
+class EncountersFactoryImpl {
+    + Optional<Encounter> getRandomEncounter()
+}
+
+class EncountersConstants {
+    + {static}encounterChance
+    + {static}gymBroChance
+    + {static}Map<StatsType, Integer> pusherAccept()
+    ...
+}
+@enduml

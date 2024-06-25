@@ -39,7 +39,7 @@ public class BenchView extends MinigameView implements MinigamePanel {
         buttonMinigame.setSize(dimensionGetter.getButtonMinigameDimension());
         buttonMinigame.setBackground(Color.GREEN);
         buttonMinigame.setBorder(new LineBorder(Color.WHITE, borderSize));
-
+        buttonMinigame.setOpaque(true);
 
         addLayeredPanel(buttonMinigame);
         buttonMinigame.setLocation(

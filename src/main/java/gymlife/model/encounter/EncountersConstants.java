@@ -10,7 +10,7 @@ import gymlife.model.statistics.StatsType;
  */
 public final class EncountersConstants {
     private static Map<StatsType, Integer> returnMap;
-    private static final double ENCOUNTER_CHANCE = 0.2;
+    private static final double ENCOUNTER_CHANCE = 1;
     /*No ice-cream chance because ice-cream probability is 1*/
     private static final double GYM_BRO_CHANCE = 0.8;
     private static final double PUSHER_CHANCE = 0.6;
@@ -20,6 +20,7 @@ public final class EncountersConstants {
     private static final int HIGH = 20;
     private static final int MEDIUM = 10;
     private static final int LOW = 5;
+    private static final int VERY_LOW = 2;
     private static final String PUSHER_DESCRIPTION = "A pusher offers you some steroids. Do you accept?";
     private static final String ICE_CREAM_DESCRIPTION = "An ice cream truck is parked outside the gym. Do you buy one?";
     private static final String MONEY_BAG_DESCRIPTION = "You find a bag of money on the ground. Do you take it?";
@@ -57,7 +58,7 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> iceCreamAccept() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.MASS, -LOW);
+        returnMap.put(StatsType.MASS, -VERY_LOW);
         returnMap.put(StatsType.HAPPINESS, HIGH);
         return Map.copyOf(returnMap);
     }
@@ -91,7 +92,7 @@ public final class EncountersConstants {
      */
     public static Map<StatsType, Integer> moneyBagDeny() {
         returnMap = new HashMap<>();
-        returnMap.put(StatsType.HAPPINESS, -MEDIUM);
+        returnMap.put(StatsType.HAPPINESS, -LOW);
         return Map.copyOf(returnMap);
     }
     /**
