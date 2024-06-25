@@ -4,6 +4,9 @@ import gymlife.utility.minigame.MinigameDifficulty;
 
 import java.util.List;
 
+/**
+ * Represents a scoring table that stores the scores of the players.
+ */
 public interface ScoringTable {
     /**
      * Updates the score of the player in the scoring table.

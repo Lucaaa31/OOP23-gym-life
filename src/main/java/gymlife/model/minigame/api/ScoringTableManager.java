@@ -5,6 +5,9 @@ import gymlife.utility.minigame.MinigameType;
 
 import java.util.List;
 
+/**
+ * Represents a scoring table manager that stores the scores of the players.
+ */
 public interface ScoringTableManager {
     /**
      * Updates the score of a minigame in the scoring table.
