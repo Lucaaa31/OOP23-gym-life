@@ -51,6 +51,7 @@ public final class GameMapView extends GamePanel {
      * @param dimensionGetter DimensionGetter given.
      */
     public GameMapView(final Controller controller, final DimensionGetter dimensionGetter) {
+        this.setFocusable(true);
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
