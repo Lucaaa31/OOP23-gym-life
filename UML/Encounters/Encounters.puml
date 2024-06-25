@@ -6,8 +6,7 @@ EncountersFactoryImpl  ...> EncountersConstants
 class Encounter <<(R,yellow)>>{
     + String description
     ...
-    + String getdescritpion()
-    + String getDeny()
+
 }
 
 class EncountersFactoryImpl {
