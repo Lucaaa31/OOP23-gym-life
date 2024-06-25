@@ -52,13 +52,13 @@ public class MinigameSwitchView extends GamePanel {
 
         difficultyMenu = new DifficultyMenu(dimensionGetter, e -> {
             controller.setMinigameDifficulty(MinigameDifficulty.EASY);
-            startMinigame();
+            startMinigameView();
         }, e -> {
             controller.setMinigameDifficulty(MinigameDifficulty.MEDIUM);
-            startMinigame();
+            startMinigameView();
         }, e -> {
             controller.setMinigameDifficulty(MinigameDifficulty.HARD);
-            startMinigame();
+            startMinigameView();
         }, new MouseAdapter() {
             @Override
             public void mouseEntered(final MouseEvent e) {
@@ -83,7 +83,7 @@ public class MinigameSwitchView extends GamePanel {
     /**
      * Starts the minigame and displays the minigame view.
      */
-    public void startMinigame() {
+    public void startMinigameView() {
         try {
             minigamePanel = (MinigamePanel) Class.forName(controller.getMinigameType().getViewName())
                     .getDeclaredConstructor(Controller.class, DimensionGetter.class)
@@ -115,7 +115,6 @@ public class MinigameSwitchView extends GamePanel {
         if (minigamePanel != null) {
             minigamePanel.resizeComponents();
         }
-//        minigameEndView.resizeComponents();
     }
 
     /**

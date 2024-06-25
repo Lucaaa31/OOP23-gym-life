@@ -1,9 +1,28 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class ScoringTable
-class ScoringTablemanager
+class MinigameManagerImpl {
+    +getMinigameScores()
+    +updateMinigameScore()
+}
+class ScoringTableImpl{
+    +getScores()
+    +updateScore()
+}
+class ScoringTableManagerImpl{
+    +getMinigameScores()
+    +updateMinigameScore()
+}
+class Contoller{
+    +getScores()
+}
+class ScoringTableView
+class MinigameSwitcherView
 
-ScoringTablemanager --* ScoringTable
+MinigameSwitcherView --* Contoller
+ScoringTableView --* Contoller
+Contoller --* MinigameManagerImpl
+ScoringTableManagerImpl --* ScoringTableImpl
+MinigameManagerImpl --* ScoringTableManagerImpl
 
 @enduml

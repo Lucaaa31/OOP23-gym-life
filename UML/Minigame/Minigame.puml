@@ -1,13 +1,39 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-interface MinigameManager
-class MinigameManagerImpl implements MinigameManager
-abstract class Minigame
-class BenchStrategy implements Minigame
-class LatStrategy implements Minigame
-class SquatStrategy implements Minigame
+class MinigameStatistics << (R, yellow) >> {
+    - int numReps
+    - int mistakes
+    ...
+}
 
-MinigameManagerImpl --* Minigame
+abstract class Minigame implements MinigameStateHandler{
+    + notStarted()
+    + repReached()
+    + miniGameEndedWon()
+    + miniGameEndedLost()
+    + notifyUserAction()
+    + {abstract} MinigameStatistics getMinigameStatistics()
+}
+
+class BenchStrategy extends Minigame{
+    + running()
+    + validPress()
+    + invalidPress()
+
+}
+
+class LatStrategy extends Minigame{
+    ...
+
+}
+
+class SquatStrategy extends Minigame{
+    ...
+
+}
+MinigameStatistics .up.* BenchStrategy
+MinigameStatistics .up.* LatStrategy
+MinigameStatistics .up.* SquatStrategy
 
 @enduml

@@ -1,6 +1,7 @@
 package gymlife.model.minigame;
 
 import gymlife.model.minigame.api.MinigameManager;
+import gymlife.model.minigame.api.ScoringTableManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -18,7 +19,7 @@ import java.util.List;
 public class MinigameManagerImpl implements MinigameManager {
     private Minigame currentMinigame;
     private MinigameType currentMinigameType;
-    private final ScoringTableManager scoringTableManager = new ScoringTableManager();
+    private final ScoringTableManager scoringTableManager = new ScoringTableManagerImpl();
 
     /**
      * Constructs a new MinigameManager object.

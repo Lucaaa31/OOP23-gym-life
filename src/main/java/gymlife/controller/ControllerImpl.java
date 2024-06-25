@@ -126,6 +126,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to get what food is about to be bought.
+     *
      * @return the food to be bought.
      */
     @Override
@@ -411,9 +412,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void setMinigameResult() {
         final int winExperience = 10;
-
         minigameManager.updateMinigameResult();
-
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
                         ? minigameManager.getDifficulty().getExperienceGained() : -winExperience);
