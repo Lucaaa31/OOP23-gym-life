@@ -1,9 +1,10 @@
-package gymlife.view;
+package gymlife.view.choice;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.statistics.StatsType;
 import gymlife.utility.DimensionGetter;
 import gymlife.utility.ScenariosType;
+import gymlife.view.choice.api.ChoicePanel;
 
 
 import java.io.Serial;

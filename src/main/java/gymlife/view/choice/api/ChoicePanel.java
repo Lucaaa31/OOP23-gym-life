@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.choice.api;
 
 import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;

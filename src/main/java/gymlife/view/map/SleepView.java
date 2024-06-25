@@ -1,4 +1,4 @@
-package gymlife.view;
+package gymlife.view.map;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.DimensionGetter;
