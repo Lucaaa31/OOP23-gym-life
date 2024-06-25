@@ -62,6 +62,9 @@ public class MainView extends JFrame {
         FontLoader.loadFont();
         // Creazione dell'azione per il tasto 'esc'
         final Action closeGameAction = new AbstractAction() {
+            @Serial
+            private static final long serialVersionUID = 7293028989583504096L;
+
             @Override
             public void actionPerformed(final ActionEvent e) {
                 closeGame();
@@ -133,6 +136,9 @@ public class MainView extends JFrame {
 
         // Creazione dell'azione per il tasto '+'
         final Action increaseSizeAction = new AbstractAction() {
+            @Serial
+            private static final long serialVersionUID = -2411846631108764517L;
+
             @Override
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.incScreenDimension();
@@ -144,6 +150,9 @@ public class MainView extends JFrame {
 
         // Creazione dell'azione per il tasto '-'
         final Action decreaseSizeAction = new AbstractAction() {
+            @Serial
+            private static final long serialVersionUID = 7855342688567814672L;
+
             @Override
             public void actionPerformed(final ActionEvent e) {
                 dimensionGetter.decScreenDimension();
