@@ -14,7 +14,6 @@ import gymlife.model.minigame.api.MinigameManager;
 import gymlife.model.map.api.InteractionsManager;
 import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
-import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.bankgame.PlaneGameModelImpl;
@@ -54,7 +53,6 @@ public class ControllerImpl implements Controller {
     private final SynchronizerModel sync2 = new SynchronizerModel();
     private final PlaneGameModelImpl planeGameModel = new PlaneGameModelImpl(sync1, sync2);
     private final MinigameManager minigameManager;
-    private final ScoringTableManager scoringTableManager = new ScoringTableManager();
     private final Inventory inventory = new InventoryImpl();
     private Encounter currentEncounter;
     private static final int MONEY_START = 50;
@@ -128,6 +126,7 @@ public class ControllerImpl implements Controller {
 
     /**
      * Method to get what food is about to be bought.
+     *
      * @return the food to be bought.
      */
     @Override
@@ -413,10 +412,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void setMinigameResult() {
         final int winExperience = 10;
-        scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
-                minigameManager.getDifficulty(),
-                minigameManager.getTimeMinigame());
-
+        minigameManager.updateMinigameResult();
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
                         ? minigameManager.getDifficulty().getExperienceGained() : -winExperience);
@@ -454,7 +450,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
-        return scoringTableManager.getMinigameScore(minigameType, difficulty);
+        return minigameManager.getMinigameScore(minigameType, difficulty);
     }
 
 

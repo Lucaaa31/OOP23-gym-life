@@ -29,7 +29,7 @@ import java.util.List;
  * It extends the JPanel class and provides the necessary UI elements and functionality
  * for the ScoreBoard mini-game.
  */
-public class ScoreBoardView extends JPanel {
+public class ScoringTableView extends JPanel {
     @Serial
     private static final long serialVersionUID = -8662696018025077116L;
     private final JPanel easyPanel = createPanel();
@@ -52,10 +52,10 @@ public class ScoreBoardView extends JPanel {
      * @param backButton          the back button
      * @param dimensionGetter     the dimension getter
      */
-    public ScoreBoardView(final Controller controller,
-                          final MinigameType currentMinigameType,
-                          final MouseAdapter backButton,
-                          final DimensionGetter dimensionGetter) {
+    public ScoringTableView(final Controller controller,
+                            final MinigameType currentMinigameType,
+                            final MouseAdapter backButton,
+                            final DimensionGetter dimensionGetter) {
 
         this.setLayout(new BorderLayout());
         final JPanel buttonPanel = new JPanel(new FlowLayout());

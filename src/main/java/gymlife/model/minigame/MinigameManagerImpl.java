@@ -1,6 +1,7 @@
 package gymlife.model.minigame;
 
 import gymlife.model.minigame.api.MinigameManager;
+import gymlife.model.minigame.api.ScoringTableManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MinigameManagerImpl implements MinigameManager {
     private Minigame currentMinigame;
     private MinigameType currentMinigameType;
+    private final ScoringTableManager scoringTableManager = new ScoringTableManagerImpl();
 
     /**
      * Constructs a new MinigameManager object.
@@ -119,6 +121,26 @@ public class MinigameManagerImpl implements MinigameManager {
     @Override
     public int getTimeMinigame() {
         return currentMinigame.getTimeMinigame();
+    }
+
+    /**
+     * Update the minigame result.
+     */
+    @Override
+    public void updateMinigameResult() {
+        scoringTableManager.updateMinigameScore(getMinigameType(),
+                getDifficulty(),
+                getTimeMinigame());
+    }
+
+    /**
+     * Get the minigame score.
+     *
+     * @return the minigame score
+     */
+    @Override
+    public List<Integer> getMinigameScore(final MinigameType minigameType, final MinigameDifficulty difficulty) {
+        return scoringTableManager.getMinigameScore(minigameType, difficulty);
     }
 
 

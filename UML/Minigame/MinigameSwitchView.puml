@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class MinigameSwitchView
+class MinigameEndView
+class DifficultyMenu
+abstract class MinigameView
+class BenchView extends MinigameView
+class LatView extends MinigameView
+class SquatView extends MinigameView
+
+MinigameSwitchView ..* MinigameEndView
+MinigameSwitchView ..* DifficultyMenu
+MinigameSwitchView ..* MinigameView
+
+@enduml

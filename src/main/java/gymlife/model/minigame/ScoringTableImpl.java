@@ -1,5 +1,6 @@
 package gymlife.model.minigame;
 
+import gymlife.model.minigame.api.ScoringTable;
 import gymlife.utility.minigame.MinigameDifficulty;
 
 import java.util.HashMap;
@@ -13,14 +14,14 @@ import java.util.stream.Collectors;
  * It shows the scores of the players in the minigame, and updates the scores when a player finishes the minigame.
  * It keeps track of the top 5 scores of the players in all the three difficulties.
  */
-public class ScoringTable {
+public class ScoringTableImpl implements ScoringTable {
     private final Map<MinigameDifficulty, List<Integer>> scores;
 
     /**
      * Constructs a new ScoringTable object.
      * Initializes the scores map with the three difficulties and sets the scores to null.
      */
-    public ScoringTable() {
+    public ScoringTableImpl() {
         scores = new HashMap<>();
         for (final MinigameDifficulty difficulty : MinigameDifficulty.values()) {
             scores.put(difficulty, null);
@@ -35,6 +36,7 @@ public class ScoringTable {
      * @param difficulty the difficulty of the minigame that has been played
      * @param score      the score of the player
      */
+    @Override
     public void updateScore(final MinigameDifficulty difficulty, final int score) {
         final int maxScores = 5;
         List<Integer> tmpScores = scores.get(difficulty);
@@ -57,6 +59,7 @@ public class ScoringTable {
      * @param difficulty the difficulty of the minigame
      * @return the list of scores
      */
+    @Override
     public List<Integer> getScore(final MinigameDifficulty difficulty) {
         if (scores.get(difficulty) == null) {
             return List.of();

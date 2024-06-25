@@ -26,7 +26,7 @@ import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameType;
 import gymlife.view.api.GamePanel;
-import gymlife.view.minigame.ScoreBoardView;
+import gymlife.view.minigame.ScoringTableView;
 
 /**
  * The StatsView class represents a JPanel that displays statistics related to
@@ -205,7 +205,7 @@ public class SideStatsView extends GamePanel {
     private JPanel createBoardsPanel(final MinigameType minigameType) {
         statsPanel4.removeAll();
         final JPanel mainPanel = new JPanel();
-        mainPanel.add(new ScoreBoardView(controller,
+        mainPanel.add(new ScoringTableView(controller,
                 minigameType,
                 new MouseAdapter() {
                     @Override
