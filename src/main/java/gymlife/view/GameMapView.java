@@ -86,21 +86,24 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                final char key = Character.toLowerCase(e.getKeyChar());
-                if (Direction.getDir(key).isPresent()) {
-                    controller.moveCharacter(Direction.getDir(key).get());
-                    characterLabel.changeImage(controller.getPlayerLevel(), Direction.getDir(key).get());
-                    moveCharacter();
-                } else if (key == 'e' && controller.getCurrentMap()
-                            .getCellAtCoord(controller.getCharacterPos())
-                            .getInteraction()
-                            .isPresent()) {
+                final char keyChar = Character.toLowerCase(e.getKeyChar());
+                if (keyChar == 'e' && controller.getCurrentMap()
+                        .getCellAtCoord(controller.getCharacterPos())
+                        .getInteraction()
+                        .isPresent()) {
                     controller.cellInteraction();
                     GameMapView.super.transferFocus();
                 }
             }
             @Override
             public void keyPressed(final KeyEvent e) {
+                final int keyCode = e.getKeyCode();
+                final Direction direction = Direction.getDir(keyCode).orElse(null);
+                if (direction != null) {
+                    controller.moveCharacter(direction);
+                    characterLabel.changeImage(controller.getPlayerLevel(), direction);
+                    moveCharacter();
+                }
             }
             @Override
             public void keyReleased(final KeyEvent e) {

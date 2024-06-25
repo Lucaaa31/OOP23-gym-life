@@ -1,5 +1,6 @@
 package gymlife.utility;
 
+import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 /**
@@ -9,24 +10,24 @@ public enum Direction {
     /**
      * Direction UP.
      */
-    UP('w', new Position(0, -1)),
+    UP(KeyEvent.VK_W, new Position(0, -1)),
 
     /**
      * Direction RIGHT.
      */
-    RIGHT('d', new Position(+1, 0)),
+    RIGHT(KeyEvent.VK_D, new Position(+1, 0)),
 
     /**
      * Direction Left.
      */
-    LEFT('a', new Position(-1, 0)),
+    LEFT(KeyEvent.VK_A, new Position(-1, 0)),
 
     /**
      * Direction DOWN.
      */
-    DOWN('s', new Position(0, +1));
+    DOWN(KeyEvent.VK_S, new Position(0, +1));
 
-    private final char key;
+    private final int key;
     private final Position offSet;
 
     /**
@@ -35,7 +36,7 @@ public enum Direction {
      * @param key the character key associated with the direction
      * @param offSet the position change associated with the direction
      */
-    Direction(final char key, final Position offSet) {
+    Direction(final int key, final Position offSet) {
         this.key = key;
         this.offSet = offSet;
     }
@@ -47,9 +48,9 @@ public enum Direction {
      * @param key the character key
      * @return an Optional containing the Directions enum value, or an empty Optional if no match is found
      */
-    public static Optional<Direction> getDir(final char key) {
+    public static Optional<Direction> getDir(final int key) {
         for (final Direction elem : Direction.values()) {
-            if (elem.key == Character.toLowerCase(key)) {
+            if (elem.key == key) {
                 return Optional.of(elem);
             }
         }
