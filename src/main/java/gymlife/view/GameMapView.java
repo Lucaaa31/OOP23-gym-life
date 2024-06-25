@@ -77,7 +77,7 @@ public final class GameMapView extends GamePanel {
 
         this.addFocusListener(new FocusAdapter() {
             @Override
-            public void focusGained(FocusEvent e) {
+            public void focusGained(final FocusEvent e) {
                 requestFocusInWindow();
             }
         });
