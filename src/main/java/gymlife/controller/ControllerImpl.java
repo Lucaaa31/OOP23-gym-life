@@ -76,6 +76,7 @@ public class ControllerImpl implements Controller {
                 minigameManager,
                 inventory
         );
+        statsManager.setStat(StatsType.MONEY, StatsConstants.MAX_STATS_LEVEL);
 
     }
 
