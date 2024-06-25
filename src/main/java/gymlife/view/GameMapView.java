@@ -86,14 +86,6 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                final char keyChar = Character.toLowerCase(e.getKeyChar());
-                if (keyChar == 'e' && controller.getCurrentMap()
-                        .getCellAtCoord(controller.getCharacterPos())
-                        .getInteraction()
-                        .isPresent()) {
-                    controller.cellInteraction();
-                    GameMapView.super.transferFocus();
-                }
             }
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -103,6 +95,13 @@ public final class GameMapView extends GamePanel {
                     controller.moveCharacter(direction);
                     characterLabel.changeImage(controller.getPlayerLevel(), direction);
                     moveCharacter();
+                }
+                if (keyCode == KeyEvent.VK_E && controller.getCurrentMap()
+                        .getCellAtCoord(controller.getCharacterPos())
+                        .getInteraction()
+                        .isPresent()) {
+                    controller.cellInteraction();
+                    GameMapView.super.transferFocus();
                 }
             }
             @Override
