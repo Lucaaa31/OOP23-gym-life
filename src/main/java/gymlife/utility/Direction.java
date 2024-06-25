@@ -10,22 +10,22 @@ public enum Direction {
     /**
      * Direction UP.
      */
-    UP(KeyEvent.VK_W, new Position(0, -1)),
+    UP(KeyEvent.VK_UP, new Position(0, -1)),
 
     /**
      * Direction RIGHT.
      */
-    RIGHT(KeyEvent.VK_D, new Position(+1, 0)),
+    RIGHT(KeyEvent.VK_DOWN, new Position(+1, 0)),
 
     /**
      * Direction Left.
      */
-    LEFT(KeyEvent.VK_A, new Position(-1, 0)),
+    LEFT(KeyEvent.VK_LEFT, new Position(-1, 0)),
 
     /**
      * Direction DOWN.
      */
-    DOWN(KeyEvent.VK_S, new Position(0, +1));
+    DOWN(KeyEvent.VK_RIGHT, new Position(0, +1));
 
     private final int key;
     private final Position offSet;
