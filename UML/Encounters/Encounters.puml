@@ -1,7 +1,7 @@
 @startuml
 hide empty members
 EncountersFactoryImpl  ..* Encounter
-EncountersFactoryImpl  ...* EncountersConstants
+EncountersFactoryImpl  ...> EncountersConstants
 
 class Encounter <<(R,yellow)>>{
     + String description

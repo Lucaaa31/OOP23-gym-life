@@ -1,0 +1,28 @@
+@startuml
+
+
+class BankGameView extends GamePanel {
+
+}
+
+class ImageLabelView {
+}
+
+class MoneyGameView {
+}
+
+class MultiplierGameView {
+}
+
+class TextLabelView {
+}
+
+class PlaneAnimationView {
+}
+
+BankGameView --* ImageLabelView
+BankGameView --* MoneyGameView
+BankGameView --* MultiplierGameView
+BankGameView --* TextLabelView
+BankGameView --* PlaneAnimationView
+@enduml

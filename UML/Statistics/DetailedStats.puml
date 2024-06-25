@@ -1,7 +1,7 @@
 @startuml
 hide empty members
 StatsManagerImpl  ..* CommonStats
-StatsManagerImpl  ..* StatsType
+StatsManagerImpl  ..> StatsType
 StatsManagerImpl  ...* GameDifficulty
 CommonStatsImpl  .* StatsType
 interface StatsManager {

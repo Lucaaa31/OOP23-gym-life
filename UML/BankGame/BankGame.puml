@@ -1,0 +1,23 @@
+@startuml
+class PlaneGameModelImpl implements PlaneGameModel {
+}
+
+class BankGameView
+
+class Controller {
+-sync1
+-sync2
++getSync1
++getSync2
+}
+
+class SynchronizerModel {
++ signal
++ waitForSignal
+}
+note right : monitor class
+Controller --* SynchronizerModel
+PlaneGameModelImpl --* SynchronizerModel
+
+BankGameView ..* Controller
+@enduml
