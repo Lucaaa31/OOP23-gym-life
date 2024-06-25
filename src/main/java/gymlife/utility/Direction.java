@@ -28,7 +28,7 @@ public enum Direction {
     DOWN(KeyEvent.VK_S, new Position(0, +1));
 
     private final int key;
-    private final Position offSet;
+    private final transient Position offSet;
 
     /**
      * Private constructor.
