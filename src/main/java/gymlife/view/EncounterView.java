@@ -1,7 +1,7 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
-
+import gymlife.utility.DimensionGetter;
 
 import java.io.Serial;
 import java.util.Locale;

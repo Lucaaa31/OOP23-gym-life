@@ -3,10 +3,10 @@ package gymlife.view.minigame;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
-import gymlife.utility.minigame.Colors;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.minigame.ColorModel;
+import gymlife.utility.minigame.MinigameState;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -24,7 +24,7 @@ import java.util.Objects;
  * functionality
  * for the Squat mini-game.
  */
-public class SquatView extends AbstractMinigameView implements MinigamePanel {
+public class SquatView extends MinigameView implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -5624416626690898281L;
     private final transient DimensionGetter dimensionGetter;
@@ -37,6 +37,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
     private final JPanel buttonPanel = new JPanel();
     private static final int FONT_PROPORTION = 5;
     private static final int OFFSET = 25;
+    private static final int SLEEP_TIME = 3500;
 
     /**
      * Creates a new SquatView object.
@@ -54,6 +55,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
 
 
         for (final JButton button : buttonList) {
+            button.setOpaque(true);
             button.setSize(dimensionGetter.getButtonMinigameDimension());
             button.setBackground(Color.GREEN);
             button.setBorder(new LineBorder(Color.BLACK, borderSize));
@@ -62,7 +64,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
                             / FONT_PROPORTION));
             button.setOpaque(true);
             button.addActionListener(e -> {
-                controller.notifyUserAction(Objects.requireNonNull(Colors.getColorName(
+                controller.notifyUserAction(Objects.requireNonNull(ColorModel.getColorName(
                         button.getBackground().getRed(),
                         button.getBackground().getGreen(),
                         button.getBackground().getBlue()
@@ -91,15 +93,28 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
         super.handleMinigameState();
         final List<String> sequence = new ArrayList<>(controller.getSequence());
         final String actualColor = sequence.get(0);
-        final Color color = Objects.requireNonNull(Colors.getColor(sequence.get(1))).getColor();
+        final Color color = Objects.requireNonNull(ColorModel.getColor(sequence.get(1))).getColor();
         Collections.shuffle(sequence);
         for (int i = 0; i < 3; i++) {
             buttonList.get(i).setBackground(Objects.requireNonNull(
-                    Objects.requireNonNull(Colors.getColor(sequence.get(i)))
+                    Objects.requireNonNull(ColorModel.getColor(sequence.get(i)))
                             .getColor()));
             buttonList.get(i).setText("?");
         }
-        super.setText("Press the " + actualColor + " button!", color);
+        if (controller.getMinigameState() == MinigameState.REP_REACHED
+                || controller.getMinigameState() == MinigameState.INVALID_PRESS) {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(SLEEP_TIME);
+                } catch (InterruptedException ignored) {
+                }
+                super.setText("Press the " + actualColor + " button!", color);
+            }).start();
+        } else {
+            super.setText("Press the " + actualColor + " button!", color);
+        }
+
+
     }
 
     /**
@@ -114,7 +129,7 @@ public class SquatView extends AbstractMinigameView implements MinigamePanel {
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
-                setCharacterLabelIcon(super.getCharacterImage("images/Minigame/squat/sprite_" + state + ".png"));
+                setCharacterLabelIcon(super.getCharacterImage("images/minigame/squat/sprite_" + state + ".png"));
             }
             buttonList.forEach(button -> button.setEnabled(true));
         }).start();

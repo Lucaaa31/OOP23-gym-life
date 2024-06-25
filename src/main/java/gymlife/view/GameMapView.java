@@ -1,16 +1,20 @@
 package gymlife.view;
 
 import gymlife.controller.api.Controller;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.Direction;
 import gymlife.utility.MapConstants;
 import gymlife.utility.Position;
 import gymlife.view.api.GamePanel;
+import gymlife.view.character.CharacterView;
 
 import java.awt.Point;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -49,6 +53,7 @@ public final class GameMapView extends GamePanel {
      * @param dimensionGetter DimensionGetter given.
      */
     public GameMapView(final Controller controller, final DimensionGetter dimensionGetter) {
+        this.setFocusable(true);
         this.controller = controller;
         this.dimensionGetter = dimensionGetter;
         this.setSize(dimensionGetter.getScenarioDimension());
@@ -70,6 +75,12 @@ public final class GameMapView extends GamePanel {
         // Populate the map with cells
         this.loadMap();
 
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(final FocusEvent e) {
+                requestFocusInWindow();
+            }
+        });
         // Initialize characterLabel and set its location
         characterLabel = new CharacterView(dimensionGetter, controller.getPlayerLevel());
         characterLabel.setLocation(controller.getCharacterPos().X() * dimensionGetter.getCellDimension().width,
@@ -84,27 +95,28 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                final char key = Character.toLowerCase(e.getKeyChar());
-                if (Direction.getDir(key).isPresent()) {
-                    controller.moveCharacter(Direction.getDir(key).get());
-                    characterLabel.changeImage(controller.getPlayerLevel(), Direction.getDir(key).get());
+            }
+            @Override
+            public void keyPressed(final KeyEvent e) {
+                final int keyCode = e.getKeyCode();
+                final Direction direction = Direction.getDir(keyCode).orElse(null);
+                if (direction != null) {
+                    controller.moveCharacter(direction);
+                    characterLabel.changeImage(controller.getPlayerLevel(), direction);
                     moveCharacter();
-                } else if (key == 'e' && controller.getCurrentMap()
-                            .getCellAtCoord(controller.getCharacterPos())
-                            .getInteraction()
-                            .isPresent()) {
+                }
+                if (keyCode == KeyEvent.VK_E && controller.getCurrentMap()
+                        .getCellAtCoord(controller.getCharacterPos())
+                        .getInteraction()
+                        .isPresent()) {
                     controller.cellInteraction();
                     GameMapView.super.transferFocus();
                 }
             }
             @Override
-            public void keyPressed(final KeyEvent e) {
-            }
-            @Override
             public void keyReleased(final KeyEvent e) {
             }
         });
-
         // Add mainPanel to this panel
         this.add(mainPanel, BorderLayout.CENTER);
         this.setFocusable(true);

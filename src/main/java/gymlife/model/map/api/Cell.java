@@ -1,7 +1,5 @@
 package gymlife.model.map.api;
 
-import gymlife.model.api.GameInteraction;
-
 import java.util.Optional;
 
 /**

@@ -1,19 +1,20 @@
 package gymlife.view.bankgame;
 
-import javax.swing.JLayeredPane;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.BorderFactory;
+import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
 
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.ScenariosType;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.Serial;
+import java.util.List;
 
 
 /**
@@ -31,6 +33,7 @@ public final class BankGameView extends GamePanel {
     private static final long serialVersionUID = -3972452455820596601L;
 
     private static final long THREAD_W = 8;
+    private static final double START_MULTIPLIER_VALUES = 0.9;
     private final TextLabelView numberLabel;
     private final TextLabelView moneyLabel;
     private boolean started;
@@ -44,8 +47,9 @@ public final class BankGameView extends GamePanel {
     private final ImageLabelView skyLayer;
     private final JButton startButton;
     private final JButton restartButton;
+    private final JButton infoGameButton;
     private final transient DimensionGetter dimensionGetter;
-    private static final double MULTIPLIER_VALUE = 0.7;
+    private static final double MULTIPLIER_VALUE = 0.9;
     private static final int START_BUTTON_RED = 30;
     private static final int START_BUTTON_GREEN = 130;
     private static final int RESTART_BUTTON_RED = 150;
@@ -57,19 +61,21 @@ public final class BankGameView extends GamePanel {
      * shows the multiplier and the money multiplied,
      * moreover it sets the images' layering.
      *
-     * @param controller the controller associated with the bank game view.
+     * @param controller      the controller associated with the bank game view.
      * @param dimensionGetter an object for getting dimensions.
      */
     public BankGameView(final Controller controller, final DimensionGetter dimensionGetter) {
+        final float buttonTextSIze = dimensionGetter.getBigFontSize() / 3;
         this.setPreferredSize(dimensionGetter.getScenarioDimension());
         this.setLayout(new BorderLayout());
         numberLabel = new MultiplierGameView();
         moneyLabel = new MoneyGameView();
         mainPanel = new JLayeredPane();
-        planeLayer = new ImageLabelView("gymlife/airplane/airplane.png");
-        skyLayer = new ImageLabelView("gymlife/sky/sky.jpg");
+        planeLayer = new ImageLabelView("images/airplane/airplane.png");
+        skyLayer = new ImageLabelView("images/sky/sky.jpg");
         startButton = new JButton();
         restartButton = new JButton();
+        infoGameButton = new JButton();
         boxMoney = new JTextField();
         planeAnimation = new PlaneAnimationView();
         final Border darkBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
@@ -83,27 +89,37 @@ public final class BankGameView extends GamePanel {
         mainPanel.add(restartButton, JLayeredPane.MODAL_LAYER);
         mainPanel.add(boxMoney, JLayeredPane.MODAL_LAYER);
         mainPanel.add(moneyLabel, JLayeredPane.MODAL_LAYER);
+        mainPanel.add(infoGameButton, JLayeredPane.MODAL_LAYER);
+
 
         planeLayer.setVisible(false);
         startButton.setText("PLAY");
         restartButton.setText("RESTART");
+        infoGameButton.setText("INFO");
         startButton.setBackground(new Color(START_BUTTON_RED, START_BUTTON_GREEN, 0));
         restartButton.setBackground(new Color(RESTART_BUTTON_RED, 0, 0));
         restartButton.setForeground(Color.black);
         startButton.setForeground(Color.black);
+        infoGameButton.setForeground(Color.darkGray);
         startButton.setBorder(darkBorder);
         restartButton.setBorder(darkBorder);
+        infoGameButton.setBorder(darkBorder);
         startButton.setEnabled(false);
+        restartButton.setOpaque(true);
+        startButton.setOpaque(true);
+        startButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        restartButton.setFont(FontLoader.getCustomFont(buttonTextSIze));
+        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getSmallFontSize()));
 
-        boxMoney.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
-
-        boxMoney.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(final KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-                    e.consume();
-                }
+        infoGameButton.addActionListener(e -> {
+            final List<Float> value = controller.returnList();
+            int i = 0;
+            final StringBuilder values = new StringBuilder();
+            for (final float f : value) {
+                i++;
+                values.append(String.format("Bet %d thresholds was: %f %n", i, f));
             }
+            JOptionPane.showMessageDialog(this, values.toString());
         });
 
         boxMoney.addActionListener(e -> {
@@ -112,13 +128,13 @@ public final class BankGameView extends GamePanel {
             moneyLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
             final String temp = boxMoney.getText();
             try {
-                moneyStart = Float.parseFloat(temp);
-                if (moneyStart <= controller.returnMoney()) {
+                moneyStart = Integer.parseInt(temp);
+                if (moneyStart <= controller.returnMoney() && moneyStart != 0) {
                     ((MoneyGameView) moneyLabel).updateText(controller.returnMoney());
                     moneyLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
                     moneyLabel.setVisible(true);
                     restartButton.setEnabled(true);
-                    ((MultiplierGameView) numberLabel).updateText(0.5, moneyStart);
+                    ((MultiplierGameView) numberLabel).updateText(START_MULTIPLIER_VALUES, moneyStart);
                     numberLabel.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize()));
                     if (!flagAnimation) {
                         planeLayer.setVisible(true);
@@ -126,7 +142,7 @@ public final class BankGameView extends GamePanel {
                         flagAnimation = true;
                     }
                 } else {
-                    moneyLabel.setText("You're broke, man.");
+                    moneyLabel.setText("Are you broke man?");
                 }
             } catch (NumberFormatException ex) {
                 moneyLabel.setText("Enter a valid number.");
@@ -138,11 +154,8 @@ public final class BankGameView extends GamePanel {
             @Override
             public void keyTyped(final KeyEvent e) {
                 final char c = e.getKeyChar();
-                if (c == 'q') {
+                if (Character.toLowerCase(c) == 'q') {
                     goAway(controller);
-                }
-                if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_ENTER) {
-                    e.consume();
                 }
             }
         });
@@ -158,14 +171,14 @@ public final class BankGameView extends GamePanel {
                     boxMoney.setEditable(false);
                     restartButton.setEnabled(false);
                     planeAnimation.planeUpDownAnimation(planeLayer);
-                    controller.changeMoney(controller.returnMoney() - (int) moneyStart);
+                    controller.changeMoney(-(int) moneyStart);
                 } else {
                     started = false;
                     controller.controllerStopMultiplier();
                     restartButton.setEnabled(true);
                     startButton.setEnabled(false);
                     planeAnimation.planeExitAnimation(mainPanel, planeLayer);
-                    controller.changeMoney(controller.returnMoney() + Math.round(moneyMultiplied));
+                    controller.changeMoney(Math.round(moneyMultiplied));
                     if (controller.getMultiplier() < 1) {
                         numberLabel.setForeground(Color.red);
                     } else {
@@ -243,10 +256,11 @@ public final class BankGameView extends GamePanel {
      * @param restartButton The button used to restart the game.
      * @param moneyLabel    The label displaying the money.
      * @param boxMoney      The text field for entering the money value.
+     * @param infoGame      The button use to know all the threshold of any bet made.
      */
     private void setLayersNewSize(final ImageLabelView skyLabel, final ImageLabelView planeLabel,
                                   final TextLabelView numberLabel, final JButton button, final JButton restartButton,
-                                  final TextLabelView moneyLabel, final JTextField boxMoney) {
+                                  final TextLabelView moneyLabel, final JTextField boxMoney, final JButton infoGame) {
 
         final Dimension newSize = this.getSize();
         final int buttonWidth = newSize.width / 45;
@@ -262,6 +276,9 @@ public final class BankGameView extends GamePanel {
         final int boxMoneyDimensionHeight = newSize.height / 17;
         final int moneyLabelWidth = newSize.width / 40;
         final int moneyLabelDimension = newSize.height;
+        final int infoGameHeight = newSize.height / 2;
+        final int infoGameDimensionWidth = newSize.width / 20;
+        final int infoGameDimensionHeight = newSize.height / 15;
 
         skyLabel.setBounds(0, 0, newSize.width, newSize.height);
         skyLabel.reload();
@@ -270,15 +287,14 @@ public final class BankGameView extends GamePanel {
         planeLabel.setBounds(planeLabelWidth, newSize.height / 4, planeLabelWidth, planeLabelHeight);
         planeLabel.reload();
         numberLabel.setBounds(numberLabelWidth, newSize.height / 3, numberLabelDimension, numberLabelDimension);
-        numberLabel.reload();
+        infoGame.setBounds(buttonWidth, infoGameHeight / 2, infoGameDimensionWidth, infoGameDimensionHeight);
         boxMoney.setBounds(boxMoneyWidth, newSize.height / 2, boxMoneyDimensionWidth, boxMoneyDimensionHeight);
         moneyLabel.setBounds(moneyLabelWidth, newSize.height / 3, moneyLabelDimension, moneyLabelDimension);
-        moneyLabel.reload();
     }
 
     @Override
     public void resizeComponents() {
-        setLayersNewSize(skyLayer, planeLayer, numberLabel, startButton, restartButton, moneyLabel, boxMoney);
+        setLayersNewSize(skyLayer, planeLayer, numberLabel, startButton, restartButton, moneyLabel, boxMoney, infoGameButton);
     }
 
     @Override

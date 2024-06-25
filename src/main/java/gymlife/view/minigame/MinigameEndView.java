@@ -3,7 +3,7 @@ package gymlife.view.minigame;
 import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameState;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

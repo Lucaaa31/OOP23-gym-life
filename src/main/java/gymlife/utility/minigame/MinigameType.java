@@ -1,12 +1,13 @@
 package gymlife.utility.minigame;
 
-import gymlife.model.minigame.BenchMinigame;
-import gymlife.model.minigame.LatMachineMinigame;
-import gymlife.model.minigame.SquatMinigame;
+import gymlife.model.minigame.BenchStrategy;
+import gymlife.model.minigame.LatStrategy;
+import gymlife.model.minigame.SquatStrategy;
 import gymlife.model.statistics.StatsType;
 import gymlife.view.minigame.BenchView;
-import gymlife.view.minigame.LatMachineView;
+import gymlife.view.minigame.LatView;
 import gymlife.view.minigame.SquatView;
+
 
 /**
  * The MinigameType enum represents the different types of minigames available
@@ -19,29 +20,32 @@ public enum MinigameType {
      * Bench press minigame type.
      */
     BENCH_PRESS(
-            BenchMinigame.class.getCanonicalName(),
+            BenchStrategy.class.getCanonicalName(),
             BenchView.class.getCanonicalName(),
             StatsType.CHEST_MASS,
             "Bench Press",
-            "Press the button as fast as you can!"),
+            "Press the button as fast as you can!"
+    ),
     /**
      * Squat minigame type.
      */
     SQUAT(
-            SquatMinigame.class.getCanonicalName(),
+            SquatStrategy.class.getCanonicalName(),
             SquatView.class.getCanonicalName(),
             StatsType.LEG_MASS,
             "Squat",
-            ""),
+            ""
+    ),
     /**
      * Lat machine minigame type.
      */
     LAT_MACHINE(
-            LatMachineMinigame.class.getCanonicalName(),
-            LatMachineView.class.getCanonicalName(),
+            LatStrategy.class.getCanonicalName(),
+            LatView.class.getCanonicalName(),
             StatsType.BACK_MASS,
             "Lat Machine",
-            "Press the buttons in order!");
+            "Press the buttons in order!"
+    );
 
 
     private final String minigameType;
@@ -76,7 +80,7 @@ public enum MinigameType {
      *
      * @return the name of the minigame type
      */
-    public String getClassName() {
+    public String getStrategy() {
         return this.minigameType;
     }
 
@@ -115,4 +119,6 @@ public enum MinigameType {
     public String getDescription() {
         return description;
     }
+
+
 }

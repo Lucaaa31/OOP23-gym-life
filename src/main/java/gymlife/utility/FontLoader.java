@@ -6,12 +6,14 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
 
+
 /**
  * The FontLoader class is responsible for loading a custom font and providing access to it.
  */
 public final class FontLoader {
     private static final float DEFAULT_FONT_SIZE = 25f;
     private static Font customFont;
+
 
     static {
         loadFont();

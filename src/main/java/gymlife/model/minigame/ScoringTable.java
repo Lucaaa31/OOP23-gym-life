@@ -57,7 +57,7 @@ public class ScoringTable {
      * @param difficulty the difficulty of the minigame
      * @return the list of scores
      */
-    public List<Integer> getScores(final MinigameDifficulty difficulty) {
+    public List<Integer> getScore(final MinigameDifficulty difficulty) {
         if (scores.get(difficulty) == null) {
             return List.of();
         }

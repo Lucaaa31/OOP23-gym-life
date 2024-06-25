@@ -2,22 +2,24 @@ package gymlife.controller;
 
 import gymlife.controller.api.Controller;
 
-import gymlife.model.InteractionsManager;
+import gymlife.model.map.GameMapImpl;
+import gymlife.model.map.MapManagerImpl;
+import gymlife.model.map.InteractionsManagerImpl;
+import gymlife.model.map.ScenariosManagerImpl;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.inventory.InventoryImpl;
 import gymlife.model.inventory.api.Inventory;
-import gymlife.model.map.GameMapImpl;
-import gymlife.model.map.MapManagerImpl;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
+import gymlife.model.map.api.InteractionsManager;
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
 import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
-import gymlife.model.PlaneGameModel;
+import gymlife.model.bankgame.PlaneGameModelImpl;
 import gymlife.model.statistics.StatsManagerImpl;
-import gymlife.model.ScenariosManager;
-import gymlife.model.SynchronizerModel;
+import gymlife.model.bankgame.SynchronizerModel;
 
 import gymlife.model.character.CharacterImpl;
 import gymlife.model.statistics.StatsType;
@@ -50,7 +52,7 @@ public class ControllerImpl implements Controller {
     private final InteractionsManager interactionsManager;
     private final SynchronizerModel sync1 = new SynchronizerModel();
     private final SynchronizerModel sync2 = new SynchronizerModel();
-    private final PlaneGameModel planeGameModel = new PlaneGameModel(sync1, sync2);
+    private final PlaneGameModelImpl planeGameModel = new PlaneGameModelImpl(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
     private final Inventory inventory = new InventoryImpl();
@@ -67,10 +69,10 @@ public class ControllerImpl implements Controller {
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
         statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
-        this.scenariosManager = new ScenariosManager();
+        this.scenariosManager = new ScenariosManagerImpl();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
-        this.interactionsManager = new InteractionsManager(
+        this.interactionsManager = new InteractionsManagerImpl(
                 scenariosManager,
                 statsManager,
                 minigameManager,
@@ -125,8 +127,8 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     *
-     * @return
+     * Method to get what food is about to be bought.
+     * @return the food to be bought.
      */
     @Override
     public FoodType getFoodToBuy() {
@@ -139,7 +141,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void buyFood() {
         final FoodType food = inventory.getCurrentFoodToBuy();
-        statsManager.setStat(StatsType.MONEY, statsManager.getMoney() - (int) food.getCost());
+        statsManager.multiIncrementStat(StatsType.MONEY, -(int) food.getCost());
         inventory.addFood(food);
     }
 
@@ -413,7 +415,7 @@ public class ControllerImpl implements Controller {
         final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
-                minigameManager.getEndTime());
+                minigameManager.getTimeMinigame());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
@@ -452,7 +454,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
-        return scoringTableManager.getScores(minigameType, difficulty);
+        return scoringTableManager.getMinigameScore(minigameType, difficulty);
     }
 
 
@@ -484,6 +486,16 @@ public class ControllerImpl implements Controller {
     @Override
     public void changeMoney(final int value) {
         statsManager.multiIncrementStat(StatsType.MONEY, value);
+    }
+
+    /**
+     * Returns the list of thresholds from the plane game model.
+     *
+     * @return A list containing the thresholds from the plane game model.
+     */
+    @Override
+    public List<Float> returnList() {
+        return planeGameModel.getList();
     }
 
 }

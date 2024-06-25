@@ -13,7 +13,7 @@ public enum FoodType {
      * Hamburger food type with cost, stamina bonus, happiness bonus, and mass
      * penalty.
      */
-    HAMBURGER(15, 5, 10, -10),
+    HAMBURGER(15, 5, 10, -5),
 
     /**
      * Broccoli food type with cost, stamina bonus, happiness penalty, and mass
@@ -24,7 +24,7 @@ public enum FoodType {
     /**
      * Meat food type with cost, stamina bonus, happiness bonus, and mass penalty.
      */
-    MEAT(10, 5, -5, 10);
+    MEAT(10, 5, 5, -5);
 
     private final int cost;
     private final Map<StatsType, Integer> foodPerks;
