@@ -1,7 +1,10 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class MinigameSwitchView
+hide empty members
+class MinigameSwitchView{
+    + startMinigameView()
+}
 class MinigameEndView
 class DifficultyMenu
 abstract class MinigameView
