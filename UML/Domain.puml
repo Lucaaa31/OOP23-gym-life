@@ -13,10 +13,10 @@ hide empty members
     InteractionsManager --o StatsManager
     InteractionsManager -o ScenariosManager
     InteractionsManager --o Inventory
-    InteractionsManager --o BankMiniGame
+    InteractionsManager --o PlaneGameModel
     Inventory --* Food
-    EncounterManager --* Encounter
-    MapManager --o EncounterManager
+    EncounterFactory --* Encounter
+    MapManager --o EncounterFactory
     InteractionsManager --o MinigameManager
     MinigameManager --* Minigame
     MinigameManager --* ScoringTableManager
@@ -38,7 +38,7 @@ hide empty members
     interface Counter{
         +increment()
         +decrement()
-        +getCount()
+        +multiIncrement(int)
     }
 
     interface GameMap {
@@ -60,16 +60,12 @@ hide empty members
         +getPosition()
     }
 
-    interface EncounterManager {
+    interface EncounterFactory {
         
         +generateEncounter()
     }
 
     interface Encounter{
-        
-        +getDescription()
-        +getAcceptStats()
-        +getDeclineStats()
     }
 
     interface ScenariosManager{
@@ -79,19 +75,19 @@ hide empty members
     }
 
     interface Food{
-        +getStats()
+        +returnFoodPerks()
         +getCost()
     }
 
     interface Inventory{
-        +getCount(Food)
+        +getFoodCount(Food)
         +consume(Food)
         +addFood(Food)
     }
 
-    interface BankMiniGame {
-        +startMultiplier()
-        +stop()
+    interface PlaneGameModel {
+        +runMultiplier()
+        +stopMultiplier()
     }
 
     interface MinigameManager {

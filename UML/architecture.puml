@@ -7,13 +7,10 @@ hide empty members
 
     interface MainView {
         +show(panel: GamePanel)
-        +checkController()
     }
 
 
     interface GamePanel{
-        +getInput()
-        +returnToMainView()
     }
 
 
@@ -21,12 +18,11 @@ hide empty members
     interface Controller{
         +changeScenario()
         +getCurrentScenario() Scenario
-        +changeModel()
     }
 
 class Input << (I, white) >>
-Input --> GamePanel
-Ouput <-- MainView
+Input ..> GamePanel
+Ouput <.. MainView
 class Ouput << (O, grey) >>
 
     MainView <-- GamePanel
