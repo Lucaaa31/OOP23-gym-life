@@ -21,7 +21,7 @@ import java.util.Map;
 import gymlife.controller.api.Controller;
 import gymlife.controller.ControllerImpl;
 import gymlife.utility.FontLoader;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.view.minigame.DifficultyMenu;
 import gymlife.view.minigame.MinigameView;
 import gymlife.utility.ScenariosType;
