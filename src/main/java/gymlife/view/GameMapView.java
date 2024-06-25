@@ -86,6 +86,8 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
+                System.out.println(e.getKeyCode());
+                System.out.println(e.getKeyChar());
             }
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -108,7 +110,6 @@ public final class GameMapView extends GamePanel {
             public void keyReleased(final KeyEvent e) {
             }
         });
-
         // Add mainPanel to this panel
         this.add(mainPanel, BorderLayout.CENTER);
         this.setFocusable(true);

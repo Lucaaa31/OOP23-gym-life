@@ -105,7 +105,9 @@ public class MainView extends JFrame {
                 ScenariosType.BUY_FOOD, buyFoodView,
                 ScenariosType.GAME_OVER, gameOverView,
                 ScenariosType.GAME_WON, gameWonView);
-
+        for (final GamePanel panel : scenariosPanels.values()) {
+            panel.setFocusable(true);
+        }
         mainPanel.setPreferredSize(dimensionGetter.getFrameDimension());
         mainPanel.setLayout(new BorderLayout());
 
@@ -201,6 +203,7 @@ public class MainView extends JFrame {
         this.setVisible(true);
         this.setFocusable(true);
         gameMapView.requestFocusInWindow();
+        gameMapView.setFocusable(true);
     }
 
     /**
