@@ -8,13 +8,14 @@ import gymlife.view.bankgame.BankGameView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * This test check if the value of threshold and multiplierShort.
+ * This class test the bank game model.
  */
-class TestMultiplier {
+class TestBankGame {
     private static ControllerImpl controller;
     private static PlaneGameModelImpl model;
     private static final double MAX_MULTIPLIER_VALUE = 5.90;
@@ -51,6 +52,16 @@ class TestMultiplier {
     @Test
     void testMultiplierShort() {
         assertTrue(model.getMultiplierShort() <= MAX_MULTIPLIER_VALUE);
+    }
+
+    @Test
+    void testReturnList() {
+        assertNotNull(model.getList());
+    }
+
+    @Test
+    void testMoneyMultiplied() {
+        assertTrue(model.getMoneyMultiplied() > model.getMultiplierShort());
     }
 
 }

@@ -113,7 +113,7 @@ public final class BankGameView extends GamePanel {
             final StringBuilder values = new StringBuilder();
             for (final float f : value) {
                 i++;
-                values.append(String.format("Bet %d thresholds is: %f %n", i, f));
+                values.append(String.format("Bet %d thresholds was: %f %n", i, f));
             }
             JOptionPane.showMessageDialog(this, values.toString());
         });
@@ -150,7 +150,7 @@ public final class BankGameView extends GamePanel {
             @Override
             public void keyTyped(final KeyEvent e) {
                 final char c = e.getKeyChar();
-                if (c == 'q') {
+                if (Character.toLowerCase(c) == 'q') {
                     goAway(controller);
                 }
             }
