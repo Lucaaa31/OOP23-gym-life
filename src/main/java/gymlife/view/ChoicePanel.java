@@ -89,6 +89,8 @@ public abstract class ChoicePanel extends GamePanel {
         declineButton.setOpaque(true);
         declineButton.setBackground(myRed);
         declineButton.setForeground(Color.WHITE);
+        acceptButton.setBorder(border);
+        declineButton.setBorder(border);
         buttonsPanel.add(acceptButton);
         buttonsPanel.add(declineButton);
 
