@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide empty members
+
+    MapLoader <.. Cell
+    GameMapImpl --o Cell
+    GameMapImpl --o Position
+    GameMapImpl <.. MapLoader
+    MapLoader <.. Position
+
+
+    enum CellImpl implements  Cell{
+        -int id
+        -boolean collision
+        -GameInteraction interaction
+    }
+
+    enum GameMapImpl implements GameMap{
+        HOUSE
+        GYM
+        SHOP
+        ..
+        -Map< Position, Cells> cells
+    }
+
+    class Position << (R, yellow) >>{
+        <<Record>>
+        +getX()
+        +getY()
+    }
+    interface Cell{
+        +getId()
+        +isCollision()
+        +getInteraction()
+    }
+
+    interface GameMap{
+        +getCellAtCoord(Position) Cell
+    }
+
+    interface MapLoader{
+        +load(String) : Map< Position, cells>
+    }
+
+@enduml

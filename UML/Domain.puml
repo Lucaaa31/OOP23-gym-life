@@ -1,0 +1,135 @@
+@startuml
+'https://plantuml.com/interface-diagram
+
+hide empty members
+
+    MapManager --* GameMap
+    GameMap --* Cell
+    GameMap --o Position
+    Character --o Position
+    StatsManager --o Counter
+    Cell <-- GameInteraction
+    GameInteraction <- InteractionsManager
+    InteractionsManager --o StatsManager
+    InteractionsManager -o ScenariosManager
+    InteractionsManager --o Inventory
+    InteractionsManager --o BankMiniGame
+    Inventory --* Food
+    EncounterManager --* Encounter
+    MapManager --o EncounterManager
+    InteractionsManager --o MinigameManager
+    MinigameManager --* Minigame
+    MinigameManager --* ScoringTableManager
+    ScoringTableManager --* ScoringTable
+
+
+
+    interface Cell {
+        +getCollision()
+        +getInteraction()
+    }
+
+    interface StatsManager{
+        +isGameOver()
+        +setStat(int)
+        +getStat(StatType)
+    }
+
+    interface Counter{
+        +increment()
+        +decrement()
+        +getCount()
+    }
+
+    interface GameMap {
+        +getCells()
+    }
+
+    interface MapManager {
+        +changeMap(GameMap)
+        +getCurrentMap()
+    }
+
+    interface Position{
+        +getX()
+        +getY()
+    }
+
+    interface Character {
+        
+        +getPosition()
+    }
+
+    interface EncounterManager {
+        
+        +generateEncounter()
+    }
+
+    interface Encounter{
+        
+        +getDescription()
+        +getAcceptStats()
+        +getDeclineStats()
+    }
+
+    interface ScenariosManager{
+        
+        +getCurrentScenario()
+        +changeScenario(Scenario)
+    }
+
+    interface Food{
+        +getStats()
+        +getCost()
+    }
+
+    interface Inventory{
+        +getCount(Food)
+        +consume(Food)
+        +addFood(Food)
+    }
+
+    interface BankMiniGame {
+        +startMultiplier()
+        +stop()
+    }
+
+    interface MinigameManager {
+        +setCurrentMinigame()
+        +setMinigameDifficulty()
+        +getMinigameType()
+        +getMinigameState()
+    }
+
+    interface Minigame {
+        +notifyUserAction()
+        +setDifficulty()
+        +validatePress()
+        +getSequence()
+
+    }
+
+    interface InteractionsManager{
+        +exitInteraction()
+        +buyFoodInteraction()
+        +eatFoodInteraction()
+        +minigameInteraction()
+        +bankGameInteraction()
+        +sleepInteraction()
+    }
+
+    interface GameInteraction{
+        <<functional interface>>
+        +interact()
+    }
+
+    interface ScoringTable{
+        +updateScore()
+        +getScore()
+    }
+    interface ScoringTableManager{
+        +updateMinigameScore()
+        +getMinigameScore()
+    }
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide empty members
+
+    Cell . Controller
+    Cell <|-- GameInteraction
+    GameInteraction <|- InteractionsManager
+    Controller <|-- InteractionsManager
+    InteractionsManager <-- Inventory
+    InteractionsManager <-- ScenariosManager
+    InteractionsManager <-- StatsManager
+
+    class Controller{
+        +cellInteraction()
+    }
+
+    interface Cell{
+        +getInteraction() GameInteraction
+    }
+
+    interface GameInteraction{
+        <<Functional Interface>>
+        +interact()
+    }
+    note bottom : Strategy Interface
+
+    interface InteractionsManager{
+        +exitInteraction()
+        +buyFoodInteraction()
+        +eatFoodInteraction()
+        +minigameInteraction()
+        +bankGameInteraction()
+        +sleepInteraction()
+    }
+    note right : Mediator class
+
+    interface Inventory{
+        +addFood()
+        +consume()
+    }
+    interface ScenariosManager{
+        +changeScenario()
+        +getCurrentScenario()
+    }
+    interface StatsManager{
+        +incrementStat(StatType)
+    }
+
+@enduml

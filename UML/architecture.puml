@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+hide empty members
+
+
+
+    interface MainView {
+        +show(panel: GamePanel)
+        +checkController()
+    }
+
+
+    interface GamePanel{
+        +getInput()
+        +returnToMainView()
+    }
+
+
+
+    interface Controller{
+        +changeScenario()
+        +getCurrentScenario() Scenario
+        +changeModel()
+    }
+
+class Input << (I, white) >>
+Input --> GamePanel
+Ouput <-- MainView
+class Ouput << (O, grey) >>
+
+    MainView <-- GamePanel
+    MainView <--- Controller
+    GamePanel <-- Controller
+
+
+    interface Character
+    interface MapManager
+    interface InteractionsManager
+    interface ScenarioManager
+
+    Controller <|-- Character
+    Controller <|-- MapManager
+    Controller <|-- InteractionsManager
+    Controller <|-- ScenarioManager
+
+@enduml
