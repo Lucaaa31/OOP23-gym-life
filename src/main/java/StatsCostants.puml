@@ -1,0 +1,45 @@
+@startuml
+hide empty members
+StatsManagerImpl  ..* CommonStats
+StatsManagerImpl  ..* StatsType
+StatsManagerImpl  ...* GameDifficulty
+CommonStatsImpl  .* StatsType
+interface StatsManager {
+    + Map<StatsType, LimitedGameCounterImpl> getCommonStats()
+    + boolean isGameOver()
+    + boolean checkWin()
+}
+interface CommonStats {
+    + getStat(StatsType)
+    Map<StatsType, LimitedGameCounterImpl> getMap()
+}
+
+class StatsManagerImpl implements StatsManager {
+    - Commonstats  gameStats
+    - GameCounterImpl gameDays
+    ...
+}
+
+class CommonStatsImpl implements CommonStats {
+    - Map<StatsType, LimitedGameCounterImpl>
+    ...
+}
+
+enum StatsType {
+    - MASS
+    - HAPPYNESS
+    - DAYS
+    ...
+}
+enum GameDifficulty {
+    - EASY
+    - MEDIUM
+    - HARD
+    + getDays()
+}
+note top of (GameDifficulty)
+    used to calculate
+    the number of days
+end note
+@enduml
+

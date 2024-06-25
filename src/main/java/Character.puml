@@ -1,0 +1,40 @@
+@startuml
+hide empty members
+CharacterImpl --* Direction
+CharacterImpl --* Position
+GameMapView ..* Direction
+GameMapView.. Controller
+Controller .. CharacterImpl
+
+
+class GameMapView {
+    - CharacterImpl character
+    + CharacterImpl getCharacter()
+}
+
+class CharacterImpl{
+    - Position characterPos
+    + Position getCharacterPos()
+    + void move(Direction )
+}
+class Position <<(R,green)>>{
+    - int x
+    - int y
+}
+note right of (Direction)
+    convert pressed key
+    into a Direction
+end note
+class Controller {
+    - CharacterImpl
+    + moveCharacter(Direction)
+}
+enum Direction {
+    + UP
+    + DOWN
+    + RIGHT
+    + LEFT
+    + getDir(int)
+}
+
+@enduml
