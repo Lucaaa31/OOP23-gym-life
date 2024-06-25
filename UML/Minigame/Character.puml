@@ -2,14 +2,15 @@
 hide empty members
 CharacterImpl --* Direction
 CharacterImpl --* Position
-GameMapView ..* Direction
+GameMapView ..> Direction
 GameMapView.. Controller
 Controller .. CharacterImpl
 
 
 class GameMapView {
-    - CharacterImpl character
-    + CharacterImpl getCharacter()
+    take input from
+    user call Controller's
+    methods
 }
 
 class CharacterImpl{
@@ -17,7 +18,7 @@ class CharacterImpl{
     + Position getCharacterPos()
     + void move(Direction )
 }
-class Position <<(R,green)>>{
+class Position <<(R,yellow)>>{
     - int x
     - int y
 }
