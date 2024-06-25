@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -73,6 +75,12 @@ public final class GameMapView extends GamePanel {
         // Populate the map with cells
         this.loadMap();
 
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                requestFocusInWindow();
+            }
+        });
         // Initialize characterLabel and set its location
         characterLabel = new CharacterView(dimensionGetter, controller.getPlayerLevel());
         characterLabel.setLocation(controller.getCharacterPos().X() * dimensionGetter.getCellDimension().width,
