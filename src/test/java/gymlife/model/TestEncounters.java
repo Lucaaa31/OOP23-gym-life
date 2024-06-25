@@ -51,7 +51,7 @@ class TestEncounters {
         final boolean allValid = IntStream.range(0, TEST_ITERATIONS).allMatch(i -> {
             final Optional<Encounter> encounter = EncountersFactory.getRandomEncounter();
             return encounter.map(enc -> {
-                final Map<StatsType, Integer> denyCase = enc.getDenyCase();
+                final Map<StatsType, Integer> denyCase = enc.denyCase();
                 return denyCase.equals(EncountersConstants.gymBroDeny())
                         || denyCase.equals(EncountersConstants.iceCreamDeny())
                         || denyCase.equals(EncountersConstants.moneyBagDeny())

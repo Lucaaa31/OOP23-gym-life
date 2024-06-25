@@ -153,7 +153,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void denyEncounter(final Encounter encounterImpl) {
-        final Map<StatsType, Integer> denyCase = encounterImpl.getDenyCase();
+        final Map<StatsType, Integer> denyCase = encounterImpl.denyCase();
         denyCase.forEach((key, value) -> {
             if (key == StatsType.MONEY) {
                 gameMoney.multiIncrement(value);
