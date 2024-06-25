@@ -86,8 +86,6 @@ public final class GameMapView extends GamePanel {
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(final KeyEvent e) {
-                System.out.println(e.getKeyCode());
-                System.out.println(e.getKeyChar());
             }
             @Override
             public void keyPressed(final KeyEvent e) {
