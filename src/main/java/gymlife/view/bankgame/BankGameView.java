@@ -154,6 +154,9 @@ public final class BankGameView extends GamePanel {
             @Override
             public void keyTyped(final KeyEvent e) {
                 final char c = e.getKeyChar();
+                if (e.getKeyChar() == '-') {
+                    e.consume();
+                }
                 if (Character.toLowerCase(c) == 'q') {
                     goAway(controller);
                 }

@@ -16,6 +16,6 @@ public class MoneyGameView extends TextLabelView {
      * @param moneyStart The amount of money to be displayed.
      */
     public void updateText(final float moneyStart) {
-        super.setText(String.format("Saldo: %.2f$", moneyStart));
+        super.setText(String.format("Balance: %.2f$", moneyStart));
     }
 }
