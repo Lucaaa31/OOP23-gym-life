@@ -70,5 +70,18 @@ public interface MinigameManager {
      */
     int getTimeMinigame();
 
+    /**
+     * Used to update the score of the scoreBoard.
+     */
+    void updateMinigameResult();
+
+    /**
+     * Used to get the score of the minigame.
+     *
+     * @param minigameType       the type of the minigame
+     * @param minigameDifficulty the difficulty of the minigame
+     * @return the score of the minigame
+     */
+    List<Integer> getMinigameScore(MinigameType minigameType, MinigameDifficulty minigameDifficulty);
 
 }
