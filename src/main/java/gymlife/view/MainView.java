@@ -68,6 +68,7 @@ public class MainView extends JFrame {
         this.setSize(dimensionGetter.getFrameDimension());
         this.setUndecorated(true);
         this.setLocationRelativeTo(null);
+        this.setFocusable(true);
         this.setVisible(true);
     }
 

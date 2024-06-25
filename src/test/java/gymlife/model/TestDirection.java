@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class TestDirection {
     @Test
     void testGetDir() {
-        assertEquals(Optional.of(Direction.UP), Direction.getDir(KeyEvent.VK_UP));
-        assertEquals(Optional.of(Direction.RIGHT), Direction.getDir(KeyEvent.VK_RIGHT));
-        assertEquals(Optional.of(Direction.LEFT), Direction.getDir(KeyEvent.VK_LEFT));
-        assertEquals(Optional.of(Direction.DOWN), Direction.getDir(KeyEvent.VK_DOWN));
+        assertEquals(Optional.of(Direction.UP), Direction.getDir(KeyEvent.VK_W));
+        assertEquals(Optional.of(Direction.RIGHT), Direction.getDir(KeyEvent.VK_D));
+        assertEquals(Optional.of(Direction.LEFT), Direction.getDir(KeyEvent.VK_A));
+        assertEquals(Optional.of(Direction.DOWN), Direction.getDir(KeyEvent.VK_S));
         assertEquals(Optional.empty(), Direction.getDir('z'));
     }
 
