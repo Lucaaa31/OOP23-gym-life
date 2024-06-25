@@ -2,6 +2,7 @@ package gymlife.view;
 
 import gymlife.controller.api.Controller;
 import gymlife.model.map.GameMapImpl;
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.utility.MapConstants;
 import gymlife.view.api.GamePanel;
@@ -64,13 +65,15 @@ public final class FastTravelView extends GamePanel {
                 new JButton("House"),
                 new JButton("Shop")));
 
-        FontLoader.loadFont();
+
         buttonsList.forEach(button -> button.setFont(FontLoader.getCustomFont(dimensionGetter.getBigFontSize())));
 
         final MouseAdapter ml = new MouseAdapter() {
             @Override
             public void mouseEntered(final MouseEvent e) {
-                final String loc = ((JButton) e.getSource()).getText().toLowerCase(new Locale("en"));
+                final JButton button = (JButton) e.getSource();
+                button.setBackground(Color.GREEN);
+                final String loc = button.getText().toLowerCase(Locale.ROOT);
                 if (!loc.equals(getMap())) {
                     showWay(loc);
                 }
@@ -79,6 +82,7 @@ public final class FastTravelView extends GamePanel {
             @Override
             public void mouseExited(final MouseEvent e) {
                 changeLocation();
+                ((JButton) e.getSource()).setBackground(MapConstants.BUTTONS_COLOR);
             }
         };
 
@@ -89,6 +93,7 @@ public final class FastTravelView extends GamePanel {
             changeLocation();
             disableFocus();
         };
+
 
         buttonsList.forEach(button -> {
             button.addMouseListener(ml);

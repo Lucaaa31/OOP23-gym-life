@@ -1,38 +1,40 @@
 package gymlife.controller;
 
-import gymlife.model.character.CharacterModelImpl;
-import gymlife.model.InteractionsManager;
-import gymlife.model.inventory.FoodType;
-import gymlife.model.inventory.Inventory;
+import gymlife.controller.api.Controller;
+
 import gymlife.model.map.GameMapImpl;
 import gymlife.model.map.MapManagerImpl;
+import gymlife.model.map.InteractionsManagerImpl;
+import gymlife.model.map.ScenariosManagerImpl;
+import gymlife.model.inventory.FoodType;
+import gymlife.model.inventory.InventoryImpl;
+import gymlife.model.inventory.api.Inventory;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
+import gymlife.model.map.api.InteractionsManager;
+import gymlife.model.map.api.ScenariosManager;
 import gymlife.model.minigame.MinigameManagerImpl;
 import gymlife.model.minigame.ScoringTableManager;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsConstants;
 import gymlife.model.bankgame.PlaneGameModelImpl;
 import gymlife.model.statistics.StatsManagerImpl;
-import gymlife.model.ScenariosManager;
 import gymlife.model.bankgame.SynchronizerModel;
 
+import gymlife.model.character.CharacterImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.model.statistics.CounterImpl;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.map.api.MapManager;
-
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.utility.ScenariosType;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.character.api.Character;
+
+import gymlife.model.statistics.GameDifficulty;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
-import gymlife.utility.Directions;
-import gymlife.controller.api.Controller;
-import gymlife.model.character.api.CharacterModel;
+import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
-
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +45,7 @@ import java.util.Optional;
  * It handles the character's movements, interactions with the game map, and game statistics.
  */
 public class ControllerImpl implements Controller {
-    private final CharacterModel characterModel = new CharacterModelImpl();
+    private final Character character = new CharacterImpl();
     private final MapManager mapManager = new MapManagerImpl(GameMapImpl.HOUSE_MAP);
     private final ScenariosManager scenariosManager;
     private final StatsManager statsManager;
@@ -53,7 +55,7 @@ public class ControllerImpl implements Controller {
     private final PlaneGameModelImpl planeGameModel = new PlaneGameModelImpl(sync1, sync2);
     private final MinigameManager minigameManager;
     private final ScoringTableManager scoringTableManager = new ScoringTableManager();
-    private final Inventory inventory = new Inventory();
+    private final Inventory inventory = new InventoryImpl();
     private Encounter currentEncounter;
     private static final int MONEY_START = 50;
 
@@ -67,13 +69,14 @@ public class ControllerImpl implements Controller {
         statsManager.setStat(StatsType.STAMINA, StatsConstants.MAX_STATS_LEVEL);
         statsManager.setStat(StatsType.HAPPINESS, StatsConstants.MAX_STATS_LEVEL / 2);
         statsManager.multiIncrementStat(StatsType.MONEY, MONEY_START);
-        this.scenariosManager = new ScenariosManager();
+        this.scenariosManager = new ScenariosManagerImpl();
         this.minigameManager = new MinigameManagerImpl();
         this.currentEncounter = null;
-        this.interactionsManager = new InteractionsManager(
+        this.interactionsManager = new InteractionsManagerImpl(
                 scenariosManager,
                 statsManager,
-                minigameManager
+                minigameManager,
+                inventory
         );
 
     }
@@ -124,6 +127,25 @@ public class ControllerImpl implements Controller {
     }
 
     /**
+     * Method to get what food is about to be bought.
+     * @return the food to be bought.
+     */
+    @Override
+    public FoodType getFoodToBuy() {
+        return inventory.getCurrentFoodToBuy();
+    }
+
+    /**
+     * Method that adds the food to the inventory and also reduces money by the cost of the food.
+     */
+    @Override
+    public void buyFood() {
+        final FoodType food = inventory.getCurrentFoodToBuy();
+        statsManager.multiIncrementStat(StatsType.MONEY, -(int) food.getCost());
+        inventory.addFood(food);
+    }
+
+    /**
      * Returns the current value of the multiplier.
      *
      * @return The current value of the multiplier.
@@ -167,13 +189,13 @@ public class ControllerImpl implements Controller {
      * @param dir the direction in which to move the character
      */
     @Override
-    public void moveCharacter(final Directions dir) {
+    public void moveCharacter(final Direction dir) {
         final Position positionToGo = new Position(
-                getCharacterPos().X() + dir.getPos().X(),
-                getCharacterPos().Y() + dir.getPos().Y());
+                getCharacterPos().X() + dir.getOffSet().X(),
+                getCharacterPos().Y() + dir.getOffSet().Y());
         if (mapManager.getCurrentMap().checkBorders(positionToGo)
                 && !mapManager.getCurrentMap().isCellCollidable(positionToGo)) {
-            characterModel.move(dir);
+            character.move(dir);
         }
     }
 
@@ -184,7 +206,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public Position getCharacterPos() {
-        return characterModel.getCharacterPos();
+        return character.getCharacterPos();
     }
 
     /**
@@ -193,8 +215,8 @@ public class ControllerImpl implements Controller {
      * @return a Map of the current game statistics
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getStatistics() {
-        return statsManager.getStats();
+    public Map<StatsType, LimitedGameCounterImpl> getStatistics() {
+        return statsManager.getCommonStats();
     }
 
     /**
@@ -206,7 +228,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public int returnMoney() {
-        return statsManager.getMoney().getCount();
+        return statsManager.getMoney();
     }
 
     /**
@@ -225,7 +247,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getDays() {
+    public int getDays() {
         return statsManager.getDays();
     }
 
@@ -235,7 +257,7 @@ public class ControllerImpl implements Controller {
      * @return the number of days
      */
     @Override
-    public CounterImpl getMoney() {
+    public int getMoney() {
         return statsManager.getMoney();
     }
 
@@ -271,7 +293,7 @@ public class ControllerImpl implements Controller {
     @Override
     public void cellInteraction() {
         mapManager.getCurrentMap()
-                .getCellAtCoord(characterModel.getCharacterPos())
+                .getCellAtCoord(character.getCharacterPos())
                 .getInteraction()
                 .ifPresent((e) -> e.interact(interactionsManager));
     }
@@ -284,8 +306,8 @@ public class ControllerImpl implements Controller {
     @Override
     public int getPlayerLevel() {
         final int div = 75;
-        return statsManager.getStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
-                ? statsManager.getStats().get(StatsType.MASS).getCount() / div + 1 : 4;
+        return statsManager.getCommonStats().get(StatsType.MASS).getCount() < StatsConstants.MAX_MASS_LEVEL
+                ? statsManager.getCommonStats().get(StatsType.MASS).getCount() / div + 1 : 4;
     }
 
     /**
@@ -313,7 +335,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void resetPlayerPosition() {
-        characterModel.setPosition(mapManager.getCurrentMap().getDefaultPosition());
+        character.setPosition(mapManager.getCurrentMap().getDefaultPosition());
     }
 
     /**
@@ -393,7 +415,7 @@ public class ControllerImpl implements Controller {
         final int winExperience = 10;
         scoringTableManager.updateMinigameScore(minigameManager.getMinigameType(),
                 minigameManager.getDifficulty(),
-                minigameManager.getEndTime());
+                minigameManager.getTimeMinigame());
 
         statsManager.multiIncrementStat(minigameManager.getMinigameType().getStatsType(),
                 minigameManager.getMinigameState() == MinigameState.ENDED_WON
@@ -432,7 +454,7 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public List<Integer> getScores(final MinigameType minigameType, final MinigameDifficulty difficulty) {
-        return scoringTableManager.getScores(minigameType, difficulty);
+        return scoringTableManager.getMinigameScore(minigameType, difficulty);
     }
 
 

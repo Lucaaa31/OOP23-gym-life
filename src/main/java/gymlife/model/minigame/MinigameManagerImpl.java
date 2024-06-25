@@ -1,6 +1,6 @@
 package gymlife.model.minigame;
 
-import gymlife.model.api.MinigameManager;
+import gymlife.model.minigame.api.MinigameManager;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameState;
 import gymlife.utility.minigame.MinigameType;
@@ -16,7 +16,7 @@ import java.util.List;
  * and retrieve the current minigame type and instance.
  */
 public class MinigameManagerImpl implements MinigameManager {
-    private AbstractMinigame currentMinigame;
+    private Minigame currentMinigame;
     private MinigameType currentMinigameType;
 
     /**
@@ -48,8 +48,8 @@ public class MinigameManagerImpl implements MinigameManager {
     public void setCurrentMinigame(final MinigameType minigameType) {
         this.currentMinigameType = minigameType;
         try {
-            this.currentMinigame = (AbstractMinigame) Class
-                    .forName(minigameType.getClassName())
+            this.currentMinigame = (Minigame) Class
+                    .forName(minigameType.getStrategy())
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException
@@ -73,11 +73,7 @@ public class MinigameManagerImpl implements MinigameManager {
      */
     @Override
     public void notifyUserAction(final String button) {
-        if ("0".equals(button)) {
-            this.currentMinigame.notifyUserAction();
-        } else {
-            this.currentMinigame.notifyUserAction(button);
-        }
+        currentMinigame.notifyUserAction(button);
     }
 
 
@@ -121,7 +117,7 @@ public class MinigameManagerImpl implements MinigameManager {
      * @return the end time of the minigame
      */
     @Override
-    public int getEndTime() {
+    public int getTimeMinigame() {
         return currentMinigame.getTimeMinigame();
     }
 

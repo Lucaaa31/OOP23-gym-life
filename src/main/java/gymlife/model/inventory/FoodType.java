@@ -13,7 +13,7 @@ public enum FoodType {
      * Hamburger food type with cost, stamina bonus, happiness bonus, and mass
      * penalty.
      */
-    HAMBURGER(15, 5, 10, -10),
+    HAMBURGER(15, 5, 10, -5),
 
     /**
      * Broccoli food type with cost, stamina bonus, happiness penalty, and mass

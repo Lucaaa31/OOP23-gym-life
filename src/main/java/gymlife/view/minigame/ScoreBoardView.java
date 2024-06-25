@@ -4,7 +4,7 @@ import gymlife.controller.api.Controller;
 import gymlife.utility.FontLoader;
 import gymlife.utility.minigame.MinigameDifficulty;
 import gymlife.utility.minigame.MinigameType;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -22,7 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.util.List;
-
 
 
 /**
@@ -57,7 +56,7 @@ public class ScoreBoardView extends JPanel {
                           final MinigameType currentMinigameType,
                           final MouseAdapter backButton,
                           final DimensionGetter dimensionGetter) {
-        FontLoader.loadFont();
+
         this.setLayout(new BorderLayout());
         final JPanel buttonPanel = new JPanel(new FlowLayout());
 
@@ -72,8 +71,8 @@ public class ScoreBoardView extends JPanel {
             ((JLabel) button).setOpaque(true);
             button.setPreferredSize(new Dimension(
                     dimensionGetter.getSideDimension().width / 4,
-                    dimensionGetter.getScenarioDimension().height / DimensionGetter.
-                            getMinigameButtonFontProportion()));
+                    dimensionGetter.getScenarioDimension().height
+                            / DimensionGetter.getMinigameButtonFontProportion()));
             ((JLabel) button).setHorizontalAlignment(SwingConstants.CENTER);
             ((JLabel) button).setBorder(new MatteBorder(3, 3, 3, 3, Color.BLACK));
         }
@@ -138,6 +137,7 @@ public class ScoreBoardView extends JPanel {
                 updateButton(MinigameDifficulty.HARD);
             }
         });
+
 
         this.setVisible(true);
     }
@@ -214,5 +214,6 @@ public class ScoreBoardView extends JPanel {
             default -> throw new IllegalArgumentException("Invalid difficulty level");
         }
     }
+
 
 }

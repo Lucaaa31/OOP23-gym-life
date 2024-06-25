@@ -84,7 +84,7 @@ public enum GameMapImpl implements GameMap {
      * @return Returns the correspondent GameMap.
      */
     public static GameMapImpl fromString(final String name) {
-        return valueOf(name.toUpperCase(new Locale("en")) + "_MAP");
+        return valueOf(name.toUpperCase(Locale.ROOT) + "_MAP");
     }
 
     @Override

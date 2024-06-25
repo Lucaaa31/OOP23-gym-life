@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.io.Serial;
 
 import gymlife.controller.api.Controller;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.MinigamePanel;
 
 /**
@@ -17,7 +17,7 @@ import gymlife.view.api.MinigamePanel;
  * It extends the JPanel class and contains a button, an image label, and a
  * timer view.
  */
-public class BenchView extends AbstractMinigameView implements MinigamePanel {
+public class BenchView extends MinigameView implements MinigamePanel {
     @Serial
     private static final long serialVersionUID = -2554575966007368L;
     private final JButton buttonMinigame = new JButton("START");
@@ -49,9 +49,10 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
 
         buttonMinigame.addActionListener(e -> {
             controller.notifyUserAction("0");
-            super.handleMinigameState();
             super.progressBarHandler();
+            super.handleMinigameState();
             buttonMinigame.setLocation(getRandomPositionButton(buttonMinigame));
+            buttonMinigame.setOpaque(true);
         });
         this.setFocusable(true);
         this.setVisible(true);
@@ -71,7 +72,7 @@ public class BenchView extends AbstractMinigameView implements MinigamePanel {
                     Thread.sleep(1000);
                 } catch (InterruptedException ignored) {
                 }
-                setCharacterLabelIcon(super.getCharacterImage("images/Minigame/bench_press/sprite_" + state + ".png"));
+                setCharacterLabelIcon(super.getCharacterImage("images/minigame/bench_press/sprite_" + state + ".png"));
             }
             buttonMinigame.setText("Press me!");
             buttonMinigame.setEnabled(true);

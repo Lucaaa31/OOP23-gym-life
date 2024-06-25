@@ -3,11 +3,10 @@ package gymlife.controller.api;
 import gymlife.model.inventory.FoodType;
 import gymlife.model.map.api.GameMap;
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.CounterImpl;
-import gymlife.model.statistics.LimitedCounterImpl;
 import gymlife.model.bankgame.SynchronizerModel;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
-import gymlife.utility.Directions;
+import gymlife.utility.Direction;
 import gymlife.utility.Position;
 import gymlife.utility.ScenariosType;
 import gymlife.utility.minigame.MinigameDifficulty;
@@ -32,7 +31,7 @@ public interface Controller {
      *
      * @param dir the direction in which to move the character
      */
-    void moveCharacter(Directions dir);
+    void moveCharacter(Direction dir);
 
     /**
      * Returns the current position of the character.
@@ -46,7 +45,7 @@ public interface Controller {
      *
      * @return a Map of the statistics
      */
-    Map<StatsType, LimitedCounterImpl> getStatistics();
+    Map<StatsType, LimitedGameCounterImpl> getStatistics();
 
     /**
      * Returns the current amount of money.
@@ -62,14 +61,14 @@ public interface Controller {
      *
      * @return the number of days
      */
-    CounterImpl getDays();
+    int getDays();
 
     /**
      * Returns the money of the player.
      *
      * @return the number of days
      */
-    CounterImpl getMoney();
+    int getMoney();
 
     /**
      * Changes the current game map to the specified new map.
@@ -225,6 +224,17 @@ public interface Controller {
      * @return The value of the multiplier's threshold.
      */
     float getThreshold();
+
+    /**
+     * Returns what is the current food to be bought.
+     * @return the FoodType to to buy.
+     */
+    FoodType getFoodToBuy();
+
+    /**
+     * Method to actually buy the food and add it to the inventory.
+     */
+    void buyFood();
 
     /**
      * Return the current value of the multiplier.

@@ -3,8 +3,7 @@ package gymlife.model.statistics.api;
 import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
-import gymlife.model.statistics.CounterImpl;
-import gymlife.model.statistics.LimitedCounterImpl;
+import gymlife.model.statistics.LimitedGameCounterImpl;
 import gymlife.model.statistics.StatsType;
 
 import javax.annotation.concurrent.Immutable;
@@ -19,13 +18,13 @@ public interface StatsManager {
      *
      * @return a map of statistics
      */
-    Map<StatsType, LimitedCounterImpl> getStats();
+    Map<StatsType, LimitedGameCounterImpl> getCommonStats();
     /**
      * Returns the number of days in the gym life.
      *
      * @return the number of days
      */
-    CounterImpl getDays();
+    int getDays();
     /**
      * Decrement the number of day of one.
      *
@@ -63,7 +62,7 @@ public interface StatsManager {
      *
      * @return the money of the game
      */
-    CounterImpl getMoney();
+    int getMoney();
     /**
      * Multincrement a specified stats to the value.
      *
@@ -78,4 +77,10 @@ public interface StatsManager {
      * @param value to set the stat
      */
     void setStat(StatsType stats, int value);
+    /**
+     * Change the stats of the game according to the food eaten.
+     *
+     * @param stats of the game
+     */
+    void changeStatsWithFood(Map<StatsType, Integer> stats);
 }

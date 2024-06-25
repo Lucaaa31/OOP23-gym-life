@@ -4,18 +4,17 @@ import java.util.Map;
 
 import gymlife.model.encounter.Encounter;
 import gymlife.model.statistics.api.StatsManager;
-import gymlife.model.statistics.api.DaysModel;
-import gymlife.model.statistics.api.MoneyModel;
-import gymlife.model.statistics.api.StatsModel;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.api.CommonStats;
+
 /**
  * Implementation of the StatsManager interface.
  * This class manages the game statistics and provides methods to retrieve the stats.
+ * This class is also responsible for hanling stats variations and the logic of that change.
  */
 public class StatsManagerImpl implements StatsManager {
-    private final StatsModel gameStats;
-    private final DaysModel gameDays;
-    private final MoneyModel gameMoney;
+    private final CommonStats gameStats;
+    private final GameCounterImpl gameDays;
+    private final GameCounterImpl gameMoney;
     /**
      * Constructs a StatsManagerImpl object with the given game difficulty.
      * Initializes the gameStats and gameDays objects.
@@ -23,9 +22,9 @@ public class StatsManagerImpl implements StatsManager {
      * @param difficulty the game difficulty
      */
     public StatsManagerImpl(final GameDifficulty difficulty) {
-        gameStats = new StatsModelImpl();
-        gameDays = new DaysModelImpl(difficulty.getDays());
-        gameMoney = new MoneyModelImpl(StatsConstants.STARTING_STATS_LEVEL);
+        gameStats = new CommonStatsImpl();
+        gameDays = new GameCounterImpl(difficulty.getDays());
+        gameMoney = new GameCounterImpl(StatsConstants.STARTING_STATS_LEVEL);
     }
     /**
      * Retrieves the game statistics as a map of StatsType and their corresponding values.
@@ -33,7 +32,7 @@ public class StatsManagerImpl implements StatsManager {
      * @return a map of StatsType and their corresponding values
      */
     @Override
-    public Map<StatsType, LimitedCounterImpl> getStats() {
+    public Map<StatsType, LimitedGameCounterImpl> getCommonStats() {
         return gameStats.getMap();
     }
     /**
@@ -42,8 +41,8 @@ public class StatsManagerImpl implements StatsManager {
      * @return the money of the game
      */
     @Override
-    public CounterImpl getMoney() {
-        return new CounterImpl(gameMoney.getMoney());
+    public int getMoney() {
+        return gameMoney.getCount();
     }
     /**
      * Multincrement a specified stats to the value.
@@ -53,8 +52,8 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void multiIncrementStat(final StatsType stats, final int value) {
-        if ("MONEY".equals(stats.toString())) {
-            gameMoney.setMoney(value);
+        if (stats.equals(StatsType.MONEY)) {
+            gameMoney.multiIncrement(value);
         } else {
             gameStats.multiIncrementStats(stats, value);
         }
@@ -65,6 +64,7 @@ public class StatsManagerImpl implements StatsManager {
      *
      * @param stats to be changed
      */
+    @Override
     public void changeStatsWithFood(final Map<StatsType, Integer> stats) {
         for (final Map.Entry<StatsType, Integer> entry : stats.entrySet()) {
             gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
@@ -79,7 +79,7 @@ public class StatsManagerImpl implements StatsManager {
     @Override
     public void setStat(final StatsType stats, final int value) {
         if ("MONEY".equals(stats.toString())) {
-            gameMoney.setMoney(value);
+            gameMoney.setCount(value);
         } else {
             gameStats.setStats(stats, value);
         }
@@ -90,8 +90,8 @@ public class StatsManagerImpl implements StatsManager {
      * @return the number of days left
      */
     @Override
-    public CounterImpl getDays() {
-        return new CounterImpl(gameDays.dayLeft());
+    public int getDays() {
+        return gameDays.getCount();
     }
     /**
      * Increments the number of days by one.
@@ -99,7 +99,7 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public void newDay() {
-        gameDays.newDay();
+        gameDays.decrement();
     }
     /**
      * Checks if the game is over.
@@ -109,16 +109,11 @@ public class StatsManagerImpl implements StatsManager {
      */
     @Override
     public boolean isGameOver() {
-        if (gameDays.isDayOver()) {
+        if (gameDays.getCount() == 0) {
             return true;
         }
-        final Map<StatsType, LimitedCounterImpl> statsMap = gameStats.getMap();
-        for (final Map.Entry<StatsType, LimitedCounterImpl> entry : statsMap.entrySet()) {
-            if (entry.getValue().getCount() == 0) {
-                return true;
-            }
-        }
-        return false;
+        return gameStats.getMap().values().stream()
+                .anyMatch(counter -> counter.getCount() == 0);
     }
     /**
      * Checks if the player has won the game.
@@ -147,7 +142,7 @@ public class StatsManagerImpl implements StatsManager {
         final Map<StatsType, Integer> acceptCase = encounter.acceptCase();
         for (final Map.Entry<StatsType, Integer> entry : acceptCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
-                gameMoney.multiIncrementMoney(entry.getValue());
+                gameMoney.multiIncrement(entry.getValue());
             } else {
                 gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
             }
@@ -156,14 +151,14 @@ public class StatsManagerImpl implements StatsManager {
     /**
      * Modifies the game statistics according to the encounter type and the deny case of the specific encounter.
      * 
-     * @param encounter the encounter to deny
+     * @param encounterImpl the encounter to deny
      */
     @Override
-    public void denyEncounter(final Encounter encounter) {
-        final Map<StatsType, Integer> denyCase = encounter.denyCase();
+    public void denyEncounter(final Encounter encounterImpl) {
+        final Map<StatsType, Integer> denyCase = encounterImpl.getDenyCase();
         for (final Map.Entry<StatsType, Integer> entry : denyCase.entrySet()) {
             if (entry.getKey() == StatsType.MONEY) {
-                gameMoney.multiIncrementMoney(entry.getValue());
+                gameMoney.multiIncrement(entry.getValue());
             } else {
                 gameStats.multiIncrementStats(entry.getKey(), entry.getValue());
             }

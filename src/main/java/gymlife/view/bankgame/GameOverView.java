@@ -1,5 +1,6 @@
 package gymlife.view.bankgame;
 
+import gymlife.utility.DimensionGetter;
 import gymlife.utility.FontLoader;
 import gymlife.view.DimensionGetter;
 import gymlife.view.api.GamePanel;

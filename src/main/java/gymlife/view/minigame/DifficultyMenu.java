@@ -1,9 +1,9 @@
 package gymlife.view.minigame;
 
 import gymlife.utility.FontLoader;
-import gymlife.utility.GameDifficulty;
+import gymlife.model.statistics.GameDifficulty;
 import gymlife.utility.minigame.MinigameDifficulty;
-import gymlife.view.DimensionGetter;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.api.GamePanel;
 
 import javax.swing.JButton;
@@ -112,7 +112,7 @@ public class DifficultyMenu extends GamePanel {
                            final ActionListener mediumListener,
                            final ActionListener hardListener) {
 
-        FontLoader.loadFont();
+
         final int borderSize = 15;
         final int fontDescriptionSize = 55;
 
@@ -200,7 +200,7 @@ public class DifficultyMenu extends GamePanel {
     }
 
     /**
-     * Updates the description text based on the selected difficulty level.
+     * Updates the getDescription text based on the selected difficulty level.
      *
      * @param source the button that was clicked
      */

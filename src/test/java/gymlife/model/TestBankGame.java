@@ -2,8 +2,8 @@ package gymlife.model;
 
 import gymlife.controller.ControllerImpl;
 import gymlife.model.bankgame.PlaneGameModelImpl;
-import gymlife.utility.GameDifficulty;
-import gymlife.view.DimensionGetter;
+import gymlife.model.statistics.GameDifficulty;
+import gymlife.utility.DimensionGetter;
 import gymlife.view.bankgame.BankGameView;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -29,12 +29,16 @@ public enum ScenariosType {
      */
     ENCOUNTER,
     /**
+     * Represents the purchasing of food scenario.
+     */
+    BUY_FOOD,
+    /**
      *Represents the GameOver scenario.
      */
     GAME_OVER,
     /**
      *Represents the GameWin scenario.
      */
-    GAME_WON;
+    GAME_WON
 
 }
